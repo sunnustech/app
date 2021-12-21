@@ -15,7 +15,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../firebase";
-import { RootStackParamList } from "../App";
+import { RootStackParamList } from "../../App";
 
 type loginScreenNavigationType = NativeStackNavigationProp<RootStackParamList, "Login">
 

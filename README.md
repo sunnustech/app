@@ -5,6 +5,7 @@ To get started:
 - Clone the repo to your local device using `git clone <repo URL>`.
 - Alternatively, pull the latest changes using `git pull`.
 - Install all necessary dependencies using `yarn install`.
+    > Do check that npm/ yarn and expo are installed with path variables set.
 - If needed, download emulators to run on such as [expo go](https://apps.apple.com/us/app/expo-go/id982107779). 
 - To init and run, type `expo start` in your terminal to run.
 
@@ -13,7 +14,7 @@ To get started:
 ...
 ## Who is this app intended for?
 
-The main purpose of the 
+The main purpose of the app is intended for participants of the Sentosa Outdoor Amazing Race (SOAR) event.
 
 # Sections
 
@@ -26,4 +27,5 @@ To be added soon!
 ## Socials
 
 SunNUS Instagram: [@sunnus_official](https://www.instagram.com/sunnus_official/?hl=en)
+
 SunNUS Website: Click me! (Currently under construction)
