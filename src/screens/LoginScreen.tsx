@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   View,
@@ -17,7 +17,10 @@ import {
 import { auth } from "../../firebase";
 import { RootStackParamList } from "../../App";
 
-type loginScreenNavigationType = NativeStackNavigationProp<RootStackParamList, "Login">
+type loginScreenNavigationType = NativeStackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -28,7 +31,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const onListener = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.navigate('Home');
+        navigation.navigate("Home");
       }
     });
     return onListener;
