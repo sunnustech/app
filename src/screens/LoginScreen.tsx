@@ -55,6 +55,14 @@ const LoginScreen = () => {
     //  })
     //  .catch((err) => console.log(err));
   };
+  const breakInHandler = () => {
+    signInWithEmailAndPassword(auth, "sunnus@gmail.com", "test1234")
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -82,6 +90,9 @@ const LoginScreen = () => {
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={breakInHandler} style={styles.button}>
+          <Text style={styles.buttonText}>Break In</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -115,6 +126,7 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
     borderRadius: 10,
+    marginTop: 5,
     alignItems: "center",
   },
   buttonOutline: {
