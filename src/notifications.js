@@ -1,8 +1,7 @@
-import Constants from 'expo-constants'
-import Device from 'expo-device'
-import * as Notifications from 'expo-notifications'
-import React, { useState, useEffect, useRef } from 'react'
-import { Text, View, Button, Platform } from 'react-native'
+import Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import { useState, useEffect, useRef } from 'react';
+import { Text, View, Button, Platform } from 'react-native';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -10,34 +9,38 @@ Notifications.setNotificationHandler({
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
-})
+});
 
 export default function App() {
-  const [expoPushToken, setExpoPushToken] = useState('')
-  const [notification, setNotification] = useState(false)
-  const notificationListener = useRef()
-  const responseListener = useRef()
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => setExpoPushToken(token))
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification)
-      })
+        setNotification(notification);
+      });
 
     // This listener is fired whenever a user taps on or inteacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response)
-      })
+        console.log(response);
+      });
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current)
-      Notifications.removeNotificationSubscription(responseListener.current)
-    }
-  }, [])
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   return (
     <View
@@ -61,22 +64,24 @@ export default function App() {
       <Button
         title="Press to Send Notification"
         onPress={async () => {
-          await sendPushNotification(expoPushToken)
+          await sendPushNotification(expoPushToken);
         }}
       />
     </View>
-  )
+  );
 }
 
 // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
 async function sendPushNotification(expoPushToken) {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
-    data: { someData: 'goes here' },
-  }
+  const message = [
+    {
+      to: expoPushToken,
+      sound: 'default',
+      title: 'Original Title',
+      body: 'And here is the body!',
+      data: { someData: 'goes here' },
+    },
+  ];
 
   await fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
@@ -86,26 +91,27 @@ async function sendPushNotification(expoPushToken) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(message),
-  })
+  });
 }
 
 async function registerForPushNotificationsAsync() {
-  let token
+  let token;
   if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync()
-    let finalStatus = existingStatus
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
     if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync()
-      finalStatus = status
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!')
-      return
+      alert('Failed to get push token for push notification!');
+      return;
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data
-    console.log(token)
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
   } else {
-    alert('Must use physical device for Push Notifications')
+    alert('Must use physical device for Push Notifications');
   }
 
   if (Platform.OS === 'android') {
@@ -114,8 +120,8 @@ async function registerForPushNotificationsAsync() {
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
       lightColor: '#FF231F7C',
-    })
+    });
   }
 
-  return token
+  return token;
 }
