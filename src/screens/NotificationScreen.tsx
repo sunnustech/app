@@ -7,7 +7,6 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase'
 import { RootStackParamList } from '../../App'
 
@@ -16,46 +15,17 @@ type logoutScreenNavigationType = NativeStackNavigationProp<
   'Home'
 >
 
-const HomeScreen = () => {
+const NotificationScreen = () => {
   const navigation = useNavigation<logoutScreenNavigationType>()
-
-  const logoutHandler = () => {
-    signOut(auth)
-      .then(() => {
-        navigation.replace('Login')
-      })
-      .catch((err) => console.log(err))
-  }
-
-  const notificationsHandler = () => {
-    navigation.push('Notifications')
-  }
-
-  const mapHandler = () => {
-    navigation.push('Map')
-  }
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text>
         You are logged in as{' '}
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
       </Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={logoutHandler} style={styles.button}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={notificationsHandler} style={styles.button}>
-          <Text style={styles.buttonText}>Go To Notifications Screen</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={mapHandler} style={styles.button}>
-          <Text style={styles.buttonText}>View your Current Location!</Text>
-        </TouchableOpacity>
-      </View>
+      <Text>
+        This page will be used to test-drive notifications
+      </Text>
     </KeyboardAvoidingView>
   )
 }
@@ -98,4 +68,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default HomeScreen
+export default NotificationScreen
