@@ -28,7 +28,7 @@ const HomeScreen = () => {
   };
 
   const mapHandler = () => {
-    navigation.replace("Map");
+    navigation.push("Map");
   }
 
   return (
