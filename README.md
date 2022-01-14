@@ -7,6 +7,7 @@ Welcome to the SunNUS 21/22 App Repo!
 - [node][node] **v16**
 - [yarn][yarn] **v1**
 - [git][git]
+- `secrets.json` (get it from a project member)
 
 ## Getting Started
 
@@ -25,6 +26,9 @@ Go into the newly created directory and install all necessary dependencies
 ```
 cd app && yarn install
 ```
+
+Copy the `secrets.json` file into the root directory of the project.
+(Same location as `example.secrets.json`)
 
 To run the app on a local server, run this command from anywhere under
 the `app` directory
