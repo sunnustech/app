@@ -1,28 +1,27 @@
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { signOut } from 'firebase/auth'
-import { auth } from '../../firebase'
-import { RootStackParamList } from '../../App'
+import { KeyboardAvoidingView, Text, View } from 'react-native'
 
-type logoutScreenNavigationType = NativeStackNavigationProp<
-  RootStackParamList,
-  'Home'
->
+/* firebase */
+import { signOut, Auth } from 'firebase/auth'
+
+/* navigation */
+import { RootStackParamList } from '../../App'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+
+/* sunnus components */
+import { auth } from '../../firebase'
+import styles from '../styles/main'
+import { Button, ButtonRed } from '../components/Buttons'
 
 const HomeScreen = () => {
-  const navigation = useNavigation<logoutScreenNavigationType>()
+  type NavType = NSNP<RootStackParamList, 'Home'>
+  const navigation = useNavigation<NavType>()
 
-  const logoutHandler = () => {
+  const logoutHandler = (auth: Auth, navigation: NavType) => {
     signOut(auth)
       .then(() => {
         navigation.replace('Login')
+        console.log("successful signout")
       })
       .catch((err) => console.log(err))
   }
@@ -34,81 +33,19 @@ const HomeScreen = () => {
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.push('Notifications')}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Notifications Screen</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.push('Database')}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Database Screen</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.push('Map')}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>View your Current Location!</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={logoutHandler} style={styles.buttonRed}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
+        <Button onPress={() => navigation.push('Notifications')}>
+          Notifications Screen
+        </Button>
+        <Button onPress={() => navigation.push('Database')}>
+          Database Screen
+        </Button>
+        <Button onPress={() => navigation.push('Map')}>
+          View your current location!
+        </Button>
+        <ButtonRed onPress={() => logoutHandler(auth, navigation)}>Logout</ButtonRed>
       </View>
     </KeyboardAvoidingView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  button: {
-    backgroundColor: '#0782F9',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  buttonRed: {
-    backgroundColor: '#f43f5e',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-})
 
 export default HomeScreen

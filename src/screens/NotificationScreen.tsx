@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react'
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -6,13 +7,23 @@ import {
   Platform,
   View,
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { auth } from '../../firebase'
-import { RootStackParamList } from '../../App'
-import Constant from 'expo-constants'
+
+/* expo */
+import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
-import { useState, useEffect, useRef } from 'react'
+
+/* navigation */
+// import { RootStackParamList } from '../../App'
+// import { useNavigation } from '@react-navigation/native'
+// import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+
+/* sunnus components */
+import { auth } from '../../firebase'
+import { notifications as styles } from '../styles/main'
+
+/* experimental */
+import { Subscription } from 'expo-modules-core'
+import { Notification } from 'expo-notifications'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -22,37 +33,40 @@ Notifications.setNotificationHandler({
   }),
 })
 
-type logoutScreenNavigationType = NativeStackNavigationProp<
-  RootStackParamList,
-  'Home'
->
-
 const NotificationScreen = () => {
-  const navigation = useNavigation<logoutScreenNavigationType>()
+  // const navigation = useNavigation<NSNP<RootStackParamList, 'Notifications'>>()
   const [expoPushToken, setExpoPushToken] = useState('')
-  const [notification, setNotification] = useState(false)
-  const notificationListener = useRef()
-  const responseListener = useRef()
+  const [notification, setNotification] = useState<Notification>()
+  const notificationListener = useRef<Subscription>()
+  const responseListener = useRef<Subscription>()
 
   useEffect(() => {
-    console.log('useEffect triggered!')
-    registerForPushNotificationsAsync().then((token) => setExpoPushToken(token))
+    // console.log('useEffect triggered!')
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(String(token))
+    )
 
-    // This listener is fired whenever a notification is received while the app is foregrounded
+    /* This listener is fired whenever a notification is received while the app
+     * is foregrounded
+     */
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification)
       })
 
-    // This listener is fired whenever a user taps on or inteacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    /* This listener is fired whenever a user taps on or inteacts with a
+     * notification (works when app is foregrounded, backgrounded, or killed)
+     */
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log(response)
       })
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current)
-      Notifications.removeNotificationSubscription(responseListener.current)
+      const nc = notificationListener.current
+      const rc = responseListener.current
+      nc ? Notifications.removeNotificationSubscription(nc) : null
+      rc ? Notifications.removeNotificationSubscription(rc) : null
     }
   }, [])
   return (
@@ -72,12 +86,12 @@ const NotificationScreen = () => {
         <Text>Your expo push token: {expoPushToken}</Text>
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Text>
-            Title: {notification && notification.request.content.title}{' '}
+            Title: {notification && notification?.request.content.title}{' '}
           </Text>
-          <Text>Body: {notification && notification.request.content.body}</Text>
+          <Text>Body: {notification && notification?.request.content.body}</Text>
           <Text>
             Data:{' '}
-            {notification && JSON.stringify(notification.request.content.data)}
+            {notification && JSON.stringify(notification?.request.content.data)}
           </Text>
         </View>
         <Button
@@ -92,7 +106,7 @@ const NotificationScreen = () => {
 }
 
 // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
-async function sendPushNotification(expoPushToken) {
+async function sendPushNotification(expoPushToken: string) {
   console.log('-- start of sendPushNotification function --')
   console.log('expoPushToken: ', expoPushToken)
   const message = {
@@ -116,8 +130,8 @@ async function sendPushNotification(expoPushToken) {
 }
 
 async function registerForPushNotificationsAsync() {
-  let token
-  if (Constant.isDevice) {
+  let token = ''
+  if (Device.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync()
     let finalStatus = existingStatus
     if (existingStatus !== 'granted') {
@@ -143,47 +157,7 @@ async function registerForPushNotificationsAsync() {
     })
   }
 
-  console.log('registered token: ', token)
-
   return token
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  button: {
-    backgroundColor: '#0782F9',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-})
 
 export default NotificationScreen
