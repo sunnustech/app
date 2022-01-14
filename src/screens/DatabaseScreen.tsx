@@ -2,57 +2,33 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  Button,
+  Platform,
   View,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase'
 import { RootStackParamList } from '../../App'
+import Constant from 'expo-constants'
+import * as Notifications from 'expo-notifications'
+import { useState, useEffect, useRef } from 'react'
 
 type logoutScreenNavigationType = NativeStackNavigationProp<
   RootStackParamList,
   'Home'
 >
 
-const HomeScreen = () => {
+const DatabaseScreen = () => {
   const navigation = useNavigation<logoutScreenNavigationType>()
-
-  const logoutHandler = () => {
-    signOut(auth)
-      .then(() => {
-        navigation.replace('Login')
-      })
-      .catch((err) => console.log(err))
-  }
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text>
         You are logged in as{' '}
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
       </Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => navigation.push('Notifications')} style={styles.button}>
-          <Text style={styles.buttonText}>Notifications Screen</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => navigation.push('Database')} style={styles.button}>
-          <Text style={styles.buttonText}>Database Screen</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => navigation.push('Map')} style={styles.button}>
-          <Text style={styles.buttonText}>View your Current Location!</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={logoutHandler} style={styles.buttonRed}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
+      <Text>This page will be used to test firebase:firestore read/writes</Text>
+      <Text>the plan is to store a bunch of expo push notification tokens on firebase</Text>
     </KeyboardAvoidingView>
   )
 }
@@ -77,13 +53,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
-  buttonRed: {
-    backgroundColor: '#f43f5e',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
@@ -102,4 +71,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default HomeScreen
+export default DatabaseScreen

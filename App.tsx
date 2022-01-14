@@ -5,12 +5,14 @@ import HomeScreen from './src/screens/HomeScreen'
 import LoginScreen from './src/screens/LoginScreen'
 import MapScreen from './src/screens/MapScreen'
 import NotificationScreen from './src/screens/NotificationScreen'
+import DatabaseScreen from './src/screens/DatabaseScreen'
 
 export type RootStackParamList = {
   Home: undefined
   Login: undefined
   Map: undefined
   Notifications: undefined
+  Database: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -23,6 +25,7 @@ const App = () => {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="Notifications" component={NotificationScreen} />
+        <Stack.Screen name="Database" component={DatabaseScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )
