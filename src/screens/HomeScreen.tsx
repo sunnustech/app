@@ -34,17 +34,26 @@ const HomeScreen = () => {
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => navigation.push('Notifications')} style={styles.button}>
+        <TouchableOpacity
+          onPress={() => navigation.push('Notifications')}
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Notifications Screen</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => navigation.push('Database')} style={styles.button}>
+        <TouchableOpacity
+          onPress={() => navigation.push('Database')}
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Database Screen</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => navigation.push('Map')} style={styles.button}>
+        <TouchableOpacity
+          onPress={() => navigation.push('Map')}
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>View your Current Location!</Text>
         </TouchableOpacity>
       </View>

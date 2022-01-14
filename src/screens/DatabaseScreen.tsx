@@ -28,7 +28,10 @@ const DatabaseScreen = () => {
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
       </Text>
       <Text>This page will be used to test firebase:firestore read/writes</Text>
-      <Text>the plan is to store a bunch of expo push notification tokens on firebase</Text>
+      <Text>
+        the plan is to store a bunch of expo push notification tokens on
+        firebase
+      </Text>
     </KeyboardAvoidingView>
   )
 }
