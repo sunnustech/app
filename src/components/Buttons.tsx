@@ -2,7 +2,7 @@ import { Text, TouchableOpacity } from 'react-native'
 import styles from '../styles/main'
 
 type ButtonProps = {
-  onPress: any
+  onPress: () => void;
   children: string
 }
 
