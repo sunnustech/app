@@ -1,5 +1,6 @@
-import { initializeApp } from 'firebase/app'
+import { initializeApp, getApp, getApps } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 import secrets from './secrets.json'
 
 // Your web app's Firebase configuration
@@ -7,6 +8,16 @@ import secrets from './secrets.json'
 const firebaseConfig = secrets.firebase
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig)
+let app
+if (getApps.length === 0) {
+  app = initializeApp(firebaseConfig)
+  console.log('firebase: initialized')
+} else {
+  console.log('firebase: continued')
+  app = getApp()
+}
 
-export const auth = getAuth(firebaseApp)
+const auth = getAuth(app)
+const db = getFirestore(app)
+
+export { auth, db }
