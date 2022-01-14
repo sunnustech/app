@@ -31,7 +31,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const onListener = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.navigate("Home");
+        navigation.replace("Home");
       }
     });
     return onListener;
