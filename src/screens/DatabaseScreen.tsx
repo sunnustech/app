@@ -20,9 +20,9 @@ import {
 // import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
 /* sunnus components */
-import { auth, db } from '../../firebase'
-import { Button } from '../components/Buttons'
-import styles from '../styles/main'
+import { auth, db } from '@/sunnus/firebase'
+import { Button } from '@/components/Buttons'
+import styles from '@/styles/main'
 
 namespace fb {
   export const read = async () => {

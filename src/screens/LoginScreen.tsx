@@ -9,15 +9,15 @@ import {
 } from 'firebase/auth'
 
 /* navigation */
-import { RootStackParamList } from '../../App'
+import { RootStackParamList } from '@/sunnus/App'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
 /* sunnus components */
-import { auth } from '../../firebase'
-import styles from '../styles/main'
-import { Button, ButtonOutlined } from '../components/Buttons'
-import { Input, SecureInput } from '../components/Inputs'
+import { auth } from '@/sunnus/firebase'
+import styles from '@/styles/main'
+import { Button, ButtonOutlined } from '@/components/Buttons'
+import { Input, SecureInput } from '@/components/Inputs'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')

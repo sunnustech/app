@@ -18,8 +18,8 @@ import * as Notifications from 'expo-notifications'
 // import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
 /* sunnus components */
-import { auth } from '../../firebase'
-import { notifications as styles } from '../styles/main'
+import { auth } from '@/sunnus/firebase'
+import { notifications as styles } from '@/styles/main'
 
 /* experimental */
 import { Subscription } from 'expo-modules-core'
