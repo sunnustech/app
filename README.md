@@ -1,13 +1,43 @@
 # SunNUS 21/22
 
 Welcome to the SunNUS 21/22 App Repo!
-To get started:
 
-- Clone the repo to your local device using `git clone <repo URL>`.
-- Alternatively, pull the latest changes using `git pull`.
-- Install all necessary dependencies using `yarn install`.
-  > Do check that npm/ yarn and expo are installed with path variables set.
-- If needed, download emulators to run on such as [expo go](https://apps.apple.com/us/app/expo-go/id982107779).
+## Requirements
+
+- [node][node] **v16**
+- [yarn][yarn] **v1**
+- [git][git]
+
+## Getting Started
+
+### Mac
+
+Open Terminal.
+
+Clone the repository to your local device
+
+```
+git clone git@github.com:sunnustech/app.git
+```
+
+Go into the newly created directory and install all necessary dependencies
+
+```
+cd app && yarn install
+```
+
+To run the app on a local server, run this command from anywhere under
+the `app` directory
+
+```
+expo start
+```
+
+### Windows
+
+Check that npm/yarn and expo are installed with path variables set.
+
+- If needed, download emulators to run on such as [Expo Go][expo-go].
 - To init and run, type `expo start` in your terminal to run.
 
 ## What is SunNUS?
@@ -25,9 +55,17 @@ To be added soon!
 - User Guide
 - Developer Guide
 - Learning Outcomes
+  ()
 
 ## Socials
 
-SunNUS Instagram: [@sunnus_official](https://www.instagram.com/sunnus_official/?hl=en)
+SunNUS Instagram: [@sunnus_official][insta]
 
-SunNUS Website: Click me! (Currently under construction)
+SunNUS Website: [link][website]
+
+[expo-go]: https://apps.apple.com/app/expo-go/id982107779
+[git]: https://git-scm.com/downloads
+[insta]: https://www.instagram.com/sunnus_official
+[node]: https://nodejs.org
+[website]: https://sunnus-dev.vercel.app
+[yarn]: https://classic.yarnpkg.com/docs/install
