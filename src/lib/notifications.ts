@@ -14,15 +14,26 @@ Notifications.setNotificationHandler({
 })
 
 // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
-async function sendPushNotification(expoPushToken: string) {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
-    data: { someData: 'goes here' },
-  }
+async function sendPushNotification(expoPushToken: string | Array<any>) {
+  var message = {}
 
+  if (typeof expoPushToken === 'string') {
+    message = {
+      to: expoPushToken,
+      sound: 'default',
+      title: 'Original Title',
+      body: 'And here is the body!',
+      data: { someData: 'goes here' },
+    }
+  } else if (typeof expoPushToken === 'object') {
+    message = expoPushToken.map((t) => ({
+      to: `ExponentPushToken[${t}]`,
+      sound: 'default',
+      title: 'Original Title',
+      body: 'And here is the body!',
+      data: { someData: 'goes here' },
+    }))
+  }
   await fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {

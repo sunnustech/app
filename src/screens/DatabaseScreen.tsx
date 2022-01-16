@@ -23,6 +23,7 @@ import {
 import { auth, db } from '@/sunnus/firebase'
 import { Button } from '@/components/Buttons'
 import styles from '@/styles/main'
+import { notificationInit, sendPushNotification } from '@/lib/notifications'
 
 namespace fb {
   export const read = async () => {
@@ -62,11 +63,13 @@ namespace fb {
     // console.log('Document data:', docSnap.data())
     const data = docSnap.data()
     const expoPushTokens = data?.pushTokens
+    await sendPushNotification(expoPushTokens)
     console.log(expoPushTokens)
   }
 }
 
 const DatabaseScreen = () => {
+  const notification = notificationInit().notification
   // const navigation = useNavigation<NSNP<RootStackParamList, 'Database'>>()
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
