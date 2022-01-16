@@ -12,8 +12,10 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 import { auth } from '@/sunnus/firebase'
 import styles from '@/styles/main'
 import { Button, ButtonRed } from '@/components/Buttons'
+import { notificationInit } from '@/lib/notifications'
 
 const HomeScreen = () => {
+  notificationInit()
   type NavType = NSNP<RootStackParamList, 'Home'>
   const navigation = useNavigation<NavType>()
 

@@ -109,7 +109,7 @@ function notificationInit() {
         setNotification(notification)
       })
 
-    /* This listener is fired whenever a user taps on or inteacts with a
+    /* This listener is fired whenever a user taps on or interacts with a
      * notification (works when app is foregrounded, backgrounded, or killed)
      */
     responseListener.current =
@@ -124,6 +124,7 @@ function notificationInit() {
       rc ? Notifications.removeNotificationSubscription(rc) : null
     }
   }, [])
+  console.log(expoPushToken)
   return {
     expoPushToken,
     notification,
