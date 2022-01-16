@@ -27,7 +27,7 @@ async function sendPushNotification(expoPushToken: string | Array<any>) {
     }
   } else if (typeof expoPushToken === 'object') {
     message = expoPushToken.map((t) => ({
-      to: `ExponentPushToken[${t}]`,
+      to: t,
       sound: 'default',
       title: 'Original Title',
       body: 'And here is the body!',

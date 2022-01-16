@@ -1,14 +1,12 @@
-import {
-  KeyboardAvoidingView,
-  Text,
-  View,
-} from 'react-native'
+import { KeyboardAvoidingView, Text, View } from 'react-native'
 
 /* firebase */
 import {
   collection,
   addDoc,
   getDocs,
+  arrayUnion,
+  updateDoc,
   getDoc,
   doc,
   setDoc,
@@ -53,6 +51,15 @@ namespace fb {
       console.error('Error adding document: ', e)
     }
   }
+  export const pushMyExpoToken = async (expoPushToken: string) => {
+    try {
+      await updateDoc(doc(db, 'test', 'expo'), {
+        pushTokens: arrayUnion(expoPushToken),
+      })
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+  }
   export const notifyAll = async () => {
     const docRef = doc(db, 'test', 'expo')
     const docSnap = await getDoc(docRef)
@@ -69,7 +76,7 @@ namespace fb {
 }
 
 const DatabaseScreen = () => {
-  const notification = notificationInit().notification
+  const expoPushToken = notificationInit().expoPushToken
   // const navigation = useNavigation<NSNP<RootStackParamList, 'Database'>>()
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -86,6 +93,9 @@ const DatabaseScreen = () => {
         <Button onPress={() => fb.read()}>Read</Button>
         <Button onPress={() => fb.writeCollection()}>Write Collection</Button>
         <Button onPress={() => fb.writeDocument()}>Write Document</Button>
+        <Button onPress={() => fb.pushMyExpoToken(expoPushToken)}>
+          Push My Expo Token
+        </Button>
         <Button onPress={() => fb.notifyAll()}>
           Send Notification to all Expo Users
         </Button>
