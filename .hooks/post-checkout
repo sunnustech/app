@@ -1,0 +1,32 @@
+#! /bin/sh
+
+# This script runs right after every git checkout.
+# If there's a change in package.json, it will run `yarn` for you.
+
+# color my pencils
+em="\033[93m" # yellow
+nm="\033[0m"  # normal
+
+# gets previously checked-out commit id
+tmp=$(git reflog -n 1 --skip=1)
+prev_id=${tmp%% *}
+
+# gets currently checked-out commit id
+tmp=$(git log --oneline -n 1)
+curr_id=${tmp%% *}
+
+# gets the list of files that changed
+diff=$(git diff --name-only $prev_id $curr_id)
+
+# if there package.json changed,
+# and it exists after the checkout,
+# then run `yarn`
+if [[ $diff = *"package.json"* ]]; then
+  echo "${em}package.json changed!${nm}"
+  git_files=$(git ls-files)
+  if [[ $git_files = *"package.json"* ]]; then
+    yarn
+  else
+    exit 0
+  fi
+fi

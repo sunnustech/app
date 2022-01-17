@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# run this script right after cloning the repo for the first time.
+
+ln -sf $PWD/.hooks/* .git/hooks/
