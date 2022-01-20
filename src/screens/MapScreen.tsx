@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import MapView, { Marker, Callout, Camera } from 'react-native-maps'
+import MapView, { Marker, Camera } from 'react-native-maps'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import * as Location from 'expo-location'
-import { Fontisto } from '@expo/vector-icons'
+import { CustomMarker } from '@/components/Markers'
+import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
+// search for icons at [https://icons.expo.fyi/]
 
 /* navigation */
 import { RootStackParamList } from '@/sunnus/App'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
-type NavType = NSNP<RootStackParamList, 'Home'>
+type NavType = NSNP<RootStackParamList, 'Map'>
 
 const sentosaDefault: Camera = {
   center: {
@@ -22,30 +24,27 @@ const sentosaDefault: Camera = {
   altitude: 0,
 }
 
-const CustomMarker = ({ navigation }: { navigation: NavType }) => {
-  return (
-    <Marker
-      key={3}
-      coordinate={{
-        latitude: 1.258,
-        longitude: 103.82,
-      }}
-    >
-      <Fontisto name="beach-slipper" size={42} color="#ef4444" />
-      <Callout
-        style={styles.callout}
-        onPress={() => navigation.push('Notifications')}
-      >
-        <View>
-          <Text>
-            So you have pressed the pin. Press anywhere on this callout to
-            navigate to the Notification Screen.
-          </Text>
-        </View>
-      </Callout>
-    </Marker>
-  )
-}
+const gameLocations = [
+  {
+    name: 'Alpha',
+    description:
+      'So you have pressed the pin. Press anywhere on this callout to navigate to the Notification Screen.',
+    icon: () => <FO name="beach-slipper" size={42} color="#ef4444" />,
+    coordinate: {
+      latitude: 1.258,
+      longitude: 103.82,
+    },
+  },
+  {
+    name: 'Bravo',
+    description: 'Test Marker 2',
+    icon: () => <FA name="umbrella-beach" size={42} color="#22c55e" />,
+    coordinate: {
+      latitude: 1.25,
+      longitude: 103.82,
+    },
+  },
+]
 
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
@@ -72,6 +71,7 @@ const MapScreen = () => {
           heading: 0,
           altitude: 0,
         }
+        // navigate to user's location once it loads
         // mapRef.current?.animateCamera(r, { duration: 2000 })
       })
       setLoading(false)
@@ -112,7 +112,15 @@ const MapScreen = () => {
               <Text>Custom Label</Text>
             </View>
           </Marker>
-          <CustomMarker navigation={navigation} />
+          {gameLocations.map((e) => (
+            <CustomMarker
+              navigation={navigation}
+              coordinate={e.coordinate}
+              description={e.description}
+            >
+              {e.icon()}
+            </CustomMarker>
+          ))}
         </MapView>
       </View>
     )
@@ -120,6 +128,12 @@ const MapScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   callout: {
     width: 200,
     height: 200,
