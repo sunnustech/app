@@ -1,25 +1,22 @@
-import { useEffect, useState } from 'react'
-import MapView, { Marker, Callout } from 'react-native-maps'
+import { useEffect, useRef, useState } from 'react'
+import MapView, { Marker, Callout, Camera } from 'react-native-maps'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import * as Location from 'expo-location'
 
-interface Region {
-  latitude: number
-  longitude: number
-  latitudeDelta: number
-  longitudeDelta: number
-}
-
-const sentosaDefault: Region = {
-  latitude: 1.254206,
-  longitude: 103.819977,
-  latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
+const sentosaDefault: Camera = {
+  center: {
+    latitude: 1.254206,
+    longitude: 103.819977,
+  },
+  pitch: 0,
+  zoom: 15,
+  heading: 0,
+  altitude: 0,
 }
 
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
-  const [region, setRegion] = useState(sentosaDefault)
+  const mapRef = useRef<MapView>(null)
 
   useEffect(() => {
     ;(async () => {
@@ -28,17 +25,20 @@ const MapScreen = () => {
         alert('Permission Denied!')
         return
       }
-      let location = Location.getCurrentPositionAsync().then(e => {
+      Location.getCurrentPositionAsync().then((e) => {
         console.log(e)
+        const r: Camera = {
+          center: {
+            latitude: e.coords.latitude,
+            longitude: e.coords.longitude,
+          },
+          pitch: 0,
+          zoom: 15,
+          heading: 0,
+          altitude: 0,
+        }
+        mapRef.current?.animateCamera(r, { duration: 2000 })
       })
-      // console.log(location)
-      // const r = {
-      //   latitude: location.coords.latitude,
-      //   longitude: location.coords.longitude,
-      //   latitudeDelta: 0.01,
-      //   longitudeDelta: 0.01,
-      // }
-      setRegion(sentosaDefault)
       setLoading(false)
     })()
   }, [])
@@ -49,9 +49,10 @@ const MapScreen = () => {
     return (
       <View style={styles.container}>
         <MapView
+          ref={mapRef}
           style={styles.map}
           provider={'google'}
-          initialRegion={region}
+          initialCamera={sentosaDefault}
           showsUserLocation={true}
         >
           <Marker
@@ -66,7 +67,7 @@ const MapScreen = () => {
           <Marker
             key={2}
             coordinate={{
-              latitude: 1.250,
+              latitude: 1.25,
               longitude: 103.82,
             }}
             title="test marker"
@@ -76,22 +77,22 @@ const MapScreen = () => {
               <Text>Custom Label</Text>
             </View>
           </Marker>
-            <Marker
-              key={3}
-              coordinate={{
-                latitude: 1.258,
-                longitude: 103.82,
-              }}
-            >
+          <Marker
+            key={3}
+            coordinate={{
+              latitude: 1.258,
+              longitude: 103.82,
+            }}
+          >
+            <View>
+              <Text>Custom Label + Custom Callout</Text>
+            </View>
+            <Callout>
               <View>
-                <Text>Custom Label + Custom Callout</Text>
+                <Text>Callout Contents</Text>
               </View>
-              <Callout>
-                <View>
-                  <Text>Callout Contents</Text>
-                </View>
-              </Callout>
-            </Marker>
+            </Callout>
+          </Marker>
         </MapView>
       </View>
     )
