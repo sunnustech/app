@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import MapView, { Marker, Callout, Camera } from 'react-native-maps'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import * as Location from 'expo-location'
+import { Fontisto } from '@expo/vector-icons'
 
 const sentosaDefault: Camera = {
   center: {
@@ -12,6 +13,25 @@ const sentosaDefault: Camera = {
   zoom: 15,
   heading: 0,
   altitude: 0,
+}
+
+const CustomMarker = () => {
+  return (
+    <Marker
+      key={3}
+      coordinate={{
+        latitude: 1.258,
+        longitude: 103.82,
+      }}
+    >
+      <Fontisto name="beach-slipper" size={42} color="#ef4444"/>
+      <Callout>
+        <View>
+          <Text>Callout Contents</Text>
+        </View>
+      </Callout>
+    </Marker>
+  )
 }
 
 const MapScreen = () => {
@@ -37,7 +57,7 @@ const MapScreen = () => {
           heading: 0,
           altitude: 0,
         }
-        mapRef.current?.animateCamera(r, { duration: 2000 })
+        // mapRef.current?.animateCamera(r, { duration: 2000 })
       })
       setLoading(false)
     })()
@@ -77,22 +97,7 @@ const MapScreen = () => {
               <Text>Custom Label</Text>
             </View>
           </Marker>
-          <Marker
-            key={3}
-            coordinate={{
-              latitude: 1.258,
-              longitude: 103.82,
-            }}
-          >
-            <View>
-              <Text>Custom Label + Custom Callout</Text>
-            </View>
-            <Callout>
-              <View>
-                <Text>Callout Contents</Text>
-              </View>
-            </Callout>
-          </Marker>
+          <CustomMarker />
         </MapView>
       </View>
     )
