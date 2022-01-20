@@ -28,15 +28,17 @@ const MapScreen = () => {
         alert('Permission Denied!')
         return
       }
-      let location = await Location.getCurrentPositionAsync()
-      console.log(location)
-      const r = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      }
-      setRegion(r)
+      let location = Location.getCurrentPositionAsync().then(e => {
+        console.log(e)
+      })
+      // console.log(location)
+      // const r = {
+      //   latitude: location.coords.latitude,
+      //   longitude: location.coords.longitude,
+      //   latitudeDelta: 0.01,
+      //   longitudeDelta: 0.01,
+      // }
+      setRegion(sentosaDefault)
       setLoading(false)
     })()
   }, [])
