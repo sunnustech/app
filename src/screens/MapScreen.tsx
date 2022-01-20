@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, Callout } from 'react-native-maps'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import * as Location from 'expo-location'
 
@@ -53,13 +53,43 @@ const MapScreen = () => {
           showsUserLocation={true}
         >
           <Marker
+            key={1}
             coordinate={{
-              latitude: 1.254206,
-              longitude: 103.819977,
+              latitude: 1.254,
+              longitude: 103.82,
+            }}
+            title="pinned marker"
+            description="pinned description"
+          />
+          <Marker
+            key={2}
+            coordinate={{
+              latitude: 1.250,
+              longitude: 103.82,
             }}
             title="test marker"
             description="test description"
-          />
+          >
+            <View>
+              <Text>Custom Label</Text>
+            </View>
+          </Marker>
+            <Marker
+              key={3}
+              coordinate={{
+                latitude: 1.258,
+                longitude: 103.82,
+              }}
+            >
+              <View>
+                <Text>Custom Label + Custom Callout</Text>
+              </View>
+              <Callout>
+                <View>
+                  <Text>Callout Contents</Text>
+                </View>
+              </Callout>
+            </Marker>
         </MapView>
       </View>
     )
