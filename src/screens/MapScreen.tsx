@@ -4,6 +4,13 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import * as Location from 'expo-location'
 import { Fontisto } from '@expo/vector-icons'
 
+/* navigation */
+import { RootStackParamList } from '@/sunnus/App'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+
+type NavType = NSNP<RootStackParamList, 'Home'>
+
 const sentosaDefault: Camera = {
   center: {
     latitude: 1.254206,
@@ -15,7 +22,7 @@ const sentosaDefault: Camera = {
   altitude: 0,
 }
 
-const CustomMarker = () => {
+const CustomMarker = ({ navigation }: { navigation: NavType }) => {
   return (
     <Marker
       key={3}
@@ -24,10 +31,16 @@ const CustomMarker = () => {
         longitude: 103.82,
       }}
     >
-      <Fontisto name="beach-slipper" size={42} color="#ef4444"/>
-      <Callout>
+      <Fontisto name="beach-slipper" size={42} color="#ef4444" />
+      <Callout
+        style={styles.callout}
+        onPress={() => navigation.push('Notifications')}
+      >
         <View>
-          <Text>Callout Contents</Text>
+          <Text>
+            So you have pressed the pin. Press anywhere on this callout to
+            navigate to the Notification Screen.
+          </Text>
         </View>
       </Callout>
     </Marker>
@@ -37,6 +50,8 @@ const CustomMarker = () => {
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
   const mapRef = useRef<MapView>(null)
+
+  const navigation = useNavigation<NavType>()
 
   useEffect(() => {
     ;(async () => {
@@ -97,7 +112,7 @@ const MapScreen = () => {
               <Text>Custom Label</Text>
             </View>
           </Marker>
-          <CustomMarker />
+          <CustomMarker navigation={navigation} />
         </MapView>
       </View>
     )
@@ -105,11 +120,9 @@ const MapScreen = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  callout: {
+    width: 200,
+    height: 200,
   },
   map: {
     width: Dimensions.get('window').width,
