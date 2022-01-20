@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import * as Location from 'expo-location'
 
@@ -51,7 +51,16 @@ const MapScreen = () => {
           provider={'google'}
           initialRegion={region}
           showsUserLocation={true}
-        />
+        >
+          <Marker
+            coordinate={{
+              latitude: 1.254206,
+              longitude: 103.819977,
+            }}
+            title="test marker"
+            description="test description"
+          />
+        </MapView>
       </View>
     )
   }
