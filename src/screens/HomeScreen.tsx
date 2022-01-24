@@ -41,10 +41,15 @@ const HomeScreen = () => {
         <Button onPress={() => navigation.push('Database')}>
           Database Screen
         </Button>
+        <Button onPress={() => navigation.push('Scanner')}>
+          QR Code Screen
+        </Button>
         <Button onPress={() => navigation.push('Map')}>
           View your current location!
         </Button>
-        <ButtonRed onPress={() => logoutHandler(auth, navigation)}>Logout</ButtonRed>
+        <ButtonRed onPress={() => logoutHandler(auth, navigation)}>
+          Logout
+        </ButtonRed>
       </View>
     </KeyboardAvoidingView>
   )

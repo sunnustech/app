@@ -3,7 +3,6 @@ import { KeyboardAvoidingView, View } from 'react-native'
 
 /* firebase */
 import {
-  createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
@@ -16,7 +15,7 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
 import styles from '@/styles/main'
-import { Button, ButtonOutlined } from '@/components/Buttons'
+import { Button } from '@/components/Buttons'
 import { Input, SecureInput } from '@/components/Inputs'
 
 const LoginScreen = () => {
@@ -40,16 +39,6 @@ const LoginScreen = () => {
         console.log('successful login as:', credential.user.email)
       })
       .catch((err) => console.log(err))
-  }
-
-  const signupHandler = () => {
-    console.log(email, password)
-    // createUserWithEmailAndPassword(auth, email, password)
-    //   .then((userCredential) => {
-    //     const user = userCredential.user
-    //     console.log(user)
-    //   })
-    //   .catch((err) => console.log(err))
   }
 
   /* for devs to log in quickly;
@@ -79,7 +68,6 @@ const LoginScreen = () => {
       </View>
       <View style={styles.buttonContainer}>
         <Button onPress={loginHandler}>Login</Button>
-        <ButtonOutlined onPress={signupHandler}>Sign Up</ButtonOutlined>
         <Button onPress={breakInHandler}>Break In</Button>
       </View>
     </KeyboardAvoidingView>
