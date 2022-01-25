@@ -5,6 +5,8 @@ import LoginScreen from '@/screens/LoginScreen'
 import MapScreen from '@/screens/MapScreen'
 import NotificationScreen from '@/screens/NotificationScreen'
 import DatabaseScreen from '@/screens/DatabaseScreen'
+import ScanScreen from './src/screens/ScanScreen'
+import SampleSoarGamePage from './src/screens/SampleSoarGamePage'
 
 export type RootStackParamList = {
   Home: undefined
@@ -12,6 +14,10 @@ export type RootStackParamList = {
   Map: undefined
   Notifications: undefined
   Database: undefined
+  Scanner: undefined
+  
+  // Just a TEST, will be deleted or refined later
+  DummyTest: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -25,6 +31,8 @@ const App = () => {
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="Notifications" component={NotificationScreen} />
         <Stack.Screen name="Database" component={DatabaseScreen} />
+        <Stack.Screen name="Scanner" component={ScanScreen} />
+        <Stack.Screen name="DummyTest" component={SampleSoarGamePage} />
       </Stack.Navigator>
     </NavigationContainer>
   )

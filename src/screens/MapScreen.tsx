@@ -1,25 +1,56 @@
-import { useEffect, useState } from 'react'
-import MapView from 'react-native-maps'
+import { useEffect, useRef, useState } from 'react'
+import MapView, { Marker, Camera } from 'react-native-maps'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import * as Location from 'expo-location'
+import { CustomMarker } from '@/components/Markers'
+import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
+// search for icons at [https://icons.expo.fyi/]
 
-interface Region {
-  latitude: number
-  longitude: number
-  latitudeDelta: number
-  longitudeDelta: number
+/* navigation */
+import { RootStackParamList } from '@/sunnus/App'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+
+type NavType = NSNP<RootStackParamList, 'Map'>
+
+const sentosaDefault: Camera = {
+  center: {
+    latitude: 1.254206,
+    longitude: 103.819977,
+  },
+  pitch: 0,
+  zoom: 15,
+  heading: 0,
+  altitude: 0,
 }
 
-const sentosaDefault: Region = {
-  latitude: 1.254206,
-  longitude: 103.819977,
-  latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
-}
+const gameLocations = [
+  {
+    name: 'Alpha',
+    description:
+      'So you have pressed the pin. Press anywhere on this callout to navigate to the Notification Screen.',
+    icon: () => <FO name="beach-slipper" size={42} color="#ef4444" />,
+    coordinate: {
+      latitude: 1.258,
+      longitude: 103.82,
+    },
+  },
+  {
+    name: 'Bravo',
+    description: 'Test Marker 2',
+    icon: () => <FA name="umbrella-beach" size={42} color="#22c55e" />,
+    coordinate: {
+      latitude: 1.25,
+      longitude: 103.82,
+    },
+  },
+]
 
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
-  const [region, setRegion] = useState(sentosaDefault)
+  const mapRef = useRef<MapView>(null)
+
+  const navigation = useNavigation<NavType>()
 
   useEffect(() => {
     ;(async () => {
@@ -28,15 +59,21 @@ const MapScreen = () => {
         alert('Permission Denied!')
         return
       }
-      let location = await Location.getCurrentPositionAsync()
-      console.log(location)
-      const r = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      }
-      setRegion(r)
+      Location.getCurrentPositionAsync().then((e) => {
+        console.log(e)
+        const r: Camera = {
+          center: {
+            latitude: e.coords.latitude,
+            longitude: e.coords.longitude,
+          },
+          pitch: 0,
+          zoom: 15,
+          heading: 0,
+          altitude: 0,
+        }
+        // navigate to user's location once it loads
+        // mapRef.current?.animateCamera(r, { duration: 2000 })
+      })
       setLoading(false)
     })()
   }, [])
@@ -47,11 +84,44 @@ const MapScreen = () => {
     return (
       <View style={styles.container}>
         <MapView
+          ref={mapRef}
           style={styles.map}
           provider={'google'}
-          initialRegion={region}
+          initialCamera={sentosaDefault}
           showsUserLocation={true}
-        />
+        >
+          <Marker
+            key={1}
+            coordinate={{
+              latitude: 1.254,
+              longitude: 103.82,
+            }}
+            title="pinned marker"
+            description="pinned description"
+          />
+          <Marker
+            key={2}
+            coordinate={{
+              latitude: 1.25,
+              longitude: 103.82,
+            }}
+            title="test marker"
+            description="test description"
+          >
+            <View>
+              <Text>Custom Label</Text>
+            </View>
+          </Marker>
+          {gameLocations.map((e) => (
+            <CustomMarker
+              navigation={navigation}
+              coordinate={e.coordinate}
+              description={e.description}
+            >
+              {e.icon()}
+            </CustomMarker>
+          ))}
+        </MapView>
       </View>
     )
   }
@@ -63,6 +133,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  callout: {
+    width: 200,
+    height: 200,
   },
   map: {
     width: Dimensions.get('window').width,
