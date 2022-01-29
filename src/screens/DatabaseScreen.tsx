@@ -22,6 +22,7 @@ import { auth, db } from '@/sunnus/firebase'
 import { Button } from '@/components/Buttons'
 import styles from '@/styles/main'
 import { notificationInit, sendPushNotification } from '@/lib/notifications'
+import writeSchema, { participants } from '@/lib/schema'
 
 namespace fb {
   export const read = async () => {
@@ -41,19 +42,6 @@ namespace fb {
       console.error('Error adding document: ', e)
     }
   }
-  const schema = {
-    something: 'is up',
-  }
-
-  export const writeSchema = async () => {
-    try {
-      const docRef = await addDoc(collection(db, 'test-schema'), schema)
-      console.log('Document written with ID: ', docRef.id)
-    } catch (e) {
-      console.error('Error adding document: ', e)
-    }
-  }
-
   export const writeDocument = async () => {
     try {
       const docRef = await setDoc(doc(db, 'test', 'expo'), {
@@ -106,7 +94,7 @@ const DatabaseScreen = () => {
         {/* <Button onPress={() => fb.read()}>Read</Button> */}
         {/* <Button onPress={() => fb.writeCollection()}>Write Collection</Button> */}
         {/* <Button onPress={() => fb.writeDocument()}>Write Document</Button> */}
-        <Button onPress={() => fb.writeSchema()}>Write Schema</Button>
+        <Button onPress={() => writeSchema()}>Write Schema</Button>
         <Button onPress={() => fb.pushMyExpoToken(expoPushToken)}>
           Push My Expo Token
         </Button>
