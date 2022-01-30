@@ -46,7 +46,44 @@ function handlePartcipants() {
     output.push(res)
   })
 
-  fs.writeFileSync(outputFile, JSON.stringify(output))
+  // fs.writeFileSync(outputFile, JSON.stringify(output))
+  return output
 }
 
-handlePartcipants()
+function handleTSS() {
+  /* columns A-C is first_32
+  /* columns E-H is schedule
+   */
+  const filename = 'TSS.csv'
+  const file = fs.readFileSync(path.join(root, filename), 'utf8')
+  const data = parse(file, { columns: true })
+  const outputFile = 'TSS.json'
+
+  /* keeps only the keys of object listed in keysKept */
+  function keep(data, keysKept) {
+    return data.map((row) =>
+      keysKept.reduce(
+        (obj, key) => ({
+          ...obj,
+          [key]: row[key],
+        }),
+        {}
+      )
+    )
+  }
+
+  /* grab the first_32 */
+  const first_32 = keep(data, ['A', 'B'])
+
+  /* grab the schedule
+   * and remove entries with no title
+   */
+  const schedule = keep(data, ['time', 'venue', 'title']).filter(
+    (e) => e.title != ''
+  )
+
+  return { first_32, schedule }
+}
+
+const participants = handlePartcipants()
+const { first_32, schedule } = handleTSS()

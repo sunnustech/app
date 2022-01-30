@@ -1,3 +1,4 @@
 #!/bin/sh
 
 node index.mjs
+npx prettier --write .
