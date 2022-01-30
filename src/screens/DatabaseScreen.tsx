@@ -22,7 +22,7 @@ import { auth, db } from '@/sunnus/firebase'
 import { Button } from '@/components/Buttons'
 import styles from '@/styles/main'
 import { notificationInit, sendPushNotification } from '@/lib/notifications'
-import writeSchema, { participants } from '@/lib/schema'
+import writeSchema from '@/lib/schema'
 
 namespace fb {
   export const read = async () => {
