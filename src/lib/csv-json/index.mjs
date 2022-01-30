@@ -4,6 +4,9 @@ import path from 'path'
 
 const root = process.cwd()
 
+/* takes in a path to a csv file,
+ * returns a two-dimensional array
+ */
 function getCSV(filename) {
   const file = fs.readFileSync(path.join(root, filename), 'utf8')
   return parse(file)
@@ -27,7 +30,7 @@ function handlePartcipants() {
   )
 
   /* process member emails and phone numbers */
-  const output = []
+  const participants = []
   zipped.forEach((row) => {
     const res = {}
     res.id = row.id
@@ -42,21 +45,17 @@ function handlePartcipants() {
         console.log(row.id, 'member', i, 'has missing email/phone number')
       }
     }
-    output.push(res)
+    participants.push(res)
   })
-
-  // fs.writeFileSync(outputFile, JSON.stringify(output))
-  return output
+  return participants
 }
 
 function handleTSS() {
   /* columns A-C is first_32
   /* columns E-H is schedule
    */
-  const filename = 'TSS.csv'
-  const file = fs.readFileSync(path.join(root, filename), 'utf8')
+  const file = fs.readFileSync(path.join(root, 'TSS.csv'), 'utf8')
   const data = parse(file, { columns: true })
-  const outputFile = 'TSS.json'
 
   /* keeps only the keys of object listed in keysKept */
   function keep(data, keysKept) {
@@ -74,9 +73,7 @@ function handleTSS() {
   /* grab the first_32 */
   const first_32 = keep(data, ['A', 'B'])
 
-  /* grab the schedule
-   * and remove entries with no title
-   */
+  /* grab the schedule and remove entries with no title */
   const schedule = keep(data, ['time', 'venue', 'title']).filter(
     (e) => e.title != ''
   )
@@ -87,8 +84,11 @@ function handleTSS() {
 function handleSOAR() {
   const data = getCSV('SOAR.csv')
 
+  /* get the details of each location
+   * returns an array of objects, each object containing details of one location
+   */
   function parseLocations(data) {
-    const locations = data.map((row) => row.slice(0, 6))
+    const locations = data.map((row) => row.slice(1, 6))
 
     const headers = locations.shift()
 
@@ -97,10 +97,13 @@ function handleSOAR() {
       return key.replace('?', '').replace('/', '').replace(/ /g, '_')
     }
     const parseValue = (value) => {
-      switch (value) {
+      const lower = value.toLowerCase()
+      switch (lower) {
         case 'yes':
+        case 'true':
           return true
         case 'no':
+        case 'false':
           return false
         default:
           return value
@@ -122,12 +125,20 @@ function handleSOAR() {
     return zipped
   }
 
+  /* adds to the locations array with schedules of each location */
   function parseSchedules(data, locations) {
+    /* find the indices of headers which say 'time'
+     * these will be used to locate the tables which contain schedules
+     */
     const idx = data[0].reduce((res, element, idx) => {
       element === 'time' && res.push(idx)
       return res
     }, [])
     const output = []
+
+    /* at each occurence of time, find the corresponding title
+     * and parse the schedule associated
+     */
     idx.forEach((i) => {
       const title = data[0][i - 1]
       const locationList = data.map((row) => row.slice(i, i + 2))
@@ -144,15 +155,14 @@ function handleSOAR() {
         )
         .filter((e) => e.time != '')
       const found = locations.find((e) => e.title === title)
-      delete found.sn
       output.push({ ...found, schedule })
     })
     return output
   }
 
   const locations = parseLocations(data)
-  const output = parseSchedules(data, locations)
-  return output
+  const SOAR = parseSchedules(data, locations)
+  return SOAR
 }
 
 const participants = handlePartcipants()
