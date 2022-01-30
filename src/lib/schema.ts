@@ -3,6 +3,9 @@ import { setDoc, doc, writeBatch } from '@firebase/firestore'
 
 /* sunnus components */
 import { db } from '@/sunnus/firebase'
+import participants from '@/lib/csv-json/participants.json'
+import TSS from '@/lib/csv-json/TSS.json'
+import SOAR from '@/lib/csv-json/SOAR.json'
 
 /* expected data for each team:
  * 1. the group title
@@ -13,7 +16,7 @@ import { db } from '@/sunnus/firebase'
  *      - email address
  *      - handphone number
  */
-const participants = [
+const _participants = [
   // {{{
   {
     group_title: 'Known Painters',
@@ -65,7 +68,7 @@ const participants = [
  * 1. the who v. who, venue, time for the first 32 teams
  * 2. the venue, time for all the matches up to the finals
  */
-const TSS = {
+const _TSS = {
   // {{{
   first_32: [
     { A: 'Independent Decorators', B: 'Gentle Sweaters' },
@@ -97,7 +100,7 @@ const TSS = {
  *        1. time
  *        2. exact group title of who's supposed to be that at said time
  */
-const SOAR = [
+const _SOAR = [
   // {{{
   {
     location: 'The Lair of the Green-eyed Man',
@@ -175,7 +178,7 @@ const writeSOAR = async () => {
 
   /* add to-add stuff to the write batch using .set */
   SOAR.forEach((place) => {
-    batch.set(doc(db, collection, place.game_title), { place })
+    batch.set(doc(db, collection, place.title), { place })
   })
 
   /* execute the write with .commit */

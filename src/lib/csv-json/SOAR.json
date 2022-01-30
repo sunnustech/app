@@ -1,23 +1,21 @@
 [
   {
-    "sn": "1",
     "title": "YeetBall",
     "location": "The Lair of the Green-eyed Man",
     "physical": true,
     "details": "game instructions/intro statement (try to keep it concise!)",
-    "google map pin url": "https://goo.gl/maps/1Zrg21yeCGQJGhK18",
+    "google_map_pin_url": "https://goo.gl/maps/1Zrg21yeCGQJGhK18",
     "schedule": [
       { "time": "14:00", "group": "Gentle Sweaters" },
       { "time": "14:30", "group": "Independent Decorators" }
     ]
   },
   {
-    "sn": "2",
     "title": "SheeshJump",
     "location": "Camp Nou",
     "physical": false,
     "details": "game instructions/intro statement (try to keep it concise!)",
-    "google map pin url": "https://goo.gl/maps/1Zrg21yeCGQJGhK18",
+    "google_map_pin_url": "https://goo.gl/maps/1Zrg21yeCGQJGhK18",
     "schedule": [
       { "time": "10:00", "group": "Known Painters" },
       { "time": "10:30", "group": "Modest Liberators" }

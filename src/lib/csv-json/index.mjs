@@ -94,7 +94,7 @@ function handleSOAR() {
 
     /* some parsing helpers */
     const parseKey = (key) => {
-      return key.replace('?', '').replace('/', '')
+      return key.replace('?', '').replace('/', '').replace(/ /g, '_')
     }
     const parseValue = (value) => {
       switch (value) {
@@ -144,6 +144,7 @@ function handleSOAR() {
         )
         .filter((e) => e.time != '')
       const found = locations.find((e) => e.title === title)
+      delete found.sn
       output.push({ ...found, schedule })
     })
     return output
