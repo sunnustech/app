@@ -1,0 +1,22 @@
+[
+  {
+    "id": "XK618j",
+    "group_title": "Alpha Warriors",
+    "members": [
+      { "email": "alice@gmail.com", "phone": "77884793" },
+      { "email": "brandon@gmail.com", "phone": "79412799" },
+      { "email": "carla@gmail.com", "phone": "77008669" },
+      { "email": "dave@gmail.com", "phone": "70620715" }
+    ]
+  },
+  {
+    "id": "1l6tlj",
+    "group_title": "Charlie Tigers",
+    "members": [
+      { "email": "adam@gmail.com", "phone": "73125593" },
+      { "email": "beverly@gmail.com", "phone": "75687708" },
+      { "email": "cedric@gmail.com", "phone": "75893845" },
+      { "email": "dana@gmail.com", "phone": "78449264" }
+    ]
+  }
+]
