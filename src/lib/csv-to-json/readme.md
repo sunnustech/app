@@ -1,11 +1,17 @@
 Usage:
 
 ```
-node <mjs file>
+./run
 ```
 
-Example:
+required files:
 
-```
-node index.mjs
-```
+- participants.csv
+- TSS.csv
+- SOAR.csv
+
+output files:
+
+- participants.json
+- TSS.json
+- SOAR.json
