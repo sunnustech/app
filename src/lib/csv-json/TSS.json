@@ -1,0 +1,24 @@
+{
+  "first_32": [
+    { "A": "name", "B": "of" },
+    { "A": "the ", "B": "two " },
+    { "A": "participating", "B": "teams" },
+    { "A": "for", "B": "each" },
+    { "A": "of", "B": "the" },
+    { "A": "first", "B": "sixteen" },
+    { "A": "matches", "B": "foo" },
+    { "A": "bar", "B": "baz" },
+    { "A": "asdf", "B": "asdf" },
+    { "A": "asdf", "B": "asdf" },
+    { "A": "asdf", "B": "asdf" },
+    { "A": "asdf", "B": "asdf" },
+    { "A": "asdf", "B": "asdf" },
+    { "A": "asdf", "B": "asdf" },
+    { "A": "asdf", "B": "asdf" },
+    { "A": "asdf", "B": "asdf" }
+  ],
+  "schedule": [
+    { "time": "15:00", "venue": "Court 3", "title": "Dodgeball Semi-finals" },
+    { "time": "16:00", "venue": "Stage", "title": "Prize Presentation" }
+  ]
+}

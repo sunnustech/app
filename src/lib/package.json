@@ -1,3 +1,6 @@
 {
-  "name": "@/lib"
+  "name": "@/lib",
+  "dependencies": {
+    "csv-parse": "^5.0.4"
+  }
 }

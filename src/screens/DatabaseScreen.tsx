@@ -22,6 +22,7 @@ import { auth, db } from '@/sunnus/firebase'
 import { Button } from '@/components/Buttons'
 import styles from '@/styles/main'
 import { notificationInit, sendPushNotification } from '@/lib/notifications'
+import writeSchema from '@/lib/schema'
 
 namespace fb {
   export const read = async () => {
@@ -90,9 +91,10 @@ const DatabaseScreen = () => {
         firebase
       </Text>
       <View style={styles.buttonContainer}>
-        <Button onPress={() => fb.read()}>Read</Button>
-        <Button onPress={() => fb.writeCollection()}>Write Collection</Button>
-        <Button onPress={() => fb.writeDocument()}>Write Document</Button>
+        {/* <Button onPress={() => fb.read()}>Read</Button> */}
+        {/* <Button onPress={() => fb.writeCollection()}>Write Collection</Button> */}
+        {/* <Button onPress={() => fb.writeDocument()}>Write Document</Button> */}
+        <Button onPress={() => writeSchema()}>Write Schema</Button>
         <Button onPress={() => fb.pushMyExpoToken(expoPushToken)}>
           Push My Expo Token
         </Button>
