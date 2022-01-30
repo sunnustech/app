@@ -1,5 +1,5 @@
 /* firebase */
-import { setDoc, addDoc, doc, writeBatch } from '@firebase/firestore'
+import { setDoc, doc, writeBatch } from '@firebase/firestore'
 
 /* sunnus components */
 import { db } from '@/sunnus/firebase'
