@@ -42,7 +42,7 @@ const ScanScreen = () => {
     if (qrdata.length === 4 && qrdata[0] === "sunnus") {
       // To be changed
       navigation.push("DummyTest")
-      //switch
+      // switch
     }
 
     // Logger to check

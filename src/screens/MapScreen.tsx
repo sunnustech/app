@@ -1,15 +1,36 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Marker, Camera } from 'react-native-maps'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native'
 import * as Location from 'expo-location'
 import { CustomMarker } from '@/components/Markers'
-import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
+import {
+  Fontisto as FO,
+  FontAwesome5 as FA,
+  AntDesign,
+  Ionicons,
+  MaterialIcons,
+} from '@expo/vector-icons'
 // search for icons at [https://icons.expo.fyi/]
 
 /* navigation */
 import { RootStackParamList } from '@/sunnus/App'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+
+/* sunnus components */
+import styles from '@/styles/main'
+
+/* sunnus data */
+import { islandLocations } from '../data/GameStations'
+
+/* sunnus context */
+import { SoarContext } from '@/sunnus/App'
 
 type NavType = NSNP<RootStackParamList, 'Map'>
 
@@ -24,33 +45,41 @@ const sentosaDefault: Camera = {
   altitude: 0,
 }
 
-const gameLocations = [
-  {
-    name: 'Alpha',
-    description:
-      'So you have pressed the pin. Press anywhere on this callout to navigate to the Notification Screen.',
-    icon: () => <FO name="beach-slipper" size={42} color="#ef4444" />,
-    coordinate: {
-      latitude: 1.258,
-      longitude: 103.82,
-    },
-  },
-  {
-    name: 'Bravo',
-    description: 'Test Marker 2',
-    icon: () => <FA name="umbrella-beach" size={42} color="#22c55e" />,
-    coordinate: {
-      latitude: 1.25,
-      longitude: 103.82,
-    },
-  },
-]
-
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
+  const [filterTag, setFilterTag] = useState('')
+  const [filterLocations, setFilterLocations] = useState(islandLocations)
+  const { stage, updateStage } = useContext(SoarContext)
   const mapRef = useRef<MapView>(null)
 
   const navigation = useNavigation<NavType>()
+
+  const getCurrentLocation = () => {
+    console.log('triggered')
+    Location.getCurrentPositionAsync().then((e) => {
+      const r: Camera = {
+        center: {
+          latitude: e.coords.latitude,
+          longitude: e.coords.longitude,
+        },
+        pitch: 0,
+        zoom: 15,
+        heading: 0,
+        altitude: 0,
+      }
+      //mapRef.current?.animateCamera(r, { duration: 500 })
+    })
+  }
+
+  const toggleGameStations = () => {
+    setFilterTag('game')
+    setFilterLocations(islandLocations.filter((e) => e.type === 'game' && e.stage === stage))
+  }
+
+  const toggleAdminStations = () => {
+    setFilterTag('admin')
+    setFilterLocations(islandLocations.filter((e) => e.type === 'admin'))
+  }
 
   useEffect(() => {
     ;(async () => {
@@ -59,21 +88,7 @@ const MapScreen = () => {
         alert('Permission Denied!')
         return
       }
-      Location.getCurrentPositionAsync().then((e) => {
-        console.log(e)
-        const r: Camera = {
-          center: {
-            latitude: e.coords.latitude,
-            longitude: e.coords.longitude,
-          },
-          pitch: 0,
-          zoom: 15,
-          heading: 0,
-          altitude: 0,
-        }
-        // navigate to user's location once it loads
-        // mapRef.current?.animateCamera(r, { duration: 2000 })
-      })
+      getCurrentLocation()
       setLoading(false)
     })()
   }, [])
@@ -83,6 +98,24 @@ const MapScreen = () => {
   } else {
     return (
       <View style={styles.container}>
+        <TouchableOpacity style={styles.mapSideBarContainer}>
+          <View style={styles.mapSideButton}>
+            <AntDesign
+              name="enviroment"
+              size={24}
+              color="black"
+              onPress={() => toggleGameStations()}
+            />
+          </View>
+        </TouchableOpacity>
+        <View style={styles.currentLocationButton}>
+          <MaterialIcons
+            name="my-location"
+            color="black"
+            size={24}
+            onPress={() => toggleAdminStations()}
+          />
+        </View>
         <MapView
           ref={mapRef}
           style={styles.map}
@@ -90,29 +123,7 @@ const MapScreen = () => {
           initialCamera={sentosaDefault}
           showsUserLocation={true}
         >
-          <Marker
-            key={1}
-            coordinate={{
-              latitude: 1.254,
-              longitude: 103.82,
-            }}
-            title="pinned marker"
-            description="pinned description"
-          />
-          <Marker
-            key={2}
-            coordinate={{
-              latitude: 1.25,
-              longitude: 103.82,
-            }}
-            title="test marker"
-            description="test description"
-          >
-            <View>
-              <Text>Custom Label</Text>
-            </View>
-          </Marker>
-          {gameLocations.map((e) => (
+          {filterLocations.map((e) => (
             <CustomMarker
               navigation={navigation}
               coordinate={e.coordinate}
@@ -127,21 +138,40 @@ const MapScreen = () => {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  callout: {
-    width: 200,
-    height: 200,
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-})
-
 export default MapScreen
+
+/* Another button as test
+<View style={styles.mapSideButton}>
+          <Ionicons
+            name="flag"
+            size={24}
+            color="black"
+            onPress={() => toggleAdminStations()}
+          />
+        </View>
+*/
+
+/* Test Markers
+<Marker
+            key={1}
+            coordinate={{
+              latitude: 1.254,
+              longitude: 103.82,
+            }}
+            title="pinned marker"
+            description="pinned description"
+          />
+          <Marker
+            key={2}
+            coordinate={{
+              latitude: 1.252,
+              longitude: 103.82,
+            }}
+            title="test marker"
+            description="test description"
+          >
+            <View>
+              <Text>Custom Marker NO 2</Text>
+            </View>
+          </Marker>
+*/
