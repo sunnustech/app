@@ -73,7 +73,9 @@ const MapScreen = () => {
 
   const toggleGameStations = () => {
     setFilterTag('game')
-    setFilterLocations(islandLocations.filter((e) => e.type === 'game' && e.stage === stage))
+    setFilterLocations(
+      islandLocations.filter((e) => e.type === 'game' && e.stage === stage)
+    )
   }
 
   const toggleAdminStations = () => {
@@ -107,6 +109,14 @@ const MapScreen = () => {
               onPress={() => toggleGameStations()}
             />
           </View>
+          <View style={styles.mapSideButton}>
+            <Ionicons
+              name="flag"
+              size={24}
+              color="black"
+              onPress={() => toggleAdminStations()}
+            />
+          </View>
         </TouchableOpacity>
         <View style={styles.currentLocationButton}>
           <MaterialIcons
@@ -125,6 +135,7 @@ const MapScreen = () => {
         >
           {filterLocations.map((e) => (
             <CustomMarker
+              key={e.id}
               navigation={navigation}
               coordinate={e.coordinate}
               description={e.description}

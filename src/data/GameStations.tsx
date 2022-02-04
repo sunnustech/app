@@ -2,6 +2,7 @@ import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
 
 export const islandLocations = [
   {
+    id: 1,
     name: 'Game Station 1',
     description:
       'So you have pressed the pin. Press anywhere on this callout to navigate to the Notification Screen.',
@@ -14,6 +15,7 @@ export const islandLocations = [
     stage: 0,
   },
   {
+    id: 2,
     name: 'Game Station 2',
     description:
       'Supreme Leader Hong Sheng has casually destroyed his opponents',
@@ -26,6 +28,7 @@ export const islandLocations = [
     stage: 1,
   },
   {
+    id: 3,
     name: 'Admin Booth',
     description: 'Just a tag to differentiate game stations',
     icon: () => <FA name="umbrella-beach" size={42} color="#22c55e" />,
