@@ -34,17 +34,37 @@ function resetTSS() {
  */
 type MatchRequest = {
   sport: 'dodgeball' | 'frisbee' | 'volleyball' | 'tchoukball'
-  round:
-    | 'round_of_32'
-    | 'round_of_16'
-    | 'quarterfinals'
-    | 'semifinals'
-    | 'finals'
   matchNumber: number
-  winner: string
+  winner: 'A' | 'B'
+  round: Round
 }
+
+type Round =
+  | 'round_of_32'
+  | 'round_of_16'
+  | 'quarterfinals'
+  | 'semifinals'
+  | 'finals'
+
+const roundOrder: Array<Round> = [
+  'round_of_32',
+  'round_of_16',
+  'quarterfinals',
+  'semifinals',
+  'finals',
+]
+
 function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
   delimiter()
+
+  if (round === 'finals') {
+    // handle champions
+  }
+
+  const nextRound: Round = roundOrder[roundOrder.indexOf(round) + 1]
+  console.log('nextRound', nextRound)
+  const nextMatchNumber = Math.floor(matchNumber / 2)
+  const nextMatch = TSS[sport][nextRound][nextMatchNumber]
 
   // get that exact match
   const match = TSS[sport][round][matchNumber]
@@ -58,11 +78,21 @@ function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
           winner,
         },
       },
+      [nextRound]: {
+        [nextMatchNumber]: {
+          ...nextMatch,
+          [matchNumber % 2 === 0 ? 'A' : 'B']: match[winner],
+        },
+      },
     },
   }
 
+  // apend the schedule for next match
+
   // update the database
   push({ collection: 'TSS', data: packet })
+
+  // push that team into the next round
 }
 
 function debug() {
@@ -90,9 +120,9 @@ const KnockoutTable = () => {
   // to be interactively keyed in eventually
   const matchData = {
     sport: 'volleyball',
-    round: 'round_of_32',
-    matchNumber: 0,
-    winner: 'Independent_Decorators',
+    round: 'round_of_16',
+    matchNumber: 5,
+    winner: 'B',
   }
 
   return (
