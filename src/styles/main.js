@@ -54,13 +54,11 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     alignItems: 'center',
   },
-  buttonRed: {
+  redBg: {
     backgroundColor: '#f43f5e',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    marginVertical: 8,
-    alignItems: 'center',
+  },
+  greenBg: {
+    backgroundColor: '#10b981',
   },
   buttonOutline: {
     backgroundColor: 'white',

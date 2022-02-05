@@ -8,6 +8,7 @@ import DatabaseScreen from '@/screens/DatabaseScreen'
 import ScanScreen from './src/screens/ScanScreen'
 import SampleSoarGamePage from './src/screens/SampleSoarGamePage'
 import { createSoarCtx } from './src/contexts/SoarContext'
+import KnockoutTable from './src/screens/KnockoutTable'
 
 export type RootStackParamList = {
   Home: undefined
@@ -16,6 +17,7 @@ export type RootStackParamList = {
   Notifications: undefined
   Database: undefined
   Scanner: undefined
+  KnockoutTable: undefined
 
   // Just a TEST, will be deleted or refined later
   DummyTest: undefined
@@ -38,6 +40,7 @@ const App = () => {
           <Stack.Screen name="Database" component={DatabaseScreen} />
           <Stack.Screen name="Scanner" component={ScanScreen} />
           <Stack.Screen name="DummyTest" component={SampleSoarGamePage} />
+          <Stack.Screen name="KnockoutTable" component={KnockoutTable} />
         </Stack.Navigator>
       </NavigationContainer>
     </SoarProvider>

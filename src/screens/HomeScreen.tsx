@@ -23,7 +23,7 @@ const HomeScreen = () => {
     signOut(auth)
       .then(() => {
         navigation.replace('Login')
-        console.log("successful signout")
+        console.log('successful signout')
       })
       .catch((err) => console.log(err))
   }
@@ -46,6 +46,9 @@ const HomeScreen = () => {
         </Button>
         <Button onPress={() => navigation.push('Map')}>
           View your current location!
+        </Button>
+        <Button onPress={() => navigation.push('KnockoutTable')}>
+          Knockout Table
         </Button>
         <ButtonRed onPress={() => logoutHandler(auth, navigation)}>
           Logout

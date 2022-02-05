@@ -6,6 +6,7 @@
     "paths": {
       "@/sunnus/*": ["./*"],
       "@/components/*": ["./src/components/*"],
+      "@/data/*": ["./src/data/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/screens/*": ["./src/screens/*"],
       "@/styles/*": ["./src/styles/*"]

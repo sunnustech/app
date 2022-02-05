@@ -2,7 +2,7 @@ import { Text, TouchableOpacity } from 'react-native'
 import styles from '../styles/main'
 
 type ButtonProps = {
-  onPress: () => void;
+  onPress: () => void
   children: string
 }
 
@@ -16,7 +16,15 @@ const Button = ({ onPress, children }: ButtonProps) => {
 
 const ButtonRed = ({ onPress, children }: ButtonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.buttonRed}>
+    <TouchableOpacity onPress={onPress} style={[styles.button, styles.redBg]}>
+      <Text style={styles.buttonText}>{children}</Text>
+    </TouchableOpacity>
+  )
+}
+
+const ButtonGreen = ({ onPress, children }: ButtonProps) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={[styles.button, styles.greenBg]}>
       <Text style={styles.buttonText}>{children}</Text>
     </TouchableOpacity>
   )
@@ -33,4 +41,4 @@ const ButtonOutlined = ({ onPress, children }: ButtonProps) => {
   )
 }
 
-export { Button, ButtonRed, ButtonOutlined }
+export { Button, ButtonRed, ButtonGreen, ButtonOutlined }
