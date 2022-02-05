@@ -77,4 +77,4 @@ function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
   // push that team into the next round
 }
 
-export { resetTSS, handleMatch }
+export { resetTSS, handleMatch, delimiter }

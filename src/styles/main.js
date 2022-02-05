@@ -11,11 +11,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  scrollContainer: {
+    backgroundColor: '#fff',
+  },
   buttonContainer: {
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
+  },
+  pickerContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
+    padding: 10,
+    backgroundColor: '#eee',
   },
   inputContainer: {
     width: '80%',
@@ -107,6 +118,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+  },
+
+  /* pickers */
+  textPicker: {
+    backgroundColor: '#0782F9',
   },
 })
 
