@@ -1,7 +1,6 @@
 import { KeyboardAvoidingView, Text, View } from 'react-native'
 
 /* sunnus components */
-import { auth, db } from '@/sunnus/firebase'
 import { Button, ButtonGreen, ButtonRed } from '@/components/Buttons'
 import styles from '@/styles/main'
 import TSS from '@/data/schema/TSS'
@@ -33,24 +32,33 @@ function resetTSS() {
  * writes the outcome to database
  *
  */
-function handleMatch({ sport, round, matchNumber, winner }) {
+type MatchRequest = {
+  sport: 'dodgeball' | 'frisbee' | 'volleyball' | 'tchoukball'
+  round:
+    | 'round_of_32'
+    | 'round_of_16'
+    | 'quarterfinals'
+    | 'semifinals'
+    | 'finals'
+  matchNumber: number
+  winner: string
+}
+function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
   delimiter()
 
-  // get match details
+  // get that exact match
   const match = TSS[sport][round][matchNumber]
-  // match.winner = winner
 
-  // console.log('round:', round)
-  // console.log('match:', matchNumber)
-  // console.log(match)
-  // console.log(TSS[sport][round][matchNumber])
-
-  const packet = {}
-  packet[sport] = {}
-  packet[sport][round] = {}
-  packet[sport][round][matchNumber] = {
-    ...match,
-    winner,
+  // create a packet containing only that match's data + outcome
+  const packet = {
+    [sport]: {
+      [round]: {
+        [matchNumber]: {
+          ...match,
+          winner,
+        },
+      },
+    },
   }
 
   // update the database
