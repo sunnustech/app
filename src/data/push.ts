@@ -9,9 +9,10 @@ type FirestoreRequest = {
   data: {
     [key: string]: any
   }
+  merge?: boolean
 }
 
-const push = async ({ collection, data }: FirestoreRequest) => {
+const push = async ({ collection, data, merge = true }: FirestoreRequest) => {
   /* create the collection if doesn't yet exist, and push the date */
   await setDoc(doc(db, collection, '.init'), {
     date: new Date().toString(),
@@ -24,7 +25,7 @@ const push = async ({ collection, data }: FirestoreRequest) => {
   Object.keys(data).forEach((key: string) => {
     console.log('key', key)
     /* add to queue with .set */
-    batch.set(doc(db, collection, key), data[key])
+    batch.set(doc(db, collection, key), data[key], { merge })
   })
 
   /* execute all writes in the queue with .commit */
