@@ -1,5 +1,14 @@
 #! /bin/sh
 
+# ---------------------------------------------
+# this script is temporarily suspended from use
+#  1. it doesn't run yarn in the root
+#     directory, but instead the current
+#     directory of the user.
+#  2. it produces a new yarn.lock file for
+#     whatever reason.
+# ---------------------------------------------
+
 # This script runs right after every git checkout.
 # If there's a change in package.json, it will run `yarn` for you.
 
