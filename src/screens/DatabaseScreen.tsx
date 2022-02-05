@@ -19,21 +19,23 @@ import {
 
 /* sunnus components */
 import { auth, db } from '@/sunnus/firebase'
-import { Button } from '@/components/Buttons'
+import { Button, ButtonGreen } from '@/components/Buttons'
 import styles from '@/styles/main'
 import { notificationInit, sendPushNotification } from '@/lib/notifications'
-import writeSchema from '@/lib/schema'
+import writeSchema from '@/data/writeSchema'
 
-namespace fb {
+namespace firestore {
+  /* example database read function */
   export const read = async () => {
-    const querySnapshot = await getDocs(collection(db, 'test'))
+    const querySnapshot = await getDocs(collection(db, 'examples'))
     querySnapshot.forEach((doc) => {
-      console.log(doc.data().lord)
+      console.log(doc.data().expoPushTokens)
     })
   }
+  /* example database write function (to a specific collection) */
   export const writeCollection = async () => {
     try {
-      const docRef = await addDoc(collection(db, 'test'), {
+      const docRef = await addDoc(collection(db, 'examples'), {
         expoPushTokens: ['OcXy78Pyf8Ryjwa9mnKZqe'],
       })
 
@@ -42,17 +44,21 @@ namespace fb {
       console.error('Error adding document: ', e)
     }
   }
+  /* example database write function (to a specific document) */
   export const writeDocument = async () => {
     try {
-      const docRef = await setDoc(doc(db, 'test', 'expo'), {
+      await setDoc(doc(db, 'examples', 'expo'), {
         pushTokens: ['OcXy78Pyf8Ryjwa9mnKZqe'],
       })
-      console.log('Document written with ID: ', docRef.id)
     } catch (e) {
       console.error('Error adding document: ', e)
     }
   }
+  /*
+   * pushes your expo token to firestore
+   */
   export const pushMyExpoToken = async (expoPushToken: string) => {
+    console.log('uploading my expo token', expoPushToken)
     try {
       await updateDoc(doc(db, 'test', 'expo'), {
         pushTokens: arrayUnion(expoPushToken),
@@ -61,6 +67,11 @@ namespace fb {
       console.error('Error adding document: ', e)
     }
   }
+
+  /*
+   * reads the list of expo tokens on firestore and sends a notification
+   * to all associated users
+   */
   export const notifyAll = async () => {
     const docRef = doc(db, 'test', 'expo')
     const docSnap = await getDoc(docRef)
@@ -91,14 +102,18 @@ const DatabaseScreen = () => {
         firebase
       </Text>
       <View style={styles.buttonContainer}>
-        {/* <Button onPress={() => fb.read()}>Read</Button> */}
-        {/* <Button onPress={() => fb.writeCollection()}>Write Collection</Button> */}
-        {/* <Button onPress={() => fb.writeDocument()}>Write Document</Button> */}
-        <Button onPress={() => writeSchema()}>Write Schema</Button>
-        <Button onPress={() => fb.pushMyExpoToken(expoPushToken)}>
+        <ButtonGreen onPress={() => writeSchema()}>Write Schema</ButtonGreen>
+        <Button onPress={() => firestore.writeCollection()}>
+          Write Collection
+        </Button>
+        <Button onPress={() => firestore.read()}>Read</Button>
+        <Button onPress={() => firestore.writeDocument()}>
+          Write Document
+        </Button>
+        <Button onPress={() => firestore.pushMyExpoToken(expoPushToken)}>
           Push My Expo Token
         </Button>
-        <Button onPress={() => fb.notifyAll()}>
+        <Button onPress={() => firestore.notifyAll()}>
           Send Notification to all Expo Users
         </Button>
       </View>
