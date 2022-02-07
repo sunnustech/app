@@ -1,17 +1,13 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import MapView, { Marker, Camera } from 'react-native-maps'
+import MapView, { Camera } from 'react-native-maps'
 import {
-  StyleSheet,
   Text,
   View,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native'
 import * as Location from 'expo-location'
 import { CustomMarker } from '@/components/Markers'
 import {
-  Fontisto as FO,
-  FontAwesome5 as FA,
   AntDesign,
   Ionicons,
   MaterialIcons,
@@ -27,7 +23,8 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 import styles from '@/styles/main'
 
 /* sunnus data */
-import { islandLocations } from '../data/GameStations'
+import { adminLocations } from '../data/AdminStations'
+import { gameLocations } from '../data/GameStations'
 
 /* sunnus context */
 import { SoarContext } from '@/sunnus/App'
@@ -47,15 +44,12 @@ const sentosaDefault: Camera = {
 
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
-  const [filterTag, setFilterTag] = useState('')
-  const [filterLocations, setFilterLocations] = useState(islandLocations)
-  const { stage, updateStage } = useContext(SoarContext)
+  const { filterLocations, updateFilterLocations } = useContext(SoarContext)
   const mapRef = useRef<MapView>(null)
 
   const navigation = useNavigation<NavType>()
 
   const getCurrentLocation = () => {
-    console.log('triggered')
     Location.getCurrentPositionAsync().then((e) => {
       const r: Camera = {
         center: {
@@ -71,18 +65,6 @@ const MapScreen = () => {
     })
   }
 
-  const toggleGameStations = () => {
-    setFilterTag('game')
-    setFilterLocations(
-      islandLocations.filter((e) => e.type === 'game' && e.stage === stage)
-    )
-  }
-
-  const toggleAdminStations = () => {
-    setFilterTag('admin')
-    setFilterLocations(islandLocations.filter((e) => e.type === 'admin'))
-  }
-
   useEffect(() => {
     ;(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
@@ -94,6 +76,18 @@ const MapScreen = () => {
       setLoading(false)
     })()
   }, [])
+
+  const toggleGameStations = () => {
+    updateFilterLocations(gameLocations)
+  }
+  
+  const toggleAdminStations = () => {
+    updateFilterLocations(adminLocations)
+  }
+
+  const queryfromfirebase = () => {
+
+  }
 
   if (loading) {
     return <Text>loading...</Text>
@@ -114,7 +108,7 @@ const MapScreen = () => {
               name="flag"
               size={24}
               color="black"
-              onPress={() => toggleAdminStations()}
+              onPress={() => toggleGameStations()}
             />
           </View>
         </TouchableOpacity>
@@ -132,6 +126,7 @@ const MapScreen = () => {
           provider={'google'}
           initialCamera={sentosaDefault}
           showsUserLocation={true}
+          onUserLocationChange={() => getCurrentLocation()}
         >
           {filterLocations.map((e) => (
             <CustomMarker

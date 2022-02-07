@@ -9,6 +9,8 @@ import ScanScreen from './src/screens/ScanScreen'
 import SampleSoarGamePage from './src/screens/SampleSoarGamePage'
 import { createSoarCtx } from './src/contexts/SoarContext'
 import KnockoutTable from './src/screens/KnockoutTable'
+import { adminLocations } from './src/data/AdminStations'
+import { gameLocations } from './src/data/GameStations'
 
 export type RootStackParamList = {
   Home: undefined
@@ -25,7 +27,7 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-const [ctx, SoarProvider] = createSoarCtx(0)
+const [ctx, SoarProvider] = createSoarCtx([...gameLocations, ...adminLocations])
 export const SoarContext = ctx
 
 const App = () => {

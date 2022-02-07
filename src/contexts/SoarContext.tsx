@@ -10,14 +10,14 @@ export function createSoarCtx<A>(defaultValue: A) {
   const defaultUpdate: UpdateType = () => defaultValue
   // Initialize a default
   const ctx = createContext({
-    stage: defaultValue,
-    updateStage: defaultUpdate,
+    filterLocations: defaultValue,
+    updateFilterLocations: defaultUpdate,
   })
 
   // Getters and setters to be used when using context
   function Provider(props: React.PropsWithChildren<{}>) {
-    const [stage, updateStage] = useState(defaultValue)
-    return <ctx.Provider value={{ stage, updateStage }} {...props} />
+    const [filterLocations, updateFilterLocations] = useState(defaultValue)
+    return <ctx.Provider value={{ filterLocations, updateFilterLocations }} {...props} />
   }
   // Export a tuple of the default and the functions to use the context
   return [ctx, Provider] as const

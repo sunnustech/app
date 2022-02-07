@@ -1,6 +1,6 @@
 import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
 
-export const islandLocations = [
+export const gameLocations = [
   {
     id: 1,
     name: 'Game Station 1',
@@ -26,16 +26,5 @@ export const islandLocations = [
     },
     type: 'game',
     stage: 1,
-  },
-  {
-    id: 3,
-    name: 'Admin Booth',
-    description: 'Just a tag to differentiate game stations',
-    icon: () => <FA name="umbrella-beach" size={42} color="#22c55e" />,
-    coordinate: {
-      latitude: 1.25,
-      longitude: 103.82,
-    },
-    type: 'admin',
   },
 ]
