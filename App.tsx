@@ -26,8 +26,7 @@ export type RootStackParamList = {
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
-
-const [ctx, SoarProvider] = createSoarCtx([...gameLocations, ...adminLocations])
+const [ctx, SoarProvider] = createSoarCtx(gameLocations().concat(adminLocations))
 export const SoarContext = ctx
 
 const App = () => {

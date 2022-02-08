@@ -21,6 +21,8 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 
 /* sunnus components */
 import styles from '@/styles/main'
+import { auth, db } from '@/sunnus/firebase'
+import { doc, getDoc } from 'firebase/firestore'
 
 /* sunnus data */
 import { adminLocations } from '../data/AdminStations'
@@ -82,11 +84,21 @@ const MapScreen = () => {
   }
   
   const toggleAdminStations = () => {
-    updateFilterLocations(adminLocations)
+    //updateFilterLocations(adminLocations)
   }
 
-  const queryfromfirebase = () => {
+  const queryfromfirebase = async () => {
+    const docRef = doc(db, 'SOAR', 'locationList')
+    const docSnap = await getDoc(docRef)
 
+    if (docSnap.exists()) {
+      for (let [key, value] of Object.entries(docSnap.data())) {
+        console.log(key, value)
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log('No such document!')
+    }
   }
 
   if (loading) {
@@ -100,7 +112,7 @@ const MapScreen = () => {
               name="enviroment"
               size={24}
               color="black"
-              onPress={() => toggleGameStations()}
+              onPress={() => queryfromfirebase()}
             />
           </View>
           <View style={styles.mapSideButton}>
@@ -128,7 +140,7 @@ const MapScreen = () => {
           showsUserLocation={true}
           onUserLocationChange={() => getCurrentLocation()}
         >
-          {filterLocations.map((e) => (
+          {filterLocations.map((e: any) => (
             <CustomMarker
               key={e.id}
               navigation={navigation}
