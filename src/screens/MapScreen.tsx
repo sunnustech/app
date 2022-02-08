@@ -1,17 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
-import {
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import * as Location from 'expo-location'
 import { CustomMarker } from '@/components/Markers'
-import {
-  AntDesign,
-  Ionicons,
-  MaterialIcons,
-} from '@expo/vector-icons'
+import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
 // search for icons at [https://icons.expo.fyi/]
 
 /* navigation */
@@ -47,6 +39,7 @@ const sentosaDefault: Camera = {
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
   const { filterLocations, updateFilterLocations } = useContext(SoarContext)
+  console.log(filterLocations)
   const mapRef = useRef<MapView>(null)
 
   const navigation = useNavigation<NavType>()
@@ -82,7 +75,7 @@ const MapScreen = () => {
   const toggleGameStations = () => {
     updateFilterLocations(gameLocations)
   }
-  
+
   const toggleAdminStations = () => {
     //updateFilterLocations(adminLocations)
   }

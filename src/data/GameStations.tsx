@@ -4,16 +4,16 @@ import { doc, getDoc } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 
 type GameStation = {
-  id: number;
-    name: string;
-    description: string;
-    icon: () => JSX.Element;
-    coordinate: {
-        latitude: number;
-        longitude: number;
-    };
-    type: string;
-    stage: number;
+  id: number
+  name: string
+  description: string
+  icon: () => JSX.Element
+  coordinate: {
+    latitude: number
+    longitude: number
+  }
+  type: string
+  stage: number
 }
 
 // Alternatives?
@@ -21,36 +21,36 @@ type GameStation = {
 // Context -> If i use context for this ill probably need another context for Admin Locations which doesnt seem ideal
 const getGameLocations = async () => {
   const docRef = doc(db, 'SOAR', 'locationList')
-    const docSnap = await getDoc(docRef)
-    if (docSnap.exists()) {
-      const docData = docSnap.data()
-      let locationArray: GameStation[] = []
-      for (let [key, value] of Object.entries(docData)) {
-        locationArray.push({
-          id: value.id,
-          name: value.game_title,
-          description: value.details,
-          icon: () => <FO name="beach-slipper" size={42} color="#ef4444" />,
-          coordinate: {
-            latitude: value.latitude,
-            longitude: value.longitude,
-          },
-          type: 'game',
-          stage: value.stage
-        })
-      }
-      return Promise.resolve(locationArray)
-    } else {
-      // doc.data() will be undefined in this case
-      console.log('No such document!')
-      return Promise.resolve([])
+  const docSnap = await getDoc(docRef)
+  if (docSnap.exists()) {
+    const docData = docSnap.data()
+    let locationArray: GameStation[] = []
+    for (let [key, value] of Object.entries(docData)) {
+      locationArray.push({
+        id: value.id,
+        name: value.game_title,
+        description: value.details,
+        icon: () => <FO name="beach-slipper" size={42} color="#ef4444" />,
+        coordinate: {
+          latitude: value.latitude,
+          longitude: value.longitude,
+        },
+        type: 'game',
+        stage: value.stage,
+      })
     }
+    return Promise.resolve(locationArray)
+  } else {
+    // doc.data() will be undefined in this case
+    console.log('No such document!')
+    return Promise.resolve([])
+  }
 }
 
 export const gameLocations = async () => {
+  console.log('firedebug: got here')
   return await getGameLocations()
 }
-
 
 // MOCK DATA FOR TESTING
 
@@ -82,7 +82,6 @@ export const gameLocations = async () => {
     stage: 1,
   },
 ]*/
-
 
 /*
 {
