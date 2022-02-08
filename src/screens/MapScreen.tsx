@@ -13,12 +13,8 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 
 /* sunnus components */
 import styles from '@/styles/main'
-import { auth, db } from '@/sunnus/firebase'
-import { doc, getDoc } from 'firebase/firestore'
 
 /* sunnus data */
-import { adminLocations } from '../data/AdminStations'
-import { gameLocations } from '../data/GameStations'
 
 /* sunnus context */
 import { SoarContext } from '@/sunnus/App'
@@ -38,8 +34,7 @@ const sentosaDefault: Camera = {
 
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
-  const { filterLocations, updateFilterLocations } = useContext(SoarContext)
-  console.log(filterLocations)
+  const { filterLocations, updateFilterLocations, gameLocations, adminLocations } = useContext(SoarContext)
   const mapRef = useRef<MapView>(null)
 
   const navigation = useNavigation<NavType>()
@@ -77,21 +72,7 @@ const MapScreen = () => {
   }
 
   const toggleAdminStations = () => {
-    //updateFilterLocations(adminLocations)
-  }
-
-  const queryfromfirebase = async () => {
-    const docRef = doc(db, 'SOAR', 'locationList')
-    const docSnap = await getDoc(docRef)
-
-    if (docSnap.exists()) {
-      for (let [key, value] of Object.entries(docSnap.data())) {
-        console.log(key, value)
-      }
-    } else {
-      // doc.data() will be undefined in this case
-      console.log('No such document!')
-    }
+    updateFilterLocations(adminLocations)
   }
 
   if (loading) {
@@ -105,7 +86,7 @@ const MapScreen = () => {
               name="enviroment"
               size={24}
               color="black"
-              onPress={() => queryfromfirebase()}
+              onPress={() => toggleGameStations()}
             />
           </View>
           <View style={styles.mapSideButton}>
@@ -113,7 +94,7 @@ const MapScreen = () => {
               name="flag"
               size={24}
               color="black"
-              onPress={() => toggleGameStations()}
+              onPress={() => toggleAdminStations()}
             />
           </View>
         </TouchableOpacity>
@@ -122,7 +103,7 @@ const MapScreen = () => {
             name="my-location"
             color="black"
             size={24}
-            onPress={() => toggleAdminStations()}
+            onPress={() => toggleGameStations()}
           />
         </View>
         <MapView
@@ -133,7 +114,7 @@ const MapScreen = () => {
           showsUserLocation={true}
           onUserLocationChange={() => getCurrentLocation()}
         >
-          {filterLocations.map((e: any) => (
+          {filterLocations.map((e) => (
             <CustomMarker
               key={e.id}
               navigation={navigation}
