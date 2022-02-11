@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     zIndex: 9,
     position: 'absolute',
     flexDirection: 'column',
+    alignItems: 'flex-end',
     width: WIDTH - 40,
     height: 60,
     top: 50,

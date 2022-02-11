@@ -24,8 +24,7 @@ export type RootStackParamList = {
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
-
-const [ctx, SoarProvider] = createSoarCtx(0)
+const [ctx, SoarProvider] = createSoarCtx()
 export const SoarContext = ctx
 
 const App = () => {
