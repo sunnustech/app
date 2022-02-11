@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createNativeDrawerNavigator } from '@react-navigation/native-stack'
 import HomeScreen from '@/screens/HomeScreen'
 import LoginScreen from '@/screens/LoginScreen'
 import MapScreen from '@/screens/MapScreen'
@@ -9,8 +9,9 @@ import ScanScreen from './src/screens/ScanScreen'
 import SampleSoarGamePage from './src/screens/SampleSoarGamePage'
 import { createSoarCtx } from './src/contexts/SoarContext'
 import KnockoutTable from './src/screens/KnockoutTable'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-export type RootStackParamList = {
+export type RootDrawerParamList = {
   Home: undefined
   Login: undefined
   Map: undefined
@@ -23,25 +24,27 @@ export type RootStackParamList = {
   DummyTest: undefined
 }
 
-const Stack = createNativeStackNavigator<RootStackParamList>()
+// const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const [ctx, SoarProvider] = createSoarCtx(0)
 export const SoarContext = ctx
+
+const Drawer = createDrawerNavigator()
 
 const App = () => {
   return (
     <SoarProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Map" component={MapScreen} />
-          <Stack.Screen name="Notifications" component={NotificationScreen} />
-          <Stack.Screen name="Database" component={DatabaseScreen} />
-          <Stack.Screen name="Scanner" component={ScanScreen} />
-          <Stack.Screen name="DummyTest" component={SampleSoarGamePage} />
-          <Stack.Screen name="KnockoutTable" component={KnockoutTable} />
-        </Stack.Navigator>
+        <Drawer.Navigator>
+          <Drawer.Screen name="Login" component={LoginScreen} />
+          <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name="Map" component={MapScreen} />
+          <Drawer.Screen name="Notifications" component={NotificationScreen} />
+          <Drawer.Screen name="Database" component={DatabaseScreen} />
+          <Drawer.Screen name="Scanner" component={ScanScreen} />
+          <Drawer.Screen name="DummyTest" component={SampleSoarGamePage} />
+          <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
+        </Drawer.Navigator>
       </NavigationContainer>
     </SoarProvider>
   )
