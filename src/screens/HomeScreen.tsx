@@ -50,6 +50,9 @@ const HomeScreen = () => {
         <Button onPress={() => navigation.push('KnockoutTable')}>
           Knockout Table
         </Button>
+        <Button onPress={() => navigation.push('Scoreboard')}>
+          Scoreboard
+        </Button>
         <ButtonRed onPress={() => logoutHandler(auth, navigation)}>
           Logout
         </ButtonRed>
