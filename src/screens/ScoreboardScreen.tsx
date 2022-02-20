@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 import {
+  Animated,
   FlatList,
+  ImageBackground,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -95,6 +97,36 @@ const DATA: DataTest[] = [
     team: 'aaa',
     score: -2,
   },
+  {
+    id: 17,
+    team: 'thisISaVERYlongTEAMnameWHATisDISPLAYED?',
+    score: -2,
+  },
+  {
+    id: 18,
+    team: 'aaa',
+    score: -2,
+  },
+  {
+    id: 19,
+    team: 'qqqqqqqq',
+    score: -2,
+  },
+  {
+    id: 20,
+    team: 'aaa',
+    score: -2,
+  },
+  {
+    id: 21,
+    team: 'qqqqqqqq',
+    score: -2,
+  },
+  {
+    id: 22,
+    team: 'aaa',
+    score: -2,
+  },
 ]
 
 const soarComparison = (x: DataTest, y: DataTest) => {
@@ -108,25 +140,65 @@ const soarComparison = (x: DataTest, y: DataTest) => {
 }
 
 const sortLeaderboard = (arr: DataTest[]) => {
-  return DATA.sort(soarComparison)
+  return arr.sort(soarComparison)
 }
 
 const ScoreboardScreen = () => {
+  const scrollY = useRef(new Animated.Value(0)).current
+
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        keyExtractor={(item) => item.id.toString()}
-        data={sortLeaderboard(DATA)}
-        contentContainerStyle={{
-          padding: 20,
-        }}
-        renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
-            <Text style={styles.itemName}>{item.team}</Text>
-            <Text style={styles.itemScore}>{item.score}</Text>
-          </View>
-        )}
-      />
+      <ImageBackground
+        source={require('./imgs/sunnus-bg-old.jpg')}
+        style={styles.imgBackground}
+        resizeMode="cover"
+      >
+        <Animated.FlatList
+          keyExtractor={(item) => item.id.toString()}
+          data={sortLeaderboard(DATA)}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: true }
+          )}
+          contentContainerStyle={{
+            padding: 20,
+          }}
+          renderItem={({ item, index }) => {
+            const inputRange = [-1, 0, 64 * index, 64 * (index + 3)]
+            const opacityRange = [-1, 0, 64 * index, 64 * (index + 1)]
+            const scale = scrollY.interpolate({
+              inputRange,
+              outputRange: [1, 1, 1, 0],
+            })
+            const opacity = scrollY.interpolate({
+              inputRange: opacityRange,
+              outputRange: [1, 1, 1, 0],
+            })
+            return (
+              <Animated.View
+                style={{
+                  flexDirection: 'row',
+                  backgroundColor: '#ddd',
+                  borderRadius: 12,
+                  margin: 5,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 5,
+                    height: 8,
+                  },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 5,
+                  transform: [{ scale }],
+                  opacity,
+                }}
+              >
+                <Text style={styles.itemName}>{item.team}</Text>
+                <Text style={styles.itemScore}>{item.score}</Text>
+              </Animated.View>
+            )
+          }}
+        />
+      </ImageBackground>
     </SafeAreaView>
   )
 }
@@ -155,6 +227,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 8,
     textAlign: 'center',
+    fontWeight: '500',
   },
   itemScore: {
     flex: 0.5,
@@ -162,9 +235,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 8,
     textAlign: 'center',
+    color: '#f95b78',
+    fontWeight: '500',
   },
-  title: {
-    fontSize: 32,
+  imgBackground: {
+        width: '100%',
+        height: '100%',
+        flex: 1 
   },
 })
 
