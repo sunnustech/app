@@ -3,18 +3,24 @@ import {
   Animated,
   FlatList,
   ImageBackground,
+  OpaqueColorValue,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   View,
 } from 'react-native'
+import { Entypo } from '@expo/vector-icons'
 
 type DataTest = {
   id: number
   team: string
   score: number
 }
+
+const GOLD = '#FFD700'
+const SILVER = '#C0C0C0'
+const BRONZE = '#CD7F32'
 
 const DATA: DataTest[] = [
   {
@@ -143,6 +149,64 @@ const sortLeaderboard = (arr: DataTest[]) => {
   return arr.sort(soarComparison)
 }
 
+const renderScoreboard = (
+  item: { id?: number; team: any; score: any },
+  pos: string | OpaqueColorValue | undefined,
+  scale: Animated.AnimatedInterpolation,
+  opacity: Animated.AnimatedInterpolation
+) => {
+  
+  return typeof pos === 'undefined' ? (
+    <Animated.View
+      style={{
+        flexDirection: 'row',
+        backgroundColor: '#ddd',
+        borderRadius: 12,
+        margin: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 5,
+          height: 8,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        transform: [{ scale }],
+        opacity,
+      }}
+    >
+      <Text style={{ flex: 0.2 }}></Text>
+      <Text numberOfLines={1} style={styles.itemName}>
+        {item.team}
+      </Text>
+      <Text style={styles.itemScore}>{item.score}</Text>
+    </Animated.View>
+  ) : (
+    <Animated.View
+      style={{
+        flexDirection: 'row',
+        backgroundColor: '#ddd',
+        borderRadius: 12,
+        margin: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 5,
+          height: 8,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        transform: [{ scale }],
+        opacity,
+      }}
+    >
+      <Entypo name="trophy" size={24} color={pos} style={styles.itemTrophy} />
+      <Text numberOfLines={1} style={styles.itemName}>
+        {item.team}
+      </Text>
+      <Text style={styles.itemScore}>{item.score}</Text>
+    </Animated.View>
+  )
+}
+
 const ScoreboardScreen = () => {
   const scrollY = useRef(new Animated.Value(0)).current
 
@@ -174,28 +238,16 @@ const ScoreboardScreen = () => {
               inputRange: opacityRange,
               outputRange: [1, 1, 1, 0],
             })
-            return (
-              <Animated.View
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: '#ddd',
-                  borderRadius: 12,
-                  margin: 5,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 5,
-                    height: 8,
-                  },
-                  shadowOpacity: 0.2,
-                  shadowRadius: 5,
-                  transform: [{ scale }],
-                  opacity,
-                }}
-              >
-                <Text style={styles.itemName}>{item.team}</Text>
-                <Text style={styles.itemScore}>{item.score}</Text>
-              </Animated.View>
-            )
+            const sortedLeaderboard = sortLeaderboard(DATA)
+            if (sortedLeaderboard.indexOf(item) === 0) {
+              return renderScoreboard(item, GOLD, scale, opacity)
+            } else if (sortedLeaderboard.indexOf(item) === 1) {
+              return renderScoreboard(item, SILVER, scale, opacity)
+            } else if (sortedLeaderboard.indexOf(item) === 2) {
+              return renderScoreboard(item, BRONZE, scale, opacity)
+            } else {
+              return renderScoreboard(item, undefined, scale, opacity)
+            }
           }}
         />
       </ImageBackground>
@@ -222,7 +274,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   itemName: {
-    flex: 0.5,
+    flex: 0.7,
     alignItems: 'flex-start',
     padding: 10,
     marginVertical: 8,
@@ -230,7 +282,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   itemScore: {
-    flex: 0.5,
+    flex: 0.2,
     alignItems: 'flex-start',
     padding: 10,
     marginVertical: 8,
@@ -238,10 +290,24 @@ const styles = StyleSheet.create({
     color: '#f95b78',
     fontWeight: '500',
   },
+  itemTrophy: {
+    flex: 0.1,
+    alignItems: 'flex-start',
+    padding: 10,
+    marginVertical: 8,
+    textAlign: 'center',
+    shadowColor: 'black',
+    shadowOpacity: 0.7,
+    shadowRadius: 1,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
   imgBackground: {
-        width: '100%',
-        height: '100%',
-        flex: 1 
+    width: '100%',
+    height: '100%',
+    flex: 1,
   },
 })
 
