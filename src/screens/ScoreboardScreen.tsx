@@ -149,66 +149,87 @@ const sortLeaderboard = (arr: DataTest[]) => {
   return arr.sort(soarComparison)
 }
 
-const renderScoreboard = (
-  item: { id?: number; team: any; score: any },
-  pos: string | OpaqueColorValue | undefined,
-  scale: Animated.AnimatedInterpolation,
-  opacity: Animated.AnimatedInterpolation
-) => {
-  
-  return typeof pos === 'undefined' ? (
-    <Animated.View
-      style={{
-        flexDirection: 'row',
-        backgroundColor: '#ddd',
-        borderRadius: 12,
-        margin: 5,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 5,
-          height: 8,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        transform: [{ scale }],
-        opacity,
-      }}
-    >
-      <Text style={{ flex: 0.2 }}></Text>
-      <Text numberOfLines={1} style={styles.itemName}>
-        {item.team}
-      </Text>
-      <Text style={styles.itemScore}>{item.score}</Text>
-    </Animated.View>
-  ) : (
-    <Animated.View
-      style={{
-        flexDirection: 'row',
-        backgroundColor: '#ddd',
-        borderRadius: 12,
-        margin: 5,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 5,
-          height: 8,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        transform: [{ scale }],
-        opacity,
-      }}
-    >
-      <Entypo name="trophy" size={24} color={pos} style={styles.itemTrophy} />
-      <Text numberOfLines={1} style={styles.itemName}>
-        {item.team}
-      </Text>
-      <Text style={styles.itemScore}>{item.score}</Text>
-    </Animated.View>
-  )
-}
-
 const ScoreboardScreen = () => {
+  // Get the current user's team
+  // Ideally this shouldn't be useState, and should be a module function queried from firebase.
+  // For testing purposes feel free to change this
+  const TEAM_ID = 1;
+
   const scrollY = useRef(new Animated.Value(0)).current
+
+  const renderScoreboard = (
+    item: { id?: number; team: any; score: any },
+    pos: string | OpaqueColorValue | undefined,
+    scale: Animated.AnimatedInterpolation,
+    opacity: Animated.AnimatedInterpolation,
+    team: number | undefined
+  ) => {
+    const normalRender = (
+      <>
+        <Text style={{ flex: 0.2 }}></Text>
+        <Text numberOfLines={1} style={styles.itemName}>
+          {item.team}
+        </Text>
+        <Text style={styles.itemScore}>{item.score}</Text>
+      </>
+    )
+    const topThreeRender = (
+      <>
+        <Entypo name="trophy" size={24} color={pos} style={styles.itemTrophy} />
+        <Text numberOfLines={1} style={styles.itemName}>
+          {item.team}
+        </Text>
+        <Text style={styles.itemScore}>{item.score}</Text>
+      </>
+    )
+    if (team === item.id) {
+      return (
+        <Animated.View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#e8d5b5',
+            borderRadius: 12,
+            margin: 5,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 5,
+              height: 8,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 5,
+            transform: [{ scale }],
+            opacity,
+            borderWidth: 2,
+            borderColor: '#ff784f',
+          }}
+        >
+          {typeof pos === 'undefined' ? normalRender : topThreeRender}
+        </Animated.View>
+      )
+    } else {
+      return (
+        <Animated.View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#ddd',
+            borderRadius: 12,
+            margin: 5,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 5,
+              height: 8,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 5,
+            transform: [{ scale }],
+            opacity,
+          }}
+        >
+          {typeof pos === 'undefined' ? normalRender : topThreeRender}
+        </Animated.View>
+      )
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -240,13 +261,13 @@ const ScoreboardScreen = () => {
             })
             const sortedLeaderboard = sortLeaderboard(DATA)
             if (sortedLeaderboard.indexOf(item) === 0) {
-              return renderScoreboard(item, GOLD, scale, opacity)
+              return renderScoreboard(item, GOLD, scale, opacity, TEAM_ID)
             } else if (sortedLeaderboard.indexOf(item) === 1) {
-              return renderScoreboard(item, SILVER, scale, opacity)
+              return renderScoreboard(item, SILVER, scale, opacity, TEAM_ID)
             } else if (sortedLeaderboard.indexOf(item) === 2) {
-              return renderScoreboard(item, BRONZE, scale, opacity)
+              return renderScoreboard(item, BRONZE, scale, opacity, TEAM_ID)
             } else {
-              return renderScoreboard(item, undefined, scale, opacity)
+              return renderScoreboard(item, undefined, scale, opacity, TEAM_ID)
             }
           }}
         />
