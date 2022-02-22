@@ -20,30 +20,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '80%',
   },
+
+  /* login */
   loginContainer: {
     flex: 1,
     backgroundColor: '#eee',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  mapSideBarContainer: {
-    zIndex: 9,
-    position: 'absolute',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    width: WIDTH - 40,
-    height: 60,
-    top: 50,
-    right: 20,
-    borderRadius: 2,
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-
-  /* map */
-  map: {
-    width: WIDTH,
-    height: HEIGHT,
   },
 
   /* buttons */
@@ -65,6 +48,53 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#0782F9',
     borderWidth: 2,
+  },
+
+  /* button text */
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: '#0782F9',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+
+  /* input fields */
+  input: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+  },
+})
+
+const map = StyleSheet.create({
+  map: {
+    width: WIDTH,
+    height: HEIGHT,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mapSideBarContainer: {
+    zIndex: 9,
+    position: 'absolute',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    width: WIDTH - 40,
+    height: 60,
+    top: 50,
+    right: 20,
+    borderRadius: 2,
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   currentLocationButton: {
     zIndex: 8,
@@ -88,26 +118,75 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
+})
 
-  /* button text */
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
+const scoreboard = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
   },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
+  scoreboardTitle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginTop: 10,
+    marginLeft: 30,
+    fontSize: 32,
+    fontWeight: '900',
+    color: '#f95b78',
+    textShadowColor: 'black',
+    textShadowOffset: { width: 0.5, height: 1 },
+    textShadowRadius: 2,
   },
-
-  /* input fields */
-  input: {
-    backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
+  itemContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#ddd',
+    borderRadius: 12,
+    margin: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+  },
+  itemName: {
+    flex: 0.6,
+    alignItems: 'flex-start',
+    padding: 10,
+    marginVertical: 8,
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  itemScore: {
+    flex: 0.2,
+    alignItems: 'flex-start',
+    padding: 10,
+    marginVertical: 8,
+    textAlign: 'center',
+    color: '#f95b78',
+    fontWeight: '500',
+  },
+  itemTrophy: {
+    flex: 0.2,
+    alignItems: 'flex-start',
+    padding: 10,
+    marginVertical: 8,
+    textAlign: 'center',
+    shadowColor: 'black',
+    shadowOpacity: 0.7,
+    shadowRadius: 1,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
+  imgBackground: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
   },
 })
 
@@ -150,4 +229,4 @@ const notifications = StyleSheet.create({
 })
 
 export default styles
-export { notifications }
+export { map, scoreboard, notifications }

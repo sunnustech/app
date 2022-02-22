@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
 /* sunnus components */
-import styles from '@/styles/main'
+import {map as styles} from '@/styles/main'
 
 /* sunnus context */
 import { SoarContext } from '@/sunnus/App'

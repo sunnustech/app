@@ -4,11 +4,12 @@ import {
   ImageBackground,
   OpaqueColorValue,
   SafeAreaView,
-  StatusBar,
-  StyleSheet,
+  ScrollView,
   Text,
 } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
+
+import { scoreboard as styles } from '@/styles/main'
 
 type DataTest = {
   id: number
@@ -18,7 +19,7 @@ type DataTest = {
 
 const GOLD = '#ffd700'
 const SILVER = '#c0c0c0'
-const BRONZE = '#Ccd7f32'
+const BRONZE = '#cd7f32'
 
 const DATA: DataTest[] = [
   {
@@ -133,6 +134,24 @@ const DATA: DataTest[] = [
   },
 ]
 
+const DADA: DataTest[] = [
+  {
+    id: 1,
+    team: 'Hot Singles in your Area',
+    score: 225,
+  },
+  {
+    id: 2,
+    team: 'Hong Sheng',
+    score: 45,
+  },
+  {
+    id: 3,
+    team: 'Kermit the Frog',
+    score: 23,
+  },
+]
+
 const soarComparison = (x: DataTest, y: DataTest) => {
   if (x.score > y.score) {
     return -1
@@ -164,7 +183,7 @@ const ScoreboardScreen = () => {
   ) => {
     const normalRender = (
       <>
-        <Text style={{ flex: 0.2 }}></Text>
+        <Text style={{ flex: 0.3 }}></Text>
         <Text numberOfLines={1} style={styles.itemName}>
           {item.team}
         </Text>
@@ -229,112 +248,73 @@ const ScoreboardScreen = () => {
     }
   }
 
+  const animatedListRender = (arr: DataTest[], id: number | undefined) => {
+    return (
+      <Animated.FlatList
+        keyExtractor={(item) => item.id.toString()}
+        data={sortLeaderboard(arr)}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+        contentContainerStyle={{
+          padding: 20,
+        }}
+        renderItem={({ item, index }) => {
+          const inputRange = [-1, 0, 64 * index, 64 * (index + 3)]
+          const opacityRange = [-1, 0, 64 * index, 64 * (index + 1)]
+          const scale = scrollY.interpolate({
+            inputRange,
+            outputRange: [1, 1, 1, 0],
+          })
+          const opacity = scrollY.interpolate({
+            inputRange: opacityRange,
+            outputRange: [1, 1, 1, 0],
+          })
+          const sortedLeaderboard = sortLeaderboard(arr)
+          switch (sortedLeaderboard.indexOf(item)) {
+            case 0:
+              return renderScoreboard(item, GOLD, scale, opacity, id)
+            case 1:
+              return renderScoreboard(item, SILVER, scale, opacity, id)
+            case 2:
+              return renderScoreboard(item, BRONZE, scale, opacity, id)
+            default:
+              return renderScoreboard(item, undefined, scale, opacity, id)
+          }
+        }}
+      />
+    )
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <ImageBackground
-        source={require('./imgs/sunnus-bg-old.jpg')}
-        style={styles.imgBackground}
-        resizeMode="cover"
-      >
-        <Animated.FlatList
-          keyExtractor={(item) => item.id.toString()}
-          data={sortLeaderboard(DATA)}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: true }
-          )}
-          contentContainerStyle={{
-            padding: 20,
-          }}
-          renderItem={({ item, index }) => {
-            const inputRange = [-1, 0, 64 * index, 64 * (index + 3)]
-            const opacityRange = [-1, 0, 64 * index, 64 * (index + 1)]
-            const scale = scrollY.interpolate({
-              inputRange,
-              outputRange: [1, 1, 1, 0],
-            })
-            const opacity = scrollY.interpolate({
-              inputRange: opacityRange,
-              outputRange: [1, 1, 1, 0],
-            })
-            const sortedLeaderboard = sortLeaderboard(DATA)
-            switch (sortedLeaderboard.indexOf(item)) {
-              case 0:
-                return renderScoreboard(item, GOLD, scale, opacity, TEAM_ID)
-              case 1:
-                return renderScoreboard(item, SILVER, scale, opacity, TEAM_ID)
-              case 2:
-                return renderScoreboard(item, BRONZE, scale, opacity, TEAM_ID)
-              default:
-                return renderScoreboard(
-                  item,
-                  undefined,
-                  scale,
-                  opacity,
-                  TEAM_ID
-                )
-            }
-          }}
-        />
-      </ImageBackground>
-    </SafeAreaView>
+    <ScrollView
+      horizontal={true}
+      pagingEnabled={true}
+      showsHorizontalScrollIndicator={true}
+    >
+      <SafeAreaView style={styles.container}>
+        <ImageBackground
+          source={require('./imgs/sunnus-bg-old.jpg')}
+          style={styles.imgBackground}
+          resizeMode="cover"
+        >
+          <Text style={styles.scoreboardTitle}>SOAR 🎉</Text>
+          {animatedListRender(DATA, TEAM_ID)}
+        </ImageBackground>
+      </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <ImageBackground
+          source={require('./imgs/sunnus-bg-old.jpg')}
+          style={styles.imgBackground}
+          resizeMode="cover"
+        >
+          <Text style={styles.scoreboardTitle}>FRINGE 💃</Text>
+          {animatedListRender(DADA, undefined)}
+        </ImageBackground>
+      </SafeAreaView>
+    </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  itemContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#ddd',
-    borderRadius: 12,
-    margin: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-  },
-  itemName: {
-    flex: 0.7,
-    alignItems: 'flex-start',
-    padding: 10,
-    marginVertical: 8,
-    textAlign: 'center',
-    fontWeight: '500',
-  },
-  itemScore: {
-    flex: 0.2,
-    alignItems: 'flex-start',
-    padding: 10,
-    marginVertical: 8,
-    textAlign: 'center',
-    color: '#f95b78',
-    fontWeight: '500',
-  },
-  itemTrophy: {
-    flex: 0.1,
-    alignItems: 'flex-start',
-    padding: 10,
-    marginVertical: 8,
-    textAlign: 'center',
-    shadowColor: 'black',
-    shadowOpacity: 0.7,
-    shadowRadius: 1,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-  },
-  imgBackground: {
-    width: '100%',
-    height: '100%',
-    flex: 1,
-  },
-})
 
 export default ScoreboardScreen
