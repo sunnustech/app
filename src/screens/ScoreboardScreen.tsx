@@ -1,14 +1,12 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import {
   Animated,
-  FlatList,
   ImageBackground,
   OpaqueColorValue,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
-  View,
 } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 
@@ -18,9 +16,9 @@ type DataTest = {
   score: number
 }
 
-const GOLD = '#FFD700'
-const SILVER = '#C0C0C0'
-const BRONZE = '#CD7F32'
+const GOLD = '#ffd700'
+const SILVER = '#c0c0c0'
+const BRONZE = '#Ccd7f32'
 
 const DATA: DataTest[] = [
   {
@@ -153,7 +151,7 @@ const ScoreboardScreen = () => {
   // Get the current user's team
   // Ideally this shouldn't be useState, and should be a module function queried from firebase.
   // For testing purposes feel free to change this
-  const TEAM_ID = 1;
+  const TEAM_ID = 1
 
   const scrollY = useRef(new Animated.Value(0)).current
 
@@ -260,14 +258,21 @@ const ScoreboardScreen = () => {
               outputRange: [1, 1, 1, 0],
             })
             const sortedLeaderboard = sortLeaderboard(DATA)
-            if (sortedLeaderboard.indexOf(item) === 0) {
-              return renderScoreboard(item, GOLD, scale, opacity, TEAM_ID)
-            } else if (sortedLeaderboard.indexOf(item) === 1) {
-              return renderScoreboard(item, SILVER, scale, opacity, TEAM_ID)
-            } else if (sortedLeaderboard.indexOf(item) === 2) {
-              return renderScoreboard(item, BRONZE, scale, opacity, TEAM_ID)
-            } else {
-              return renderScoreboard(item, undefined, scale, opacity, TEAM_ID)
+            switch (sortedLeaderboard.indexOf(item)) {
+              case 0:
+                return renderScoreboard(item, GOLD, scale, opacity, TEAM_ID)
+              case 1:
+                return renderScoreboard(item, SILVER, scale, opacity, TEAM_ID)
+              case 2:
+                return renderScoreboard(item, BRONZE, scale, opacity, TEAM_ID)
+              default:
+                return renderScoreboard(
+                  item,
+                  undefined,
+                  scale,
+                  opacity,
+                  TEAM_ID
+                )
             }
           }}
         />
