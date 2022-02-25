@@ -2,13 +2,10 @@ import { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, View } from 'react-native'
 
 /* firebase */
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-} from 'firebase/auth'
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 
 /* navigation */
-import { RootStackParamList } from '@/sunnus/App'
+import { StackPages } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
@@ -22,12 +19,12 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const navigation = useNavigation<NSNP<RootStackParamList, 'Login'>>()
+  const navigation = useNavigation<NSNP<StackPages, 'Login'>>()
 
   useEffect(() => {
     const onListener = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.replace('Home')
+        navigation.navigate('Home')
       }
     })
     return onListener

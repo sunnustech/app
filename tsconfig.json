@@ -4,16 +4,18 @@
     "lib": ["es5", "es6", "dom", "dom.iterable"],
     "strict": true,
     "jsx": "react-jsx",
+    "baseUrl": "./",
     "paths": {
       "@/sunnus/*": ["./*"],
       "@/components/*": ["./src/components/*"],
       "@/data/*": ["./src/data/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/screens/*": ["./src/screens/*"],
-      "@/styles/*": ["./src/styles/*"]
+      "@/styles/*": ["./src/styles/*"],
+      "@/contexts/*": ["./src/contexts/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["./src/**/*", "./"],
   "exclude": ["node_modules"],
   "prettier": {
     "tabWidth": 2,

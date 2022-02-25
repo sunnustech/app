@@ -12,11 +12,6 @@ import {
   setDoc,
 } from '@firebase/firestore'
 
-/* navigation */
-// import { RootStackParamList } from '../../App'
-// import { useNavigation } from '@react-navigation/native'
-// import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
-
 /* sunnus components */
 import { auth, db } from '@/sunnus/firebase'
 import { Button, ButtonGreen } from '@/components/Buttons'
@@ -89,7 +84,6 @@ namespace firestore {
 
 const DatabaseScreen = () => {
   const expoPushToken = notificationInit().expoPushToken
-  // const navigation = useNavigation<NSNP<RootStackParamList, 'Database'>>()
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text>

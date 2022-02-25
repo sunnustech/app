@@ -7,8 +7,9 @@ import { Tab } from '@headlessui/react'
 import { signOut, Auth } from 'firebase/auth'
 
 /* navigation */
-import { RootStackParamList } from '@/sunnus/App'
+import { DrawerPages, StackPages } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
+import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
 /* sunnus components */
@@ -19,13 +20,13 @@ import { notificationInit } from '@/lib/notifications'
 
 const HomeScreen = () => {
   notificationInit()
-  type NavType = NSNP<RootStackParamList, 'Home'>
-  const navigation = useNavigation<NavType>()
+  const navigation = useNavigation<DNP<DrawerPages, 'HomeScreen'>>()
+  const stack = useNavigation<NSNP<StackPages, 'Home'>>()
 
-  const logoutHandler = (auth: Auth, navigation: NavType) => {
+  const logoutHandler = (auth: Auth, stack: NSNP<StackPages, 'Home'>) => {
     signOut(auth)
       .then(() => {
-        navigation.replace('Login')
+        stack.replace('Login')
         console.log('successful signout')
       })
       .catch((err) => console.log(err))
@@ -39,27 +40,25 @@ const HomeScreen = () => {
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
       </Text>
       <View style={styles.buttonContainer}>
-        <Button onPress={() => navigation.push('Notifications')}>
+        <Button onPress={() => navigation.navigate('NotificationScreen')}>
           Notifications Screen
         </Button>
-        <Button onPress={() => navigation.push('Database')}>
+        <Button onPress={() => navigation.navigate('DatabaseScreen')}>
           Database Screen
         </Button>
-        <Button onPress={() => navigation.push('Scanner')}>
+        <Button onPress={() => navigation.navigate('ScanScreen')}>
           QR Code Screen
         </Button>
-        <Button onPress={() => navigation.push('Map')}>
+        <Button onPress={() => navigation.navigate('MapScreen')}>
           View your current location!
         </Button>
-        <Button onPress={() => navigation.push('KnockoutTable')}>
+        <Button onPress={() => navigation.navigate('KnockoutTable')}>
           Knockout Table
         </Button>
-        <Button onPress={() => navigation.push('Scoreboard')}>
+        <Button onPress={() => navigation.navigate('ScoreboardScreen')}>
           Scoreboard
         </Button>
-        <ButtonRed onPress={() => logoutHandler(auth, navigation)}>
-          Logout
-        </ButtonRed>
+        <ButtonRed onPress={() => logoutHandler(auth, stack)}>Logout</ButtonRed>
       </View>
     </KeyboardAvoidingView>
   )
