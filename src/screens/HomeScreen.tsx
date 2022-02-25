@@ -1,7 +1,6 @@
 import { KeyboardAvoidingView, Text, View } from 'react-native'
 // import tailwind react native classes
 import tw from 'twrnc'
-import { Tab } from '@headlessui/react'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
