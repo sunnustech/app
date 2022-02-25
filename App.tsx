@@ -15,24 +15,44 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 
 /* sunnus contexts */
 import { SoarProvider } from '@/contexts/SoarContext'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const Drawer = createDrawerNavigator()
+const Stack = createNativeStackNavigator()
+
+const Home = () => (
+  <Drawer.Navigator>
+    <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+    <Drawer.Screen name="MapScreen" component={MapScreen} />
+    <Drawer.Screen name="NotificationScreen" component={NotificationScreen} />
+    <Drawer.Screen name="DatabaseScreen" component={DatabaseScreen} />
+    <Drawer.Screen name="ScanScreen" component={ScanScreen} />
+    <Drawer.Screen name="SampleSoarGamePage" component={SampleSoarGamePage} />
+    <Drawer.Screen name="ScoreboardScreen" component={ScoreboardScreen} />
+    <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
+  </Drawer.Navigator>
+)
 
 const App = () => {
   return (
     <SoarProvider>
       <NavigationContainer>
-        <Drawer.Navigator>
-          <Drawer.Screen name="Login" component={LoginScreen} />
-          <Drawer.Screen name="Home" component={HomeScreen} />
-          <Drawer.Screen name="Map" component={MapScreen} />
-          <Drawer.Screen name="Notifications" component={NotificationScreen} />
-          <Drawer.Screen name="Database" component={DatabaseScreen} />
-          <Drawer.Screen name="Scanner" component={ScanScreen} />
-          <Drawer.Screen name="DummyTest" component={SampleSoarGamePage} />
-          <Drawer.Screen name="Scoreboard" component={ScoreboardScreen} />
-          <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
-        </Drawer.Navigator>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              headerBackVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
       </NavigationContainer>
     </SoarProvider>
   )

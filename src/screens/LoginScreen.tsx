@@ -5,9 +5,9 @@ import { KeyboardAvoidingView, View } from 'react-native'
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 
 /* navigation */
-import { RootDrawerParamList } from '@/lib/navigation'
+import { StackPages } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
+import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
@@ -19,7 +19,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const navigation = useNavigation<DNP<RootDrawerParamList, 'Login'>>()
+  const navigation = useNavigation<NSNP<StackPages, 'Login'>>()
 
   useEffect(() => {
     const onListener = onAuthStateChanged(auth, (user) => {

@@ -7,7 +7,7 @@ import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
 // search for icons at [https://icons.expo.fyi/]
 
 /* navigation */
-import { RootDrawerParamList } from '@/lib/navigation'
+import { DrawerPages } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
@@ -17,7 +17,7 @@ import { map as styles } from '@/styles/main'
 /* sunnus context */
 import { SoarContext } from '@/contexts/SoarContext'
 
-type NavType = DNP<RootDrawerParamList, 'Map'>
+type NavType = DNP<DrawerPages, 'MapScreen'>
 
 const sentosaDefault: Camera = {
   center: {
