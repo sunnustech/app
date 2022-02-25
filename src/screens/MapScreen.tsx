@@ -15,7 +15,7 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 import { map as styles } from '@/styles/main'
 
 /* sunnus context */
-import { SoarContext } from '@/sunnus/App'
+import { SoarContext } from '@/contexts/SoarContext'
 
 type NavType = NSNP<RootDrawerParamList, 'Map'>
 

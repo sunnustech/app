@@ -1,4 +1,4 @@
-import { SoarContext } from '@/sunnus/App'
+import { SoarContext } from '@/contexts/SoarContext'
 import { useContext } from 'react'
 import { View, Text } from 'react-native'
 import { Button } from '../components/Buttons'

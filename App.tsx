@@ -14,10 +14,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 /* sunnus contexts */
-import { createSoarCtx } from './src/contexts/SoarContext'
-
-const [ctx, SoarProvider] = createSoarCtx()
-export const SoarContext = ctx
+import { SoarProvider } from '@/contexts/SoarContext'
 
 const Drawer = createDrawerNavigator()
 

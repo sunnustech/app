@@ -1,0 +1,6 @@
+{
+  "name": "@/contexts",
+  "dependencies": {
+    "csv-parse": "^5.0.4"
+  }
+}
