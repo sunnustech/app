@@ -2,6 +2,7 @@ import { SOARLocation, SOARData } from './SOAR.d'
 import { objFromArray } from './utils'
 
 const testOne: SOARLocation = {
+  id: 1,
   location: 'The Lair of the Green-eyed Man',
   game_title: 'YeetBall',
   phyiscal: true,
@@ -17,9 +18,13 @@ const testOne: SOARLocation = {
       group_title: 'Gentle_Sweaters',
     },
   ],
+  latitude: 1.261,
+  longitude: 103.81,
+  stage: 0,
 }
 
 const testTwo: SOARLocation = {
+  id: 2,
   location: 'Camp Nou',
   game_title: 'SheeshJump',
   phyiscal: false,
@@ -35,6 +40,9 @@ const testTwo: SOARLocation = {
       group_title: 'Irrelevant_Readers',
     },
   ],
+  latitude: 1.261,
+  longitude: 103.82,
+  stage: 1,
 }
 
 const locationList = objFromArray([testOne, testTwo], 'game_title')

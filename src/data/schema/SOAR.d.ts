@@ -4,12 +4,16 @@ export type SOARTimetable = Array<{
 }>
 
 export type SOARLocation = {
+  id: number
   location: string
   game_title: string
   phyiscal: boolean
   details: string
   google_map_pin_url: string
   timetable: SOARTimetable
+  latitude: number
+  longitude: number
+  stage: number
 }
 
 /*

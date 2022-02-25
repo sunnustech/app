@@ -7,19 +7,17 @@ import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
 // search for icons at [https://icons.expo.fyi/]
 
 /* navigation */
-import { RootStackParamList } from '@/sunnus/App'
+import { DrawerPages } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
-import styles from '@/styles/main'
-
-/* sunnus data */
+import { map as styles } from '@/styles/main'
 
 /* sunnus context */
-import { SoarContext } from '@/sunnus/App'
+import { SoarContext } from '@/contexts/SoarContext'
 
-type NavType = NSNP<RootStackParamList, 'Map'>
+type NavType = DNP<DrawerPages, 'MapScreen'>
 
 const sentosaDefault: Camera = {
   center: {
@@ -34,7 +32,12 @@ const sentosaDefault: Camera = {
 
 const MapScreen = () => {
   const [loading, setLoading] = useState(true)
-  const { filterLocations, updateFilterLocations, gameLocations, adminLocations } = useContext(SoarContext)
+  const {
+    filterLocations,
+    updateFilterLocations,
+    gameLocations,
+    adminLocations,
+  } = useContext(SoarContext)
   const mapRef = useRef<MapView>(null)
 
   const navigation = useNavigation<NavType>()
