@@ -7,6 +7,7 @@ import DatabaseScreen from '@/screens/DatabaseScreen'
 import ScanScreen from '@/screens/ScanScreen'
 import SampleSoarGamePage from '@/screens/SampleSoarGamePage'
 import KnockoutTable from '@/screens/KnockoutTable'
+import KnockoutTree from '@/screens/KnockoutTree'
 import ScoreboardScreen from '@/screens/ScoreboardScreen'
 
 /* navigation */
@@ -30,6 +31,7 @@ const Home = () => (
     <Drawer.Screen name="SampleSoarGamePage" component={SampleSoarGamePage} />
     <Drawer.Screen name="ScoreboardScreen" component={ScoreboardScreen} />
     <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
+    <Drawer.Screen name="KnockoutTree" component={KnockoutTree} />
   </Drawer.Navigator>
 )
 

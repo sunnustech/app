@@ -1,6 +1,8 @@
 import TSS from '@/data/schema/TSS'
 import push from '@/data/push'
+import { Sport } from '@/data/schema/TSS.d'
 import { MatchRequest, Round } from './knockout.d'
+import { pullCollection } from '../data/pull'
 
 const delimiter = () => {
   const date = new Date().toString()
@@ -72,9 +74,14 @@ function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
   }
 
   // update the database
-  push({ collection: 'TSS', data: packet })
+  push({ collection: 'TSS', docs: packet })
 
   // push that team into the next round
 }
 
-export { resetTSS, handleMatch, delimiter }
+async function getKnockoutTable({ sport }: { sport: Sport }) {
+  const data = await pullCollection({ collection: 'TSS' })
+  return data[sport]
+}
+
+export { resetTSS, handleMatch, delimiter, getKnockoutTable }
