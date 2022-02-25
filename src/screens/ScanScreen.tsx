@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 
 /* navigation */
-import { RootDrawerParamList } from '@/lib/navigation'
+import { DrawerPages } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
@@ -15,7 +15,7 @@ const ScanScreen = () => {
   const [cameraPermission, setCameraPermission] = useState('')
   const [scanned, setScanned] = useState(false)
 
-  const navigation = useNavigation<DNP<RootDrawerParamList, 'Scanner'>>()
+  const navigation = useNavigation<DNP<DrawerPages, 'ScanScreen'>>()
 
   const enableCameraPermission = () => {
     ;(async () => {

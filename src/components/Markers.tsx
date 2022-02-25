@@ -1,9 +1,9 @@
 import { Marker, Callout } from 'react-native-maps'
 import { StyleSheet, View, Text } from 'react-native'
 import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
-import { RootDrawerParamList } from '@/lib/navigation'
+import { DrawerPages } from '@/lib/navigation'
 
-type NavType = DNP<RootDrawerParamList, 'Map'>
+type NavType = DNP<DrawerPages, 'MapScreen'>
 type MarkerType = {
   navigation: NavType
   coordinate: {
