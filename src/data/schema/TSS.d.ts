@@ -2,47 +2,20 @@ export type Sport = 'dodgeball' | 'frisbee' | 'volleyball' | 'tchoukball'
 
 export type TSSKnockoutTable = {
   round_of_32: {
-    0: [string, string]
-    1: [string, string]
-    2: [string, string]
-    3: [string, string]
-    4: [string, string]
-    5: [string, string]
-    6: [string, string]
-    7: [string, string]
-    8: [string, string]
-    9: [string, string]
-    10: [string, string]
-    11: [string, string]
-    12: [string, string]
-    13: [string, string]
-    14: [string, string]
-    15: [string, string]
+    [key: number]: { A: string; B: string; winner?: string }
   }
   round_of_16: {
-    0: [string, string]
-    1: [string, string]
-    2: [string, string]
-    3: [string, string]
-    4: [string, string]
-    5: [string, string]
-    6: [string, string]
-    7: [string, string]
+    [key: number]: { A: string; B: string; winner?: string }
   }
   quarterfinals: {
-    0: [string, string]
-    1: [string, string]
-    2: [string, string]
-    3: [string, string]
+    [key: number]: { A: string; B: string; winner?: string }
   }
   semifinals: {
-    0: [string, string]
-    1: [string, string]
+    [key: number]: { A: string; B: string; winner?: string }
   }
   finals: {
-    0: [string, string]
+    [key: number]: { A: string; B: string; winner?: string }
   }
-  champion: string
 }
 
 export type TSSEvents = {

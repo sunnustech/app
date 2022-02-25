@@ -104,7 +104,7 @@ const getFirebaseLocations = async (p: {
 }
 
 // Context function to be used
-export function createSoarCtx() {
+function createSoarCtx() {
   interface LocationHandlers {
     loading: boolean
     filterLocations: GameStation[]
@@ -167,3 +167,6 @@ export function createSoarCtx() {
   // Export a tuple of the default and the functions to use the context
   return [ctx, Provider] as const
 }
+
+const [SoarContext, SoarProvider] = createSoarCtx()
+export { SoarContext, SoarProvider }

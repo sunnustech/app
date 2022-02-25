@@ -1,9 +1,9 @@
 import { Marker, Callout } from 'react-native-maps'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 import { StyleSheet, View, Text } from 'react-native'
-import { RootStackParamList } from '@/sunnus/App'
+import { RootDrawerParamList } from '@/lib/navigation'
 
-type NavType = NSNP<RootStackParamList, 'Map'>
+type NavType = NSNP<RootDrawerParamList, 'Map'>
 type MarkerType = {
   navigation: NavType
   coordinate: {
