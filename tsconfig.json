@@ -10,7 +10,8 @@
       "@/data/*": ["./src/data/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/screens/*": ["./src/screens/*"],
-      "@/styles/*": ["./src/styles/*"]
+      "@/styles/*": ["./src/styles/*"],
+      "@/contexts/*": ["./src/contexts/*"]
     }
   },
   "include": ["src/**/*"],

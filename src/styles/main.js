@@ -11,11 +11,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  scrollContainer: {
+    backgroundColor: '#fff',
+  },
   buttonContainer: {
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
+  },
+  pickerContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
+    padding: 10,
+    backgroundColor: '#eee',
   },
   inputContainer: {
     width: '80%',
@@ -187,6 +198,11 @@ const scoreboard = StyleSheet.create({
     width: '100%',
     height: '100%',
     flex: 1,
+  },
+
+  /* pickers */
+  textPicker: {
+    backgroundColor: '#0782F9',
   },
 })
 

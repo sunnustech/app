@@ -7,7 +7,7 @@ import { Tab } from '@headlessui/react'
 import { signOut, Auth } from 'firebase/auth'
 
 /* navigation */
-import { RootStackParamList } from '@/sunnus/App'
+import { RootDrawerParamList } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
@@ -19,7 +19,7 @@ import { notificationInit } from '@/lib/notifications'
 
 const HomeScreen = () => {
   notificationInit()
-  type NavType = NSNP<RootStackParamList, 'Home'>
+  type NavType = NSNP<RootDrawerParamList, 'Home'>
   const navigation = useNavigation<NavType>()
 
   const logoutHandler = (auth: Auth, navigation: NavType) => {
