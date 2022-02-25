@@ -7,7 +7,7 @@ import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
 // search for icons at [https://icons.expo.fyi/]
 
 /* navigation */
-import { RootStackParamList } from '@/sunnus/App'
+import { RootDrawerParamList } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 
@@ -17,7 +17,7 @@ import { map as styles } from '@/styles/main'
 /* sunnus context */
 import { SoarContext } from '@/sunnus/App'
 
-type NavType = NSNP<RootStackParamList, 'Map'>
+type NavType = NSNP<RootDrawerParamList, 'Map'>
 
 const sentosaDefault: Camera = {
   center: {

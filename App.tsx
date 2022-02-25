@@ -1,5 +1,3 @@
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeDrawerNavigator } from '@react-navigation/native-stack'
 /* sunnus screens */
 import HomeScreen from '@/screens/HomeScreen'
 import LoginScreen from '@/screens/LoginScreen'
@@ -17,21 +15,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 
 /* sunnus contexts */
 import { createSoarCtx } from './src/contexts/SoarContext'
-
-export type RootDrawerParamList = {
-  Login: undefined
-  Home: undefined
-  Map: undefined
-  Notifications: undefined
-  Database: undefined
-  Scanner: undefined
-  Scoreboard: undefined
-  KnockoutTable: undefined
-
-  // Just a TEST, will be deleted or refined later
-  DummyTest: undefined
-}
-// const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const [ctx, SoarProvider] = createSoarCtx()
 export const SoarContext = ctx
