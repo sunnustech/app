@@ -1,9 +1,9 @@
 import { Marker, Callout } from 'react-native-maps'
-import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
 import { StyleSheet, View, Text } from 'react-native'
+import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 import { RootDrawerParamList } from '@/lib/navigation'
 
-type NavType = NSNP<RootDrawerParamList, 'Map'>
+type NavType = DNP<RootDrawerParamList, 'Map'>
 type MarkerType = {
   navigation: NavType
   coordinate: {
@@ -30,7 +30,7 @@ const CustomMarker = ({
       {children}
       <Callout
         style={styles.callout}
-        onPress={() => navigation.push(targetScreen)}
+        onPress={() => navigation.navigate(targetScreen)}
       >
         <View>
           <Text>{description}</Text>

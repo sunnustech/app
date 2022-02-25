@@ -9,7 +9,7 @@ import { signOut, Auth } from 'firebase/auth'
 /* navigation */
 import { RootDrawerParamList } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
@@ -19,13 +19,13 @@ import { notificationInit } from '@/lib/notifications'
 
 const HomeScreen = () => {
   notificationInit()
-  type NavType = NSNP<RootDrawerParamList, 'Home'>
+  type NavType = DNP<RootDrawerParamList, 'Home'>
   const navigation = useNavigation<NavType>()
 
   const logoutHandler = (auth: Auth, navigation: NavType) => {
     signOut(auth)
       .then(() => {
-        navigation.replace('Login')
+        navigation.navigate('Login')
         console.log('successful signout')
       })
       .catch((err) => console.log(err))
@@ -39,22 +39,22 @@ const HomeScreen = () => {
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
       </Text>
       <View style={styles.buttonContainer}>
-        <Button onPress={() => navigation.push('Notifications')}>
+        <Button onPress={() => navigation.navigate('Notifications')}>
           Notifications Screen
         </Button>
-        <Button onPress={() => navigation.push('Database')}>
+        <Button onPress={() => navigation.navigate('Database')}>
           Database Screen
         </Button>
-        <Button onPress={() => navigation.push('Scanner')}>
+        <Button onPress={() => navigation.navigate('Scanner')}>
           QR Code Screen
         </Button>
-        <Button onPress={() => navigation.push('Map')}>
+        <Button onPress={() => navigation.navigate('Map')}>
           View your current location!
         </Button>
-        <Button onPress={() => navigation.push('KnockoutTable')}>
+        <Button onPress={() => navigation.navigate('KnockoutTable')}>
           Knockout Table
         </Button>
-        <Button onPress={() => navigation.push('Scoreboard')}>
+        <Button onPress={() => navigation.navigate('Scoreboard')}>
           Scoreboard
         </Button>
         <ButtonRed onPress={() => logoutHandler(auth, navigation)}>

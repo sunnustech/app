@@ -9,7 +9,7 @@ import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
 /* navigation */
 import { RootDrawerParamList } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { map as styles } from '@/styles/main'
@@ -17,7 +17,7 @@ import { map as styles } from '@/styles/main'
 /* sunnus context */
 import { SoarContext } from '@/contexts/SoarContext'
 
-type NavType = NSNP<RootDrawerParamList, 'Map'>
+type NavType = DNP<RootDrawerParamList, 'Map'>
 
 const sentosaDefault: Camera = {
   center: {

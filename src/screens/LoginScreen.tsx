@@ -7,7 +7,7 @@ import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 /* navigation */
 import { RootDrawerParamList } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
@@ -19,12 +19,12 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const navigation = useNavigation<NSNP<RootDrawerParamList, 'Login'>>()
+  const navigation = useNavigation<DNP<RootDrawerParamList, 'Login'>>()
 
   useEffect(() => {
     const onListener = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.replace('Home')
+        navigation.navigate('Home')
       }
     })
     return onListener

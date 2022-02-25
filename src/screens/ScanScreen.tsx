@@ -5,7 +5,7 @@ import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 /* navigation */
 import { RootDrawerParamList } from '@/lib/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
+import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import styles from '@/styles/main'
@@ -15,7 +15,7 @@ const ScanScreen = () => {
   const [cameraPermission, setCameraPermission] = useState('')
   const [scanned, setScanned] = useState(false)
 
-  const navigation = useNavigation<NSNP<RootDrawerParamList, 'Scanner'>>()
+  const navigation = useNavigation<DNP<RootDrawerParamList, 'Scanner'>>()
 
   const enableCameraPermission = () => {
     ;(async () => {
@@ -41,7 +41,7 @@ const ScanScreen = () => {
     // sunnus_<event>_<location>_<id>
     if (qrdata.length === 4 && qrdata[0] === 'sunnus') {
       // To be changed
-      navigation.push('DummyTest')
+      navigation.navigate('DummyTest')
       // switch
     }
 
