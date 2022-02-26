@@ -44,6 +44,37 @@ const Column = ({ children }: { children: any }) => {
   return <View style={tw`flex flex-col justify-center`}>{children}</View>
 }
 
+const Knockout = () => {
+  return (
+    <ScrollView
+      style={tw`bg-green-200 w-full`}
+      horizontal={true}
+      directionalLockEnabled={false}
+      showsHorizontalScrollIndicator={false}
+    >
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={tw`flex flex-row`}>
+          <Column>
+            <ColumnMatchNodes nodes={16} gap={2} />
+          </Column>
+          <Column>
+            <ColumnMatchNodes nodes={8} gap={9} />
+          </Column>
+          <Column>
+            <ColumnMatchNodes nodes={4} gap={23} />
+          </Column>
+          <Column>
+            <ColumnMatchNodes nodes={2} gap={51} />
+          </Column>
+          <Column>
+            <MatchNode text="finals" gap={0} />
+          </Column>
+        </View>
+      </ScrollView>
+    </ScrollView>
+  )
+}
+
 const KnockoutTree = () => {
   const [sport, setSport] = useState<Sport>('volleyball')
 
@@ -63,32 +94,7 @@ const KnockoutTree = () => {
           Debug Table
         </ButtonGreen>
       </View>
-      <ScrollView
-        style={tw`bg-green-200 w-full`}
-        horizontal={true}
-        directionalLockEnabled={false}
-        showsHorizontalScrollIndicator={false}
-      >
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={tw`flex flex-row`}>
-            <Column>
-              <ColumnMatchNodes nodes={16} gap={2} />
-            </Column>
-            <Column>
-              <ColumnMatchNodes nodes={8} gap={9} />
-            </Column>
-            <Column>
-              <ColumnMatchNodes nodes={4} gap={23} />
-            </Column>
-            <Column>
-              <ColumnMatchNodes nodes={2} gap={51} />
-            </Column>
-            <Column>
-              <MatchNode text="finals" gap={0} />
-            </Column>
-          </View>
-        </ScrollView>
-      </ScrollView>
+      <Knockout />
     </KeyboardAvoidingView>
   )
 }
