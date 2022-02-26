@@ -12,6 +12,11 @@
 - Emergency button (send team name + location to admin, optional call button)
 - Database snapshot tool
 
+## Fixes
+
+- **bug:** sometimes, swiping left will bring you back to homescreen
+  ([potential fix](https://reactnavigation.org/docs/auth-flow/))
+
 ## SOAR
 
 - Timer
