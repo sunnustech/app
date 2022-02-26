@@ -257,7 +257,7 @@ const ScoreboardScreen = () => {
         keyExtractor={(item) => item.id.toString()}
         data={sortLeaderboard(arr)}
         onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          [{ nativeEvent: { contentOffset: { y: new Animated.Value(0) } } }],
           { useNativeDriver: true }
         )}
         contentContainerStyle={{
@@ -309,12 +309,16 @@ const ScoreboardScreen = () => {
           <Tab.Item titleStyle={styles.scoreboardTitle} title="FRINGE 💃" />
         </Tab>
         <TabView value={index} onChange={setIndex} animationType="spring">
-          <TabView.Item onMoveShouldSetResponder={(e) => e.stopPropagation()}>
+          <TabView.Item
+            onMoveShouldSetResponder={(e: any) => e.stopPropagation()}
+          >
             <SafeAreaView style={styles.container}>
               {animatedListRender(DATA, TEAM_ID)}
             </SafeAreaView>
           </TabView.Item>
-          <TabView.Item onMoveShouldSetResponder={(e) => e.stopPropagation()}>
+          <TabView.Item
+            onMoveShouldSetResponder={(e: any) => e.stopPropagation()}
+          >
             <SafeAreaView style={styles.container}>
               {animatedListRender(DADA, undefined)}
             </SafeAreaView>
