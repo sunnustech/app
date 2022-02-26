@@ -1,7 +1,6 @@
 import {
-  ButtonProps,
+  StyleSheet,
   KeyboardAvoidingView,
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -9,14 +8,12 @@ import {
 
 /* sunnus components */
 import { Button, ButtonGreen } from '@/components/Buttons'
-import styles from '@/styles/main'
 import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
 import TSS from '@/data/schema/TSS'
 import { Sport } from '@/data/schema/TSS.d'
 import { MatchRequest, Round } from '@/types/TSS.d'
 import { useState } from 'react'
 import { Knockout } from '@/components/Knockout'
-import tw from 'twrnc'
 
 const KnockoutTable = () => {
   const [sport, setSport] = useState<Sport>('volleyball')
@@ -47,18 +44,16 @@ const KnockoutTable = () => {
   }
 
   const Button = ({ onPress, children }: ButtonProps) => {
-    const buttonStyle = tw`rounded-xl bg-blue-400 p-4 w-1/2 flex flex-row justify-center`
-    const textStyle = tw`text-white font-bold text-base`
     return (
-      <TouchableOpacity onPress={onPress} style={buttonStyle}>
-        <Text style={textStyle}>{children}</Text>
+      <TouchableOpacity onPress={onPress} style={styles.button}>
+        <Text style={styles.text}>{children}</Text>
       </TouchableOpacity>
     )
   }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <View style={tw`flex flex-col w-full mx-auto px-8`}>
+      <View style={styles.container}>
         <Text>The one place for knockout table development and debugging</Text>
         <ButtonGreen onPress={resetTSS}>Reset TSS Data</ButtonGreen>
         <Text>
@@ -66,10 +61,8 @@ const KnockoutTable = () => {
             winner === 'A' ? m.B : m.A
           } in the ${round} in ${sport}`}
         </Text>
-        <View style={tw`flex flex-row bg-red-100`}>
-          <Button onPress={() => handleMatch(matchData)}>
-            Handle Match End
-          </Button>
+        <View style={styles.innerContainer}>
+          <Button onPress={() => handleMatch(matchData)}>Handle Match</Button>
           <Button onPress={() => debugKnockoutTree({ sport })}>
             Debug Table
           </Button>
@@ -79,5 +72,26 @@ const KnockoutTable = () => {
     </KeyboardAvoidingView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  innerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    width: '60%',
+  },
+  button: {
+    height: 28,
+  },
+  text: {
+    color: 'black',
+  },
+})
 
 export default KnockoutTable
