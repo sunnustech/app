@@ -1,14 +1,15 @@
-import { useRef } from 'react'
+import { SetStateAction, useRef, useState } from 'react'
 import {
   Animated,
   ImageBackground,
   OpaqueColorValue,
   SafeAreaView,
-  ScrollView,
   Text,
 } from 'react-native'
+import { Tab, TabView } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 
+/* sunnus components */
 import { scoreboard as styles } from '@/styles/main'
 
 type DataTest = {
@@ -167,6 +168,8 @@ const sortLeaderboard = (arr: DataTest[]) => {
 }
 
 const ScoreboardScreen = () => {
+  const [index, setIndex] = useState(0)
+
   // Get the current user's team
   // Ideally this shouldn't be useState, and should be a module function queried from firebase.
   // For testing purposes feel free to change this
@@ -288,32 +291,37 @@ const ScoreboardScreen = () => {
   }
 
   return (
-    <ScrollView
-      horizontal={true}
-      pagingEnabled={true}
-      showsHorizontalScrollIndicator={true}
-    >
-      <SafeAreaView style={styles.container}>
-        <ImageBackground
-          source={require('./imgs/sunnus-bg-old.jpg')}
-          style={styles.imgBackground}
-          resizeMode="cover"
+    <>
+      <ImageBackground
+        source={require('./imgs/sunnus-bg-old.jpg')}
+        style={styles.imgBackground}
+        resizeMode="cover"
+      >
+        <Tab
+          value={index}
+          onChange={(e: SetStateAction<number>) => setIndex(e)}
+          indicatorStyle={{
+            backgroundColor: '#f95b78',
+            height: 2.5,
+          }}
         >
-          <Text style={styles.scoreboardTitle}>SOAR 🎉</Text>
-          {animatedListRender(DATA, TEAM_ID)}
-        </ImageBackground>
-      </SafeAreaView>
-      <SafeAreaView style={styles.container}>
-        <ImageBackground
-          source={require('./imgs/sunnus-bg-old.jpg')}
-          style={styles.imgBackground}
-          resizeMode="cover"
-        >
-          <Text style={styles.scoreboardTitle}>FRINGE 💃</Text>
-          {animatedListRender(DADA, undefined)}
-        </ImageBackground>
-      </SafeAreaView>
-    </ScrollView>
+          <Tab.Item titleStyle={styles.scoreboardTitle} title="SOAR 🎉" />
+          <Tab.Item titleStyle={styles.scoreboardTitle} title="FRINGE 💃" />
+        </Tab>
+        <TabView value={index} onChange={setIndex} animationType="spring">
+          <TabView.Item onMoveShouldSetResponder={(e) => e.stopPropagation()}>
+            <SafeAreaView style={styles.container}>
+              {animatedListRender(DATA, TEAM_ID)}
+            </SafeAreaView>
+          </TabView.Item>
+          <TabView.Item onMoveShouldSetResponder={(e) => e.stopPropagation()}>
+            <SafeAreaView style={styles.container}>
+              {animatedListRender(DADA, undefined)}
+            </SafeAreaView>
+          </TabView.Item>
+        </TabView>
+      </ImageBackground>
+    </>
   )
 }
 

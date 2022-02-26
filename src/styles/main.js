@@ -138,12 +138,7 @@ const scoreboard = StyleSheet.create({
     width: Dimensions.get('window').width,
   },
   scoreboardTitle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginTop: 10,
-    marginLeft: 30,
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: '900',
     color: '#f95b78',
     textShadowColor: 'black',
