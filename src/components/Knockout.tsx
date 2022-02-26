@@ -8,9 +8,17 @@ import {
 
 const MatchNode = ({ text, styleProps }: { text: string; styleProps: any }) => {
   return (
-    <TouchableOpacity style={styles.matchNode(styleProps)}>
+    <View
+      style={{
+        height: styleProps.height,
+        marginVertical: styleProps.gap,
+        backgroundColor: 'steelblue',
+        borderTopWidth: 2,
+        borderBottomWidth: styleProps.height,
+      }}
+    >
       <Text>{`A vs. B ${text}`}</Text>
-    </TouchableOpacity>
+    </View>
   )
 }
 
@@ -36,7 +44,7 @@ const MatchColumn = ({
 
 const Columns = () => {
   const gaps = []
-  const height = 10
+  const height = 30
   const gap = 4
   const columns = 5
   for (let i = 0; i < columns - 1; i++) {
@@ -52,7 +60,7 @@ const Columns = () => {
     <>
       {gaps.map((e) => (
         <MatchColumn
-          color="#fee2e2"
+          color="skyblue"
           nodes={e.nodes}
           styleProps={{ gap: e.gap, height }}
         />
@@ -90,24 +98,19 @@ const styles = StyleSheet.create({
   },
   vertical: {
     width: '100%',
-    flex: 1,
+    display: 'flex',
     flexDirection: 'row',
   },
   matchNode: ({ gap, height }: { gap: number; height: number }) => ({
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: height,
+    height,
     width: 100,
-    padding: 0,
-    marginHorizontal: 8,
+    backgroundColor: 'powderblue',
     marginVertical: gap,
     borderStyle: 'solid',
-    borderWidth: 10,
+    borderWidth: 1,
   }),
   matchColumn: ({ color }: { color: string }) => ({
-    flex: 1,
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: color,
