@@ -42,6 +42,7 @@ const sampleKnockoutTable: TSSKnockoutTable = {
   finals: {
     0: { A: 'Independent_Decorators', B: 'Prone_Artists' },
   },
+  champions: '',
 }
 
 const schedule: TSSSchedule = [

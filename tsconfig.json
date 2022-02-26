@@ -9,6 +9,7 @@
       "@/sunnus/*": ["./*"],
       "@/components/*": ["./src/components/*"],
       "@/data/*": ["./src/data/*"],
+      "@/types/*": ["./src/types/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/screens/*": ["./src/screens/*"],
       "@/styles/*": ["./src/styles/*"],

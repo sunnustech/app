@@ -8,7 +8,7 @@ import styles from '@/styles/main'
 import { delimiter, getKnockoutTable } from '@/lib/knockout'
 import TSS from '@/data/schema/TSS'
 import { Sport } from '@/data/schema/TSS.d'
-import { MatchRequest, Round } from '@/lib/knockout.d'
+import { MatchRequest, Round } from '@/types/TSS.d'
 import { useState } from 'react'
 // }}}
 
