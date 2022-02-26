@@ -14,7 +14,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import tw from 'twrnc'
 // }}}
 
-const MatchNode = ({ text, gap }: { text: string; gap: number }) => {
+const MatchNode = ({
+  text,
+  gap,
+  color,
+}: {
+  text: string
+  gap: number
+  color: string
+}) => {
   return (
     <TouchableOpacity
       style={tw`flex flex-row justify-center items-center h-10 w-36 bg-blue-200 p-2 border mx-3 my-${gap}`}
@@ -24,18 +32,22 @@ const MatchNode = ({ text, gap }: { text: string; gap: number }) => {
   )
 }
 
-const ColumnMatchNodes = ({
+const MatchColumn = ({
   nodes,
+  color,
   gap = 0,
 }: {
   nodes: number
+  color: string
   gap?: number
 }) => {
   return (
-    <View>
-      {[...Array(nodes).keys()].map((e, i) => (
-        <MatchNode text={e.toString()} key={i} gap={gap} />
-      ))}
+    <View style={tw`flex flex-col justify-center`}>
+      <View>
+        {[...Array(nodes).keys()].map((e, i) => (
+          <MatchNode text={e.toString()} key={i} gap={gap} color={color} />
+        ))}
+      </View>
     </View>
   )
 }
@@ -54,21 +66,11 @@ const Knockout = () => {
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={tw`flex flex-row`}>
-          <Column>
-            <ColumnMatchNodes nodes={16} gap={2} />
-          </Column>
-          <Column>
-            <ColumnMatchNodes nodes={8} gap={9} />
-          </Column>
-          <Column>
-            <ColumnMatchNodes nodes={4} gap={23} />
-          </Column>
-          <Column>
-            <ColumnMatchNodes nodes={2} gap={51} />
-          </Column>
-          <Column>
-            <MatchNode text="finals" gap={0} />
-          </Column>
+          <MatchColumn nodes={16} gap={2} />
+          <MatchColumn nodes={8} gap={9} />
+          <MatchColumn nodes={4} gap={23} />
+          <MatchColumn nodes={2} gap={51} />
+          <MatchColumn nodes={1} gap={0} />
         </View>
       </ScrollView>
     </ScrollView>
