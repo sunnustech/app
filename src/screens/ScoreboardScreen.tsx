@@ -1,4 +1,4 @@
-import { SetStateAction, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import {
   Animated,
   ImageBackground,
@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   Text,
 } from 'react-native'
-import { Tab, TabView } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 
 /* sunnus components */
@@ -132,24 +131,6 @@ const DATA: DataTest[] = [
     id: 22,
     team: 'aaa',
     score: -2,
-  },
-]
-
-const DADA: DataTest[] = [
-  {
-    id: 1,
-    team: 'Hot Singles in your Area',
-    score: 225,
-  },
-  {
-    id: 2,
-    team: 'Hong Sheng',
-    score: 45,
-  },
-  {
-    id: 3,
-    team: 'Kermit the Frog',
-    score: 23,
   },
 ]
 
@@ -297,33 +278,10 @@ const ScoreboardScreen = () => {
         style={styles.imgBackground}
         resizeMode="cover"
       >
-        <Tab
-          value={index}
-          onChange={(e: SetStateAction<number>) => setIndex(e)}
-          indicatorStyle={{
-            backgroundColor: '#f95b78',
-            height: 2.5,
-          }}
-        >
-          <Tab.Item titleStyle={styles.scoreboardTitle} title="SOAR 🎉" />
-          <Tab.Item titleStyle={styles.scoreboardTitle} title="FRINGE 💃" />
-        </Tab>
-        <TabView value={index} onChange={setIndex} animationType="spring">
-          <TabView.Item
-            onMoveShouldSetResponder={(e: any) => e.stopPropagation()}
-          >
-            <SafeAreaView style={styles.container}>
-              {animatedListRender(DATA, TEAM_ID)}
-            </SafeAreaView>
-          </TabView.Item>
-          <TabView.Item
-            onMoveShouldSetResponder={(e: any) => e.stopPropagation()}
-          >
-            <SafeAreaView style={styles.container}>
-              {animatedListRender(DADA, undefined)}
-            </SafeAreaView>
-          </TabView.Item>
-        </TabView>
+        <Text style={styles.scoreboardTitle}>SOAR 🎉</Text>
+        <SafeAreaView style={styles.container}>
+          {animatedListRender(DATA, TEAM_ID)}
+        </SafeAreaView>
       </ImageBackground>
     </>
   )
