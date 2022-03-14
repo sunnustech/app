@@ -3,6 +3,11 @@ import opts from './opts'
 
 export default StyleSheet.create({
   /* containers */
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   loginContainer: {
     flex: 1,
     backgroundColor: '#f9fafb',

@@ -12,7 +12,7 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
-import styles from '@/styles/main'
+import { home as styles } from '@/styles/fresh'
 import { Button, ButtonRed } from '@/components/Buttons'
 import { notificationInit } from '@/lib/notifications'
 
@@ -35,7 +35,7 @@ const HomeScreen = () => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text>
         You are logged in as{' '}
-        {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
+        {auth.currentUser ? auth.currentUser.email : 'ERROR'}! smash
       </Text>
       <View style={styles.buttonContainer}>
         <Button onPress={() => navigation.navigate('NotificationScreen')}>
