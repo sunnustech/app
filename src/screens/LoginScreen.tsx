@@ -47,17 +47,6 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const navigation = useNavigation<NSNP<StackPages, 'Login'>>()
-
-  useEffect(() => {
-    const onListener = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace('Home')
-      }
-    })
-    return onListener
-  }, [])
-
   const loginHandler = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((credential) => {

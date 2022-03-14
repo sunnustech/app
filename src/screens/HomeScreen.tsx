@@ -21,11 +21,10 @@ const HomeScreen = () => {
   const navigation = useNavigation<DNP<DrawerPages, 'HomeScreen'>>()
   const stack = useNavigation<NSNP<StackPages, 'Home'>>()
 
-  const logoutHandler = (auth: Auth, stack: NSNP<StackPages, 'Home'>) => {
+  const logoutHandler = (auth: Auth) => {
     signOut(auth)
       .then(() => {
-        stack.replace('Login')
-        console.log('successful signout')
+        console.log('successful signout', auth.currentUser)
       })
       .catch((err) => console.log(err))
   }
@@ -56,7 +55,7 @@ const HomeScreen = () => {
         <Button onPress={() => navigation.navigate('ScoreboardScreen')}>
           Scoreboard
         </Button>
-        <ButtonRed onPress={() => logoutHandler(auth, stack)}>Logout</ButtonRed>
+        <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
       </View>
     </KeyboardAvoidingView>
   )

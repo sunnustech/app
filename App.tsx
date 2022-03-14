@@ -17,6 +17,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 /* sunnus contexts */
 import { SoarProvider } from '@/contexts/SoarContext'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import AuthNavigation from './src/navigations/AuthNavigation'
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()
@@ -50,23 +51,7 @@ const App = () => {
   return (
     <SoarProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{
-              headerBackVisible: false,
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
+        <AuthNavigation />
       </NavigationContainer>
     </SoarProvider>
   )
