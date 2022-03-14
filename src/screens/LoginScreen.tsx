@@ -12,7 +12,7 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
-import styles from '@/styles/fresh'
+import { login as styles } from '@/styles/fresh'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 
 const LoginButton = ({ loginHandler }: { loginHandler: any }) => {

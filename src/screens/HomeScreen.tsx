@@ -1,6 +1,5 @@
 import { KeyboardAvoidingView, Text, View } from 'react-native'
 // import tailwind react native classes
-import tw from 'twrnc'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
@@ -34,7 +33,7 @@ const HomeScreen = () => {
   // example usage of tailwind react native class (3 lines below)
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text style={tw`bg-blue-100`}>
+      <Text>
         You are logged in as{' '}
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!
       </Text>
