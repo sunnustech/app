@@ -22,8 +22,19 @@ const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()
 
 const Home = () => (
-  <Drawer.Navigator>
-    <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+  <Drawer.Navigator
+    initialRouteName="HomeScreen"
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
+    <Drawer.Screen
+      name="HomeScreen"
+      component={HomeScreen}
+      options={{
+        gestureEnabled: false,
+      }}
+    />
     <Drawer.Screen name="MapScreen" component={MapScreen} />
     <Drawer.Screen name="NotificationScreen" component={NotificationScreen} />
     <Drawer.Screen name="DatabaseScreen" component={DatabaseScreen} />
