@@ -45,6 +45,7 @@ const App = () => {
             component={LoginScreen}
             options={{
               headerBackVisible: false,
+              headerShown: false,
             }}
           />
           <Stack.Screen

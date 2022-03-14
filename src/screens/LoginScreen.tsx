@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, View } from 'react-native'
+import { View, Image, TouchableOpacity, Text } from 'react-native'
+import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
@@ -11,9 +12,36 @@ import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stac
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
-import styles from '@/styles/main'
-import { Button } from '@/components/Buttons'
-import { Input, SecureInput } from '@/components/Inputs'
+import styles from '@/styles/fresh'
+import { ScrollView, TextInput } from 'react-native-gesture-handler'
+
+const LoginButton = ({ loginHandler }: { loginHandler: any }) => {
+  return (
+    <TouchableOpacity onPress={loginHandler} style={styles.button}>
+      <Text style={styles.buttonText}>Login</Text>
+    </TouchableOpacity>
+  )
+}
+
+const Input = ({
+  value,
+  onChangeText,
+  placeholder,
+  secureTextEntry = false,
+}: {
+  [key: string]: any
+}) => {
+  // secureTextEntry
+  return (
+    <TextInput
+      secureTextEntry={secureTextEntry}
+      placeholder={placeholder}
+      value={value}
+      onChangeText={onChangeText}
+      style={styles.input}
+    />
+  )
+}
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -50,24 +78,31 @@ const LoginScreen = () => {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.loginContainer} behavior="padding">
+    <ScrollView
+      contentContainerStyle={styles.loginContainer}
+      scrollEnabled={false}
+    >
+      <Image source={SunnusLogo} style={styles.image} />
       <View style={styles.inputContainer}>
         <Input
-          placeholder="Email"
+          placeholder="Team ID + key"
           value={email}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text: string) => setEmail(text)}
         />
-        <SecureInput
-          placeholder="Password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
+        {/* <Input */}
+        {/*   secureTextEntry */}
+        {/*   placeholder="Password" */}
+        {/*   value={password} */}
+        {/*   onChangeText={(text: string) => setPassword(text)} */}
+        {/* /> */}
       </View>
       <View style={styles.buttonContainer}>
-        <Button onPress={loginHandler}>Login</Button>
-        <Button onPress={breakInHandler}>Break In</Button>
+        <LoginButton loginHandler={loginHandler} />
+        <TouchableOpacity style={styles.button} onPress={breakInHandler}>
+          <Text style={styles.buttonText}>Break In</Text>
+        </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 
