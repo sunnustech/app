@@ -78,6 +78,7 @@ const LoginScreen = () => {
           value={email}
           onChangeText={(text: string) => setEmail(text)}
         />
+        {/* password field */}
         {/* <Input */}
         {/*   secureTextEntry */}
         {/*   placeholder="Password" */}
