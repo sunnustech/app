@@ -1,31 +1,20 @@
 import { useEffect, useState } from 'react'
-import { View, Image, TouchableOpacity, Text } from 'react-native'
-import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  User,
-} from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 
 /* navigation */
-import { StackPages } from '@/lib/navigation'
-import { useNavigation } from '@react-navigation/native'
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp as NSNP,
-} from '@react-navigation/native-stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
-import { login as styles } from '@/styles/fresh'
-import { ScrollView, TextInput } from 'react-native-gesture-handler'
 
 /* screens */
-import LoginScreen from '@/screens/LoginScreen'
+import Login from '@/screens/LoginScreen'
 import HomeScreen from '@/screens/HomeScreen'
+
+import { UserState } from '@/types/index'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -33,55 +22,62 @@ const Drawer = createDrawerNavigator()
 const Home = () => (
   <Drawer.Navigator
     initialRouteName="HomeScreen"
-    screenOptions={{
-      headerShown: false,
-    }}
+    screenOptions={{ headerShown: false }}
   >
-    <Drawer.Screen
-      name="HomeScreen"
-      component={HomeScreen}
-      options={{
-        gestureEnabled: false,
-      }}
-    />
+    <Drawer.Screen name="HomeScreen" component={HomeScreen} />
   </Drawer.Navigator>
 )
 
+/*
+ * uses a react state to keep track of whether the user is logged in or not.
+ * this prevent the accidental navigation to a screen that a particular user
+ * group is not supposed to see.
+ */
 const AuthNavigation = () => {
-  const [user, setUser] = useState(false)
+  /* initialize user's state */
+  const [userState, setUserState] = useState<UserState>({
+    isLoggedIn: false,
+    isRegistered: false,
+  })
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      /*
+       * on a failed firebase login, user will be null
+       * so it suffices to check the truthiness of user to determine a
+       * successful login.
+       */
       if (user) {
-        setUser(true)
+        setUserState({ isLoggedIn: true, isRegistered: true })
       } else {
-        setUser(false)
+        setUserState({ isLoggedIn: false, isRegistered: false })
       }
     })
   }, [])
-  console.log('auth nav', auth.currentUser)
 
-  return (
-    <Stack.Navigator>
-      {!user ? (
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            headerBackVisible: false,
-            headerShown: false,
-          }}
-        />
-      ) : (
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            headerShown: false,
-          }}
-        />
-      )}
-    </Stack.Navigator>
-  )
+  const handleLoginState = (userState: UserState) => {
+    const minOpts = {
+      headerBackVisible: false,
+      headerShown: false,
+    }
+
+    if (userState.isLoggedIn) {
+      if (userState.isRegistered) {
+        /* user has logged in with firebase */
+        return <Stack.Screen name="Home" component={Home} options={minOpts} />
+      } else {
+        /* user has logged in as guest (no firebase) */
+        return <Stack.Screen name="Home" component={Home} options={minOpts} />
+        // TODO: handle guest option properly
+        // (currently treat guests as registered users)
+      }
+    } else {
+      /* user has yet to log in at all */
+      return <Stack.Screen name="Login" component={Login} options={minOpts} />
+    }
+  }
+
+  return <Stack.Navigator>{handleLoginState(userState)}</Stack.Navigator>
 }
 
 export default AuthNavigation

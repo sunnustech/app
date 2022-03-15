@@ -12,6 +12,7 @@
       "@/lib/*": ["./src/lib/*"],
       "@/screens/*": ["./src/screens/*"],
       "@/styles/*": ["./src/styles/*"],
+      "@/types/*": ["./src/types/*"],
       "@/contexts/*": ["./src/contexts/*"]
     }
   },
