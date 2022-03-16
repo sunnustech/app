@@ -142,10 +142,10 @@ const SOARScreen = () => {
     return <Text>loading...</Text>
   } else {
     return (
-      <View>
+      <View style={styles.map}>
+        <Map />
         <TopRight />
         <BottomRight />
-        <Map />
       </View>
     )
   }

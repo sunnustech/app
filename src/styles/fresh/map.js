@@ -3,13 +3,18 @@ import { Dimensions, StyleSheet } from 'react-native'
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
+const sideButton = {
+  size: 56,
+  color: '#fff',
+}
+
 const map = StyleSheet.create({
   map: {
     width: '100%',
     height: '100%',
   },
   mapTopRightContainer: {
-    zIndex: 9,
+    backgroundColor: '#bbf7d0',
     position: 'absolute',
     flexDirection: 'column',
     alignItems: 'flex-end',
@@ -22,11 +27,10 @@ const map = StyleSheet.create({
     justifyContent: 'space-between',
   },
   currentLocationButton: {
-    zIndex: 8,
     position: 'absolute',
-    width: 45,
-    height: 45,
-    backgroundColor: '#fff',
+    width: sideButton.size,
+    height: sideButton.size,
+    backgroundColor: sideButton.color,
     top: HEIGHT - 200,
     left: WIDTH - 70,
     borderRadius: 50,
@@ -36,9 +40,9 @@ const map = StyleSheet.create({
   mapSideButton: {
     marginBottom: 12,
     zIndex: 9,
-    width: 45,
-    height: 45,
-    backgroundColor: '#fff',
+    width: sideButton.size,
+    height: sideButton.size,
+    backgroundColor: sideButton.color,
     borderRadius: 50,
     justifyContent: 'space-around',
     alignItems: 'center',
