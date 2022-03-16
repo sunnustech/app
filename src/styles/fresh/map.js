@@ -8,13 +8,7 @@ const map = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  mapSideBarContainer: {
+  mapTopRightContainer: {
     zIndex: 9,
     position: 'absolute',
     flexDirection: 'column',

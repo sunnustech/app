@@ -69,63 +69,83 @@ const SOARScreen = () => {
   }, [])
 
   const toggleGameStations = () => {
+    console.log('map: pressed <toggleGameStations>')
     updateFilterLocations(gameLocations)
   }
 
   const toggleAdminStations = () => {
+    console.log('map: pressed <toggleAdminStations>')
     updateFilterLocations(adminLocations)
+  }
+
+  const TopRight = () => {
+    return (
+      <View style={styles.mapTopRightContainer}>
+        <View style={styles.mapSideButton}>
+          <AntDesign
+            name="enviroment"
+            size={24}
+            color="black"
+            onPress={toggleGameStations}
+          />
+        </View>
+        <View style={styles.mapSideButton}>
+          <Ionicons
+            name="flag"
+            size={24}
+            color="black"
+            onPress={toggleAdminStations}
+          />
+        </View>
+      </View>
+    )
+  }
+
+  const BottomRight = () => {
+    return (
+      <View style={styles.currentLocationButton}>
+        <MaterialIcons
+          name="my-location"
+          color="black"
+          size={24}
+          onPress={() => toggleGameStations()}
+        />
+      </View>
+    )
+  }
+
+  const Map = () => {
+    return (
+      <MapView
+        ref={mapRef}
+        style={styles.map}
+        provider={'google'}
+        initialCamera={sentosaDefault}
+        showsUserLocation={true}
+        onUserLocationChange={() => getCurrentLocation()}
+      >
+        {filterLocations.map((e) => (
+          <CustomMarker
+            key={e.id}
+            navigation={navigation}
+            coordinate={e.coordinate}
+            description={e.description}
+          >
+            {e.icon()}
+          </CustomMarker>
+        ))}
+      </MapView>
+    )
   }
 
   if (loading) {
     return <Text>loading...</Text>
   } else {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.mapSideBarContainer}>
-          <View style={styles.mapSideButton}>
-            <AntDesign
-              name="enviroment"
-              size={24}
-              color="black"
-              onPress={() => toggleGameStations()}
-            />
-          </View>
-          <View style={styles.mapSideButton}>
-            <Ionicons
-              name="flag"
-              size={24}
-              color="black"
-              onPress={() => toggleAdminStations()}
-            />
-          </View>
-        </TouchableOpacity>
-        <View style={styles.currentLocationButton}>
-          <MaterialIcons
-            name="my-location"
-            color="black"
-            size={24}
-            onPress={() => toggleGameStations()}
-          />
-        </View>
-        <MapView
-          ref={mapRef}
-          style={styles.map}
-          provider={'google'}
-          initialCamera={sentosaDefault}
-          showsUserLocation={true}
-          onUserLocationChange={() => getCurrentLocation()}
-        >
-          {filterLocations.map((e) => (
-            <CustomMarker
-              key={e.id}
-              navigation={navigation}
-              coordinate={e.coordinate}
-              description={e.description}
-            >
-              {e.icon()}
-            </CustomMarker>
-          ))}
-        </MapView>
+      <View>
+        <TopRight />
+        <BottomRight />
+        <Map />
       </View>
     )
   }
