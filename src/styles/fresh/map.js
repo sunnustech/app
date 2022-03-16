@@ -1,7 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native'
-
-const WIDTH = Dimensions.get('window').width
-const HEIGHT = Dimensions.get('window').height
+import { StyleSheet } from 'react-native'
 
 const sideButton = {
   size: 56,
@@ -9,41 +6,44 @@ const sideButton = {
 }
 
 const map = StyleSheet.create({
-  map: {
+  container: {
+    width: '100%',
+    height: '100%',
+    position: 'relative',
+  },
+  overlap: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
     width: '100%',
     height: '100%',
   },
   mapTopRightContainer: {
-    backgroundColor: '#bbf7d0',
-    position: 'absolute',
-    flexDirection: 'column',
+    flex: 1,
     alignItems: 'flex-end',
-    width: WIDTH - 40,
-    height: 60,
-    top: 50,
-    right: 20,
-    borderRadius: 2,
-    display: 'flex',
-    justifyContent: 'space-between',
   },
-  currentLocationButton: {
-    position: 'absolute',
-    width: sideButton.size,
-    height: sideButton.size,
-    backgroundColor: sideButton.color,
-    top: HEIGHT - 200,
-    left: WIDTH - 70,
-    borderRadius: 50,
-    justifyContent: 'space-around',
-    alignItems: 'center',
+  mapBottomRightContainer: {
+    alignItems: 'flex-end',
+  },
+
+  mapUIContainer: {
+    /* take % of screen's dimensions and center it */
+    width: '90%',
+    height: '80%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+
+    display: 'flex',
+    flexDirection: 'column',
   },
   mapSideButton: {
-    marginBottom: 12,
-    zIndex: 9,
+    marginBottom: 14,
     width: sideButton.size,
     height: sideButton.size,
     backgroundColor: sideButton.color,
-    borderRadius: 50,
+    borderRadius: 100,
     justifyContent: 'space-around',
     alignItems: 'center',
   },

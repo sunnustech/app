@@ -103,13 +103,15 @@ const SOARScreen = () => {
 
   const BottomRight = () => {
     return (
-      <View style={styles.currentLocationButton}>
-        <MaterialIcons
-          name="my-location"
-          color="black"
-          size={24}
-          onPress={() => toggleGameStations()}
-        />
+      <View style={styles.mapBottomRightContainer}>
+        <View style={styles.mapSideButton}>
+          <MaterialIcons
+            name="my-location"
+            color="black"
+            size={24}
+            onPress={() => toggleGameStations()}
+          />
+        </View>
       </View>
     )
   }
@@ -118,7 +120,7 @@ const SOARScreen = () => {
     return (
       <MapView
         ref={mapRef}
-        style={styles.map}
+        style={styles.overlap}
         provider={'google'}
         initialCamera={sentosaDefault}
         showsUserLocation={true}
@@ -142,10 +144,14 @@ const SOARScreen = () => {
     return <Text>loading...</Text>
   } else {
     return (
-      <View style={styles.map}>
+      <View style={styles.container}>
         <Map />
-        <TopRight />
-        <BottomRight />
+        <View style={styles.overlap}>
+          <View style={styles.mapUIContainer}>
+            <TopRight />
+            <BottomRight />
+          </View>
+        </View>
       </View>
     )
   }
