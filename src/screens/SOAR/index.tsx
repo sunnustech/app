@@ -80,7 +80,7 @@ const SOARScreen = () => {
 
   const TopRight = () => {
     return (
-      <View style={styles.mapTopRightContainer}>
+      <View style={styles.mapTopRightContainer} pointerEvents="box-none">
         <View style={styles.mapSideButton}>
           <AntDesign
             name="enviroment"
@@ -103,7 +103,7 @@ const SOARScreen = () => {
 
   const BottomRight = () => {
     return (
-      <View style={styles.mapBottomRightContainer}>
+      <View style={styles.mapBottomRightContainer} pointerEvents="box-none">
         <View style={styles.mapSideButton}>
           <MaterialIcons
             name="my-location"
@@ -146,8 +146,8 @@ const SOARScreen = () => {
     return (
       <View style={styles.container}>
         <Map />
-        <View style={styles.overlap}>
-          <View style={styles.mapUIContainer}>
+        <View style={styles.overlap} pointerEvents="box-none">
+          <View style={styles.mapUIContainer} pointerEvents="box-none">
             <TopRight />
             <BottomRight />
           </View>
