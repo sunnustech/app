@@ -13,6 +13,9 @@ import { auth } from '@/sunnus/firebase'
 /* screens */
 import Login from '@/screens/LoginScreen'
 import HomeScreen from '@/screens/HomeScreen'
+import SOARScreen from '@/screens/SOAR'
+import TSSScreen from '@/screens/TSS'
+import WSSScreen from '@/screens/WSS'
 
 import { UserState } from '@/types/index'
 
@@ -25,6 +28,9 @@ const Home = () => (
     screenOptions={{ headerShown: false }}
   >
     <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+    <Drawer.Screen name="SOAR" component={SOARScreen} />
+    <Drawer.Screen name="TSS" component={TSSScreen} />
+    <Drawer.Screen name="WSS" component={WSSScreen} />
   </Drawer.Navigator>
 )
 

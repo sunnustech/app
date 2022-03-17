@@ -54,21 +54,21 @@ const HomeScreen = () => {
       <Image source={SunnusLogo} style={styles.image} />
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => navigation.navigate('HomeScreen')}
+          onPress={() => navigation.navigate('SOAR')}
           textStyle={styles.SOARbuttonText}
           containerStyle={styles.SOARbutton}
         >
           SOAR
         </Button>
         <Button
-          onPress={() => navigation.navigate('HomeScreen')}
+          onPress={() => navigation.navigate('TSS')}
           textStyle={styles.TSSbuttonText}
           containerStyle={styles.TSSbutton}
         >
           TSS
         </Button>
         <Button
-          onPress={() => navigation.navigate('HomeScreen')}
+          onPress={() => navigation.navigate('WSS')}
           textStyle={styles.WSSbuttonText}
           containerStyle={styles.WSSbutton}
         >

@@ -123,7 +123,7 @@ function notificationInit() {
       rc ? Notifications.removeNotificationSubscription(rc) : null
     }
   }, [])
-  console.log(expoPushToken)
+  // console.log(expoPushToken)
   return {
     expoPushToken,
     notification,
