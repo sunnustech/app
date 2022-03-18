@@ -82,6 +82,22 @@ namespace firestore {
   }
 }
 
+const Buttons = () => {
+  return (
+    <>
+      <ButtonGreen onPress={() => writeSchema()}>Write Schema</ButtonGreen>
+      <Button onPress={() => firestore.writeCollection()}>
+        Write Collection
+      </Button>
+      <Button onPress={() => firestore.read()}>Read</Button>
+      <Button onPress={() => firestore.writeDocument()}>Write Document</Button>
+      <Button onPress={() => firestore.notifyAll()}>
+        Send Notification to all Expo Users
+      </Button>
+    </>
+  )
+}
+
 const DatabaseScreen = () => {
   const expoPushToken = notificationInit().expoPushToken
   return (
@@ -116,3 +132,4 @@ const DatabaseScreen = () => {
 }
 
 export default DatabaseScreen
+export { Buttons }
