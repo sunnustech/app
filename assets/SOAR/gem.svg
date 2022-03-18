@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 45 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="Diamond">
+        <g id="Group-613" serif:id="Group 613">
+            <g>
+                <path id="Edit-color-here" serif:id="Edit color here" d="M4,15.03L10.894,6.17L34.198,6.17L40.996,15.03L22.546,34.404L4,15.03Z" style="fill:url(#_Linear1);fill-rule:nonzero;"/>
+                <g id="Group-8991" serif:id="Group 8991">
+                    <path d="M22.405,8.108L10.819,6.167L12.538,17.85L32.269,17.85L33.988,6.167L22.405,8.108Z" style="fill:white;fill-opacity:0.44;fill-rule:nonzero;"/>
+                    <path d="M10.819,6.167L22.547,10.061L34.198,6.171L10.819,6.167Z" style="fill:white;fill-opacity:0.5;fill-rule:nonzero;"/>
+                    <path d="M12.538,17.85L4,15.03L10.819,6.167L12.538,6.167L12.538,17.85Z" style="fill:white;fill-opacity:0.33;fill-rule:nonzero;"/>
+                    <path d="M32.269,17.85L41,15.03L34.181,6.167L32.461,6.167L32.269,17.85Z" style="fill:white;fill-opacity:0.33;fill-rule:nonzero;"/>
+                    <path d="M12.538,17.85L22.497,34.379L32.268,17.85L12.538,17.85Z" style="fill:white;fill-opacity:0.22;fill-rule:nonzero;"/>
+                    <path d="M22.404,8.108L12.538,17.849L32.268,17.849L22.404,8.108Z" style="fill:white;fill-opacity:0.22;fill-rule:nonzero;"/>
+                    <path d="M22.546,10.061L12.538,17.849L32.268,17.849L22.546,10.061Z" style="fill:white;fill-opacity:0.1;fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+    <defs>
+        <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.72883e-15,28.2339,-28.2339,1.72883e-15,22.4976,6.17041)"><stop offset="0" style="stop-color:rgb(255,92,0);stop-opacity:1"/><stop offset="0.43" style="stop-color:rgb(255,55,95);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(255,92,0);stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>

@@ -1,30 +1,24 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
 import * as Location from 'expo-location'
-import { CustomMarker } from '@/components/Markers'
-import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { Text, View, TouchableOpacity } from 'react-native'
+import {
+  AntDesign as AD,
+  Ionicons as IC,
+  MaterialIcons as MI,
+  MaterialCommunityIcons as MCI,
+} from '@expo/vector-icons'
+import { Text } from 'react-native'
 
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { SOARPageProps } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { SoarContext } from '@/contexts/SoarContext'
 import { map as styles } from '@/styles/fresh'
 import { notificationInit } from '@/lib/notifications'
-
-const sentosaDefault: Camera = {
-  center: {
-    latitude: 1.254206,
-    longitude: 103.819977,
-  },
-  pitch: 0,
-  zoom: 15,
-  heading: 0,
-  altitude: 0,
-}
+import { NoTouchDiv, Overlap } from '@/components/Views'
+import { Map, MapButton, Timer } from '@/components/SOAR'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -36,7 +30,8 @@ const SOARScreen = () => {
   } = useContext(SoarContext)
 
   notificationInit()
-  const navigation = useNavigation<DNP<DrawerPages, 'SOAR'>>()
+  const navigation = useNavigation<SOARPageProps>()
+  // const a: number = navigation
   const [loading, setLoading] = useState(true)
   const mapRef = useRef<MapView>(null)
 
@@ -78,65 +73,42 @@ const SOARScreen = () => {
     updateFilterLocations(adminLocations)
   }
 
-  const TopRight = () => {
+  const openQRScanner = () => {
+    console.log('handle opening QR scanner')
+  }
+
+  const handleSOS = () => {
+    console.log('handle opening SOS screen')
+  }
+
+  const TopUI = () => {
     return (
-      <View style={styles.mapTopRightContainer} pointerEvents="box-none">
-        <View style={styles.mapSideButton}>
-          <AntDesign
-            name="enviroment"
-            size={24}
-            color="black"
-            onPress={toggleGameStations}
-          />
-        </View>
-        <View style={styles.mapSideButton}>
-          <Ionicons
-            name="flag"
-            size={24}
-            color="black"
-            onPress={toggleAdminStations}
-          />
-        </View>
-      </View>
+      <NoTouchDiv style={styles.mapTopContainer}>
+        <Overlap style={styles.mapRightContainer}>
+          <MapButton icon={[AD, 'enviroment']} onPress={toggleGameStations} />
+          <MapButton icon={[IC, 'flag']} onPress={toggleAdminStations} />
+        </Overlap>
+        <Overlap>
+          <NoTouchDiv style={styles.timerContainer}>
+            <Timer />
+          </NoTouchDiv>
+        </Overlap>
+      </NoTouchDiv>
     )
   }
 
-  const BottomRight = () => {
+  const BottomUI = () => {
     return (
-      <View style={styles.mapBottomRightContainer} pointerEvents="box-none">
-        <View style={styles.mapSideButton}>
-          <MaterialIcons
-            name="my-location"
-            color="black"
-            size={24}
-            onPress={() => toggleGameStations()}
-          />
-        </View>
-      </View>
-    )
-  }
-
-  const Map = () => {
-    return (
-      <MapView
-        ref={mapRef}
-        style={styles.overlap}
-        provider={'google'}
-        initialCamera={sentosaDefault}
-        showsUserLocation={true}
-        onUserLocationChange={() => getCurrentLocation()}
-      >
-        {filterLocations.map((e) => (
-          <CustomMarker
-            key={e.id}
-            navigation={navigation}
-            coordinate={e.coordinate}
-            description={e.description}
-          >
-            {e.icon()}
-          </CustomMarker>
-        ))}
-      </MapView>
+      <NoTouchDiv style={styles.mapBottomContainer}>
+        <NoTouchDiv style={styles.mapLeftContainer}>
+          <NoTouchDiv style={styles.flex1} />
+          <MapButton icon={[MCI, 'exclamation-thick']} onPress={handleSOS} />
+        </NoTouchDiv>
+        <NoTouchDiv style={styles.mapRightContainer}>
+          <MapButton icon={[MI, 'my-location']} onPress={handleSOS} />
+          <MapButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
+        </NoTouchDiv>
+      </NoTouchDiv>
     )
   }
 
@@ -144,15 +116,20 @@ const SOARScreen = () => {
     return <Text>loading...</Text>
   } else {
     return (
-      <View style={styles.container}>
-        <Map />
-        <View style={styles.overlap} pointerEvents="box-none">
-          <View style={styles.mapUIContainer} pointerEvents="box-none">
-            <TopRight />
-            <BottomRight />
-          </View>
-        </View>
-      </View>
+      <NoTouchDiv style={styles.container}>
+        <Map
+          ref={mapRef}
+          getCurrentLocation={getCurrentLocation}
+          navigation={navigation}
+          filterLocations={filterLocations}
+        />
+        <Overlap>
+          <NoTouchDiv style={styles.mapUIContainer}>
+            <TopUI />
+            <BottomUI />
+          </NoTouchDiv>
+        </Overlap>
+      </NoTouchDiv>
     )
   }
 }

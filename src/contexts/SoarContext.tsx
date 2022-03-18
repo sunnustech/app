@@ -2,7 +2,8 @@ import React, { createContext, useState, useEffect } from 'react'
 import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
 import { db } from '@/sunnus/firebase'
 import { doc, DocumentData, getDoc } from 'firebase/firestore'
-import { GameStation } from '../types/GameStation'
+import { GameStation } from '@/types/GameStation'
+import { SOARContextProps } from '@/types/soar-map'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
 
@@ -40,7 +41,7 @@ function parseFirestoreAdminData(firebaseData: DocumentData) {
       id: e.id,
       name: e.game_title,
       description: e.details,
-      icon: () => <FA name="umbrella-beach" size={42} color="#22c55e" />,
+      icon: () => <FA name="umbrella-beach" size={42} color="#000000" />,
       coordinate: {
         latitude: e.latitude,
         longitude: e.longitude,
@@ -105,17 +106,7 @@ const getFirebaseLocations = async (p: {
 
 // Context function to be used
 function createSoarCtx() {
-  interface LocationHandlers {
-    loading: boolean
-    filterLocations: GameStation[]
-    updateFilterLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
-    gameLocations: GameStation[]
-    updateGameLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
-    adminLocations: GameStation[]
-    updateAdminLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
-  }
-
-  const ctx = createContext<LocationHandlers>({
+  const ctx = createContext<SOARContextProps>({
     loading: false,
     filterLocations: [],
     updateFilterLocations: () => [],
