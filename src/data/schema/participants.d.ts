@@ -15,6 +15,7 @@ export type Group = {
   members: Array<{
     email: string
     phone: string
+    loginid?: string
   }>
 }
 

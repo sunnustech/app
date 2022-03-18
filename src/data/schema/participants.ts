@@ -55,6 +55,23 @@ const testTwo: Group = {
   ],
 }
 
-const participants: ParticipantsData = objFromArray([testOne, testTwo], 'id')
+const trimGroupNameToLowercase = (grp: string) => {
+  return grp.split(' ').join('').toLowerCase()
+}
+
+const generateRandomID = () => {
+  return '_' + Math.random().toString(36).substring(5)
+}
+
+const addLoginID = (obj: Group) => {
+  let grpNameTitle = trimGroupNameToLowercase(obj.group_title)
+  obj.members.map((par) => (par['loginid'] = grpNameTitle + generateRandomID()))
+  return obj
+}
+
+const participants: ParticipantsData = objFromArray(
+  [addLoginID(testOne), addLoginID(testTwo)],
+  'id'
+)
 
 export default participants
