@@ -19,6 +19,7 @@ import { map as styles } from '@/styles/fresh'
 import { notificationInit } from '@/lib/notifications'
 import MapButton from '@/components/SOAR/MapButton'
 import Map from '@/components/SOAR/Map'
+import { SafeDivProps } from '@/types/soar-map'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -81,27 +82,51 @@ const SOARScreen = () => {
     console.log('handle opening SOS screen')
   }
 
+  const NoTouchDiv = ({ style, children }: SafeDivProps) => (
+    <View style={style} pointerEvents="box-none">
+      {children}
+    </View>
+  )
+
+  const Overlap = ({ children, style }: SafeDivProps) => (
+    <NoTouchDiv style={[styles.overlap, style]}>{children}</NoTouchDiv>
+  )
+
+  const Timer = () => {
+    return (
+      <Text>
+        somethingals dfkjasdl fkajsdf lkdasjf lkasdjf lkasdjf lkasdfj laksdjf
+        laksdfj laksdjf lkasjdf lkasdj flkasdj flkasdjf lkasjdf lkasdf
+      </Text>
+    )
+  }
+
   const TopUI = () => {
     return (
-      <View style={styles.mapTopContainer} pointerEvents="box-none">
-        <MapButton icon={[AD, 'enviroment']} onPress={toggleGameStations} />
-        <MapButton icon={[IC, 'flag']} onPress={toggleAdminStations} />
-      </View>
+      <NoTouchDiv style={styles.mapTopContainer}>
+        <Overlap style={styles.mapRightContainer}>
+          <MapButton icon={[AD, 'enviroment']} onPress={toggleGameStations} />
+          <MapButton icon={[IC, 'flag']} onPress={toggleAdminStations} />
+        </Overlap>
+        <Overlap>
+          <Timer />
+        </Overlap>
+      </NoTouchDiv>
     )
   }
 
   const BottomUI = () => {
     return (
-      <View style={styles.mapBottomContainer} pointerEvents="box-none">
-        <View style={styles.mapLeftContainer}>
-          <View style={styles.flex1} />
+      <NoTouchDiv style={styles.mapBottomContainer}>
+        <NoTouchDiv style={styles.mapLeftContainer}>
+          <NoTouchDiv style={styles.flex1} />
           <MapButton icon={[MCI, 'exclamation-thick']} onPress={handleSOS} />
-        </View>
-        <View style={styles.mapRightContainer}>
+        </NoTouchDiv>
+        <NoTouchDiv style={styles.mapRightContainer}>
           <MapButton icon={[MI, 'my-location']} onPress={handleSOS} />
           <MapButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
-        </View>
-      </View>
+        </NoTouchDiv>
+      </NoTouchDiv>
     )
   }
 
@@ -109,20 +134,20 @@ const SOARScreen = () => {
     return <Text>loading...</Text>
   } else {
     return (
-      <View style={styles.container}>
+      <NoTouchDiv style={styles.container}>
         <Map
           ref={mapRef}
           getCurrentLocation={getCurrentLocation}
           navigation={navigation}
           filterLocations={filterLocations}
         />
-        <View style={styles.overlap} pointerEvents="box-none">
-          <View style={styles.mapUIContainer} pointerEvents="box-none">
+        <Overlap>
+          <NoTouchDiv style={styles.mapUIContainer}>
             <TopUI />
             <BottomUI />
-          </View>
-        </View>
-      </View>
+          </NoTouchDiv>
+        </Overlap>
+      </NoTouchDiv>
     )
   }
 }

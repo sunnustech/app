@@ -23,3 +23,8 @@ export type MapProps = {
   navigation: SOARPageProps
   filterLocations: any
 }
+
+export type SafeDivProps = {
+  style?: any
+  children?: any
+}
