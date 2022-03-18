@@ -14,6 +14,7 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 import { SoarContext } from '@/contexts/SoarContext'
 import { map as styles } from '@/styles/fresh'
 import { notificationInit } from '@/lib/notifications'
+import Gem from '@/components/SOAR/Gem'
 
 const sentosaDefault: Camera = {
   center: {
