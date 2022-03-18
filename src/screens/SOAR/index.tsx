@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
 import * as Location from 'expo-location'
-import { CustomMarker } from '@/components/Markers'
 import {
   AntDesign as AD,
   Ionicons as IC,
@@ -11,23 +10,15 @@ import {
 import { Text, View } from 'react-native'
 
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { SOARPageProps } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { SoarContext } from '@/contexts/SoarContext'
 import { map as styles } from '@/styles/fresh'
 import { notificationInit } from '@/lib/notifications'
 import MapButton from '@/components/SOAR/MapButton'
-
-const NUSCoordinates: Camera = {
-  center: { latitude: 1.296674, longitude: 103.77639 },
-  pitch: 0,
-  zoom: 15.3,
-  heading: 0,
-  altitude: 0,
-}
+import Map from '@/components/SOAR/Map'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -39,7 +30,8 @@ const SOARScreen = () => {
   } = useContext(SoarContext)
 
   notificationInit()
-  const navigation = useNavigation<DNP<DrawerPages, 'SOAR'>>()
+  const navigation = useNavigation<SOARPageProps>()
+  // const a: number = navigation
   const [loading, setLoading] = useState(true)
   const mapRef = useRef<MapView>(null)
 
@@ -113,37 +105,17 @@ const SOARScreen = () => {
     )
   }
 
-  const Map = () => {
-    console.log(filterLocations)
-    return (
-      <MapView
-        ref={mapRef}
-        style={styles.overlap}
-        provider={'google'}
-        initialCamera={NUSCoordinates}
-        showsUserLocation={true}
-        onUserLocationChange={() => getCurrentLocation()}
-      >
-        {filterLocations.map((e) => (
-          <CustomMarker
-            key={e.id}
-            navigation={navigation}
-            coordinate={e.coordinate}
-            description={e.description}
-          >
-            {e.icon()}
-          </CustomMarker>
-        ))}
-      </MapView>
-    )
-  }
-
   if (loading) {
     return <Text>loading...</Text>
   } else {
     return (
       <View style={styles.container}>
-        <Map />
+        <Map
+          ref={mapRef}
+          getCurrentLocation={getCurrentLocation}
+          navigation={navigation}
+          filterLocations={filterLocations}
+        />
         <View style={styles.overlap} pointerEvents="box-none">
           <View style={styles.mapUIContainer} pointerEvents="box-none">
             <TopUI />
