@@ -40,7 +40,7 @@ function parseFirestoreAdminData(firebaseData: DocumentData) {
       id: e.id,
       name: e.game_title,
       description: e.details,
-      icon: () => <FA name="umbrella-beach" size={42} color="#22c55e" />,
+      icon: () => <FA name="umbrella-beach" size={42} color="#000000" />,
       coordinate: {
         latitude: e.latitude,
         longitude: e.longitude,

@@ -16,13 +16,10 @@ import { map as styles } from '@/styles/fresh'
 import { notificationInit } from '@/lib/notifications'
 import Gem from '@/components/SOAR/Gem'
 
-const sentosaDefault: Camera = {
-  center: {
-    latitude: 1.254206,
-    longitude: 103.819977,
-  },
+const NUSCoordinates: Camera = {
+  center: { latitude: 1.296674, longitude: 103.77639 },
   pitch: 0,
-  zoom: 15,
+  zoom: 15.3,
   heading: 0,
   altitude: 0,
 }
@@ -118,12 +115,13 @@ const SOARScreen = () => {
   }
 
   const Map = () => {
+    console.log(filterLocations)
     return (
       <MapView
         ref={mapRef}
         style={styles.overlap}
         provider={'google'}
-        initialCamera={sentosaDefault}
+        initialCamera={NUSCoordinates}
         showsUserLocation={true}
         onUserLocationChange={() => getCurrentLocation()}
       >
