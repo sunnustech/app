@@ -6,6 +6,10 @@ const sideButton = {
 }
 
 const map = StyleSheet.create({
+  /* ==========
+   * containers
+   * ==========
+   */
   container: {
     width: '100%',
     height: '100%',
@@ -17,6 +21,12 @@ const map = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
+  },
+  timerContainer: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    // backgroundColor: '#bbf7d0',
+    // opacity: 0.7,
   },
   mapTopContainer: {
     flex: 1,
@@ -36,7 +46,26 @@ const map = StyleSheet.create({
   mapLeftContainer: {
     flex: 1,
   },
+  mapUIContainer: {
+    /* take % of screen's dimensions and center it */
+    width: '90%',
+    height: '80%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 'auto',
+    marginBottom: 'auto',
 
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  /* ===========
+   * text fields
+   * ===========
+   */
+  timerText: {
+    fontSize: 36,
+    fontWeight: '600',
+  },
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -52,18 +81,6 @@ const map = StyleSheet.create({
     flex: 1,
   },
 
-  mapUIContainer: {
-    /* take % of screen's dimensions and center it */
-    width: '90%',
-    height: '80%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-
-    display: 'flex',
-    flexDirection: 'column',
-  },
   mapSideButton: {
     marginTop: 14,
     width: sideButton.size,

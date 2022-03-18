@@ -7,7 +7,7 @@ import {
   MaterialIcons as MI,
   MaterialCommunityIcons as MCI,
 } from '@expo/vector-icons'
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
 
 /* navigation */
 import { SOARPageProps } from '@/types/navigation'
@@ -17,9 +17,8 @@ import { useNavigation } from '@react-navigation/native'
 import { SoarContext } from '@/contexts/SoarContext'
 import { map as styles } from '@/styles/fresh'
 import { notificationInit } from '@/lib/notifications'
-import MapButton from '@/components/SOAR/MapButton'
-import Map from '@/components/SOAR/Map'
-import { SafeDivProps } from '@/types/soar-map'
+import { NoTouchDiv, Overlap } from '@/components/Views'
+import { Map, MapButton, Timer } from '@/components/SOAR'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -82,25 +81,6 @@ const SOARScreen = () => {
     console.log('handle opening SOS screen')
   }
 
-  const NoTouchDiv = ({ style, children }: SafeDivProps) => (
-    <View style={style} pointerEvents="box-none">
-      {children}
-    </View>
-  )
-
-  const Overlap = ({ children, style }: SafeDivProps) => (
-    <NoTouchDiv style={[styles.overlap, style]}>{children}</NoTouchDiv>
-  )
-
-  const Timer = () => {
-    return (
-      <Text>
-        somethingals dfkjasdl fkajsdf lkdasjf lkasdjf lkasdjf lkasdfj laksdjf
-        laksdfj laksdjf lkasjdf lkasdj flkasdj flkasdjf lkasjdf lkasdf
-      </Text>
-    )
-  }
-
   const TopUI = () => {
     return (
       <NoTouchDiv style={styles.mapTopContainer}>
@@ -109,7 +89,9 @@ const SOARScreen = () => {
           <MapButton icon={[IC, 'flag']} onPress={toggleAdminStations} />
         </Overlap>
         <Overlap>
-          <Timer />
+          <NoTouchDiv style={styles.timerContainer}>
+            <Timer />
+          </NoTouchDiv>
         </Overlap>
       </NoTouchDiv>
     )
