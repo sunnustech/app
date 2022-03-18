@@ -72,6 +72,10 @@ const map = StyleSheet.create({
     borderRadius: 100,
     justifyContent: 'space-around',
     alignItems: 'center',
+    shadowColor: '#282828',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
   },
 })
 
