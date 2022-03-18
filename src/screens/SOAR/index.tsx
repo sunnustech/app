@@ -2,8 +2,13 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
 import * as Location from 'expo-location'
 import { CustomMarker } from '@/components/Markers'
-import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { Text, View, TouchableOpacity } from 'react-native'
+import {
+  AntDesign as AD,
+  Ionicons as IC,
+  MaterialIcons as MI,
+  MaterialCommunityIcons as MCI,
+} from '@expo/vector-icons'
+import { Text, View } from 'react-native'
 
 /* navigation */
 import { DrawerPages } from '@/types/navigation'
@@ -14,7 +19,7 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 import { SoarContext } from '@/contexts/SoarContext'
 import { map as styles } from '@/styles/fresh'
 import { notificationInit } from '@/lib/notifications'
-import Gem from '@/components/SOAR/Gem'
+import MapButton from '@/components/SOAR/MapButton'
 
 const NUSCoordinates: Camera = {
   center: { latitude: 1.296674, longitude: 103.77639 },
@@ -76,39 +81,33 @@ const SOARScreen = () => {
     updateFilterLocations(adminLocations)
   }
 
-  const TopRight = () => {
+  const openQRScanner = () => {
+    console.log('handle opening QR scanner')
+  }
+
+  const handleSOS = () => {
+    console.log('handle opening SOS screen')
+  }
+
+  const TopUI = () => {
     return (
-      <View style={styles.mapTopRightContainer} pointerEvents="box-none">
-        <View style={styles.mapSideButton}>
-          <AntDesign
-            name="enviroment"
-            size={24}
-            color="black"
-            onPress={toggleGameStations}
-          />
-        </View>
-        <View style={styles.mapSideButton}>
-          <Ionicons
-            name="flag"
-            size={24}
-            color="black"
-            onPress={toggleAdminStations}
-          />
-        </View>
+      <View style={styles.mapTopContainer} pointerEvents="box-none">
+        <MapButton icon={[AD, 'enviroment']} onPress={toggleGameStations} />
+        <MapButton icon={[IC, 'flag']} onPress={toggleAdminStations} />
       </View>
     )
   }
 
-  const BottomRight = () => {
+  const BottomUI = () => {
     return (
-      <View style={styles.mapBottomRightContainer} pointerEvents="box-none">
-        <View style={styles.mapSideButton}>
-          <MaterialIcons
-            name="my-location"
-            color="black"
-            size={24}
-            onPress={() => toggleGameStations()}
-          />
+      <View style={styles.mapBottomContainer} pointerEvents="box-none">
+        <View style={styles.mapLeftContainer}>
+          <View style={styles.flex1} />
+          <MapButton icon={[MCI, 'exclamation-thick']} onPress={handleSOS} />
+        </View>
+        <View style={styles.mapRightContainer}>
+          <MapButton icon={[MI, 'my-location']} onPress={handleSOS} />
+          <MapButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
         </View>
       </View>
     )
@@ -147,8 +146,8 @@ const SOARScreen = () => {
         <Map />
         <View style={styles.overlap} pointerEvents="box-none">
           <View style={styles.mapUIContainer} pointerEvents="box-none">
-            <TopRight />
-            <BottomRight />
+            <TopUI />
+            <BottomUI />
           </View>
         </View>
       </View>

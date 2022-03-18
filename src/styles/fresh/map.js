@@ -18,12 +18,38 @@ const map = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  mapTopRightContainer: {
+  mapTopContainer: {
     flex: 1,
     alignItems: 'flex-end',
+    // backgroundColor: '#bbf7d0',
+    // opacity: 0.7,
   },
-  mapBottomRightContainer: {
+  mapBottomContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    // backgroundColor: '#93c5fd',
+    // opacity: 0.6,
+  },
+  mapRightContainer: {
     alignItems: 'flex-end',
+  },
+  mapLeftContainer: {
+    flex: 1,
+  },
+
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  flexCol: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  flexEnd: {
+    alignItems: 'flex-end',
+  },
+  flex1: {
+    flex: 1,
   },
 
   mapUIContainer: {
@@ -39,7 +65,7 @@ const map = StyleSheet.create({
     flexDirection: 'column',
   },
   mapSideButton: {
-    marginBottom: 14,
+    marginTop: 14,
     width: sideButton.size,
     height: sideButton.size,
     backgroundColor: sideButton.color,
