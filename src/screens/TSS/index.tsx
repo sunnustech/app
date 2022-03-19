@@ -4,7 +4,6 @@ import { KeyboardAvoidingView, Text } from 'react-native'
 import { DrawerPages } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
-import { Buttons } from '../DatabaseScreen'
 
 /* sunnus components */
 import { TSS as styles } from '@/styles/fresh'
@@ -18,7 +17,6 @@ const TSSScreen = () => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text>Welcome to the TSS page!</Text>
       <Text>(you can navigate back by swiping in from the left)</Text>
-      <Buttons />
     </KeyboardAvoidingView>
   )
 }

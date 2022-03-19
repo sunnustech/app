@@ -11,3 +11,7 @@ export type ButtonProps = {
   onPress: () => void
   children: string
 }
+
+export type DebugButtonProps = ButtonProps & {
+  color?: string
+}

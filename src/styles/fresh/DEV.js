@@ -43,7 +43,7 @@ export default StyleSheet.create({
   /* button base */
   button: {
     width: '100%',
-    borderWidth: opts.border,
+    backgroundColor: '#d1d5db',
     padding: 18,
     borderRadius: opts.radius,
     marginVertical: 8,
@@ -52,6 +52,7 @@ export default StyleSheet.create({
 
   /* button text */
   buttonText: {
+    color: 'white',
     fontWeight: '600',
     fontSize: 18,
   },
