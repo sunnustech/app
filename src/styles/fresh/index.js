@@ -5,5 +5,6 @@ import TSS from './TSS'
 import WSS from './WSS'
 import DEV from './DEV'
 import map from './map'
+import knockout from './knockout'
 
-export { login, home, map, SOAR, TSS, WSS, DEV }
+export { login, home, map, SOAR, TSS, WSS, DEV, knockout }

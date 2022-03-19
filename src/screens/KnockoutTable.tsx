@@ -14,6 +14,7 @@ import { Sport } from '@/data/schema/TSS.d'
 import { MatchRequest, Round } from '@/types/TSS.d'
 import { useState } from 'react'
 import { Knockout } from '@/components/Knockout'
+import { knockout as styles } from '@/styles/fresh'
 
 const KnockoutTable = () => {
   const [sport, setSport] = useState<Sport>('volleyball')
@@ -51,47 +52,51 @@ const KnockoutTable = () => {
     )
   }
 
-  return (
-    <KeyboardAvoidingView style={styles.container}>
-      <View style={styles.container}>
+  const Inner = () => {
+    return (
+      <>
+        <View style={styles.container}>
+          <Text>
+            {`${winner === 'A' ? m.A : m.B} wins ${
+              winner === 'A' ? m.B : m.A
+            } in the ${round} in ${sport}`}
+          </Text>
+          <View style={styles.innerContainer}>
+            <Button onPress={() => handleMatch(matchData)}>Handle Match</Button>
+            <Button onPress={() => debugKnockoutTree({ sport })}>
+              Debug Table
+            </Button>
+          </View>
+        </View>
+        <Knockout />
+      </>
+    )
+  }
+
+  const NotTheTable = () => {
+    return (
+      <View style={styles.innerContainer}>
         <Text>The one place for knockout table development and debugging</Text>
         <ButtonGreen onPress={resetTSS}>Reset TSS Data</ButtonGreen>
-        <Text>
-          {`${winner === 'A' ? m.A : m.B} wins ${
-            winner === 'A' ? m.B : m.A
-          } in the ${round} in ${sport}`}
-        </Text>
-        <View style={styles.innerContainer}>
-          <Button onPress={() => handleMatch(matchData)}>Handle Match</Button>
-          <Button onPress={() => debugKnockoutTree({ sport })}>
-            Debug Table
-          </Button>
-        </View>
       </View>
-      <Knockout />
+    )
+  }
+
+  const TheTable = () => {
+    return (
+      <View style={styles.tableContainer}>
+        <Knockout />
+      </View>
+    )
+  }
+
+  return (
+    <KeyboardAvoidingView style={styles.container}>
+      <NotTheTable />
+      <TheTable />
+      {/* <Inner /> */}
     </KeyboardAvoidingView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  innerContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 40,
-    width: '60%',
-  },
-  button: {
-    height: 28,
-  },
-  text: {
-    color: 'black',
-  },
-})
 
 export default KnockoutTable
