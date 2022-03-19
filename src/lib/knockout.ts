@@ -11,7 +11,7 @@ const delimiter = () => {
 }
 
 function resetTSS() {
-  push({ collection: 'TSS', data: TSS, merge: false })
+  push({ collection: 'TSS', docs: TSS, merge: false })
 }
 
 /*
@@ -73,6 +73,7 @@ function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
     },
   }
 
+  console.log(packet)
   // update the database
   push({ collection: 'TSS', docs: packet })
 

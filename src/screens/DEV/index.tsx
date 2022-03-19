@@ -1,5 +1,5 @@
 // {{{
-import { Text, View } from 'react-native'
+import { Text, View, ScrollView } from 'react-native'
 /* navigation */
 import { DrawerPages } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
@@ -17,12 +17,42 @@ import DebugButton from './DebugButton'
 
 /* debug functions */
 import writeSchema from '@/data/writeSchema'
+import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
+import { MatchRequest } from '@/lib/knockout.d'
+
+/* use this space to hard-code test inputs to functions */
+
+function _handleMatch() {
+  const outcome: MatchRequest = {
+    sport: 'dodgeball',
+    round: 'semifinals',
+    matchNumber: 1,
+    winner: 'A',
+  }
+  handleMatch(outcome)
+}
 
 /* add button that links to debug function */
 const DebugList = () => (
-  <DebugButton onPress={writeSchema} color="#22c55e">
-    Write Schema
-  </DebugButton>
+  <>
+    <Text>Database</Text>
+
+    <DebugButton onPress={writeSchema} color="#22c55e">
+      Write Schema
+    </DebugButton>
+
+    <Text>Knockout Table</Text>
+
+    <DebugButton onPress={resetTSS} color="#ec4899">
+      Reset TSS Data
+    </DebugButton>
+    <DebugButton onPress={_handleMatch} color="#ec4899">
+      Handle Match
+    </DebugButton>
+    <DebugButton onPress={getKnockoutTable} color="#ec4899">
+      Get Knockout Table
+    </DebugButton>
+  </>
 )
 
 /*
@@ -35,13 +65,13 @@ const DebugList = () => (
 const DEVScreen = () => {
   const navigation = useNavigation<DNP<DrawerPages, 'DEV'>>()
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text>Welcome to the DEV page!</Text>
       <Text>(you can navigate back by swiping in from the left)</Text>
-      <View style={{ width: '60%' }}>
+      <View style={{ width: '60%', marginTop: 32 }}>
         <DebugList />
       </View>
-    </View>
+    </ScrollView>
   )
 }
 export default DEVScreen
