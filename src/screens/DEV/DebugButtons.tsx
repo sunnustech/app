@@ -56,15 +56,6 @@ const Buttons = () => (
     <DebugButton onPress={writeSchema} color="#22c55e">
       Write Schema
     </DebugButton>
-    <DebugButton onPress={firestore.writeCollection} color="#eab308">
-      Write Collection
-    </DebugButton>
-    <DebugButton onPress={firestore.read} color="#eab308">
-      Read
-    </DebugButton>
-    <DebugButton onPress={firestore.writeDocument} color="#eab308">
-      Write Document
-    </DebugButton>
   </>
 )
 

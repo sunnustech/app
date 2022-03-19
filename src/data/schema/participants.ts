@@ -68,7 +68,6 @@ const addLoginID = (obj: Group) => {
   obj.members.forEach((e) => {
     e['loginid'] = grpNameTitle + generateRandomID()
   })
-  console.log(obj)
   return obj
 }
 
