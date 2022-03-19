@@ -1,3 +1,4 @@
+// {{{
 import { Text, View } from 'react-native'
 /* navigation */
 import { DrawerPages } from '@/types/navigation'
@@ -6,6 +7,7 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 /* sunnus components */
 import { DEV as styles } from '@/styles/fresh'
 import DebugButton from './DebugButton'
+// }}}
 
 /*
  * Hey devs, to add your own debug function, simply create a new instance of
@@ -29,6 +31,7 @@ const DebugList = () => (
  * the function!
  */
 
+// {{{
 const DEVScreen = () => {
   const navigation = useNavigation<DNP<DrawerPages, 'DEV'>>()
   return (
@@ -41,5 +44,5 @@ const DEVScreen = () => {
     </View>
   )
 }
-
 export default DEVScreen
+// }}}

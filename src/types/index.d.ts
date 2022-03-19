@@ -8,7 +8,7 @@ export type UserState = {
 }
 
 export type ButtonProps = {
-  onPress: () => void
+  onPress: any
   children: string
 }
 
