@@ -16,6 +16,7 @@ export type TSSKnockoutTable = {
   finals: {
     [key: number]: { A: string; B: string; winner?: string }
   }
+  champions: string
 }
 
 export type TSSEvents = {

@@ -1,20 +1,25 @@
-import { KeyboardAvoidingView, ScrollView, Text, View } from 'react-native'
-import RNPickerSelect from 'react-native-picker-select'
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 /* sunnus components */
-import { Button, ButtonGreen, ButtonRed } from '@/components/Buttons'
-import styles from '@/styles/main'
-import { resetTSS, handleMatch, delimiter } from '@/lib/knockout'
+import { Button, ButtonGreen } from '@/components/Buttons'
+import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
 import TSS from '@/data/schema/TSS'
 import { Sport } from '@/data/schema/TSS.d'
-import { MatchRequest, Round } from '@/lib/knockout.d'
+import { MatchRequest, Round } from '@/types/TSS.d'
 import { useState } from 'react'
+import { Knockout } from '@/components/Knockout'
 
 const KnockoutTable = () => {
   const [sport, setSport] = useState<Sport>('volleyball')
-  const [round, setRound] = useState<Round>('round_of_32')
+  const [round, setRound] = useState<Round>('finals')
   const [matchNumber, setMatchNumber] = useState<number>(0)
-  const [winner, setWinner] = useState<'A' | 'B'>('A')
+  const [winner, setWinner] = useState<'A' | 'B'>('B')
 
   // to be interactively keyed in eventually
   const matchData: MatchRequest = {
@@ -24,86 +29,69 @@ const KnockoutTable = () => {
     winner,
   }
 
+  // get test match
   const m = TSS[sport][round][matchNumber]
-  const sportList = ['dodgeball', 'frisbee', 'volleyball', 'tchoukball']
-  const roundList = [
-    'round_of_32',
-    'round_of_16',
-    'quarterfinals',
-    'semifinals',
-    'finals',
-  ]
 
-  const CustomPicker = ({ state, setState, items }) => {
-    const [value, setValue] = useState(state)
-    function send(value) {
-      setState(value)
-    }
-    return (
-      <View style={styles.pickerContainer}>
-        <RNPickerSelect
-          onValueChange={(e) => setValue(e)}
-          doneText="Select"
-          onDonePress={() => send(value)}
-          // items={sportList.map((e) => ({
-          //   label: e.charAt(0).toUpperCase() + e.slice(1),
-          //   value: e,
-          // }))}
-          items={items}
-        />
-      </View>
-    )
+  function debugKnockoutTree({ sport }: { sport: Sport }) {
+    getKnockoutTable({ sport }).then((data: any) => {
+      console.log(sport, data)
+    })
   }
 
-  // items={[
-  //   { label: 'volleyball', value: 'volleyball' },
-  //   { label: 'dodgeball', value: 'dodgeball' },
-  //   { label: 'tchoukball', value: 'tchoukball' },
-  //   { label: 'frisbee', value: 'frisbee' },
-  // ]}
-  function debug() {
-    delimiter()
-    console.log(round)
-    const idx = roundList.indexOf(round)
-    console.log('index', idx)
-    const items = roundList.map((e, idx) => {
-      const exponent = roundList.length - idx
-      const total = 2 ** exponent
-      console.log(total)
-    })
+  type ButtonProps = {
+    onPress: () => void
+    children: string
+  }
+
+  const Button = ({ onPress, children }: ButtonProps) => {
+    return (
+      <TouchableOpacity onPress={onPress} style={styles.button}>
+        <Text style={styles.text}>{children}</Text>
+      </TouchableOpacity>
+    )
   }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text>The one place for knockout table development and debugging</Text>
-      <View style={styles.buttonContainer}>
+      <View style={styles.container}>
+        <Text>The one place for knockout table development and debugging</Text>
         <ButtonGreen onPress={resetTSS}>Reset TSS Data</ButtonGreen>
-        <CustomPicker
-          state={sport}
-          setState={setSport}
-          items={sportList.map((e) => ({
-            label: e,
-            value: e,
-          }))}
-        />
-        <CustomPicker
-          state={round}
-          setState={setRound}
-          items={roundList.map((e) => ({
-            label: e,
-            value: e,
-          }))}
-        />
         <Text>
           {`${winner === 'A' ? m.A : m.B} wins ${
             winner === 'A' ? m.B : m.A
           } in the ${round} in ${sport}`}
         </Text>
-        <Button onPress={() => handleMatch(matchData)}>Handle Match End</Button>
-        {/* <ButtonRed onPress={debug}>Debug</ButtonRed> */}
+        <View style={styles.innerContainer}>
+          <Button onPress={() => handleMatch(matchData)}>Handle Match</Button>
+          <Button onPress={() => debugKnockoutTree({ sport })}>
+            Debug Table
+          </Button>
+        </View>
       </View>
+      <Knockout />
     </KeyboardAvoidingView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  innerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    width: '60%',
+  },
+  button: {
+    height: 28,
+  },
+  text: {
+    color: 'black',
+  },
+})
 
 export default KnockoutTable

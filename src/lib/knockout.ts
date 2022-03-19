@@ -1,14 +1,23 @@
 import TSS from '@/data/schema/TSS'
 import push from '@/data/push'
 import { Sport } from '@/data/schema/TSS.d'
-import { MatchRequest, Round } from './knockout.d'
-import { pullCollection } from '../data/pull'
+import { MatchParticipants, MatchRequest, Round, Winner } from '@/types/TSS.d'
+import { pullCollection } from '@/data/pull'
 
 const delimiter = () => {
   const date = new Date().toString()
   const line = '='.repeat(date.length)
   console.log(`\n\n\n${line}\n${date}\n${line}\n`)
 }
+
+const sportList = ['dodgeball', 'frisbee', 'volleyball', 'tchoukball']
+const roundList: Array<Round> = [
+  'round_of_32',
+  'round_of_16',
+  'quarterfinals',
+  'semifinals',
+  'finals',
+]
 
 function resetTSS() {
   push({ collection: 'TSS', docs: TSS, merge: false })
@@ -30,54 +39,60 @@ function resetTSS() {
  *
  */
 
-const roundOrder: Array<Round> = [
-  'round_of_32',
-  'round_of_16',
-  'quarterfinals',
-  'semifinals',
-  'finals',
-]
+const getNextRound = (round: Round) => {
+  const currentOrder = roundList.indexOf(round)
+  const nextOrder = currentOrder + 1
+  if (nextOrder <= roundList.length) {
+    return roundList[currentOrder + 1]
+  } else {
+    return roundList[-1]
+  }
+}
+
+const getNextMatchNumber = (matchNumber: number) => {
+  return Math.floor(matchNumber / 2)
+}
 
 function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
   delimiter()
 
-  if (round === 'finals') {
-    // handle champions
-  }
-
-  const nextRound: Round = roundOrder[roundOrder.indexOf(round) + 1]
-  console.log('nextRound', nextRound)
-  const nextMatchNumber = Math.floor(matchNumber / 2)
-  const nextMatch = TSS[sport][nextRound][nextMatchNumber]
-
   // get that exact match
-  const match = TSS[sport][round][matchNumber]
+  const matchParticipants: MatchParticipants = TSS[sport][round][matchNumber]
+  const winnerName = matchParticipants[winner]
 
-  // create a packet containing only that match's data + outcome
-  const packet = {
-    [sport]: {
-      // update the outcome of that match
-      [round]: {
-        [matchNumber]: {
-          ...match,
-          winner,
+  var packet
+  if (round === 'finals') {
+    packet = {
+      [sport]: {
+        // update the outcome of that match
+        [round]: {
+          [matchNumber]: { ...matchParticipants, winner },
+        },
+        champions: winnerName,
+      },
+    }
+  } else {
+    const nextRound: Round = getNextRound(round)
+    const nextMatchNumber = getNextMatchNumber(matchNumber)
+    const nextMatch = TSS[sport][nextRound][nextMatchNumber]
+    const nextSlot: Winner = matchNumber % 2 === 0 ? 'A' : 'B'
+    packet = {
+      [sport]: {
+        // update the outcome of that match
+        [round]: {
+          [matchNumber]: { ...matchParticipants, winner },
+        },
+        // apend the schedule for next match
+        [nextRound]: {
+          [nextMatchNumber]: { ...nextMatch, [nextSlot]: winnerName },
         },
       },
-      // apend the schedule for next match
-      [nextRound]: {
-        [nextMatchNumber]: {
-          ...nextMatch,
-          [matchNumber % 2 === 0 ? 'A' : 'B']: match[winner],
-        },
-      },
-    },
+    }
   }
 
   console.log(packet)
   // update the database
   push({ collection: 'TSS', docs: packet })
-
-  // push that team into the next round
 }
 
 async function getKnockoutTable({ sport }: { sport: Sport }) {
@@ -86,3 +101,4 @@ async function getKnockoutTable({ sport }: { sport: Sport }) {
 }
 
 export { resetTSS, handleMatch, delimiter, getKnockoutTable }
+export { sportList, roundList }
