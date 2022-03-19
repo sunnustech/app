@@ -13,6 +13,7 @@ export type DrawerPages = {
   TSS: undefined
   WSS: undefined
   DEV: undefined
+  KnockoutTable: undefined
 }
 
 export type StackPages = {
