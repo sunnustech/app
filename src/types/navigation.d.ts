@@ -12,6 +12,7 @@ export type DrawerPages = {
   SOAR: undefined
   TSS: undefined
   WSS: undefined
+  DEV: undefined
 }
 
 export type StackPages = {
