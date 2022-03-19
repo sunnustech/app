@@ -16,6 +16,7 @@ import HomeScreen from '@/screens/HomeScreen'
 import SOARScreen from '@/screens/SOAR'
 import TSSScreen from '@/screens/TSS'
 import WSSScreen from '@/screens/WSS'
+import DEVScreen from '@/screens/DEV'
 
 import { UserState } from '@/types/index'
 
@@ -31,6 +32,7 @@ const Home = () => (
     <Drawer.Screen name="SOAR" component={SOARScreen} />
     <Drawer.Screen name="TSS" component={TSSScreen} />
     <Drawer.Screen name="WSS" component={WSSScreen} />
+    <Drawer.Screen name="DEV" component={DEVScreen} />
   </Drawer.Navigator>
 )
 

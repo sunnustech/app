@@ -1,31 +1,6 @@
 import { StyleSheet } from 'react-native'
 import opts from './opts'
 
-const colors = {
-  // taken from https://tailwindcss.com/docs/customizing-colors
-  // bg: 300, fg: 500, border: 600
-  SOAR: {
-    bg: '#fcd34d',
-    border: '#f59e0b',
-    fg: '#d97706',
-  },
-  WSS: {
-    bg: '#7dd3fc',
-    border: '#0ea5e9',
-    fg: '#0284c7',
-  },
-  TSS: {
-    bg: '#86efac',
-    border: '#22c55e',
-    fg: '#22c55e',
-  },
-  DEV: {
-    bg: '#d8b4fe',
-    border: '#a855f7',
-    fg: '#a855f7',
-  },
-}
-
 export default StyleSheet.create({
   /* containers */
   container: {
@@ -74,38 +49,10 @@ export default StyleSheet.create({
     marginVertical: 8,
     alignItems: 'center',
   },
-  SOARbutton: {
-    backgroundColor: colors.SOAR.bg,
-    borderColor: colors.SOAR.border,
-  },
-  TSSbutton: {
-    backgroundColor: colors.TSS.bg,
-    borderColor: colors.TSS.border,
-  },
-  WSSbutton: {
-    backgroundColor: colors.WSS.bg,
-    borderColor: colors.WSS.border,
-  },
-  DEVbutton: {
-    backgroundColor: colors.DEV.bg,
-    borderColor: colors.DEV.border,
-  },
 
   /* button text */
   buttonText: {
     fontWeight: '600',
     fontSize: 18,
-  },
-  SOARbuttonText: {
-    color: colors.SOAR.fg,
-  },
-  WSSbuttonText: {
-    color: colors.WSS.fg,
-  },
-  TSSbuttonText: {
-    color: colors.TSS.fg,
-  },
-  DEVbuttonText: {
-    color: colors.DEV.fg,
   },
 })

@@ -74,6 +74,13 @@ const HomeScreen = () => {
         >
           WSS
         </Button>
+        <Button
+          onPress={() => navigation.navigate('DEV')}
+          textStyle={styles.DEVbuttonText}
+          containerStyle={styles.DEVbutton}
+        >
+          Development
+        </Button>
         <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
       </View>
     </KeyboardAvoidingView>
