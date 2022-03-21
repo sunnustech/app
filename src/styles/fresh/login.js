@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   inputContainer: {
     width: opts.allWidths,
-    marginBottom: opts.marginBottom,
+    marginBottom: 10,
   },
 
   image: {
@@ -49,5 +49,9 @@ export default StyleSheet.create({
     color: '#9a3412',
     fontWeight: '600',
     fontSize: 18,
+  },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10,
   },
 })

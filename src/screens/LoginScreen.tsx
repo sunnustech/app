@@ -36,6 +36,7 @@ const Input = ({
 
 const LoginScreen = () => {
   const [loginid, setLoginid] = useState('')
+  const [loginError, setLoginError] = useState(false)
 
   const loginHandler = async () => {
     const email = queryEmailFromFirebase()
@@ -44,7 +45,10 @@ const LoginScreen = () => {
         .then((credential) => {
           console.log('successful login as:', credential)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          setLoginError(true)
+          console.log(err)
+        })
     }
   }
 
@@ -93,6 +97,11 @@ const LoginScreen = () => {
           value={loginid}
           onChangeText={(text: string) => setLoginid(text)}
         />
+      </View>
+      <View>
+        <Text style={styles.errorMessage}>
+          {loginError ? 'Sorry, but this username does not exist!' : ''}
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={loginHandler}>
