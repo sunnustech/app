@@ -18,6 +18,7 @@ import TSSScreen from '@/screens/TSS'
 import WSSScreen from '@/screens/WSS'
 import DEVScreen from '@/screens/DEV'
 import KnockoutTable from '@/screens/KnockoutTable'
+import TimerScreen from '@/screens/DEV/TimerScreen'
 
 import { UserState } from '@/types/index'
 
@@ -35,6 +36,7 @@ const Home = () => (
     <Drawer.Screen name="WSS" component={WSSScreen} />
     <Drawer.Screen name="DEV" component={DEVScreen} />
     <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
+    <Drawer.Screen name="TimerScreen" component={TimerScreen} />
   </Drawer.Navigator>
 )
 

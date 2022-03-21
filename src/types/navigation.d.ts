@@ -14,6 +14,7 @@ export type DrawerPages = {
   WSS: undefined
   DEV: undefined
   KnockoutTable: undefined
+  TimerScreen: undefined
 }
 
 export type StackPages = {
