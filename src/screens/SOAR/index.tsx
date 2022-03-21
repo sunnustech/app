@@ -10,7 +10,7 @@ import {
 import { Text } from 'react-native'
 
 /* navigation */
-import { SOARPageProps } from '@/types/navigation'
+import { DrawerPages, SOARPageProps } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
@@ -18,7 +18,14 @@ import { SoarContext } from '@/contexts/SoarContext'
 import { map as styles } from '@/styles/fresh'
 import { notificationInit } from '@/lib/notifications'
 import { NoTouchDiv, Overlap } from '@/components/Views'
-import { Map, MapButton, Timer } from '@/components/SOAR'
+import {
+  Map,
+  MapTopButton,
+  MapBottomButton,
+  MapNavigationButton,
+  Timer,
+} from '@/components/SOAR'
+import { DrawerNavigationProp } from '@react-navigation/drawer'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -30,7 +37,7 @@ const SOARScreen = () => {
   } = useContext(SoarContext)
 
   notificationInit()
-  const navigation = useNavigation<SOARPageProps>()
+  const navigation = useNavigation<DrawerNavigationProp<DrawerPages, 'SOAR'>>()
   // const a: number = navigation
   const [loading, setLoading] = useState(true)
   const mapRef = useRef<MapView>(null)
@@ -85,12 +92,23 @@ const SOARScreen = () => {
     return (
       <NoTouchDiv style={styles.mapTopContainer}>
         <Overlap style={styles.mapRightContainer}>
-          <MapButton icon={[AD, 'enviroment']} onPress={toggleGameStations} />
-          <MapButton icon={[IC, 'flag']} onPress={toggleAdminStations} />
+          <MapTopButton
+            icon={[AD, 'enviroment']}
+            onPress={toggleGameStations}
+          />
+          <MapTopButton icon={[IC, 'flag']} onPress={toggleAdminStations} />
         </Overlap>
         <Overlap>
           <NoTouchDiv style={styles.timerContainer}>
             <Timer />
+          </NoTouchDiv>
+        </Overlap>
+        <Overlap>
+          <NoTouchDiv style={styles.navigationContainer}>
+            <MapNavigationButton
+              icon={[IC, 'arrow-back']}
+              onPress={navigation.openDrawer}
+            />
           </NoTouchDiv>
         </Overlap>
       </NoTouchDiv>
@@ -102,11 +120,14 @@ const SOARScreen = () => {
       <NoTouchDiv style={styles.mapBottomContainer}>
         <NoTouchDiv style={styles.mapLeftContainer}>
           <NoTouchDiv style={styles.flex1} />
-          <MapButton icon={[MCI, 'exclamation-thick']} onPress={handleSOS} />
+          <MapBottomButton
+            icon={[MCI, 'exclamation-thick']}
+            onPress={handleSOS}
+          />
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
-          <MapButton icon={[MI, 'my-location']} onPress={handleSOS} />
-          <MapButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
+          <MapBottomButton icon={[MI, 'my-location']} onPress={handleSOS} />
+          <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
         </NoTouchDiv>
       </NoTouchDiv>
     )

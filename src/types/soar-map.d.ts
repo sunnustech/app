@@ -13,6 +13,7 @@ export type SOARContextProps = {
 }
 
 export type MapButtonProps = {
+  style?: any
   icon: any
   onPress: any
 }
