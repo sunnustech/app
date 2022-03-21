@@ -5,23 +5,12 @@ import SunnusLogo from '../../assets/sunnus-anniversary.png'
 /* firebase */
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 
-/* navigation */
-import { StackPages } from '@/lib/navigation'
-import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp as NSNP } from '@react-navigation/native-stack'
-
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
 import { login as styles } from '@/styles/fresh'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 
-const LoginButton = ({ loginHandler }: { loginHandler: any }) => {
-  return (
-    <TouchableOpacity onPress={loginHandler} style={styles.button}>
-      <Text style={styles.buttonText}>Login</Text>
-    </TouchableOpacity>
-  )
-}
+const PASSWORD = 'sunnus'
 
 const Input = ({
   value,
@@ -45,14 +34,17 @@ const Input = ({
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
 
   const loginHandler = () => {
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, PASSWORD)
       .then((credential) => {
         console.log('successful login as:', credential.user.email)
       })
       .catch((err) => console.log(err))
+  }
+
+  const forgotHandler = () => {
+    // https://firebase.google.com/products/extensions/firebase-firestore-send-email
   }
 
   /* for devs to log in quickly;
@@ -78,16 +70,14 @@ const LoginScreen = () => {
           value={email}
           onChangeText={(text: string) => setEmail(text)}
         />
-        {/* password field */}
-        {/* <Input */}
-        {/*   secureTextEntry */}
-        {/*   placeholder="Password" */}
-        {/*   value={password} */}
-        {/*   onChangeText={(text: string) => setPassword(text)} */}
-        {/* /> */}
       </View>
       <View style={styles.buttonContainer}>
-        <LoginButton loginHandler={loginHandler} />
+        <TouchableOpacity style={styles.button} onPress={loginHandler}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={forgotHandler}>
+          <Text style={styles.buttonText}>Forgot ID?</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={breakInHandler}>
           <Text style={styles.buttonText}>Break In</Text>
         </TouchableOpacity>

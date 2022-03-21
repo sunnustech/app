@@ -46,7 +46,7 @@ const DebugList = () => (
     <DebugButton onPress={resetTSS} color="#ec4899">
       Reset TSS Data
     </DebugButton>
-    <DebugButton onPress={_handleMatch} color="#ec4899">
+    <DebugButton onPress={handleMatch} color="#ec4899">
       Handle Match
     </DebugButton>
     <DebugButton onPress={getKnockoutTable} color="#ec4899">

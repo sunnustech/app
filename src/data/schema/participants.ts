@@ -56,19 +56,19 @@ const testTwo: Group = {
 }
 
 const trimGroupNameToLowercase = (grp: string) => {
-  return grp.split(' ').join('').toLowerCase()
+  return grp.split('_').join('').split(' ').join('').toLowerCase()
 }
 
 const generateRandomID = () => {
-  return '_' + Math.random().toString(36).substring(5)
+  return Math.random().toString(10).substring(2, 8)
 }
 
 const addLoginID = (obj: Group) => {
   let grpNameTitle = trimGroupNameToLowercase(obj.group_title)
-  obj.members.forEach((e) => {
-    e['loginid'] = grpNameTitle + generateRandomID()
-  })
-  return obj
+  let updatedObj = obj.members.map(
+    (par) => (par['loginid'] = grpNameTitle + generateRandomID())
+  )
+  return updatedObj
 }
 
 const participants: ParticipantsData = objFromArray(
