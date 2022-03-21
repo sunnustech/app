@@ -65,10 +65,10 @@ const generateRandomID = () => {
 
 const addLoginID = (obj: Group) => {
   let grpNameTitle = trimGroupNameToLowercase(obj.group_title)
-  let updatedObj = obj.members.map(
-    (par) => (par['loginid'] = grpNameTitle + generateRandomID())
-  )
-  return updatedObj
+  obj.members.forEach((e) => {
+    e['loginid'] = grpNameTitle + generateRandomID()
+  })
+  return obj
 }
 
 const participants: ParticipantsData = objFromArray(
