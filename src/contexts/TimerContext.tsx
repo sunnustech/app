@@ -4,7 +4,7 @@ import { createContext, useState } from 'react'
 function createTimerContext() {
   // Getters and setters to be used when using context
   var ctx
-  function Provider(props: any) {
+  function Provider(props: React.PropsWithChildren<{}>) {
     const [isActive, setIsActive] = useState(false)
     const [isPaused, setIsPaused] = useState(true)
     const [time, setTime] = useState(0)

@@ -21,3 +21,7 @@ const auth = getAuth(app)
 const db = getFirestore(app)
 
 export { auth, db }
+export function firestore() {
+  throw new Error('Function not implemented.')
+}
+

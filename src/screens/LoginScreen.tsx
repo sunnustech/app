@@ -4,6 +4,8 @@ import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { db } from '@/sunnus/firebase'
+import { collection, getDocs, query } from 'firebase/firestore'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
@@ -33,14 +35,35 @@ const Input = ({
 }
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('')
+  const [loginid, setLoginid] = useState('')
 
-  const loginHandler = () => {
-    signInWithEmailAndPassword(auth, email, PASSWORD)
-      .then((credential) => {
-        console.log('successful login as:', credential.user.email)
-      })
-      .catch((err) => console.log(err))
+  const loginHandler = async () => {
+    const email = queryEmailFromFirebase()
+    if (email) {
+      signInWithEmailAndPassword(auth, await email, PASSWORD)
+        .then((credential) => {
+          console.log('successful login as:', credential)
+        })
+        .catch((err) => console.log(err))
+    }
+  }
+
+  const queryEmailFromFirebase = async () => {
+    const userRef = query(collection(db, 'participants'))
+    const querySnapshot = await getDocs(userRef)
+    let email = ''
+    querySnapshot.forEach((doc) => {
+      const teamData = doc.data()
+      const teamDetails = teamData.members
+      if (teamDetails) {
+        for (let i = 0; i < teamDetails.length; i++) {
+          if (teamDetails[i].loginid === loginid) {
+            email = teamDetails[i].email
+          }
+        }
+      }
+    })
+    return email
   }
 
   const forgotHandler = () => {
@@ -67,8 +90,8 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <Input
           placeholder="Team ID + key"
-          value={email}
-          onChangeText={(text: string) => setEmail(text)}
+          value={loginid}
+          onChangeText={(text: string) => setLoginid(text)}
         />
       </View>
       <View style={styles.buttonContainer}>
