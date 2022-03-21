@@ -1,32 +1,43 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, Dispatch, SetStateAction } from 'react'
 
-// Context function to be used
-function createTimerContext() {
-  // Getters and setters to be used when using context
-  var ctx
-  function Provider(props: any) {
-    const [isActive, setIsActive] = useState(false)
-    const [isPaused, setIsPaused] = useState(true)
-    const [time, setTime] = useState(0)
-    ctx = createContext({
-      isActive,
-      setIsActive,
-      isPaused,
-      setIsPaused,
-      time,
-      setTime,
-    })
+type TimerContextProps = {
+  isActive: boolean
+  isPaused: boolean
+  contextTime: number
+  setIsActive: Dispatch<SetStateAction<boolean>>
+  setIsPaused: Dispatch<SetStateAction<boolean>>
+  setContextTime: Dispatch<SetStateAction<number>>
+}
+
+const createTimerContext = () => {
+  const TimerContext = createContext<TimerContextProps>({
+    isActive: false,
+    isPaused: false,
+    contextTime: 0,
+    setIsActive: () => {},
+    setIsPaused: () => {},
+    setContextTime: () => 0,
+  })
+  const TimerProvider = (props: React.PropsWithChildren<{}>) => {
+    const [isActive, setIsActive] = useState<boolean>(false)
+    const [isPaused, setIsPaused] = useState<boolean>(false)
+    const [contextTime, setContextTime] = useState<number>(0)
     return (
-      <ctx.Provider
-        value={{ isActive, setIsActive, isPaused, setIsPaused, time, setTime }}
+      <TimerContext.Provider
+        value={{
+          isActive,
+          isPaused,
+          setIsActive,
+          setIsPaused,
+          contextTime,
+          setContextTime,
+        }}
         {...props}
       />
     )
   }
-  // Export a tuple of the default and the functions to use the context
-  return [ctx, Provider] as const
+  return [TimerContext, TimerProvider] as const
 }
 
 const [TimerContext, TimerProvider] = createTimerContext()
-
 export { TimerContext, TimerProvider }
