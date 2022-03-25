@@ -36,7 +36,7 @@ const Input = ({
 }
 
 const LoginScreen = () => {
-  const { userid, setUserid, team, setTeam } = useContext(UserContext)
+  const { setUserid, setTeam } = useContext(UserContext)
   const [loginid, setLoginid] = useState('')
   const [loginError, setLoginError] = useState(false)
 
@@ -58,13 +58,22 @@ const LoginScreen = () => {
     const userRef = query(collection(db, 'participants'))
     const querySnapshot = await getDocs(userRef)
     let email = ''
+    let teamNames: string[] = []
     querySnapshot.forEach((doc) => {
       const teamData = doc.data()
+      if (teamData.group_title) {
+        teamNames.push(teamData.group_title)
+      }
       const teamDetails = teamData.members
       if (teamDetails) {
         for (let i = 0; i < teamDetails.length; i++) {
           if (teamDetails[i].loginid === loginid) {
-            email = teamDetails[i].email         
+            setUserid(loginid)
+            email = teamDetails[i].email
+            const teamName = teamNames[teamNames.length - 1]
+              .split('_')
+              .join(' ')
+            setTeam(teamName)
           }
         }
       }
