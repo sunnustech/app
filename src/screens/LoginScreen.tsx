@@ -1,5 +1,11 @@
-import { useContext, useEffect, useState } from 'react'
-import { View, Image, TouchableOpacity, Text } from 'react-native'
+import { useContext, useState } from 'react'
+import {
+  ActivityIndicator,
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+} from 'react-native'
 import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
@@ -38,6 +44,7 @@ const Input = ({
 const LoginScreen = () => {
   const { setUserid, setTeam } = useContext(UserContext)
   const [loginid, setLoginid] = useState('')
+  const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
 
   const loginHandler = async () => {
@@ -55,6 +62,7 @@ const LoginScreen = () => {
   }
 
   const queryEmailFromFirebase = async () => {
+    setLoading(true)
     const userRef = query(collection(db, 'participants'))
     const querySnapshot = await getDocs(userRef)
     let email = ''
@@ -78,6 +86,7 @@ const LoginScreen = () => {
         }
       }
     })
+    setLoading(false)
     return email
   }
 
@@ -109,19 +118,32 @@ const LoginScreen = () => {
           onChangeText={(text: string) => setLoginid(text)}
         />
       </View>
+      <ActivityIndicator animating={loading} />
       <View>
         <Text style={styles.errorMessage}>
           {loginError ? 'Sorry, but this username does not exist!' : ''}
         </Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={loginHandler}>
+        <TouchableOpacity
+          style={loading ? styles.disabledButton : styles.button}
+          disabled={loading}
+          onPress={loginHandler}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={forgotHandler}>
+        <TouchableOpacity
+          style={loading ? styles.disabledButton : styles.button}
+          disabled={loading}
+          onPress={forgotHandler}
+        >
           <Text style={styles.buttonText}>Forgot ID?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={breakInHandler}>
+        <TouchableOpacity
+          style={loading ? styles.disabledButton : styles.button}
+          disabled={loading}
+          onPress={breakInHandler}
+        >
           <Text style={styles.buttonText}>Break In</Text>
         </TouchableOpacity>
       </View>
