@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { View, Image, TouchableOpacity, Text } from 'react-native'
 import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
@@ -11,6 +11,7 @@ import { collection, getDocs, query } from 'firebase/firestore'
 import { auth } from '@/sunnus/firebase'
 import { login as styles } from '@/styles/fresh'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import { UserContext } from '../contexts/UserContext'
 
 const PASSWORD = 'sunnus'
 
@@ -35,6 +36,7 @@ const Input = ({
 }
 
 const LoginScreen = () => {
+  const { userid, setUserid, team, setTeam } = useContext(UserContext)
   const [loginid, setLoginid] = useState('')
   const [loginError, setLoginError] = useState(false)
 
@@ -62,7 +64,7 @@ const LoginScreen = () => {
       if (teamDetails) {
         for (let i = 0; i < teamDetails.length; i++) {
           if (teamDetails[i].loginid === loginid) {
-            email = teamDetails[i].email
+            email = teamDetails[i].email         
           }
         }
       }
