@@ -3,7 +3,6 @@ import { objFromArray } from './utils'
 
 const testOne: Group = {
   group_title: 'Known_Painters',
-  id: 'xifIuXK618jTpt1U5KoL',
   registered_events: {
     TSS: {
       volleyball: true,
@@ -31,7 +30,6 @@ const testOne: Group = {
 
 const testTwo: Group = {
   group_title: 'Modest_Liberators',
-  id: '1l6tlj0vXEXWWytsWlHh',
   registered_events: {
     SOAR: true,
   },
@@ -73,7 +71,7 @@ const addLoginID = (obj: Group) => {
 
 const participants: ParticipantsData = objFromArray(
   [addLoginID(testOne), addLoginID(testTwo)],
-  'id'
+  'group_title'
 )
 
 export default participants

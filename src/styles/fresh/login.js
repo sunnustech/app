@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   inputContainer: {
     width: opts.allWidths,
-    marginBottom: opts.marginBottom,
+    marginBottom: 10,
   },
 
   image: {
@@ -44,10 +44,24 @@ export default StyleSheet.create({
     marginVertical: 8,
     alignItems: 'center',
   },
+  disabledButton: {
+    backgroundColor: '#ebebe4',
+    borderWidth: opts.border,
+    borderColor: '#f59e0b',
+    width: '60%',
+    padding: 12,
+    borderRadius: opts.radius,
+    marginVertical: 8,
+    alignItems: 'center',
+  },
   buttonText: {
     // TODO: add custom fonts
     color: '#9a3412',
     fontWeight: '600',
     fontSize: 18,
+  },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10,
   },
 })

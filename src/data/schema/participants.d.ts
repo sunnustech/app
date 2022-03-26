@@ -10,7 +10,6 @@ export type RegisteredEvent = {
 
 export type Group = {
   group_title: string
-  id: string
   registered_events: RegisteredEvent
   members: Array<{
     email: string

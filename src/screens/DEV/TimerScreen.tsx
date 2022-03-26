@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, Text, TouchableOpacity } from 'react-native'
 import { timer as styles } from '@/styles/fresh'
 import { useContext } from 'react'
 import Timer from '@/components/SOAR/Timer'
-import { TimerContext } from '@/sunnus/App'
+import { TimerContext } from '@/contexts/TimerContext'
 
 const KnockoutTable = () => {
   const { setIsActive, isPaused, setIsPaused, setContextTime } =

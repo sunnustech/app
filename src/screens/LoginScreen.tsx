@@ -1,14 +1,23 @@
-import { useEffect, useState } from 'react'
-import { View, Image, TouchableOpacity, Text } from 'react-native'
+import { useContext, useState } from 'react'
+import {
+  ActivityIndicator,
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+} from 'react-native'
 import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { db } from '@/sunnus/firebase'
+import { collection, getDocs, query } from 'firebase/firestore'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
 import { login as styles } from '@/styles/fresh'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import { UserContext } from '../contexts/UserContext'
 
 const PASSWORD = 'sunnus'
 
@@ -33,14 +42,52 @@ const Input = ({
 }
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('')
+  const { setUserid, setTeam } = useContext(UserContext)
+  const [loginid, setLoginid] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [loginError, setLoginError] = useState(false)
 
-  const loginHandler = () => {
-    signInWithEmailAndPassword(auth, email, PASSWORD)
-      .then((credential) => {
-        console.log('successful login as:', credential.user.email)
-      })
-      .catch((err) => console.log(err))
+  const loginHandler = async () => {
+    const email = queryEmailFromFirebase()
+    if (email) {
+      signInWithEmailAndPassword(auth, await email, PASSWORD)
+        .then((credential) => {
+          console.log('successful login as:', credential)
+        })
+        .catch((err) => {
+          setLoginError(true)
+          console.log(err)
+        })
+    }
+  }
+
+  const queryEmailFromFirebase = async () => {
+    setLoading(true)
+    const userRef = query(collection(db, 'participants'))
+    const querySnapshot = await getDocs(userRef)
+    let email = ''
+    let teamNames: string[] = []
+    querySnapshot.forEach((doc) => {
+      const teamData = doc.data()
+      if (teamData.group_title) {
+        teamNames.push(teamData.group_title)
+      }
+      const teamDetails = teamData.members
+      if (teamDetails) {
+        for (let i = 0; i < teamDetails.length; i++) {
+          if (teamDetails[i].loginid === loginid) {
+            setUserid(loginid)
+            email = teamDetails[i].email
+            const teamName = teamNames[teamNames.length - 1]
+              .split('_')
+              .join(' ')
+            setTeam(teamName)
+          }
+        }
+      }
+    })
+    setLoading(false)
+    return email
   }
 
   const forgotHandler = () => {
@@ -67,18 +114,36 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <Input
           placeholder="Team ID + key"
-          value={email}
-          onChangeText={(text: string) => setEmail(text)}
+          value={loginid}
+          onChangeText={(text: string) => setLoginid(text)}
         />
       </View>
+      <ActivityIndicator animating={loading} />
+      <View>
+        <Text style={styles.errorMessage}>
+          {loginError ? 'Sorry, but this username does not exist!' : ''}
+        </Text>
+      </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={loginHandler}>
+        <TouchableOpacity
+          style={loading ? styles.disabledButton : styles.button}
+          disabled={loading}
+          onPress={loginHandler}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={forgotHandler}>
+        <TouchableOpacity
+          style={loading ? styles.disabledButton : styles.button}
+          disabled={loading}
+          onPress={forgotHandler}
+        >
           <Text style={styles.buttonText}>Forgot ID?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={breakInHandler}>
+        <TouchableOpacity
+          style={loading ? styles.disabledButton : styles.button}
+          disabled={loading}
+          onPress={breakInHandler}
+        >
           <Text style={styles.buttonText}>Break In</Text>
         </TouchableOpacity>
       </View>

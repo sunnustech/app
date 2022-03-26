@@ -1,7 +1,7 @@
 import { Text } from 'react-native'
 import { map as styles } from '@/styles/fresh'
 import { useEffect, useContext, useState } from 'react'
-import { TimerContext } from '@/sunnus/App'
+import { TimerContext } from '@/contexts/TimerContext'
 
 const Timer = () => {
   const { isActive, isPaused, contextTime, setContextTime } =

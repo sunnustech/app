@@ -19,6 +19,8 @@ import DebugButton from './DebugButton'
 import writeSchema from '@/data/writeSchema'
 import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
 import { MatchRequest } from '@/lib/knockout.d'
+import { useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -63,6 +65,12 @@ const DebugList = () => (
 
 // {{{
 const DEVScreen = () => {
+  const { userid, team } = useContext(UserContext)
+  const getContext = () => {
+    console.log('trying to fetch...')
+    console.log('userid:', userid)
+    console.log('team:', team)
+  }
   const navigation = useNavigation<DNP<DrawerPages, 'DEV'>>()
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -70,6 +78,9 @@ const DEVScreen = () => {
       <Text>(you can navigate back by swiping in from the left)</Text>
       <View style={{ width: '60%', marginTop: 32 }}>
         <DebugList />
+        <DebugButton onPress={getContext} color="#ec4899">
+          Get User + Team Context
+        </DebugButton>
       </View>
     </ScrollView>
   )

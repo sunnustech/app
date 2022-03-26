@@ -22,7 +22,12 @@ const map = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  navigationContainer: {
+    // backgroundColor: '#bbf7d0',
+    // opacity: 0.7,
+  },
   timerContainer: {
+    marginTop: 10,
     marginLeft: 'auto',
     marginRight: 'auto',
     // backgroundColor: '#bbf7d0',
@@ -49,7 +54,7 @@ const map = StyleSheet.create({
   mapUIContainer: {
     /* take % of screen's dimensions and center it */
     width: '90%',
-    height: '80%',
+    height: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 'auto',
@@ -82,13 +87,30 @@ const map = StyleSheet.create({
   },
 
   mapSideButton: {
-    marginTop: 14,
     width: sideButton.size,
     height: sideButton.size,
     backgroundColor: sideButton.color,
     borderRadius: 100,
     justifyContent: 'space-around',
     alignItems: 'center',
+    shadowColor: '#282828',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+  },
+  mapTopButton: {
+    marginBottom: 14,
+  },
+  mapBottomButton: {
+    marginTop: 14,
+  },
+  mapNavigationButton: {
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: 'rgba(0, 0, 0, 0.15);',
+    width: sideButton.size,
+    height: sideButton.size,
     shadowColor: '#282828',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
