@@ -9,8 +9,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject",
-    "prepare": "./.hooks/setup"
+    "eject": "expo eject"
   },
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",
