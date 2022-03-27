@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { SetStateAction, useRef, useState } from 'react'
 import {
   Animated,
   ImageBackground,
@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Text,
 } from 'react-native'
+import { Tab, TabView } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 
 /* sunnus components */
@@ -24,113 +25,8 @@ const BRONZE = '#cd7f32'
 const DATA: DataTest[] = [
   {
     id: 1,
-    team: 'Daddy Hong Sheng',
+    team: 'Mock Data',
     score: 225,
-  },
-  {
-    id: 2,
-    team: 'Papa Jun Hong',
-    score: 228,
-  },
-  {
-    id: 3,
-    team: 'Ryan',
-    score: -1,
-  },
-  {
-    id: 4,
-    team: 'Khang',
-    score: 225,
-  },
-  {
-    id: 5,
-    team: 'Benjy',
-    score: 225,
-  },
-  {
-    id: 6,
-    team: 'a',
-    score: -2,
-  },
-  {
-    id: 7,
-    team: 'ha',
-    score: -2,
-  },
-  {
-    id: 8,
-    team: 'test',
-    score: -2,
-  },
-  {
-    id: 9,
-    team: 'fff',
-    score: -2,
-  },
-  {
-    id: 10,
-    team: 'xxx',
-    score: -2,
-  },
-  {
-    id: 11,
-    team: 'abc',
-    score: -2,
-  },
-  {
-    id: 12,
-    team: 'def',
-    score: -2,
-  },
-  {
-    id: 13,
-    team: 'ggg',
-    score: -2,
-  },
-  {
-    id: 14,
-    team: 'cocccc',
-    score: -2,
-  },
-  {
-    id: 15,
-    team: 'qqqqqqqq',
-    score: -2,
-  },
-  {
-    id: 16,
-    team: 'aaa',
-    score: -2,
-  },
-  {
-    id: 17,
-    team: 'thisISaVERYlongTEAMnameWHATisDISPLAYED?',
-    score: -2,
-  },
-  {
-    id: 18,
-    team: 'aaa',
-    score: -2,
-  },
-  {
-    id: 19,
-    team: 'qqqqqqqq',
-    score: -2,
-  },
-  {
-    id: 20,
-    team: 'aaa',
-    score: -2,
-  },
-  {
-    id: 21,
-    team: 'qqqqqqqq',
-    score: -2,
-  },
-  {
-    id: 22,
-    team: 'aaa',
-    score: -2,
   },
 ]
 
@@ -278,10 +174,33 @@ const ScoreboardScreen = () => {
         style={styles.imgBackground}
         resizeMode="cover"
       >
-        <Text style={styles.scoreboardTitle}>SOAR 🎉</Text>
-        <SafeAreaView style={styles.container}>
-          {animatedListRender(DATA, TEAM_ID)}
-        </SafeAreaView>
+        <Tab
+          value={index}
+          onChange={(e: SetStateAction<number>) => setIndex(e)}
+          indicatorStyle={{
+            backgroundColor: '#f95b78',
+            height: 2.5,
+          }}
+        >
+          <Tab.Item titleStyle={styles.scoreboardTitle} title="SOAR 🎉" />
+          <Tab.Item titleStyle={styles.scoreboardTitle} title="FRINGE 💃" />
+        </Tab>
+        <TabView value={index} onChange={setIndex} animationType="spring">
+          <TabView.Item
+            onMoveShouldSetResponder={(e: any) => e.stopPropagation()}
+          >
+            <SafeAreaView style={styles.container}>
+              {animatedListRender(DATA, TEAM_ID)}
+            </SafeAreaView>
+          </TabView.Item>
+          <TabView.Item
+            onMoveShouldSetResponder={(e: any) => e.stopPropagation()}
+          >
+            <SafeAreaView style={styles.container}>
+              {animatedListRender(DATA, undefined)}
+            </SafeAreaView>
+          </TabView.Item>
+        </TabView>
       </ImageBackground>
     </>
   )
