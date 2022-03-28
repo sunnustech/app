@@ -5,6 +5,8 @@ type UserContextProps = {
   setUserid: Dispatch<SetStateAction<string>>
   team: string
   setTeam: Dispatch<SetStateAction<string>>
+  schedule: object
+  setSchedule: Dispatch<SetStateAction<object>>
 }
 
 const createUserContext = () => {
@@ -13,10 +15,13 @@ const createUserContext = () => {
     setUserid: () => '',
     team: '',
     setTeam: () => '',
+    schedule: {},
+    setSchedule: () => {}
   })
   const UserProvider = (props: React.PropsWithChildren<{}>) => {
     const [userid, setUserid] = useState('')
     const [team, setTeam] = useState('')
+    const [schedule, setSchedule] = useState({})
     return (
       <UserContext.Provider
         value={{
@@ -24,6 +29,8 @@ const createUserContext = () => {
           setUserid,
           team,
           setTeam,
+          schedule,
+          setSchedule
         }}
         {...props}
       />
