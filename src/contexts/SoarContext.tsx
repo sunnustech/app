@@ -3,9 +3,18 @@ import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
 import { db } from '@/sunnus/firebase'
 import { doc, DocumentData, getDoc } from 'firebase/firestore'
 import { GameStation } from '@/types/GameStation'
-import { SOARContextProps } from '@/types/soar-map'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
+
+type SOARContextProps = {
+  loading: boolean
+  filterLocations: GameStation[]
+  updateFilterLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
+  gameLocations: GameStation[]
+  updateGameLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
+  adminLocations: GameStation[]
+  updateAdminLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
+}
 
 /*
  * parse game location details from Firestore data

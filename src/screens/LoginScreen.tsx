@@ -42,7 +42,7 @@ const Input = ({
 }
 
 const LoginScreen = () => {
-  const { setUserid, setTeam } = useContext(UserContext)
+  const { setUserid, setTeam, setSchedule } = useContext(UserContext)
   const [loginid, setLoginid] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
@@ -82,6 +82,9 @@ const LoginScreen = () => {
               .split('_')
               .join(' ')
             setTeam(teamName)
+            if (teamData.registered_events.TSS) {
+              setSchedule(teamData.schedule)
+            }
           }
         }
       }
