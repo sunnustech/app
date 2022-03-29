@@ -15,4 +15,5 @@ web-build/
 
 # firebase
 secrets.json
+secrets.js
 firebase-debug.log
