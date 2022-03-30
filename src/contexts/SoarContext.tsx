@@ -94,11 +94,13 @@ function createSoarCtx() {
     loadingState: [false, () => true],
     locationState: [[], () => true],
     filteredState: [{}, () => {}],
+    QRState: ['', () => ''],
   })
 
   // Getters and setters to be used when using context
   function Provider(props: React.PropsWithChildren<{}>) {
     const loadingState = useState(false)
+    const QRState = useState('')
     const locationState = useState<any>({})
     const filteredState = useState<any>({
       game: true,
@@ -116,7 +118,7 @@ function createSoarCtx() {
 
     return (
       <ctx.Provider
-        value={{ loadingState, filteredState, locationState }}
+        value={{ loadingState, filteredState, locationState, QRState }}
         {...props}
       />
     )

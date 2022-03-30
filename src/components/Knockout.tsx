@@ -54,7 +54,6 @@ const Columns = () => {
     gaps.push({ gap: thisGap, nodes })
   }
   gaps.push({ gap: 0, nodes: 1 })
-  console.log('got here', gaps, height)
 
   return (
     <>

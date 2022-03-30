@@ -5,14 +5,7 @@ import { map as styles } from '@/styles/fresh'
 import { MapProps } from '@/types/soar-map'
 import { Text } from 'react-native'
 import { customMapStyle } from './MapStyle'
-
-const NUSCoordinates: Camera = {
-  center: { latitude: 1.296674, longitude: 103.77639 },
-  pitch: 0,
-  zoom: 15.3,
-  heading: 0,
-  altitude: 0,
-}
+import { NUSCoordinates } from '@/data/constants'
 
 const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
   return (

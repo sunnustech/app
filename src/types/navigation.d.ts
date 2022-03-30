@@ -15,6 +15,7 @@ export type DrawerPages = {
   DEV: undefined
   KnockoutTable: undefined
   TimerScreen: undefined
+  QRScreen: undefined
 }
 
 export type StackPages = {

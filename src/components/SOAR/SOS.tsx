@@ -5,7 +5,7 @@ import { ButtonRed } from '@/components/Buttons'
 
 const SOS = ({ visible, setState }: any) => {
   function handleDistressSignal() {
-    console.log('calling safety officer...')
+    console.log('calling safety officer...') // perma
     const safetyOfficerPhoneNumber = '93227015'
     Linking.openURL(`tel:${safetyOfficerPhoneNumber}`)
   }
@@ -13,6 +13,7 @@ const SOS = ({ visible, setState }: any) => {
   const SOSButton = ({ onPress, children }: any) => {
     return <ButtonRed onPress={onPress}>{children}</ButtonRed>
   }
+
   return (
     <Modal visible={visible} onDismiss={() => setState(false)}>
       <View style={styles.SOSContainer}>

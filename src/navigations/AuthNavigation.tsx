@@ -19,6 +19,7 @@ import WSSScreen from '@/screens/WSS'
 import DEVScreen from '@/screens/DEV'
 import KnockoutTable from '@/screens/KnockoutTable'
 import TimerScreen from '@/screens/DEV/TimerScreen'
+import QRScreen from '@/screens/QR'
 
 import { UserState } from '@/types/index'
 
@@ -37,6 +38,7 @@ const Home = () => (
     <Drawer.Screen name="DEV" component={DEVScreen} />
     <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
     <Drawer.Screen name="TimerScreen" component={TimerScreen} />
+    <Drawer.Screen name="QRScreen" component={QRScreen} />
   </Drawer.Navigator>
 )
 

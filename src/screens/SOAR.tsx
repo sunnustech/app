@@ -20,30 +20,27 @@ import { Map } from '@/components/SOAR'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
+import { ButtonGreen } from '../components/Buttons'
+import { NUSCoordinates, QRMap } from '@/data/constants'
 
 const SOARScreen = () => {
   /* read data from soar context */
-  const { locationState, filteredState, loadingState } = useContext(SoarContext)
+  const { locationState, filteredState, loadingState, QRState } =
+    useContext(SoarContext)
 
   const locations = locationState[0]
   const isLoading = loadingState[0]
   const [filtered, setFiltered] = filteredState
   const [displayLocations, setDisplayLocations] = useState<any>([])
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
+  const [QRString, setQRString] = QRState
+  const [loading, setLoading] = useState(true)
+  const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
 
   const mapRef = useRef<MapView>()
 
   notificationInit()
   const navigation = useNavigation<DrawerNavigationProp<DrawerPages, 'SOAR'>>()
-  // const a: number = navigation
-  const [loading, setLoading] = useState(true)
-  const [currentPosition, setCurrentPosition] = useState<Camera>({
-    center: { latitude: 1.296674, longitude: 103.77639 },
-    pitch: 0,
-    zoom: 15.3,
-    heading: 0,
-    altitude: 0,
-  })
 
   // first time grab user location
   useEffect(() => {
@@ -59,7 +56,6 @@ const SOARScreen = () => {
         altitude: 0,
       }
       setCurrentPosition(r)
-      console.log('first-grab user position:', r)
     })
   }, [])
 
@@ -102,6 +98,7 @@ const SOARScreen = () => {
   }
 
   const openQRScanner = () => {
+    navigation.navigate('QRScreen')
     console.log('handle opening QR scanner') // perma
   }
 
@@ -122,6 +119,30 @@ const SOARScreen = () => {
     }
   }, [filtered, isLoading])
 
+  function handleQRFunction() {
+    console.log('handleQRFunction') // perma
+    setQRString('')
+  }
+
+  const QRHandler = () => {
+    const q = QRMap[QRString]
+    return QRString === '' ? null : (
+      <Modal
+        visible={true}
+        dismissable={true}
+        onDismiss={() => setQRString('')}
+      >
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>{q.command}</Text>
+          <View style={{ marginBottom: 10 }}></View>
+          <Text style={styles.centered}>{q.summary}</Text>
+          <View style={{ marginBottom: 10 }}></View>
+          <ButtonGreen onPress={handleQRFunction}>{q.action}</ButtonGreen>
+        </View>
+      </Modal>
+    )
+  }
+
   if (loading) {
     return <Text>loading...</Text>
   } else {
@@ -133,6 +154,7 @@ const SOARScreen = () => {
           displayLocations={displayLocations}
         />
         <SOS visible={SOSVisible} setState={setSOSVisible} />
+        <QRHandler />
         <UI
           navigation={navigation}
           filtered={filtered}

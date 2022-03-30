@@ -31,3 +31,9 @@ export type SOARData = {
     data: any
   }
 }
+
+export type QRMapProps = {
+  command: string
+  summary: string
+  action: string
+}
