@@ -1,4 +1,4 @@
-import MapView, { Camera } from 'react-native-maps'
+import MapView, { Camera, PROVIDER_GOOGLE } from 'react-native-maps'
 import { CustomMarker } from '@/components/Markers'
 
 import { map as styles } from '@/styles/fresh'
@@ -21,7 +21,7 @@ const Map = ({
   return (
     <MapView
       style={styles.overlap}
-      provider={'google'}
+      provider={PROVIDER_GOOGLE}
       initialCamera={NUSCoordinates}
       showsUserLocation={true}
       onUserLocationChange={getCurrentLocation}
