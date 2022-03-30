@@ -1,4 +1,4 @@
-import { TSSSchedule, TSSKnockoutTable, TSSData } from './TSS.d'
+import { TSSSchedule, TSSKnockoutTable, TSSData } from '@/types/TSS'
 
 const sampleKnockoutTable: TSSKnockoutTable = {
   round_of_32: {

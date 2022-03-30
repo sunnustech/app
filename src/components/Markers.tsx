@@ -21,7 +21,7 @@ const CustomMarker = ({
   coordinate,
   description,
   children,
-}: MarkerType) => {
+}: any) => {
   const targetScreen = 'DummyTest'
   return (
     <Marker coordinate={coordinate}>

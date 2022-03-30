@@ -46,9 +46,7 @@ const ScanScreen = () => {
     }
 
     // Logger to check
-    console.log(
-      `Bar code with type ${code.type} and data ${code.data} has been scanned!`
-    )
+    console.log(`Bar code ${code.type} of data ${code.data} has been scanned!`) // perma
   }
 
   if (cameraPermission !== 'granted') {

@@ -42,7 +42,7 @@ function handlePartcipants() {
       if (email && phone) {
         res.members.push({ email, phone })
       } else if (email || phone) {
-        console.log(row.id, 'member', i, 'has missing email/phone number')
+        console.log(row.id, 'member', i, 'has missing email/phone number') // perma
       }
     }
     participants.push(res)

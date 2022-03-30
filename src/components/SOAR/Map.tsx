@@ -3,6 +3,7 @@ import { CustomMarker } from '@/components/Markers'
 
 import { map as styles } from '@/styles/fresh'
 import { MapProps } from '@/types/soar-map'
+import { Text } from 'react-native'
 
 const NUSCoordinates: Camera = {
   center: { latitude: 1.296674, longitude: 103.77639 },
@@ -12,7 +13,11 @@ const NUSCoordinates: Camera = {
   altitude: 0,
 }
 
-const Map = ({ getCurrentLocation, navigation, filterLocations }: MapProps) => {
+const Map = ({
+  getCurrentLocation,
+  navigation,
+  displayLocations,
+}: MapProps) => {
   return (
     <MapView
       style={styles.overlap}
@@ -21,14 +26,9 @@ const Map = ({ getCurrentLocation, navigation, filterLocations }: MapProps) => {
       showsUserLocation={true}
       onUserLocationChange={getCurrentLocation}
     >
-      {filterLocations.map((e: any) => (
-        <CustomMarker
-          key={e.id}
-          navigation={navigation}
-          coordinate={e.coordinate}
-          description={e.description}
-        >
-          {e.icon()}
+      {displayLocations.map((e: any, i: number) => (
+        <CustomMarker key={i} navigation={navigation} coordinate={e.coordinate}>
+          <Text>{`${e.type}: ${e.title}`}</Text>
         </CustomMarker>
       ))}
     </MapView>

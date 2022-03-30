@@ -1,20 +1,17 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  SetStateAction,
+  Dispatch,
+} from 'react'
 import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
 import { db } from '@/sunnus/firebase'
 import { doc, DocumentData, getDoc } from 'firebase/firestore'
 import { GameStation } from '@/types/GameStation'
+import { SOARContextProps } from '@/types/soar-map'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
-
-type SOARContextProps = {
-  loading: boolean
-  filterLocations: GameStation[]
-  updateFilterLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
-  gameLocations: GameStation[]
-  updateGameLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
-  adminLocations: GameStation[]
-  updateAdminLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
-}
 
 /*
  * parse game location details from Firestore data
@@ -66,15 +63,11 @@ function parseFirestoreAdminData(firebaseData: DocumentData) {
  * pulls all locations from the Firestore
  */
 const getFirebaseLocations = async (p: {
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
-  updateFilterLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
-  updateGameLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
-  updateAdminLocations: React.Dispatch<React.SetStateAction<GameStation[]>>
+  setLoading: Dispatch<SetStateAction<boolean>>
+  setLocations: Dispatch<SetStateAction<any>>
 }) => {
   p.setLoading(true)
-  let allLocations: GameStation[] = []
-  const gameDocRef = doc(db, 'SOAR', 'locationList')
-  await getDoc(gameDocRef)
+  await getDoc(doc(db, 'SOAR', 'locations'))
     .then((doc) => {
       /*
        * doc is an object, so to get the data itself,
@@ -83,84 +76,47 @@ const getFirebaseLocations = async (p: {
        */
       const firebaseData = doc.data()
       if (firebaseData) {
-        const locationArray = parseFirestoreGameData(firebaseData)
-        allLocations = locationArray
-        p.updateGameLocations(locationArray)
+        const locationArray = firebaseData.data
+        p.setLocations(locationArray)
+      } else {
+        console.warn('no data found')
       }
     })
     .catch((err) => {
-      console.log('error fetching game locations data from Firestore', err)
+      console.warn('error fetching admin locations data from Firestore', err)
     })
-  const adminDocRef = doc(db, 'ADMIN', 'locationList')
-  await getDoc(adminDocRef)
-    .then((doc) => {
-      /*
-       * doc is an object, so to get the data itself,
-       * you still need to call its data() method.
-       * it will return a pure JS object of data.
-       */
-      const firebaseData = doc.data()
-      if (firebaseData) {
-        const locationArray = parseFirestoreAdminData(firebaseData)
-        allLocations = [...allLocations, ...locationArray]
-        p.updateAdminLocations(locationArray)
-      }
-    })
-    .catch((err) => {
-      console.log('error fetching admin locations data from Firestore', err)
-    })
-  p.updateFilterLocations(allLocations)
-  console.log(allLocations)
   p.setLoading(false)
 }
 
 // Context function to be used
 function createSoarCtx() {
   const ctx = createContext<SOARContextProps>({
-    loading: false,
-    filterLocations: [],
-    updateFilterLocations: () => [],
-    gameLocations: [],
-    updateGameLocations: () => [],
-    adminLocations: [],
-    updateAdminLocations: () => [],
+    loadingState: [false, () => true],
+    locationState: [[], () => true],
+    filteredState: [{}, () => {}],
   })
 
   // Getters and setters to be used when using context
   function Provider(props: React.PropsWithChildren<{}>) {
-    const [loading, setLoading] = useState(false)
-    const [gameLocations, updateGameLocations] = useState<Array<GameStation>>(
-      []
-    )
-    const [adminLocations, updateAdminLocations] = useState<Array<GameStation>>(
-      []
-    )
+    const loadingState = useState(false)
+    const locationState = useState<any>({})
+    const filteredState = useState<any>({
+      game: true,
+      water: false,
+      medic: false,
+    })
 
     /* main enabler of async-ness */
     useEffect(() => {
       getFirebaseLocations({
-        setLoading,
-        updateFilterLocations,
-        updateGameLocations,
-        updateAdminLocations,
+        setLoading: loadingState[1],
+        setLocations: locationState[1],
       })
     }, [])
 
-    const [filterLocations, updateFilterLocations] = useState<
-      Array<GameStation>
-    >([])
-
     return (
       <ctx.Provider
-        value={{
-          loading,
-          filterLocations,
-          updateFilterLocations,
-          gameLocations,
-          updateGameLocations,
-          adminLocations,
-          updateAdminLocations,
-        }}
+        value={{ loadingState, filteredState, locationState }}
         {...props}
       />
     )

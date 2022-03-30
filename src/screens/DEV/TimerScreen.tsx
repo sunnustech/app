@@ -16,7 +16,7 @@ const KnockoutTable = () => {
   }
 
   const handlePauseResume = () => {
-    console.log('pressed pause')
+    console.log('pressed pause') // perma
     setIsPaused(!isPaused)
   }
 

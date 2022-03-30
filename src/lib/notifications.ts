@@ -95,7 +95,6 @@ function notificationInit() {
   const responseListener = useRef<Subscription>()
 
   useEffect(() => {
-    // console.log('useEffect triggered!')
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(String(token))
     )
@@ -113,7 +112,7 @@ function notificationInit() {
      */
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response)
+        console.log(response) // perma
       })
 
     return () => {
@@ -123,7 +122,6 @@ function notificationInit() {
       rc ? Notifications.removeNotificationSubscription(rc) : null
     }
   }, [])
-  // console.log(expoPushToken)
   return {
     expoPushToken,
     notification,

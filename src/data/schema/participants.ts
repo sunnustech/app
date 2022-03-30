@@ -1,4 +1,4 @@
-import { Group, ParticipantsData } from './participants.d'
+import { Group, ParticipantsData } from '@/types/participants'
 import { objFromArray } from './utils'
 
 const testOne: Group = {

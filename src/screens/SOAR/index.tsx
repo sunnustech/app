@@ -29,18 +29,14 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 
 const SOARScreen = () => {
   /* read data from soar context */
-  const {
-    filterLocations,
-    updateFilterLocations,
-    gameLocations,
-    adminLocations,
-  } = useContext(SoarContext)
+  const { locationState, filteredState, loadingState } = useContext(SoarContext)
+
+  const [filtered, setFiltered] = filteredState
 
   notificationInit()
   const navigation = useNavigation<DrawerNavigationProp<DrawerPages, 'SOAR'>>()
   // const a: number = navigation
   const [loading, setLoading] = useState(true)
-  const mapRef = useRef<MapView>(null)
 
   const getCurrentLocation = () => {
     Location.getCurrentPositionAsync().then((e) => {
@@ -70,22 +66,20 @@ const SOARScreen = () => {
     })()
   }, [])
 
-  const toggleGameStations = () => {
-    console.log('map: pressed <toggleGameStations>')
-    updateFilterLocations(gameLocations)
-  }
-
   const toggleAdminStations = () => {
-    console.log('map: pressed <toggleAdminStations>')
-    updateFilterLocations(adminLocations)
+    const obj = filtered
+    obj.water = !obj.water
+    setFiltered(obj)
+    setDisplayLocations(getLocations(locations, obj))
+    console.log('map: pressed <toggleAdminStations>') // perma
   }
 
   const openQRScanner = () => {
-    console.log('handle opening QR scanner')
+    console.log('handle opening QR scanner') // perma
   }
 
   const handleSOS = () => {
-    console.log('handle opening SOS screen')
+    console.log('handle opening SOS screen') // perma
   }
 
   const TopUI = () => {
@@ -93,10 +87,9 @@ const SOARScreen = () => {
       <NoTouchDiv style={styles.mapTopContainer}>
         <Overlap style={styles.mapRightContainer}>
           <MapTopButton
-            icon={[AD, 'enviroment']}
-            onPress={toggleGameStations}
+            icon={[MCI, 'cup-water']}
+            onPress={toggleAdminStations}
           />
-          <MapTopButton icon={[IC, 'flag']} onPress={toggleAdminStations} />
         </Overlap>
         <Overlap>
           <NoTouchDiv style={styles.timerContainer}>
@@ -133,6 +126,24 @@ const SOARScreen = () => {
     )
   }
 
+  function getLocations(locations: any, filtered: any) {
+    // use filteredState and locationState to determine a final array of locations to expose to the map
+    return locations.filter((location: any) => filtered[location.type])
+  }
+
+  const locations = locationState[0]
+
+  const [displayLocations, setDisplayLocations] = useState<any>([])
+
+  const isLoading = loadingState[0]
+
+  useEffect(() => {
+    if (loadingState[0] === false) {
+      const newLocs = getLocations(locations, filtered)
+      setDisplayLocations(newLocs)
+    }
+  }, [filtered, isLoading])
+
   if (loading) {
     return <Text>loading...</Text>
   } else {
@@ -141,7 +152,7 @@ const SOARScreen = () => {
         <Map
           getCurrentLocation={getCurrentLocation}
           navigation={navigation}
-          filterLocations={filterLocations}
+          displayLocations={displayLocations}
         />
         <Overlap>
           <NoTouchDiv style={styles.mapUIContainer}>

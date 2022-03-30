@@ -35,7 +35,7 @@ const KnockoutTable = () => {
 
   function debugKnockoutTree({ sport }: { sport: Sport }) {
     getKnockoutTable({ sport }).then((data: any) => {
-      console.log(sport, data)
+      console.log(sport, data) // perma
     })
   }
 

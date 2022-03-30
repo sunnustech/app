@@ -25,8 +25,25 @@ const pullCollection = async ({ collection }: CollectionRequest) => {
 }
 
 const pullDoc = async ({ collection, doc }: DocumentRequest) => {
-  const response = await getDoc(fsdoc(db, collection, doc))
-  return response.data()
+  await getDoc(fsdoc(db, collection, doc))
+    .then((doc) => {
+      /*
+       * doc is an object, so to get the data itself,
+       * you still need to call its data() method.
+       * it will return a pure JS object of data.
+       */
+      const firebaseData = doc.data()
+      if (firebaseData) {
+        return { status: 'ok', data: firebaseData }
+      } else {
+        console.warn(`There is no data in the ${doc} document.`)
+        return { status: 'error: no data' }
+      }
+    })
+    .catch((err) => {
+      console.warn('error fetching admin locations data from Firestore', err) // perma
+      return { status: 'error: firebase error' }
+    })
 }
 
 export { pullCollection, pullDoc }

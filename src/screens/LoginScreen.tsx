@@ -52,11 +52,11 @@ const LoginScreen = () => {
     if (email) {
       signInWithEmailAndPassword(auth, await email, PASSWORD)
         .then((credential) => {
-          console.log('successful login as:', credential)
+          console.log('successful login as:', credential) // perma
         })
         .catch((err) => {
           setLoginError(true)
-          console.log(err)
+          console.log(err) // perma
         })
     }
   }
@@ -103,9 +103,9 @@ const LoginScreen = () => {
   const breakInHandler = () => {
     signInWithEmailAndPassword(auth, 'sunnus@gmail.com', 'test1234')
       .then((credential) => {
-        console.log('successful login as:', credential.user.email)
+        console.log('successful login as:', credential.user.email) // perma
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err)) // perma
   }
 
   return (

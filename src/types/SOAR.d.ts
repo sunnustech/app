@@ -1,18 +1,24 @@
+import { SOARPageProps } from '@/types/navigation'
+
 export type SOARTimetable = Array<{
   time: string
   group_title: string
 }>
 
 export type SOARLocation = {
+  title: string
   id: number
+  type: string
   location: string
   game_title: string
   phyiscal: boolean
   details: string
   google_map_pin_url: string
   timetable: SOARTimetable
-  latitude: number
-  longitude: number
+  coordinate: {
+    latitude: number
+    longitude: number
+  }
   stage: number
 }
 
@@ -21,7 +27,7 @@ export type SOARLocation = {
  * and first-level values cannot be arrays
  */
 export type SOARData = {
-  locationList: {
-    [key: string]: SOARLocation
+  locations: {
+    data: any
   }
 }

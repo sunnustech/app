@@ -1,13 +1,18 @@
 import TSS from '@/data/schema/TSS'
 import push from '@/data/push'
-import { Sport } from '@/data/schema/TSS.d'
-import { MatchParticipants, MatchRequest, Round, Winner } from '@/types/TSS.d'
+import {
+  MatchParticipants,
+  MatchRequest,
+  Round,
+  Winner,
+  Sport,
+} from '@/types/TSS'
 import { pullCollection } from '@/data/pull'
 
 const delimiter = () => {
   const date = new Date().toString()
   const line = '='.repeat(date.length)
-  console.log(`\n\n\n${line}\n${date}\n${line}\n`)
+  console.log(`\n\n\n${line}\n${date}\n${line}\n`) // perma
 }
 
 const sportList = ['dodgeball', 'frisbee', 'volleyball', 'tchoukball']
@@ -90,7 +95,6 @@ function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
     }
   }
 
-  console.log(packet)
   // update the database
   push({ collection: 'TSS', docs: packet })
 }
