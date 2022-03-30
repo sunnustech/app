@@ -110,6 +110,7 @@ const getFirebaseLocations = async (p: {
       console.log('error fetching admin locations data from Firestore', err)
     })
   p.updateFilterLocations(allLocations)
+  console.log(allLocations)
   p.setLoading(false)
 }
 

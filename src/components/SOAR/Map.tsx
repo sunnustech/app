@@ -12,15 +12,9 @@ const NUSCoordinates: Camera = {
   altitude: 0,
 }
 
-const Map = ({
-  ref,
-  getCurrentLocation,
-  navigation,
-  filterLocations,
-}: MapProps) => {
+const Map = ({ getCurrentLocation, navigation, filterLocations }: MapProps) => {
   return (
     <MapView
-      ref={ref}
       style={styles.overlap}
       provider={'google'}
       initialCamera={NUSCoordinates}

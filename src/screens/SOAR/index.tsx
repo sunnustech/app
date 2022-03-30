@@ -139,7 +139,6 @@ const SOARScreen = () => {
     return (
       <NoTouchDiv style={styles.container}>
         <Map
-          ref={mapRef}
           getCurrentLocation={getCurrentLocation}
           navigation={navigation}
           filterLocations={filterLocations}

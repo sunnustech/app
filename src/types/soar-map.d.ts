@@ -9,7 +9,6 @@ export type MapButtonProps = {
 }
 
 export type MapProps = {
-  ref: any
   getCurrentLocation: any
   navigation: SOARPageProps
   filterLocations: any
