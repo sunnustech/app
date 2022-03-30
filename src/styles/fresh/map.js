@@ -15,6 +15,11 @@ const map = StyleSheet.create({
     height: '100%',
     position: 'relative',
   },
+  centered: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    textAlign: 'center',
+  },
   overlap: {
     position: 'absolute',
     top: 0,
@@ -121,6 +126,26 @@ const map = StyleSheet.create({
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
     shadowRadius: 3,
+  },
+  SOSContainer: {
+    width: '70%',
+    backgroundColor: 'white',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 18,
+    borderRadius: 10,
+  },
+  SOSTitle: {
+    fontSize: 32,
+    color: '#323232',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 10,
+  },
+  SOSSpacer: {
+    marginBottom: 10,
   },
 })
 

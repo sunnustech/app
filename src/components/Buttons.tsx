@@ -4,6 +4,7 @@ import styles from '../styles/main'
 type ButtonProps = {
   onPress: () => void
   children: string
+  style?: any
 }
 
 const Button = ({ onPress, children }: ButtonProps) => {

@@ -4,7 +4,8 @@ import {
   getCurrentPositionAsync,
   requestForegroundPermissionsAsync,
 } from 'expo-location'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
+import { Modal } from 'react-native-paper'
 
 /* navigation */
 import { DrawerPages } from '@/types/navigation'
@@ -18,6 +19,7 @@ import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
+import SOS from '@/components/SOAR/SOS'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -27,6 +29,7 @@ const SOARScreen = () => {
   const isLoading = loadingState[0]
   const [filtered, setFiltered] = filteredState
   const [displayLocations, setDisplayLocations] = useState<any>([])
+  const [SOSVisible, setSOSVisible] = useState<boolean>(false)
 
   const mapRef = useRef<MapView>()
 
@@ -103,6 +106,7 @@ const SOARScreen = () => {
   }
 
   const handleSOS = () => {
+    setSOSVisible(!SOSVisible)
     console.log('handle opening SOS screen') // perma
   }
 
@@ -128,6 +132,7 @@ const SOARScreen = () => {
           navigation={navigation}
           displayLocations={displayLocations}
         />
+        <SOS visible={SOSVisible} setState={setSOSVisible} />
         <UI
           navigation={navigation}
           filtered={filtered}
