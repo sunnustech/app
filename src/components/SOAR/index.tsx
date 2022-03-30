@@ -2,15 +2,21 @@ import Timer from './Timer'
 import MapButton, {
   MapNavigationButton,
   MapTopButton,
+  MapCurretLocationButton,
   MapBottomButton,
-} from './MapButton'
+  MapSOSButton,
+  MapAdminToggle,
+} from './MapButtons'
 import Map from './Map'
 
 export {
   Map,
   MapButton,
+  MapSOSButton,
   MapNavigationButton,
+  MapAdminToggle,
   MapTopButton,
+  MapCurretLocationButton,
   MapBottomButton,
   Timer,
 }

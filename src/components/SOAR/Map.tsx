@@ -1,9 +1,10 @@
 import MapView, { Camera, PROVIDER_GOOGLE } from 'react-native-maps'
-import { CustomMarker } from '@/components/Markers'
+import MapPoint from '@/components/SOAR/MapPoint'
 
 import { map as styles } from '@/styles/fresh'
 import { MapProps } from '@/types/soar-map'
 import { Text } from 'react-native'
+import { customMapStyle } from './MapStyle'
 
 const NUSCoordinates: Camera = {
   center: { latitude: 1.296674, longitude: 103.77639 },
@@ -13,24 +14,29 @@ const NUSCoordinates: Camera = {
   altitude: 0,
 }
 
-const Map = ({
-  getCurrentLocation,
-  navigation,
-  displayLocations,
-}: MapProps) => {
+const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
   return (
     <MapView
+      ref={mapRef}
       style={styles.overlap}
       provider={PROVIDER_GOOGLE}
       initialCamera={NUSCoordinates}
+      customMapStyle={customMapStyle}
       showsUserLocation={true}
-      onUserLocationChange={getCurrentLocation}
     >
-      {displayLocations.map((e: any, i: number) => (
-        <CustomMarker key={i} navigation={navigation} coordinate={e.coordinate}>
-          <Text>{`${e.type}: ${e.title}`}</Text>
-        </CustomMarker>
-      ))}
+      {displayLocations.map((e: any, i: number) => {
+        return (
+          <MapPoint
+            key={i}
+            navigation={navigation}
+            coordinate={e.coordinate}
+            pointType={e.type}
+            content={e.content}
+          >
+            <Text>{`${e.type}: ${e.title}`}</Text>
+          </MapPoint>
+        )
+      })}
     </MapView>
   )
 }

@@ -101,6 +101,12 @@ const map = StyleSheet.create({
   mapTopButton: {
     marginBottom: 14,
   },
+  mapActivatedButton: {
+    backgroundColor: '#60A5FA',
+  },
+  mapCurrentLocationButton: {
+    backgroundColor: '#60A5FA',
+  },
   mapBottomButton: {
     marginTop: 14,
   },

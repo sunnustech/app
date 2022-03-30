@@ -1,13 +1,15 @@
 import { SOARLocation } from '@/types/SOAR'
 
-const testOne: SOARLocation = {
+const testOne = {
   id: 1,
   type: 'game',
   location: 'The Lair of the Green-eyed Man',
-  game_title: 'YeetBall',
+  content: {
+    game_title: 'YeetBall',
+    details: 'game instructions/intro statement (try to keep it concise!)',
+  },
   title: '_Math Dept',
   phyiscal: true,
-  details: 'game instructions/intro statement (try to keep it concise!)',
   google_map_pin_url: 'https://goo.gl/maps/1Zrg21yeCGQJGhK18',
   timetable: [
     {
@@ -27,14 +29,16 @@ const testOne: SOARLocation = {
   stage: 0,
 }
 
-const testTwo: SOARLocation = {
+const testTwo = {
   id: 2,
   type: 'game',
   location: 'Camp Nou',
-  game_title: 'SheeshJump',
+  content: {
+    game_title: 'SheeshJump',
+    details: 'gameo instructo',
+  },
   title: '_NUS Track',
   phyiscal: false,
-  details: 'gameo instructo',
   google_map_pin_url: 'https://goo.gl/maps/93QFQ3WP5LnHX5sw9',
   timetable: [
     {

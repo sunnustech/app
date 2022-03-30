@@ -6,10 +6,12 @@ export type MapButtonProps = {
   style?: any
   icon: any
   onPress: any
+  activated?: any
 }
 
 export type MapProps = {
-  getCurrentLocation: any
+  // getCurrentLocation: any
+  mapRef: any
   navigation: SOARPageProps
   displayLocations: any
 }
