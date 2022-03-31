@@ -18,7 +18,7 @@
       "config": {
         "googleMapsApiKey": "AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk"
       },
-      "buildNumber": "6",
+      "buildNumber": "7",
       "supportsTablet": true,
       "bundleIdentifier": "com.nus.sunnus"
     },
