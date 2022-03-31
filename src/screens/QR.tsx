@@ -59,7 +59,7 @@ const QRScreen = () => {
     )
   }
 
-  const PillButton = ({ onPress }: any) => {
+  const BackToMap = ({ onPress }: any) => {
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -81,10 +81,8 @@ const QRScreen = () => {
       </Overlap>
       <Overlap>
         <View style={styles.buttonContainer}>
-          <View style={{ flex: 1 }}>
-            <Text>aslkdfjalskdfjalksjflkasdjflkasdjf</Text>
-          </View>
-          <PillButton onPress={() => navigation.navigate('SOAR')} />
+          <View style={{ flex: 1 }} />
+          <BackToMap onPress={() => navigation.navigate('SOAR')} />
         </View>
       </Overlap>
     </View>

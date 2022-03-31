@@ -7,6 +7,17 @@ const testOne: Group = {
     TSS: {
       volleyball: true,
     },
+    SOAR: true,
+  },
+  SOAR: {
+    timerRunning: false,
+    started: false,
+    stopped: false,
+    startTime: {},
+    stopTime: {},
+    timerEvents: [],
+    lastPause: {},
+    lastResume: {},
   },
   members: [
     {

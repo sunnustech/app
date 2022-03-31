@@ -25,6 +25,10 @@ const pullCollection = async ({ collection }: CollectionRequest) => {
 }
 
 const pullDoc = async ({ collection, doc }: DocumentRequest) => {
+  var result: { status: string; data: any } = {
+    status: 'error',
+    data: {},
+  }
   await getDoc(fsdoc(db, collection, doc))
     .then((doc) => {
       /*
@@ -34,7 +38,7 @@ const pullDoc = async ({ collection, doc }: DocumentRequest) => {
        */
       const firebaseData = doc.data()
       if (firebaseData) {
-        return { status: 'ok', data: firebaseData }
+        result = { status: 'ok', data: firebaseData }
       } else {
         console.warn(`There is no data in the ${doc} document.`)
         return { status: 'error: no data' }
@@ -44,6 +48,7 @@ const pullDoc = async ({ collection, doc }: DocumentRequest) => {
       console.warn('error fetching admin locations data from Firestore', err) // perma
       return { status: 'error: firebase error' }
     })
+  return result
 }
 
 export { pullCollection, pullDoc }

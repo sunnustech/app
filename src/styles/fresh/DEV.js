@@ -8,6 +8,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  scrollContainer: {
+    paddingTop: 64,
+    paddingBottom: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   loginContainer: {
     flex: 1,
     backgroundColor: '#f9fafb',

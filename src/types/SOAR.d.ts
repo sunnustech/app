@@ -37,3 +37,14 @@ export type QRMapProps = {
   summary: string
   action: string
 }
+
+export type SoarTeamProps = {
+  timerRunning: boolean
+  started: boolean
+  stopped: boolean
+  startTime: TimeApiProps
+  stopTime: TimeApiProps
+  timerEvents: Array<TimeApiProps>
+  lastPause: TimeApiProps
+  lastResume: TimeApiProps
+}

@@ -18,22 +18,13 @@ import DebugButton from './DebugButton'
 /* debug functions */
 import writeSchema from '@/data/writeSchema'
 import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
+import soar from '@/lib/soar'
 // import { MatchRequest } from '@/types/knockout'
 import { useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 import { generateQR } from '@/data/commandMap'
 
 /* use this space to hard-code test inputs to functions */
-
-// function _handleMatch() {
-//   const outcome: MatchRequest = {
-//     sport: 'dodgeball',
-//     round: 'semifinals',
-//     matchNumber: 1,
-//     winner: 'A',
-//   }
-//   handleMatch(outcome)
-// }
 
 /* add button that links to debug function */
 const DebugList = () => (
@@ -56,8 +47,32 @@ const DebugList = () => (
     <Text>QR Command List</Text>
 
     <DebugButton onPress={generateQR} color="#ec4899">
-      Generate QR
+      Generate QR (to send to SOAR)
     </DebugButton>
+
+    <Text>SOAR functions (team name: Known_Painters)</Text>
+
+    <DebugButton
+      onPress={() => soar.start('Known_Painters')}
+      children="start"
+    />
+
+    <DebugButton
+      onPress={() => soar.pause('Known_Painters')}
+      children="pause"
+    />
+
+    <DebugButton
+      onPress={() => soar.resume('Known_Painters')}
+      children="resume"
+    />
+
+    <DebugButton
+      onPress={() => soar.stopFinal('Known_Painters')}
+      children="stopFinal"
+    />
+
+    <Text>User Context Testing</Text>
   </>
 )
 
@@ -78,16 +93,21 @@ const DEVScreen = () => {
   }
   const navigation = useNavigation<DNP<DrawerPages, 'DEV'>>()
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text>Welcome to the DEV page!</Text>
-      <Text>(you can navigate back by swiping in from the left)</Text>
-      <View style={{ width: '60%', marginTop: 32 }}>
-        <DebugList />
-        <DebugButton onPress={getContext} color="#ec4899">
-          Get User + Team Context
-        </DebugButton>
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text>Welcome to the DEV page!</Text>
+        <Text>(you can navigate back by swiping in from the left)</Text>
+        <View style={{ width: '60%', marginTop: 32 }}>
+          <DebugList />
+          <DebugButton onPress={getContext} color="#ec4899">
+            Get User + Team Context
+          </DebugButton>
+        </View>
+      </ScrollView>
+    </View>
   )
 }
 export default DEVScreen
