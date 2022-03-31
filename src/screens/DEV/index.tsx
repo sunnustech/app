@@ -18,21 +18,22 @@ import DebugButton from './DebugButton'
 /* debug functions */
 import writeSchema from '@/data/writeSchema'
 import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
-import { MatchRequest } from '@/lib/knockout.d'
+// import { MatchRequest } from '@/types/knockout'
 import { useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
+import { generateQR } from '@/data/commandMap'
 
 /* use this space to hard-code test inputs to functions */
 
-function _handleMatch() {
-  const outcome: MatchRequest = {
-    sport: 'dodgeball',
-    round: 'semifinals',
-    matchNumber: 1,
-    winner: 'A',
-  }
-  handleMatch(outcome)
-}
+// function _handleMatch() {
+//   const outcome: MatchRequest = {
+//     sport: 'dodgeball',
+//     round: 'semifinals',
+//     matchNumber: 1,
+//     winner: 'A',
+//   }
+//   handleMatch(outcome)
+// }
 
 /* add button that links to debug function */
 const DebugList = () => (
@@ -48,11 +49,14 @@ const DebugList = () => (
     <DebugButton onPress={resetTSS} color="#ec4899">
       Reset TSS Data
     </DebugButton>
-    <DebugButton onPress={handleMatch} color="#ec4899">
-      Handle Match
-    </DebugButton>
     <DebugButton onPress={getKnockoutTable} color="#ec4899">
       Get Knockout Table
+    </DebugButton>
+
+    <Text>QR Command List</Text>
+
+    <DebugButton onPress={generateQR} color="#ec4899">
+      Generate QR
     </DebugButton>
   </>
 )
