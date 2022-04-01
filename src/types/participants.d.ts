@@ -9,13 +9,13 @@ export type RegisteredEvent = {
 }
 
 export type Group = {
-  group_title: string
+  groupTitle: string
   SOAR?: any
   registered_events: RegisteredEvent
   members: Array<{
     email: string
     phone: string
-    loginid?: string
+    loginid: string
   }>
 }
 
@@ -24,5 +24,6 @@ export type Group = {
  * and first-level values cannot be arrays
  */
 export type ParticipantsData = {
+  allParticipants: any
   [key: string]: Group
 }

@@ -80,7 +80,6 @@ const generateQR = () => {
     for (const [offset, command] of Object.entries(stationCommands)) {
       const index = startPoint + parseInt(offset)
       indexed[ten[index]] = { command, station: name }
-      console.log(`${ten[index]}: ${command}`)
     }
   })
   return indexed

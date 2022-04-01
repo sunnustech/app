@@ -18,6 +18,7 @@ import { auth } from '@/sunnus/firebase'
 import { login as styles } from '@/styles/fresh'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import { UserContext } from '../contexts/UserContext'
+import { pullDoc } from '../data/pull'
 
 const PASSWORD = 'sunnus'
 
@@ -48,7 +49,7 @@ const LoginScreen = () => {
   const [loginError, setLoginError] = useState(false)
 
   const loginHandler = async () => {
-    const email = queryEmailFromFirebase()
+    const email = await queryEmailFromFirebase()
     if (email) {
       signInWithEmailAndPassword(auth, await email, PASSWORD)
         .then((credential) => {
@@ -63,32 +64,32 @@ const LoginScreen = () => {
 
   const queryEmailFromFirebase = async () => {
     setLoading(true)
-    const userRef = query(collection(db, 'participants'))
-    const querySnapshot = await getDocs(userRef)
-    let email = ''
-    let teamNames: string[] = []
-    querySnapshot.forEach((doc) => {
-      const teamData = doc.data()
-      if (teamData.group_title) {
-        teamNames.push(teamData.group_title)
-      }
-      const teamDetails = teamData.members
-      if (teamDetails) {
-        for (let i = 0; i < teamDetails.length; i++) {
-          if (teamDetails[i].loginid === loginid) {
-            setUserid(loginid)
-            email = teamDetails[i].email
-            const teamName = teamNames[teamNames.length - 1]
-              .split('_')
-              .join(' ')
-            setTeam(teamName)
-            if (teamData.registered_events.TSS) {
-              setSchedule(teamData.schedule)
-            }
-          }
-        }
-      }
+    /*
+     * pulls a dictionary that maps loginid to groupTitle
+     */
+    const groupTitleFinder = await pullDoc({
+      collection: 'participants',
+      doc: 'allParticipants',
     })
+    const registeredUsers = Object.keys(groupTitleFinder.data)
+    if (!registeredUsers.includes(loginid)) {
+      setLoginError(true)
+      setLoading(false)
+      return ''
+    }
+    setLoginError(false)
+    const user = groupTitleFinder.data[loginid]
+    const res2: any = await pullDoc({
+      collection: 'participants',
+      doc: user.groupTitle,
+    })
+    const teamData = res2.data
+    setUserid(loginid)
+    setTeam(user.groupTitle.split('_').join(' '))
+    const email = teamData.members[user.index].email
+    if (teamData.registeredEvents.TSS) {
+      setSchedule(teamData.schedule)
+    }
     setLoading(false)
     return email
   }

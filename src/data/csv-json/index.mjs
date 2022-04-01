@@ -34,7 +34,7 @@ function handlePartcipants() {
   zipped.forEach((row) => {
     const res = {}
     res.id = row.id
-    res.group_title = row.group_title
+    res.groupTitle = row.groupTitle
     res.members = []
     for (var i = 1; i <= 10; i++) {
       const email = row[`email_${i}`]

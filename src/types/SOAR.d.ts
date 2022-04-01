@@ -2,7 +2,7 @@ import { SOARPageProps } from '@/types/navigation'
 
 export type SOARTimetable = Array<{
   time: string
-  group_title: string
+  groupTitle: string
 }>
 
 export type SOARLocation = {
