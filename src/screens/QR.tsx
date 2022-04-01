@@ -13,13 +13,13 @@ import { Button } from '@/components/Buttons'
 import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SoarContext } from '@/contexts/SoarContext'
-import { QRStaticCommands } from '@/data/constants'
+import { QRIndex } from '@/data/commandMap'
 
 const QRScreen = () => {
   const [cameraPermission, setCameraPermission] = useState('')
   const { QRState, scanningState } = useContext(SoarContext)
   const [isScanning, setIsScanning] = scanningState
-  const setCommand = QRState[1]
+  const setQR = QRState[1]
   const navigation = useNavigation<DNP<DrawerPages, 'QRScreen'>>()
 
   /* handles camera permissions */
@@ -49,24 +49,24 @@ const QRScreen = () => {
 
   /*
    * check validity
-   * parse encrypted string to a command
+   * parse encrypted string to a command object
    * doesn't process anything else
    */
-  const handleBarCode = (code: BarCodeEvent) => {
-    const string: string = code.data
+  const handleQRCode = (code: BarCodeEvent) => {
     setIsScanning(false)
-    if (!Object.keys(QRStaticCommands).includes(string)) {
-      console.warn('invalid QR scanned') // perma
-      setCommand('invalid')
+    const string: string = code.data
+    if (!Object.keys(QRIndex).includes(string)) {
+      console.log('invalid QR scanned') // perma
+      setQR({ command: 'invalid', station: '' })
       navigation.navigate('SOAR')
-      return undefined
+      return
     }
     // TODO: implement a QR code cooldown timer
     // only continue for valid QR codes
-    setCommand(string)
-    console.log('handleBarCode', string)
+    const packet = QRIndex[string]
+    console.log('parsed QR as', packet)
+    setQR(packet)
     navigation.navigate('SOAR')
-    return undefined
   }
 
   const BackToMap = ({ onPress }: any) => {
@@ -85,7 +85,7 @@ const QRScreen = () => {
       <Overlap>
         <BarCodeScanner
           type="back"
-          onBarCodeScanned={(data) => handleBarCode(data)}
+          onBarCodeScanned={(data) => handleQRCode(data)}
           style={{ height: '100%', width: '100%' }}
         />
       </Overlap>

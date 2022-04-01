@@ -21,8 +21,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '../components/Buttons'
-import { NUSCoordinates, QRStaticCommands } from '@/data/constants'
-import { QRStaticCommandProps } from '@/types/SOAR'
+import { NUSCoordinates, QRStaticCommands, emptyQR } from '@/data/constants'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -34,7 +33,7 @@ const SOARScreen = () => {
   const [filtered, setFiltered] = filteredState
   const [displayLocations, setDisplayLocations] = useState<any>([])
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
-  const [command, setCommand] = QRState
+  const [QR, setQR] = QRState
   const [loading, setLoading] = useState(true)
   const [isScanning, setIsScanning] = scanningState
   const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
@@ -116,7 +115,7 @@ const SOARScreen = () => {
   }
 
   useEffect(() => {
-    if (loadingState[0] === false) {
+    if (isLoading === false) {
       const newLocs = getLocations(locations, filtered)
       setDisplayLocations(newLocs)
     }
@@ -124,50 +123,26 @@ const SOARScreen = () => {
 
   function handleQRFunction() {
     console.log('handleQRFunction') // perma
-    setCommand('')
+    setQR(emptyQR)
   }
 
   const QRHandler = () => {
-    console.log('called QRHandler', command)
-    if (command === 'invalid') {
+    console.log('called QRHandler', QR)
+    if (QR.command === 'invalid') {
       console.log('got ehrererljarlkajsdflkajsd')
-      const q = QRStaticCommands[command]
-      setCommand('')
-      return (
-        <Modal
-          visible={true}
-          dismissable={true}
-          onDismiss={() => setCommand('')}
-        >
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>{q.title}</Text>
-            <View style={{ marginBottom: 10 }}></View>
-            <Text style={styles.centered}>{q.summary}</Text>
-            <View style={{ marginBottom: 10 }}></View>
-            <ButtonGreen onPress={handleQRFunction}>{q.action}</ButtonGreen>
-          </View>
-        </Modal>
-      )
+      const q = QRStaticCommands[QR.command]
     }
-    return null
-    // const q = QRStaticCommandPropss[command]
-    // if (typeof q === QRStaticCommandProps) {
-    //   return (
-    //     <Modal
-    //       visible={true}
-    //       dismissable={true}
-    //       onDismiss={() => setCommand('')}
-    //     >
-    //       <View style={styles.modalContainer}>
-    //         <Text style={styles.modalTitle}>{q.title}</Text>
-    //         <View style={{ marginBottom: 10 }}></View>
-    //         <Text style={styles.centered}>{q.summary}</Text>
-    //         <View style={{ marginBottom: 10 }}></View>
-    //         <ButtonGreen onPress={handleQRFunction}>{q.action}</ButtonGreen>
-    //       </View>
-    //     </Modal>
-    //   )
-    // }
+    return QR === emptyQR ? null : (
+      <Modal visible={true} dismissable={true} onDismiss={() => setQR(emptyQR)}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>hi</Text>
+          <View style={{ marginBottom: 10 }}></View>
+          <Text style={styles.centered}>hi</Text>
+          <View style={{ marginBottom: 10 }}></View>
+          <ButtonGreen onPress={handleQRFunction}>hi</ButtonGreen>
+        </View>
+      </Modal>
+    )
   }
 
   if (loading) {

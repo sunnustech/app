@@ -93,7 +93,7 @@ const SoarContext = createContext<SOARContextProps>({
   locationState: [[], () => true],
   filteredState: [{}, () => {}],
   scanningState: [false, () => true],
-  QRState: ['', () => ''],
+  QRState: [{ command: '', station: '' }, () => {}],
 })
 
 // Getters and setters to be used when using context

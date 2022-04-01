@@ -1,11 +1,7 @@
 import { Camera } from 'react-native-maps'
-import {
-  QRMapProps,
-  QRDynamicCommandProps,
-  QRStaticCommandProps,
-} from '@/types/SOAR'
+import { QRDynamicCommandProps, QRStaticCommandProps } from '@/types/SOAR'
 
-const NUSCoordinates: Camera = {
+export const NUSCoordinates: Camera = {
   center: { latitude: 1.296674, longitude: 103.77639 },
   pitch: 0,
   zoom: 15.3,
@@ -13,7 +9,12 @@ const NUSCoordinates: Camera = {
   altitude: 0,
 }
 
-const QRStaticCommands: { [key: string]: QRStaticCommandProps } = {
+export const emptyQR = {
+  command: '',
+  station: '',
+}
+
+export const QRStaticCommands: { [key: string]: QRStaticCommandProps } = {
   start: {
     title: 'start',
     summary: 'Ready to kickstart your adventure?',
@@ -41,7 +42,7 @@ const QRStaticCommands: { [key: string]: QRStaticCommandProps } = {
   },
 }
 
-const QRDynamicCommands: { [key: string]: QRDynamicCommandProps } = {
+export const QRDynamicCommands: { [key: string]: QRDynamicCommandProps } = {
   add: (points) => {
     const packet = {
       title: `+${points}`,
@@ -52,5 +53,3 @@ const QRDynamicCommands: { [key: string]: QRDynamicCommandProps } = {
     return packet
   },
 }
-
-export { NUSCoordinates, QRStaticCommands, QRDynamicCommands }

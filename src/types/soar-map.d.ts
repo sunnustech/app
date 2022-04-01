@@ -33,10 +33,15 @@ export type ADMINLocations = {
   waterPoints: soarPoint
 }
 
+type QRState = {
+  command: string
+  station: string
+}
+
 export type SOARContextProps = {
   loadingState: [boolean, Dispatch<SetStateAction<boolean>>]
   scanningState: [boolean, Dispatch<SetStateAction<boolean>>]
   locationState: [Array<any>, Dispatch<SetStateAction<Array<any>>>]
   filteredState: [any, Dispatch<SetStateAction<any>>]
-  QRState: [string, Dispatch<SetStateAction<string>>]
+  QRState: [QRState, Dispatch<SetStateAction<QRState>>]
 }
