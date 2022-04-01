@@ -43,7 +43,7 @@ const Input = ({
 }
 
 const LoginScreen = () => {
-  const { setUserid, setTeam, setSchedule } = useContext(UserContext)
+  const { setUserId, setTeam, setSchedule } = useContext(UserContext)
   const [loginId, setLoginId] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
@@ -85,7 +85,7 @@ const LoginScreen = () => {
       doc: user.groupTitle,
     })
     const teamData = res2.data
-    setUserid(loginId)
+    setUserId(loginId)
     setTeam(user.groupTitle.split('_').join(' '))
     const email = teamData.members[user.index].email
     if (teamData.registeredEvents.TSS) {
