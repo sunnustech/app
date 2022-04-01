@@ -44,7 +44,7 @@ const Input = ({
 
 const LoginScreen = () => {
   const { setUserid, setTeam, setSchedule } = useContext(UserContext)
-  const [loginid, setLoginid] = useState('')
+  const [loginId, setLoginId] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
 
@@ -65,26 +65,27 @@ const LoginScreen = () => {
   const queryEmailFromFirebase = async () => {
     setLoading(true)
     /*
-     * pulls a dictionary that maps loginid to groupTitle
+     * pulls a dictionary that maps loginId to groupTitle
      */
     const groupTitleFinder = await pullDoc({
       collection: 'participants',
       doc: 'allParticipants',
     })
     const registeredUsers = Object.keys(groupTitleFinder.data)
-    if (!registeredUsers.includes(loginid)) {
+    if (!registeredUsers.includes(loginId)) {
       setLoginError(true)
       setLoading(false)
       return ''
     }
+    // continue only if user is registered
     setLoginError(false)
-    const user = groupTitleFinder.data[loginid]
+    const user = groupTitleFinder.data[loginId]
     const res2: any = await pullDoc({
       collection: 'participants',
       doc: user.groupTitle,
     })
     const teamData = res2.data
-    setUserid(loginid)
+    setUserid(loginId)
     setTeam(user.groupTitle.split('_').join(' '))
     const email = teamData.members[user.index].email
     if (teamData.registeredEvents.TSS) {
@@ -118,8 +119,8 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <Input
           placeholder="Team ID + key"
-          value={loginid}
-          onChangeText={(text: string) => setLoginid(text)}
+          value={loginId}
+          onChangeText={(text: string) => setLoginId(text)}
         />
       </View>
       <ActivityIndicator animating={loading} />

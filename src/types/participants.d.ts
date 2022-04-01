@@ -11,11 +11,11 @@ export type RegisteredEvent = {
 export type Group = {
   groupTitle: string
   SOAR?: any
-  registered_events: RegisteredEvent
+  registeredEvents: RegisteredEvent
   members: Array<{
     email: string
     phone: string
-    loginid: string
+    loginId: string
   }>
 }
 

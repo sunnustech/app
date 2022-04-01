@@ -73,22 +73,22 @@ const Developer: Group = {
     {
       email: 'adam@gmail.com',
       phone: '73125593',
-      loginid: 'dev_loper120389',
+      loginId: 'dev_loper120389',
     },
     {
       email: 'beverly@gmail.com',
       phone: '75687708',
-      loginid: 'dev_loper120388',
+      loginId: 'dev_loper120388',
     },
     {
       email: 'calista@gmail.com',
       phone: '75893845',
-      loginid: 'k',
+      loginId: 'k',
     },
     {
       email: 'dana@gmail.com',
       phone: '78449264',
-      loginid: 'dev_loper120386',
+      loginId: 'dev_loper120386',
     },
   ],
 }
@@ -101,17 +101,17 @@ const generateRandomID = () => {
   return Math.random().toString(10).substring(2, 8)
 }
 
-const addLoginID = (obj: any): Group => {
+const addLoginId = (obj: any): Group => {
   let grpNameTitle = trimGroupNameToLowercase(obj.groupTitle)
   obj.members.forEach((e: any) => {
-    e['loginid'] = grpNameTitle + generateRandomID()
+    e['loginId'] = grpNameTitle + generateRandomID()
   })
   return obj
 }
 
 const allTeams: Array<Group> = [
-  addLoginID(testOne),
-  addLoginID(testTwo),
+  addLoginId(testOne),
+  addLoginId(testTwo),
   Developer,
 ]
 
@@ -121,7 +121,7 @@ const allParticipants: {
 
 allTeams.forEach((team) => {
   team.members.forEach((member, index) => {
-    allParticipants[member.loginid] = {
+    allParticipants[member.loginId] = {
       groupTitle: team.groupTitle,
       index,
     }
