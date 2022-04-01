@@ -36,7 +36,7 @@ const UI = ({
           <NoTouchDiv style={styles.navigationContainer}>
             <MapNavigationButton
               icon={[IC, 'arrow-back']}
-              onPress={navigation.openDrawer}
+              onPress={() => navigation.navigate('HomeScreen')}
             />
           </NoTouchDiv>
         </Overlap>
