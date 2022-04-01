@@ -67,11 +67,11 @@ const LoginScreen = () => {
     /*
      * pulls a dictionary that maps loginId to groupTitle
      */
-    const groupTitleFinder = await pullDoc({
+    const loginIdDictionary = await pullDoc({
       collection: 'participants',
       doc: 'allLoginIds',
     })
-    const registeredUsers = Object.keys(groupTitleFinder.data)
+    const registeredUsers = Object.keys(loginIdDictionary.data)
     if (!registeredUsers.includes(loginId)) {
       setLoginError(true)
       setLoading(false)
@@ -79,7 +79,7 @@ const LoginScreen = () => {
     }
     // continue only if user is registered
     setLoginError(false)
-    const user = groupTitleFinder.data[loginId]
+    const user = loginIdDictionary.data[loginId]
     const res2: any = await pullDoc({
       collection: 'participants',
       doc: user.groupTitle,

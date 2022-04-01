@@ -52,7 +52,7 @@ const HomeScreen = () => {
    */
 
   const { userId, team, schedule } = useContext(UserContext)
-  console.log(auth.currentUser?.email)
+  // console.log(auth.currentUser)
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
