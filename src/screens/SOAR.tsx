@@ -21,12 +21,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '../components/Buttons'
-import {
-  NUSCoordinates,
-  QRStaticCommands,
-  emptyQR,
-  invalidQR,
-} from '@/data/constants'
+import { NUSCoordinates, emptyQR } from '@/data/constants'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -116,7 +111,7 @@ const SOARScreen = () => {
 
   function getLocations(locations: any, filtered: any) {
     // use filteredState and locationState to determine a final array of locations to expose to the map
-    return locations.filter((location: any) => filtered[location.type])
+    return locations.filter((location: any) => filtered[location.stationType])
   }
 
   useEffect(() => {

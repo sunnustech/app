@@ -9,7 +9,7 @@ import {
 import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { db } from '@/sunnus/firebase'
 import { collection, getDocs, query } from 'firebase/firestore'
 

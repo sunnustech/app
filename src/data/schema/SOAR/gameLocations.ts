@@ -1,63 +1,126 @@
 import { SOARLocation } from '@/types/SOAR'
 
-const testOne = {
+const Slide = {
   id: 1,
-  type: 'game',
-  location: 'The Lair of the Green-eyed Man',
+  stationType: 'game',
+  title: 'Slide',
+  location: 'TODO',
   content: {
-    game_title: 'YeetBall',
-    details: 'game instructions/intro statement (try to keep it concise!)',
+    game_title: 'Slide',
+    details: 'TODO',
   },
-  title: '_Math Dept',
-  phyiscal: true,
-  google_map_pin_url: 'https://goo.gl/maps/1Zrg21yeCGQJGhK18',
-  timetable: [
-    {
-      time: '15:00',
-      group_title: 'Independent_Decorators',
-    },
-    {
-      time: '15:30',
-      group_title: 'Gentle_Sweaters',
-    },
-  ],
   coordinate: {
-    // Math Department, S17
-    latitude: 1.2977616274812807,
-    longitude: 103.78064732396246,
+    latitude: 1.2959918,
+    longitude: 103.780516,
   },
-  stage: 0,
-}
-
-const testTwo = {
-  id: 2,
-  type: 'game',
-  location: 'Camp Nou',
-  content: {
-    game_title: 'SheeshJump',
-    details: 'gameo instructo',
-  },
-  title: '_NUS Track',
-  phyiscal: false,
-  google_map_pin_url: 'https://goo.gl/maps/93QFQ3WP5LnHX5sw9',
-  timetable: [
-    {
-      time: '15:00',
-      group_title: 'Poor_Philosophers',
-    },
-    {
-      time: '15:30',
-      group_title: 'Irrelevant_Readers',
-    },
-  ],
-  coordinate: {
-    // NUS Track
-    latitude: 1.2988799275302583,
-    longitude: 103.77833179142198,
-  },
+  timetable: [],
   stage: 1,
+  phyiscal: true,
+  google_map_pin_url: 'https://goo.gl/maps/T1F9XPH1bCcAW1bJA',
 }
 
-const gameLocations = [testOne, testTwo]
+const Relay2Maze = {
+  id: 2,
+  stationType: 'game',
+  title: 'Relay2Maze',
+  location: 'TODO',
+  content: {
+    game_title: 'Relay2Maze',
+    details: 'TODO',
+  },
+  coordinate: {
+    latitude: 1.2995528,
+    longitude: 103.7756084,
+  },
+  timetable: [],
+  stage: 1,
+  phyiscal: true,
+  google_map_pin_url: 'https://goo.gl/maps/sBkDifkxaduGabCA9',
+}
+
+const SotongHouze = {
+  id: 3,
+  stationType: 'game',
+  title: 'Sotong Houze',
+  location: 'TODO',
+  content: {
+    game_title: 'Sotong Houze',
+    details: 'TODO',
+  },
+  coordinate: {
+    latitude: 1.2967515,
+    longitude: 103.7701697,
+  },
+  timetable: [],
+  stage: 1,
+  phyiscal: true,
+  google_map_pin_url: 'https://goo.gl/maps/PQswbYKbSRPiDs2C8',
+}
+
+const SnakeAndLadders = {
+  id: 4,
+  stationType: 'game',
+  title: 'Snake & Ladders',
+  location: 'TODO',
+  content: {
+    game_title: 'Snake & Ladders',
+    details: 'TODO',
+  },
+  coordinate: {
+    latitude: 1.2935693,
+    longitude: 103.7740868,
+  },
+  timetable: [],
+  stage: 1,
+  phyiscal: true,
+  google_map_pin_url: 'https://goo.gl/maps/VtG7da41VpvUsrM3A',
+}
+
+const GOLF = {
+  id: 5,
+  stationType: 'game',
+  title: 'GOLF',
+  location: 'TODO',
+  content: {
+    game_title: 'GOLF',
+    details: 'TODO',
+  },
+  coordinate: {
+    latitude: 1.3050392,
+    longitude: 103.7729745,
+  },
+  timetable: [],
+  stage: 1,
+  phyiscal: true,
+  google_map_pin_url: 'https://goo.gl/maps/zNsCz9JE63cvDtr3A',
+}
+
+const NerfBattle = {
+  id: 6,
+  stationType: 'game',
+  title: 'Nerf Battle',
+  location: 'TODO',
+  content: {
+    game_title: 'Nerf Battle',
+    details: 'TODO',
+  },
+  coordinate: {
+    latitude: 1.2966335,
+    longitude: 103.7728345,
+  },
+  timetable: [],
+  stage: 1,
+  phyiscal: true,
+  google_map_pin_url: 'https://goo.gl/maps/iDqREtXgp2swi15DA',
+}
+
+const gameLocations: Array<SOARLocation> = [
+  Slide,
+  Relay2Maze,
+  SotongHouze,
+  SnakeAndLadders,
+  GOLF,
+  NerfBattle,
+]
 
 export default gameLocations
