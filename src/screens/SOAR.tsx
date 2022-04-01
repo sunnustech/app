@@ -128,18 +128,22 @@ const SOARScreen = () => {
 
   const QRHandler = () => {
     console.log('called QRHandler', QR)
-    if (QR.command === 'invalid') {
-      console.log('got ehrererljarlkajsdflkajsd')
-      const q = QRStaticCommands[QR.command]
-    }
+    const display =
+      QR === emptyQR
+        ? {
+            title: 'invalid QR',
+            summary: 'The QR code scanned is not in our index',
+            action: 'Continue',
+          }
+        : QRStaticCommands[QR.command]
     return QR === emptyQR ? null : (
       <Modal visible={true} dismissable={true} onDismiss={() => setQR(emptyQR)}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>hi</Text>
+          <Text style={styles.modalTitle}>{display.title}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <Text style={styles.centered}>hi</Text>
+          <Text style={styles.centered}>{display.summary}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <ButtonGreen onPress={handleQRFunction}>hi</ButtonGreen>
+          <ButtonGreen onPress={handleQRFunction}>{display.action}</ButtonGreen>
         </View>
       </Modal>
     )

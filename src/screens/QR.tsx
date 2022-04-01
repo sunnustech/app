@@ -57,7 +57,11 @@ const QRScreen = () => {
     const string: string = code.data
     if (!Object.keys(QRIndex).includes(string)) {
       console.log('invalid QR scanned') // perma
-      setQR({ command: 'invalid', station: '' })
+      setQR({
+        title: 'invalid QR',
+        summary: 'The QR code scanned is not in our index',
+        action: 'Continue',
+      })
       navigation.navigate('SOAR')
       return
     }
