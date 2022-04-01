@@ -88,45 +88,46 @@ const getFirebaseLocations = async (p: {
   p.setLoading(false)
 }
 
-// Context function to be used
-function createSoarCtx() {
-  const ctx = createContext<SOARContextProps>({
-    loadingState: [false, () => true],
-    locationState: [[], () => true],
-    filteredState: [{}, () => {}],
-    QRState: ['', () => ''],
+const SoarContext = createContext<SOARContextProps>({
+  loadingState: [false, () => true],
+  locationState: [[], () => true],
+  filteredState: [{}, () => {}],
+  scanningState: [false, () => true],
+  QRState: ['', () => ''],
+})
+
+// Getters and setters to be used when using context
+function SoarProvider(props: React.PropsWithChildren<{}>) {
+  const loadingState = useState(false)
+  const scanningState = useState(false)
+  const QRState = useState('')
+  const locationState = useState<any>({})
+  const filteredState = useState<any>({
+    game: true,
+    water: false,
+    medic: false,
   })
 
-  // Getters and setters to be used when using context
-  function Provider(props: React.PropsWithChildren<{}>) {
-    const loadingState = useState(false)
-    const QRState = useState('')
-    const locationState = useState<any>({})
-    const filteredState = useState<any>({
-      game: true,
-      water: false,
-      medic: false,
+  /* main enabler of async-ness */
+  useEffect(() => {
+    getFirebaseLocations({
+      setLoading: loadingState[1],
+      setLocations: locationState[1],
     })
+  }, [])
 
-    /* main enabler of async-ness */
-    useEffect(() => {
-      getFirebaseLocations({
-        setLoading: loadingState[1],
-        setLocations: locationState[1],
-      })
-    }, [])
-
-    return (
-      <ctx.Provider
-        value={{ loadingState, filteredState, locationState, QRState }}
-        {...props}
-      />
-    )
-  }
-  // Export a tuple of the default and the functions to use the context
-  return [ctx, Provider] as const
+  return (
+    <SoarContext.Provider
+      value={{
+        loadingState,
+        filteredState,
+        locationState,
+        QRState,
+        scanningState,
+      }}
+      {...props}
+    />
+  )
 }
-
-const [SoarContext, SoarProvider] = createSoarCtx()
 
 export { SoarContext, SoarProvider }

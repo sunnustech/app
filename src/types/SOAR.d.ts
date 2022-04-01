@@ -32,11 +32,13 @@ export type SOARData = {
   }
 }
 
-export type QRMapProps = {
-  command: string
+export type QRStaticCommandProps = {
+  title: string
   summary: string
   action: string
 }
+
+export type QRDynamicCommandProps = (points: number) => QRStaticCommandProps
 
 export type SoarTeamProps = {
   timerRunning: boolean
