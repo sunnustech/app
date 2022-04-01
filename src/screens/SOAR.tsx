@@ -21,11 +21,11 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '../components/Buttons'
-import { NUSCoordinates, QRMap } from '@/data/constants'
+import { NUSCoordinates, emptyQR } from '@/data/constants'
 
 const SOARScreen = () => {
   /* read data from soar context */
-  const { locationState, filteredState, loadingState, QRState } =
+  const { locationState, filteredState, loadingState, QRState, scanningState } =
     useContext(SoarContext)
 
   const locations = locationState[0]
@@ -33,8 +33,9 @@ const SOARScreen = () => {
   const [filtered, setFiltered] = filteredState
   const [displayLocations, setDisplayLocations] = useState<any>([])
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
-  const [QRString, setQRString] = QRState
+  const [QR, setQR] = QRState
   const [loading, setLoading] = useState(true)
+  const [isScanning, setIsScanning] = scanningState
   const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
 
   const mapRef = useRef<MapView>()
@@ -98,6 +99,7 @@ const SOARScreen = () => {
   }
 
   const openQRScanner = () => {
+    setIsScanning(true)
     navigation.navigate('QRScreen')
     console.log('handle opening QR scanner') // perma
   }
@@ -109,11 +111,11 @@ const SOARScreen = () => {
 
   function getLocations(locations: any, filtered: any) {
     // use filteredState and locationState to determine a final array of locations to expose to the map
-    return locations.filter((location: any) => filtered[location.type])
+    return locations.filter((location: any) => filtered[location.stationType])
   }
 
   useEffect(() => {
-    if (loadingState[0] === false) {
+    if (isLoading === false) {
       const newLocs = getLocations(locations, filtered)
       setDisplayLocations(newLocs)
     }
@@ -121,23 +123,18 @@ const SOARScreen = () => {
 
   function handleQRFunction() {
     console.log('handleQRFunction') // perma
-    setQRString('')
+    setQR(emptyQR)
   }
 
   const QRHandler = () => {
-    const q = QRMap[QRString]
-    return QRString === '' ? null : (
-      <Modal
-        visible={true}
-        dismissable={true}
-        onDismiss={() => setQRString('')}
-      >
+    return QR === emptyQR ? null : (
+      <Modal visible={true} dismissable={true} onDismiss={() => setQR(emptyQR)}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>{q.command}</Text>
+          <Text style={styles.modalTitle}>{QR.title}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <Text style={styles.centered}>{q.summary}</Text>
+          <Text style={styles.centered}>{QR.summary}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <ButtonGreen onPress={handleQRFunction}>{q.action}</ButtonGreen>
+          <ButtonGreen onPress={handleQRFunction}>{QR.action}</ButtonGreen>
         </View>
       </Modal>
     )

@@ -1,7 +1,7 @@
 [
   {
     "id": "XK618j",
-    "group_title": "Known Painters",
+    "groupTitle": "Known Painters",
     "members": [
       { "email": "alice@gmail.com", "phone": "77884793" },
       { "email": "brandon@gmail.com", "phone": "79412799" },
@@ -11,7 +11,7 @@
   },
   {
     "id": "1l6tlj",
-    "group_title": "Modest Liberators",
+    "groupTitle": "Modest Liberators",
     "members": [
       { "email": "adam@gmail.com", "phone": "73125593" },
       { "email": "beverly@gmail.com", "phone": "75687708" },

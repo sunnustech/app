@@ -20,6 +20,8 @@ import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
 import { notificationInit } from '@/lib/notifications'
 import SunnusLogo from '../../assets/sunnus-anniversary.png'
+import { UserContext } from '@/contexts/UserContext'
+import { useContext } from 'react'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -49,9 +51,13 @@ const HomeScreen = () => {
    * >>> <firebase username>
    */
 
+  const { userId, team, schedule } = useContext(UserContext)
+  // console.log(auth.currentUser)
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Image source={SunnusLogo} style={styles.image} />
+      <Text>{`Welcome, ${userId}, of team ${team}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
           onPress={() => navigation.navigate('SOAR')}

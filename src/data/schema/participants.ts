@@ -1,9 +1,9 @@
 import { Group, ParticipantsData } from '@/types/participants'
 import { objFromArray } from './utils'
 
-const testOne: Group = {
-  group_title: 'Known_Painters',
-  registered_events: {
+const testOne = {
+  groupTitle: 'Known_Painters',
+  registeredEvents: {
     TSS: {
       volleyball: true,
     },
@@ -39,9 +39,9 @@ const testOne: Group = {
   ],
 }
 
-const testTwo: Group = {
-  group_title: 'Modest_Liberators',
-  registered_events: {
+const testTwo = {
+  groupTitle: 'Modest_Liberators',
+  registeredEvents: {
     SOAR: true,
   },
   members: [
@@ -64,6 +64,35 @@ const testTwo: Group = {
   ],
 }
 
+const Developer: Group = {
+  groupTitle: 'Dev_loper',
+  registeredEvents: {
+    SOAR: true,
+  },
+  members: [
+    {
+      email: 'adam@gmail.com',
+      phone: '73125593',
+      loginId: 'dev_loper120389',
+    },
+    {
+      email: 'beverly@gmail.com',
+      phone: '75687708',
+      loginId: 'dev_loper120388',
+    },
+    {
+      email: 'calista@gmail.com',
+      phone: '75893845',
+      loginId: 'k',
+    },
+    {
+      email: 'dana@gmail.com',
+      phone: '78449264',
+      loginId: 'dev_loper120386',
+    },
+  ],
+}
+
 const trimGroupNameToLowercase = (grp: string) => {
   return grp.split('_').join('').split(' ').join('').toLowerCase()
 }
@@ -72,17 +101,45 @@ const generateRandomID = () => {
   return Math.random().toString(10).substring(2, 8)
 }
 
-const addLoginID = (obj: Group) => {
-  let grpNameTitle = trimGroupNameToLowercase(obj.group_title)
-  obj.members.forEach((e) => {
-    e['loginid'] = grpNameTitle + generateRandomID()
+const addLoginId = (obj: any): Group => {
+  let grpNameTitle = trimGroupNameToLowercase(obj.groupTitle)
+  obj.members.forEach((e: any) => {
+    e['loginId'] = grpNameTitle + generateRandomID()
   })
   return obj
 }
 
-const participants: ParticipantsData = objFromArray(
-  [addLoginID(testOne), addLoginID(testTwo)],
-  'group_title'
-)
+const allTeams: Array<Group> = [
+  addLoginId(testOne),
+  addLoginId(testTwo),
+  Developer,
+]
+
+const allLoginIds: {
+  [key: string]: { groupTitle: string; index: number; email: string }
+} = {}
+
+const allEmails: {
+  [key: string]: { groupTitle: string; index: number; loginId: string }
+} = {}
+
+allTeams.forEach((team) => {
+  team.members.forEach((member, index) => {
+    allLoginIds[member.loginId] = {
+      groupTitle: team.groupTitle,
+      index,
+      email: member.email,
+    }
+    allEmails[member.email] = {
+      groupTitle: team.groupTitle,
+      index,
+      loginId: member.loginId,
+    }
+  })
+})
+
+const participants: ParticipantsData = objFromArray(allTeams, 'groupTitle')
+participants['allLoginIds'] = allLoginIds
+participants['allEmails'] = allEmails
 
 export default participants

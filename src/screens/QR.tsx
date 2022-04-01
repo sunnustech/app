@@ -13,50 +13,66 @@ import { Button } from '@/components/Buttons'
 import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SoarContext } from '@/contexts/SoarContext'
-import { QRMap } from '@/data/constants'
+import { QRIndex } from '@/data/commandMap'
+import { QRStaticCommands, invalidQR } from '@/data/constants'
 
 const QRScreen = () => {
   const [cameraPermission, setCameraPermission] = useState('')
-  const { QRState } = useContext(SoarContext)
-  const setQRString = QRState[1]
-
+  const { QRState, scanningState } = useContext(SoarContext)
+  const [isScanning, setIsScanning] = scanningState
+  const setQR = QRState[1]
   const navigation = useNavigation<DNP<DrawerPages, 'QRScreen'>>()
 
-  const enableCameraPermission = () => {
-    ;(async () => {
-      let { status } = await BarCodeScanner.requestPermissionsAsync()
-      if (status !== 'granted') {
-        alert('Please enable the camera to keep using the app!')
-        return
-      }
-      setCameraPermission('granted')
-    })()
+  /* handles camera permissions */
+  // {{{
+  const enableCameraPermission = async () => {
+    let { status } = await BarCodeScanner.requestPermissionsAsync()
+    if (status !== 'granted') {
+      alert('Please enable the camera to keep using the app!')
+      return
+    }
+    setCameraPermission('granted')
   }
-
-  // run once
   useEffect(() => {
     enableCameraPermission()
   }, [])
-
-  const handleBarCode = (code: BarCodeEvent) => {
-    if (!Object.keys(QRMap).includes(code.data)) {
-      console.log('invalid QR scanned') // perma
-      return
-    }
-
-    setQRString(code.data)
-    navigation.navigate('SOAR')
-  }
-
   if (cameraPermission !== 'granted') {
     return (
       <View style={styles.container}>
         <Text>It seems like camera access wasn't granted. :c</Text>
-        <Button onPress={() => enableCameraPermission()}>
+        <Button onPress={enableCameraPermission}>
           Click to enable permissions!
         </Button>
       </View>
     )
+  }
+  // }}}
+
+  /*
+   * check validity
+   * parse encrypted string to a command object
+   * doesn't process anything else
+   */
+  const handleQRCode = (code: BarCodeEvent) => {
+    setIsScanning(false)
+    const string: string = code.data
+    if (!Object.keys(QRIndex).includes(string)) {
+      console.log('invalid QR scanned') // perma
+      setQR(invalidQR)
+      navigation.navigate('SOAR')
+      return
+    }
+    // TODO: implement a QR code cooldown timer
+    // only continue for valid QR codes
+    const data = QRIndex[string]
+    const command = QRStaticCommands[data.command]
+    setQR(command)
+    navigation.navigate('SOAR')
+  }
+
+  const handleBackToMap = () => {
+    setIsScanning(false)
+    navigation.navigate('SOAR')
   }
 
   const BackToMap = ({ onPress }: any) => {
@@ -70,23 +86,23 @@ const QRScreen = () => {
     )
   }
 
-  return (
+  return isScanning ? (
     <View style={styles.container}>
       <Overlap>
         <BarCodeScanner
           type="back"
-          onBarCodeScanned={(data) => handleBarCode(data)}
+          onBarCodeScanned={(data) => handleQRCode(data)}
           style={{ height: '100%', width: '100%' }}
         />
       </Overlap>
       <Overlap>
         <View style={styles.buttonContainer}>
           <View style={{ flex: 1 }} />
-          <BackToMap onPress={() => navigation.navigate('SOAR')} />
+          <BackToMap onPress={handleBackToMap} />
         </View>
       </Overlap>
     </View>
-  )
+  ) : null
 }
 
 export default QRScreen

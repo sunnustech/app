@@ -57,9 +57,9 @@ const MapNavigationButton = ({ icon, onPress }: MapButtonProps) => {
   // icon: provider + name
   const [IconProvider, name] = icon
   return (
-    <View style={styles.mapNavigationButton}>
-      <IconProvider name={name} color="white" size={32} onPress={onPress} />
-    </View>
+    <TouchableOpacity style={styles.mapNavigationButton} onPress={onPress}>
+      <IconProvider name={name} color="white" size={32} />
+    </TouchableOpacity>
   )
 }
 

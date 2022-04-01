@@ -9,7 +9,7 @@ import {
 import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { db } from '@/sunnus/firebase'
 import { collection, getDocs, query } from 'firebase/firestore'
 
@@ -18,6 +18,7 @@ import { auth } from '@/sunnus/firebase'
 import { login as styles } from '@/styles/fresh'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import { UserContext } from '../contexts/UserContext'
+import { pullDoc } from '../data/pull'
 
 const PASSWORD = 'sunnus'
 
@@ -42,13 +43,13 @@ const Input = ({
 }
 
 const LoginScreen = () => {
-  const { setUserid, setTeam, setSchedule } = useContext(UserContext)
-  const [loginid, setLoginid] = useState('')
+  const { setUserId, setTeam, setSchedule } = useContext(UserContext)
+  const [loginId, setLoginId] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
 
   const loginHandler = async () => {
-    const email = queryEmailFromFirebase()
+    const email = await queryEmailFromFirebase()
     if (email) {
       signInWithEmailAndPassword(auth, await email, PASSWORD)
         .then((credential) => {
@@ -63,32 +64,33 @@ const LoginScreen = () => {
 
   const queryEmailFromFirebase = async () => {
     setLoading(true)
-    const userRef = query(collection(db, 'participants'))
-    const querySnapshot = await getDocs(userRef)
-    let email = ''
-    let teamNames: string[] = []
-    querySnapshot.forEach((doc) => {
-      const teamData = doc.data()
-      if (teamData.group_title) {
-        teamNames.push(teamData.group_title)
-      }
-      const teamDetails = teamData.members
-      if (teamDetails) {
-        for (let i = 0; i < teamDetails.length; i++) {
-          if (teamDetails[i].loginid === loginid) {
-            setUserid(loginid)
-            email = teamDetails[i].email
-            const teamName = teamNames[teamNames.length - 1]
-              .split('_')
-              .join(' ')
-            setTeam(teamName)
-            if (teamData.registered_events.TSS) {
-              setSchedule(teamData.schedule)
-            }
-          }
-        }
-      }
+    /*
+     * pulls a dictionary that maps loginId to groupTitle
+     */
+    const loginIdDictionary = await pullDoc({
+      collection: 'participants',
+      doc: 'allLoginIds',
     })
+    const registeredUsers = Object.keys(loginIdDictionary.data)
+    if (!registeredUsers.includes(loginId)) {
+      setLoginError(true)
+      setLoading(false)
+      return ''
+    }
+    // continue only if user is registered
+    setLoginError(false)
+    const user = loginIdDictionary.data[loginId]
+    const res2: any = await pullDoc({
+      collection: 'participants',
+      doc: user.groupTitle,
+    })
+    const teamData = res2.data
+    setUserId(loginId)
+    setTeam(user.groupTitle.split('_').join(' '))
+    const email = teamData.members[user.index].email
+    if (teamData.registeredEvents.TSS) {
+      setSchedule(teamData.schedule)
+    }
     setLoading(false)
     return email
   }
@@ -117,8 +119,8 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <Input
           placeholder="Team ID + key"
-          value={loginid}
-          onChangeText={(text: string) => setLoginid(text)}
+          value={loginId}
+          onChangeText={(text: string) => setLoginId(text)}
         />
       </View>
       <ActivityIndicator animating={loading} />

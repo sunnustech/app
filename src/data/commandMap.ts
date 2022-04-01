@@ -21,11 +21,7 @@ type HaventDecided =
   | 'fn18'
   | 'fn19'
   | 'fn20'
-type Command = 'start' | 'pause' | 'stop-final' | 'resume' | HaventDecided
-
-type CommandList = {
-  [key: string]: Command
-}
+type Command = 'start' | 'pause' | 'stopFinal' | 'resume' | HaventDecided
 
 type StationCommandList = {
   [key: number]: Command
@@ -45,7 +41,7 @@ const stationCommands: StationCommandList = {
   0: 'start',
   1: 'pause',
   2: 'resume',
-  3: 'stop-final',
+  3: 'stopFinal',
   4: 'fn01',
   5: 'fn02',
   6: 'fn03',
@@ -78,13 +74,17 @@ const stations: Array<[number, string]> = [
 ]
 
 const generateQR = () => {
+  const indexed: { [key: string]: { command: string; station: string } } = {}
   stations.forEach((station) => {
     const [startPoint, name] = station
     for (const [offset, command] of Object.entries(stationCommands)) {
       const index = startPoint + parseInt(offset)
-      console.log(`${ten[index]}: ${command}`)
+      indexed[ten[index]] = { command, station: name }
     }
   })
+  return indexed
 }
 
-export { generateQR }
+const QRIndex = generateQR()
+
+export { generateQR, QRIndex }

@@ -84,10 +84,10 @@ const DebugList = () => (
 
 // {{{
 const DEVScreen = () => {
-  const { userid, team, schedule } = useContext(UserContext)
+  const { userId, team, schedule } = useContext(UserContext)
   const getContext = () => {
     console.log('trying to fetch...') // perma
-    console.log('userid:', userid) // perma
+    console.log('userId:', userId) // perma
     console.log('team:', team) // perma
     console.log('schedule:', schedule) // perma
   }

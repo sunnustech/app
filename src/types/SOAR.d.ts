@@ -2,24 +2,26 @@ import { SOARPageProps } from '@/types/navigation'
 
 export type SOARTimetable = Array<{
   time: string
-  group_title: string
+  groupTitle: string
 }>
 
 export type SOARLocation = {
-  title: string
   id: number
-  type: string
+  stationType: string
+  title: string
   location: string
-  game_title: string
-  phyiscal: boolean
-  details: string
-  google_map_pin_url: string
-  timetable: SOARTimetable
+  content: {
+    game_title: string
+    details: string
+  }
   coordinate: {
     latitude: number
     longitude: number
   }
+  timetable: Array<any>
   stage: number
+  phyiscal: boolean
+  google_map_pin_url: string
 }
 
 /*
@@ -32,11 +34,13 @@ export type SOARData = {
   }
 }
 
-export type QRMapProps = {
-  command: string
+export type QRStaticCommandProps = {
+  title: string
   summary: string
   action: string
 }
+
+export type QRDynamicCommandProps = (points: number) => QRStaticCommandProps
 
 export type SoarTeamProps = {
   timerRunning: boolean
