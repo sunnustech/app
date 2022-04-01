@@ -69,7 +69,7 @@ const LoginScreen = () => {
      */
     const groupTitleFinder = await pullDoc({
       collection: 'participants',
-      doc: 'allParticipants',
+      doc: 'allLoginIds',
     })
     const registeredUsers = Object.keys(groupTitleFinder.data)
     if (!registeredUsers.includes(loginId)) {

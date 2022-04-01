@@ -115,20 +115,31 @@ const allTeams: Array<Group> = [
   Developer,
 ]
 
-const allParticipants: {
-  [key: string]: { groupTitle: string; index: number }
+const allLoginIds: {
+  [key: string]: { groupTitle: string; index: number; email: string }
+} = {}
+
+const allEmails: {
+  [key: string]: { groupTitle: string; index: number; loginId: string }
 } = {}
 
 allTeams.forEach((team) => {
   team.members.forEach((member, index) => {
-    allParticipants[member.loginId] = {
+    allLoginIds[member.loginId] = {
       groupTitle: team.groupTitle,
       index,
+      email: member.email,
+    }
+    allEmails[member.email] = {
+      groupTitle: team.groupTitle,
+      index,
+      loginId: member.loginId,
     }
   })
 })
 
 const participants: ParticipantsData = objFromArray(allTeams, 'groupTitle')
-participants['allParticipants'] = allParticipants
+participants['allLoginIds'] = allLoginIds
+participants['allEmails'] = allEmails
 
 export default participants

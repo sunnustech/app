@@ -24,6 +24,7 @@ export type Group = {
  * and first-level values cannot be arrays
  */
 export type ParticipantsData = {
-  allParticipants: any
+  allLoginIds: any
+  allEmails: any
   [key: string]: Group
 }
