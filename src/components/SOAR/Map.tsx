@@ -8,7 +8,6 @@ import { customMapStyle } from './MapStyle'
 import { NUSCoordinates } from '@/data/constants'
 
 const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
-  console.log('--MAP.tsx', displayLocations)
   const gameLocations = displayLocations.filter(
     (e: any) => e.stationType === 'game'
   )

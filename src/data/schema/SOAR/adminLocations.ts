@@ -2,7 +2,7 @@ const medicPoints = [
   {
     id: 'MP1',
     title: '_CLB',
-    type: 'medic',
+    stationType: 'medic',
     google_map_pin_url: '',
     coordinate: {
       // NUS Central Library
@@ -12,7 +12,7 @@ const medicPoints = [
   },
   {
     id: 'MP2',
-    type: 'medic',
+    stationType: 'medic',
     title: '_Museum',
     google_map_pin_url: '',
     coordinate: {
@@ -27,7 +27,7 @@ const waterPoints = [
   {
     id: 'WP1',
     title: '_UTown Green',
-    type: 'water',
+    stationType: 'water',
     google_map_pin_url: '',
     coordinate: {
       // UTown Green
@@ -37,7 +37,7 @@ const waterPoints = [
   },
   {
     id: 'WP2',
-    type: 'water',
+    stationType: 'water',
     title: '_NUH',
     google_map_pin_url: '',
     coordinate: {
