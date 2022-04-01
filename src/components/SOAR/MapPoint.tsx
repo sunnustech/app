@@ -40,10 +40,10 @@ const HandlePopup = ({ navigation, navTarget, content, pointType }: any) => {
   return null
 }
 
-const FadedCircle = ({ children }: any) => {
+const GemContainer = ({ children }: any) => {
   return (
     <View style={styles.debug}>
-      <View style={styles.GemCircle}>{children}</View>
+      <View style={styles.GemContainer}>{children}</View>
     </View>
   )
 }
@@ -51,9 +51,9 @@ const FadedCircle = ({ children }: any) => {
 const HandleIcon = ({ children, pointType }: any) => {
   if (pointType === 'game') {
     return (
-      <FadedCircle>
+      <GemContainer>
         <Gem />
-      </FadedCircle>
+      </GemContainer>
     )
   }
   if (pointType === 'water') {

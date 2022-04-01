@@ -5,6 +5,8 @@ const sideButton = {
   color: '#fff',
 }
 
+const gemSize = 36
+
 const map = StyleSheet.create({
   /* ==========
    * containers
@@ -171,10 +173,10 @@ const map = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  GemCircle: {
-    overflow: 'visible',
-    height: 32,
-    width: 32,
+  GemContainer: {
+    // backgroundColor: '#10b981',
+    height: gemSize,
+    width: gemSize,
   },
   callout: {
     width: 200,

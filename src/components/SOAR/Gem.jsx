@@ -2,7 +2,7 @@ import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg'
 
 const Gem = (props) => (
   <Svg
-    viewBox="0 6 45 43"
+    viewBox="0 -8 45 43"
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{

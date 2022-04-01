@@ -28,18 +28,19 @@ const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
             <Text>{`${e.type}: ${e.title}`}</Text>
           </MapPoint>
         ))}
-        {gameLocations.map((e: any, i: number) => (
-          <Circle
-            key={i}
-            strokeWidth={3}
-            strokeColor="#fca5a5"
-            fillColor="rgba(254, 202, 202, 0.4)"
-            radius={56}
-            center={e.coordinate}
-          >
-            <Text>{`${e.type}: ${e.title}`}</Text>
-          </Circle>
-        ))}
+        {/* uncomment to add circle, but imo it looks p ugly */}
+        {/* {gameLocations.map((e: any, i: number) => ( */}
+        {/*   <Circle */}
+        {/*     key={i} */}
+        {/*     strokeWidth={3} */}
+        {/*     strokeColor="#fca5a5" */}
+        {/*     fillColor="rgba(254, 202, 202, 0.4)" */}
+        {/*     radius={56} */}
+        {/*     center={e.coordinate} */}
+        {/*   > */}
+        {/*     <Text>{`${e.type}: ${e.title}`}</Text> */}
+        {/*   </Circle> */}
+        {/* ))} */}
       </>
     )
   }
