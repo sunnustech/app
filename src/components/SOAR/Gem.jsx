@@ -1,8 +1,8 @@
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg'
 
-const SvgComponent = (props) => (
+const Gem = (props) => (
   <Svg
-    viewBox="0 0 45 43"
+    viewBox="0 6 45 43"
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{
@@ -96,4 +96,4 @@ const SvgComponent = (props) => (
   </Svg>
 )
 
-export default SvgComponent
+export default Gem

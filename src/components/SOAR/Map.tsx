@@ -17,19 +17,17 @@ const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
       customMapStyle={customMapStyle}
       showsUserLocation={true}
     >
-      {displayLocations.map((e: any, i: number) => {
-        return (
-          <MapPoint
-            key={i}
-            navigation={navigation}
-            coordinate={e.coordinate}
-            pointType={e.type}
-            content={e.content}
-          >
-            <Text>{`${e.type}: ${e.title}`}</Text>
-          </MapPoint>
-        )
-      })}
+      {displayLocations.map((e: any, i: number) => (
+        <MapPoint
+          key={i}
+          navigation={navigation}
+          coordinate={e.coordinate}
+          pointType={e.type}
+          content={e.content}
+        >
+          <Text>{`${e.type}: ${e.title}`}</Text>
+        </MapPoint>
+      ))}
     </MapView>
   )
 }

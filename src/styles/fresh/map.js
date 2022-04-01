@@ -164,6 +164,22 @@ const map = StyleSheet.create({
   SOSSpacer: {
     marginBottom: 10,
   },
+  debug: {
+    position: 'relative',
+    overflow: 'visible',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  GemCircle: {
+    overflow: 'visible',
+    height: 32,
+    width: 32,
+  },
+  callout: {
+    width: 200,
+    height: 200,
+  },
 })
 
 export default map
