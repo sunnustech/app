@@ -14,12 +14,7 @@ import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SoarContext } from '@/contexts/SoarContext'
 import { QRIndex } from '@/data/commandMap'
-import {
-  QRStaticCommands,
-  invalidQR,
-  QRCommandType,
-  QRDynamicCommands,
-} from '@/data/constants'
+import { QRStaticCommands, invalidQR } from '@/data/constants'
 
 const QRScreen = () => {
   const [cameraPermission, setCameraPermission] = useState('')
@@ -75,6 +70,11 @@ const QRScreen = () => {
     navigation.navigate('SOAR')
   }
 
+  const handleBackToMap = () => {
+    setIsScanning(false)
+    navigation.navigate('SOAR')
+  }
+
   const BackToMap = ({ onPress }: any) => {
     return (
       <TouchableOpacity
@@ -98,7 +98,7 @@ const QRScreen = () => {
       <Overlap>
         <View style={styles.buttonContainer}>
           <View style={{ flex: 1 }} />
-          <BackToMap onPress={() => navigation.navigate('SOAR')} />
+          <BackToMap onPress={handleBackToMap} />
         </View>
       </Overlap>
     </View>
