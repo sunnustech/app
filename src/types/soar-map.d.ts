@@ -34,8 +34,9 @@ export type ADMINLocations = {
 }
 
 type QRState = {
-  command: string
-  station: string
+  title: string
+  summary: string
+  action: string
 }
 
 export type SOARContextProps = {

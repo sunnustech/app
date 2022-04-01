@@ -14,6 +14,12 @@ import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SoarContext } from '@/contexts/SoarContext'
 import { QRIndex } from '@/data/commandMap'
+import {
+  QRStaticCommands,
+  invalidQR,
+  QRCommandType,
+  QRDynamicCommands,
+} from '@/data/constants'
 
 const QRScreen = () => {
   const [cameraPermission, setCameraPermission] = useState('')
@@ -57,19 +63,15 @@ const QRScreen = () => {
     const string: string = code.data
     if (!Object.keys(QRIndex).includes(string)) {
       console.log('invalid QR scanned') // perma
-      setQR({
-        title: 'invalid QR',
-        summary: 'The QR code scanned is not in our index',
-        action: 'Continue',
-      })
+      setQR(invalidQR)
       navigation.navigate('SOAR')
       return
     }
     // TODO: implement a QR code cooldown timer
     // only continue for valid QR codes
-    const packet = QRIndex[string]
-    console.log('parsed QR as', packet)
-    setQR(packet)
+    const data = QRIndex[string]
+    const command = QRStaticCommands[data.command]
+    setQR(command)
     navigation.navigate('SOAR')
   }
 

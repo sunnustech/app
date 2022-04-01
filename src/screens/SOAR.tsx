@@ -21,7 +21,12 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '../components/Buttons'
-import { NUSCoordinates, QRStaticCommands, emptyQR } from '@/data/constants'
+import {
+  NUSCoordinates,
+  QRStaticCommands,
+  emptyQR,
+  invalidQR,
+} from '@/data/constants'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -127,23 +132,14 @@ const SOARScreen = () => {
   }
 
   const QRHandler = () => {
-    console.log('called QRHandler', QR)
-    const display =
-      QR === emptyQR
-        ? {
-            title: 'invalid QR',
-            summary: 'The QR code scanned is not in our index',
-            action: 'Continue',
-          }
-        : QRStaticCommands[QR.command]
     return QR === emptyQR ? null : (
       <Modal visible={true} dismissable={true} onDismiss={() => setQR(emptyQR)}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>{display.title}</Text>
+          <Text style={styles.modalTitle}>{QR.title}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <Text style={styles.centered}>{display.summary}</Text>
+          <Text style={styles.centered}>{QR.summary}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <ButtonGreen onPress={handleQRFunction}>{display.action}</ButtonGreen>
+          <ButtonGreen onPress={handleQRFunction}>{QR.action}</ButtonGreen>
         </View>
       </Modal>
     )

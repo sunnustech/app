@@ -10,6 +10,7 @@ import { db } from '@/sunnus/firebase'
 import { doc, DocumentData, getDoc } from 'firebase/firestore'
 import { GameStation } from '@/types/GameStation'
 import { SOARContextProps } from '@/types/soar-map'
+import { emptyQR } from '../data/constants'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
 
@@ -93,14 +94,14 @@ const SoarContext = createContext<SOARContextProps>({
   locationState: [[], () => true],
   filteredState: [{}, () => {}],
   scanningState: [false, () => true],
-  QRState: [{ command: '', station: '' }, () => {}],
+  QRState: [emptyQR, () => {}],
 })
 
 // Getters and setters to be used when using context
 function SoarProvider(props: React.PropsWithChildren<{}>) {
   const loadingState = useState(false)
   const scanningState = useState(false)
-  const QRState = useState('')
+  const QRState = useState(emptyQR)
   const locationState = useState<any>({})
   const filteredState = useState<any>({
     game: true,

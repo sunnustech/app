@@ -10,8 +10,15 @@ export const NUSCoordinates: Camera = {
 }
 
 export const emptyQR = {
-  command: '',
-  station: '',
+  title: '',
+  summary: '',
+  action: '',
+}
+
+export const invalidQR = {
+  title: 'invalid QR',
+  summary: 'The QR code scanned is not in our index',
+  action: 'Continue',
 }
 
 export const QRStaticCommands: { [key: string]: QRStaticCommandProps } = {
