@@ -21,7 +21,7 @@ const SOARinit: SOARTeamData = {
   stopped: false,
   startTime: {},
   stopTime: {},
-  timerEvents: [],
+  allEvents: [],
   lastPause: {},
   lastResume: {},
   direction: 'A',
@@ -80,7 +80,7 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [userId, setUserId] = useState('')
   const [teamName, setTeamName] = useState('')
   const [schedule, setSchedule] = useState({})
-  const [teamData, setTeamData] = useState({})
+  const [teamData, setTeamData] = useState<SunNUSTeamData>(teamDataInit)
 
   /*
    * This is needed because expo only remembers firebase credentials,

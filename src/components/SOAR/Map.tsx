@@ -9,7 +9,7 @@ import { NUSCoordinates } from '@/data/constants'
 
 const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
   const gameLocations = displayLocations.filter(
-    (e: any) => e.stationType === 'game'
+    (stn) => stn.stationType === 'game'
   )
   const nonGameLocations = displayLocations.filter(
     (e: any) => e.stationType !== 'game'
@@ -25,6 +25,7 @@ const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
             coordinate={e.coordinate}
             pointType={e.stationType}
             content={e.content}
+            status={e.status}
           >
             <Text>{`${e.stationType}: ${e.title}`}</Text>
           </MapPoint>

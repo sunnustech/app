@@ -1,43 +1,33 @@
-const medicPoints = [
-  {
-    id: 'MP1',
-    title: '_CLB',
-    stationType: 'medic',
-    google_map_pin_url: '',
-    coordinate: {
-      // NUS Central Library
-      latitude: 1.2967230288327685,
-      longitude: 103.77322568112703,
-    },
-  },
-  {
-    id: 'MP2',
-    stationType: 'medic',
-    title: '_Museum',
-    google_map_pin_url: '',
-    coordinate: {
-      // NUS Museum
-      latitude: 1.301805582121946,
-      longitude: 103.77231968190145,
-    },
-  },
-]
+import { SOARLocation } from '@/sunnus/src/types/SOAR'
 
-const waterPoints = [
+const waterPoints: Array<SOARLocation> = [
   {
-    id: 'WP1',
-    title: '_UTown Green',
+    id: 10,
     stationType: 'water',
-    google_map_pin_url: '',
+    title: '_UTown Green',
+    location: '',
+    content: {
+      game_title: '',
+      details: '',
+    },
     coordinate: {
       // UTown Green
       latitude: 1.3049891103654925,
       longitude: 103.77322845557454,
     },
+    physical: true,
+    stage: 0,
+    timetable: [],
+    google_map_pin_url: '',
   },
   {
-    id: 'WP2',
+    id: 20,
     stationType: 'water',
+    location: '',
+    content: {
+      game_title: '',
+      details: '',
+    },
     title: '_NUH',
     google_map_pin_url: '',
     coordinate: {
@@ -45,9 +35,12 @@ const waterPoints = [
       latitude: 1.2941740290024657,
       longitude: 103.78306481546151,
     },
+    physical: true,
+    stage: 0,
+    timetable: [],
   },
 ]
 
-const adminLocations = [...medicPoints, ...waterPoints]
+const adminLocations: Array<SOARLocation> = [...waterPoints]
 
 export default adminLocations

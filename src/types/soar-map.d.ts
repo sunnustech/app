@@ -1,4 +1,5 @@
 import { SOARPageProps } from '@/types/navigation'
+import { SOARLocation } from './SOAR'
 
 /* Map and SOAR */
 
@@ -13,7 +14,7 @@ export type MapProps = {
   // getCurrentLocation: any
   mapRef: any
   navigation: SOARPageProps
-  displayLocations: any
+  displayLocations: Array<SOARLocation>
 }
 
 export type SafeDivProps = {

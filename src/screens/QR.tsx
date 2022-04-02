@@ -65,8 +65,10 @@ const QRScreen = () => {
     // TODO: implement a QR code cooldown timer
     // only continue for valid QR codes
     const data = QRIndex[string]
-    const command = QRStaticCommands[data.command]
-    setQR(command)
+    const QR = QRStaticCommands[data.command]
+    QR.station = data.station
+    setQR(QR)
+    console.log('just scanned QR:', QR)
     navigation.navigate('SOAR')
   }
 

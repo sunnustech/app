@@ -8,7 +8,7 @@ const SOARinit: SOARTeamData = {
   stopped: false,
   startTime: {},
   stopTime: {},
-  timerEvents: [],
+  allEvents: [],
   lastPause: {},
   lastResume: {},
   direction: 'A',
@@ -71,16 +71,12 @@ const testTwo = {
   ],
 }
 
-const SOARDevInit = SOARinit
-
-SOARDevInit.stationsCompleted.push('Slide')
-
 const Developer: Group = {
   groupTitle: 'Dev_loper',
   registeredEvents: {
     SOAR: true,
   },
-  SOAR: SOARDevInit,
+  SOAR: SOARinit,
   members: [
     {
       email: 'adam@gmail.com',

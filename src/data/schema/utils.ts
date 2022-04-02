@@ -1,4 +1,4 @@
-function objFromArray(
+export function objFromArray(
   arr: Array<{ [key: string]: any }>,
   identifierKey: string
 ) {
@@ -8,5 +8,3 @@ function objFromArray(
   })
   return obj
 }
-
-export { objFromArray }

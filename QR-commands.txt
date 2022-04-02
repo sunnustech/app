@@ -3,7 +3,7 @@
     _8N6E4jwqerhmSORIwR_ : pause
     _HteWlblZIXoNfiTBwE_ : resume
     _WOvJ8EMaFRRJPCv7B5_ : stop-final
-    _UUWUI7MTwfaZKKLyoP_ : fn01
+    _UUWUI7MTwfaZKKLyoP_ : completeStage
     _1S4ed0zL3WDEPbJfAR_ : fn02
     _FlFQZnOuK2895rdlXa_ : fn03
     _r54lfyZTO7ZxpQxmVK_ : fn04
@@ -23,12 +23,13 @@
     _r9hWtQgEItKK6Qf0s4_ : fn18
     _fVmLdPQCMl2feYFCvB_ : fn19
     _kPZnKUtQAaa9p0f2zS_ : fn20
+
 2.  Relay2Maze
     _WcgQoo5OiPRGzlKFph_ : start
     _hL9oj38xkMDfCL4uej_ : pause
     _NZarAtJsx1xWFgRhBm_ : resume
     _lKDmVZ6aUKBi5ZSBkP_ : stop-final
-    _8SiYO5HUSgdza1BzyJ_ : fn01
+    _8SiYO5HUSgdza1BzyJ_ : completeStage
     _zkOQw5uDtmbyPSHAF3_ : fn02
     _mzCVZwTiF104LLZfMS_ : fn03
     _KHXZ7sOHw1rjDvgGNZ_ : fn04
@@ -48,12 +49,13 @@
     _8gwUWPKLx3dRfgD9Jk_ : fn18
     _8Nq7GCxoBt9hluF3sv_ : fn19
     _fvAPDJ3rw4ObBycN2O_ : fn20
+
 3.  Sotong Houze
     _jH59pUJ7iRBH8Hgptr_ : start
     _IMsHhYefxYkQPggMry_ : pause
     _499hPsXHdLj5auIC3Q_ : resume
     _XTNo7Arxm7eNZ4jlVU_ : stop-final
-    _1lqGSmLYlhq89e8Caz_ : fn01
+    _1lqGSmLYlhq89e8Caz_ : completeStage
     _DHCjXMXc02CBlRf2MT_ : fn02
     _RCFPSTFGjyr9GvTllP_ : fn03
     _7yezZmonPu6pGUXfz3_ : fn04
@@ -73,12 +75,13 @@
     _YMoeszLTqDdGRYYNv6_ : fn18
     _mBeWs9JgAMBRTEzanb_ : fn19
     _RWJWRjRJpLOVXS4t7t_ : fn20
-4.  Snakes and Ladde rs
+
+4.  Snake and Ladders
     _0EtRCaTalVyHaY4gIh_ : start
     _J2uRsLVoi03ecTbfL6_ : pause
     _oekwozowVWiMexVgzq_ : resume
     _rXPSVli1KANW0maIjL_ : stop-final
-    _RTLTHLg6darz80ZZb7_ : fn01
+    _RTLTHLg6darz80ZZb7_ : completeStage
     _MoGkWF9Ql5w5ON4bPE_ : fn02
     _hNm302Qn2m68uZ700H_ : fn03
     _xraC6mdYrTa2pTGhfl_ : fn04
@@ -98,12 +101,13 @@
     _Ya9uM7Kss4dR01v2G0_ : fn18
     _UD0XJCybKa9fQGju5V_ : fn19
     _V2BFxoNKmWmp1zF3RH_ : fn20
+
 5.  GOLF
     _trgSYWtZ5uaJF3fqSd_ : start
     _1KYf4ohFBQq2uvwVSw_ : pause
     _yhLxIj25q9i50XgwY4_ : resume
     _xiITteYpv9ts5eAD3o_ : stop-final
-    _MmbjrgcauDBbSRdkfd_ : fn01
+    _MmbjrgcauDBbSRdkfd_ : completeStage
     _1lMdpvey0YvxlPdqLO_ : fn02
     _EwB5kP0IK0UImFTjOu_ : fn03
     _5WyApmlNcssxCxaGcg_ : fn04
@@ -123,12 +127,13 @@
     _D4vajZBcXzZ118nc30_ : fn18
     _Aa2WxzmlsKEq1eNxC3_ : fn19
     _WU9vgyGww8lk9V5C8X_ : fn20
+
 6.  Nerf Battle
     _vj3aQ4IrxGISQ2Q6UY_ : start
     _A2Inl1D0RuyqyxtNzl_ : pause
     _jVJ6SFayybvaAz4jDx_ : resume
     _E48cuhkOfPAZ4k9CaB_ : stop-final
-    _GBiQvd7HHwmo5F5iB8_ : fn01
+    _GBiQvd7HHwmo5F5iB8_ : completeStage
     _0aEGIrEjdtywFQJIqU_ : fn02
     _rziOlHXQ3AD4Wwc8ne_ : fn03
     _pj8m6QtKIRi4YgAAex_ : fn04

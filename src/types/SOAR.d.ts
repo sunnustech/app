@@ -6,8 +6,11 @@ export type SOARTimetable = Array<{
   groupTitle: string
 }>
 
+type SOARLocationStatus = '' | 'next' | 'done'
+
 export type SOARLocation = {
   id: number
+  status: SOARLocationStatus
   stationType: string
   title: string
   location: string
@@ -21,17 +24,13 @@ export type SOARLocation = {
   }
   timetable: Array<any>
   stage: number
-  phyiscal: boolean
+  physical: boolean
   google_map_pin_url: string
 }
 
-/*
- * To be Firestore-friendly, the final form has to be an object,
- * and first-level values cannot be arrays
- */
 export type SOARData = {
   locations: {
-    data: any
+    data: SOARLocation
     stationOrder: {
       A: Array<string>
       B: Array<string>
@@ -60,19 +59,26 @@ type HaventDecided =
   | 'fn18'
   | 'fn19'
   | 'fn20'
+
 export type SoarCommand =
   | 'start'
   | 'pause'
   | 'stopFinal'
   | 'resume'
+  | 'completeStage'
+  | ''
   | HaventDecided
+
+export type QRMiniCommandProps = {
+  command: SoarCommand
+  station: string
+}
 
 export type QRStaticCommandProps = {
   title: string
   summary: string
   action: string
-  command: SoarCommand
-}
+} & QRMiniCommandProps
 
 export type QRDynamicCommandProps = (points: number) => QRStaticCommandProps
 
@@ -81,18 +87,21 @@ export type StationOrderProps = {
   B: Array<string>
 }
 
+export type SOARFilterProps = {
+  game: boolean
+  water: boolean
+  medic: boolean
+}
+
 export type UseState<Type> = [Type, Dispatch<SetStateAction<Type>>]
 
 export type SOARContextProps = {
-  loadingState: [boolean, Dispatch<SetStateAction<boolean>>]
-  scanningState: [boolean, Dispatch<SetStateAction<boolean>>]
-  locationState: [Array<any>, Dispatch<SetStateAction<Array<any>>>]
+  loadingState: UseState<boolean>
+  scanningState: UseState<boolean>
+  locationState: UseState<Array<SOARLocation>>
   stationOrderState: UseState<StationOrderProps>
-  filteredState: [any, Dispatch<SetStateAction<any>>]
-  QRState: [
-    QRStaticCommandProps,
-    Dispatch<SetStateAction<QRStaticCommandProps>>
-  ]
+  filteredState: UseState<SOARFilterProps>
+  QRState: UseState<QRStaticCommandProps>
 }
 
 type SOARStartState =
@@ -119,10 +128,14 @@ type SOAREndState =
       stopTime: {}
     }
 
+type Event = {
+  timestamp: TimeApiProps
+  QR: QRStaticCommandProps
+}
 export type SOARTeamData = SOARStartState &
   SOAREndState & {
     timerRunning: boolean
-    timerEvents: Array<TimeApiProps>
+    allEvents: Array<Event>
     direction: 'A' | 'B'
     points: number
     stationsCompleted: Array<string>

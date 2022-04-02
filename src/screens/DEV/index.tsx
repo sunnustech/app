@@ -21,8 +21,10 @@ import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
 import soar from '@/lib/soar'
 // import { MatchRequest } from '@/types/knockout'
 import { useContext } from 'react'
-import { UserContext } from '../../contexts/UserContext'
+import { UserContext } from '@/contexts/UserContext'
 import { generateQR } from '@/data/commandMap'
+import { SoarContext } from '@/contexts/SoarContext'
+import { QRStaticCommands as q } from '@/data/constants'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -49,30 +51,6 @@ const DebugList = () => (
     <DebugButton onPress={generateQR} color="#ec4899">
       Generate QR (to send to SOAR)
     </DebugButton>
-
-    <Text>SOAR functions (team name: Known_Painters)</Text>
-
-    <DebugButton
-      onPress={() => soar.start('Known_Painters')}
-      children="start"
-    />
-
-    <DebugButton
-      onPress={() => soar.pause('Known_Painters')}
-      children="pause"
-    />
-
-    <DebugButton
-      onPress={() => soar.resume('Known_Painters')}
-      children="resume"
-    />
-
-    <DebugButton
-      onPress={() => soar.stopFinal('Known_Painters')}
-      children="stopFinal"
-    />
-
-    <Text>User Context Testing</Text>
   </>
 )
 
@@ -82,9 +60,10 @@ const DebugList = () => (
  * the function!
  */
 
-// {{{
 const DEVScreen = () => {
   const { userId, teamName, schedule } = useContext(UserContext)
+  const { QRState } = useContext(SoarContext)
+  const QR = QRState[0]
   const getContext = () => {
     console.log('trying to fetch...') // perma
     console.log('userId:', userId) // perma
@@ -102,6 +81,31 @@ const DEVScreen = () => {
         <Text>(you can navigate back by swiping in from the left)</Text>
         <View style={{ width: '60%', marginTop: 32 }}>
           <DebugList />
+
+          <Text>SOAR functions (team name: Known_Painters)</Text>
+
+          <DebugButton
+            onPress={() => soar.start('Known_Painters', q.start)}
+            children="start"
+          />
+
+          <DebugButton
+            onPress={() => soar.pause('Known_Painters', q.pause)}
+            children="pause"
+          />
+
+          <DebugButton
+            onPress={() => soar.resume('Known_Painters', q.resume)}
+            children="resume"
+          />
+
+          <DebugButton
+            onPress={() => soar.stopFinal('Known_Painters', q.stopFinal)}
+            children="stopFinal"
+          />
+
+          <Text>User Context Testing</Text>
+
           <DebugButton onPress={getContext} color="#ec4899">
             Get User + Team Context
           </DebugButton>
@@ -111,4 +115,3 @@ const DEVScreen = () => {
   )
 }
 export default DEVScreen
-// }}}
