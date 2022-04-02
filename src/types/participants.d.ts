@@ -1,23 +1,31 @@
-export type RegisteredEvent = {
-  SOAR?: boolean
-  TSS?: {
-    volleyball?: boolean
-    dodgeball?: boolean
-    tchoukball?: boolean
-    frisbee?: boolean
-  }
+import { SOARTeamData } from './SOAR'
+
+type SOARRegistration = {
+  SOAR: boolean
 }
+
+type TSSRegistration = {} | {}
 
 export type Group = {
   groupTitle: string
-  SOAR?: any
-  registeredEvents: RegisteredEvent
+  SOAR: SOARTeamData
   members: Array<{
     email: string
     phone: string
     loginId: string
   }>
+  registeredEvents?: {
+    TSS?: {
+      volleyball?: boolean
+      dodgeball?: boolean
+      tchoukball?: boolean
+      frisbee?: boolean
+    }
+    SOAR?: boolean
+  }
 }
+
+export type SunNUSTeamData = Group
 
 /*
  * To be Firestore-friendly, the final form has to be an object,

@@ -10,8 +10,6 @@ import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { db } from '@/sunnus/firebase'
-import { collection, getDocs, query } from 'firebase/firestore'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
@@ -43,7 +41,8 @@ const Input = ({
 }
 
 const LoginScreen = () => {
-  const { setUserId, setTeam, setSchedule } = useContext(UserContext)
+  const { setUserId, setTeamName, setSchedule, setTeamData } =
+    useContext(UserContext)
   const [loginId, setLoginId] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
@@ -53,7 +52,7 @@ const LoginScreen = () => {
     if (email) {
       signInWithEmailAndPassword(auth, await email, PASSWORD)
         .then((credential) => {
-          console.log('successful login as:', credential) // perma
+          console.log('successful login as:', credential.user.email) // perma
         })
         .catch((err) => {
           setLoginError(true)
@@ -86,7 +85,8 @@ const LoginScreen = () => {
     })
     const teamData = res2.data
     setUserId(loginId)
-    setTeam(user.groupTitle.split('_').join(' '))
+    setTeamName(user.groupTitle.split('_').join(' '))
+    setTeamData(teamData)
     const email = teamData.members[user.index].email
     if (teamData.registeredEvents.TSS) {
       setSchedule(teamData.schedule)

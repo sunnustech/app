@@ -27,13 +27,20 @@ import { UserContext } from '@/contexts/UserContext'
 
 const SOARScreen = () => {
   /* read data from soar context */
-  const { locationState, filteredState, loadingState, QRState, scanningState } =
-    useContext(SoarContext)
+  const {
+    locationState,
+    filteredState,
+    loadingState,
+    QRState,
+    scanningState,
+    stationOrderState,
+  } = useContext(SoarContext)
 
-  const { team } = useContext(UserContext)
+  const { teamName, teamData } = useContext(UserContext)
 
   const locations = locationState[0]
   const isLoading = loadingState[0]
+  const stationOrder = stationOrderState[0]
   const [filtered, setFiltered] = filteredState
   const [displayLocations, setDisplayLocations] = useState<any>([])
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
@@ -114,8 +121,39 @@ const SOARScreen = () => {
   }
 
   function getLocations(locations: any, filtered: any) {
+    var nextGameStation = []
+    if (teamData.SOAR) {
+      console.log(
+        '=================================================================='
+      )
+      const groupDirection = teamData.SOAR.direction
+      const stationsCompleted = teamData.SOAR.stationsCompleted
+      console.log(teamData.SOAR.stationsCompleted, groupDirection)
+      const groupStationOrder = stationOrder[groupDirection]
+      const uncompletedStations: string[] = []
+      groupStationOrder.forEach((stn) => {
+        if (!stationsCompleted.includes(stn)) {
+          uncompletedStations.push(stn)
+        }
+      })
+      const nextStationTitle = uncompletedStations[0]
+      console.log('next station:', nextStationTitle)
+      nextGameStation = locations.filter((location: any) => {
+        return (
+          location.stationType === 'game' && location.title === nextStationTitle
+        )
+      })
+    }
+    // console.log(nextGameStation)
+    const noGames = locations.filter(
+      (location: any) => location.stationType !== 'game'
+    )
+    // console.log(noGames)
     // use filteredState and locationState to determine a final array of locations to expose to the map
-    return locations.filter((location: any) => filtered[location.stationType])
+    console.log([...noGames, ...nextGameStation])
+    return [...noGames, ...nextGameStation].filter(
+      (location: any) => filtered[location.stationType]
+    )
   }
 
   useEffect(() => {
@@ -126,7 +164,7 @@ const SOARScreen = () => {
   }, [filtered, isLoading])
 
   function confirmQRAction() {
-    soar[QR.command](team)
+    soar[QR.command](teamName)
     setQR(emptyQR)
   }
 

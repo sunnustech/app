@@ -84,11 +84,11 @@ const DebugList = () => (
 
 // {{{
 const DEVScreen = () => {
-  const { userId, team, schedule } = useContext(UserContext)
+  const { userId, teamName, schedule } = useContext(UserContext)
   const getContext = () => {
     console.log('trying to fetch...') // perma
     console.log('userId:', userId) // perma
-    console.log('team:', team) // perma
+    console.log('team:', teamName) // perma
     console.log('schedule:', schedule) // perma
   }
   const navigation = useNavigation<DNP<DrawerPages, 'DEV'>>()

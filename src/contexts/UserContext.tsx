@@ -1,26 +1,57 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 import { auth } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
+import { SunNUSTeamData } from '@/types/participants'
+import { SOARTeamData } from '@/types/SOAR'
 
 type UserContextProps = {
   userId: string
   setUserId: Dispatch<SetStateAction<string>>
-  team: string
-  setTeam: Dispatch<SetStateAction<string>>
+  teamName: string
+  setTeamName: Dispatch<SetStateAction<string>>
   schedule: object
   setSchedule: Dispatch<SetStateAction<object>>
+  teamData: SunNUSTeamData
+  setTeamData: Dispatch<SetStateAction<SunNUSTeamData>>
+}
+
+const SOARinit: SOARTeamData = {
+  timerRunning: false,
+  started: false,
+  stopped: false,
+  startTime: {},
+  stopTime: {},
+  timerEvents: [],
+  lastPause: {},
+  lastResume: {},
+  direction: 'A',
+  stationsCompleted: [],
+  points: 0,
+}
+
+const teamDataInit = {
+  members: [{ email: '', phone: '', loginId: '' }],
+  SOAR: SOARinit,
+  groupTitle: '',
 }
 
 const UserContext = createContext<UserContextProps>({
   userId: '',
   setUserId: () => '',
-  team: '',
-  setTeam: () => '',
+  teamName: '',
+  setTeamName: () => '',
   schedule: {},
   setSchedule: () => {},
+  teamData: teamDataInit,
+  setTeamData: () => {},
 })
 
-const rehydrateUserData = async ({ setTeam, setUserId, setSchedule }: any) => {
+const rehydrateUserData = async ({
+  setTeamName,
+  setUserId,
+  setSchedule,
+  setTeamData,
+}: any) => {
   const emailDictionary = await pullDoc({
     collection: 'participants',
     doc: 'allEmails',
@@ -32,12 +63,13 @@ const rehydrateUserData = async ({ setTeam, setUserId, setSchedule }: any) => {
      */
     const user = emailDictionary.data[auth.currentUser?.email]
     setUserId(user.loginId)
-    setTeam(user.groupTitle)
+    setTeamName(user.groupTitle)
     const res2: any = await pullDoc({
       collection: 'participants',
       doc: user.groupTitle,
     })
     const teamData = res2.data
+    setTeamData(teamData)
     if (teamData.registeredEvents.TSS) {
       setSchedule(teamData.schedule)
     }
@@ -46,15 +78,16 @@ const rehydrateUserData = async ({ setTeam, setUserId, setSchedule }: any) => {
 
 const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [userId, setUserId] = useState('')
-  const [team, setTeam] = useState('')
+  const [teamName, setTeamName] = useState('')
   const [schedule, setSchedule] = useState({})
+  const [teamData, setTeamData] = useState({})
 
   /*
    * This is needed because expo only remembers firebase credentials,
    * so we need to rehydrate the user's SunNUS-specific data
    */
   if (userId === '' && auth != null) {
-    rehydrateUserData({ setTeam, setUserId, setSchedule })
+    rehydrateUserData({ setTeamName, setUserId, setSchedule, setTeamData })
   }
 
   return (
@@ -62,10 +95,12 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
       value={{
         userId,
         setUserId,
-        team,
-        setTeam,
+        teamName,
+        setTeamName,
         schedule,
         setSchedule,
+        teamData,
+        setTeamData,
       }}
       {...props}
     />

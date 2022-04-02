@@ -5,7 +5,7 @@
 import push from '@/data/push'
 import { pullDoc } from '@/data/pull'
 import { TimeApiProps } from '@/types/index'
-import { SoarCommand, SoarTeamProps } from '@/types/SOAR'
+import { SoarCommand, SOARTeamData } from '@/types/SOAR'
 
 const TIMEAPI =
   'https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Singapore'
@@ -33,7 +33,7 @@ const generatePacket = (groupTitle: string, packet: any) => {
  * checks if the group has started SOAR or not.
  * This is key because if not the original start time may be overwritten.
  */
-const getSOARProps = async (groupTitle: string): Promise<SoarTeamProps> => {
+const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
   // TODO: handle errors on bad pulls
   const data = (await pullDoc({ collection: 'participants', doc: groupTitle }))
     ?.data.SOAR

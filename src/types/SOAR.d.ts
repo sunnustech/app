@@ -1,4 +1,5 @@
 import { SOARPageProps } from '@/types/navigation'
+import { TimeApiProps } from '@/types/index'
 
 export type SOARTimetable = Array<{
   time: string
@@ -31,6 +32,10 @@ export type SOARLocation = {
 export type SOARData = {
   locations: {
     data: any
+    stationOrder: {
+      A: Array<string>
+      B: Array<string>
+    }
   }
 }
 
@@ -71,24 +76,54 @@ export type QRStaticCommandProps = {
 
 export type QRDynamicCommandProps = (points: number) => QRStaticCommandProps
 
-export type SoarTeamProps = {
-  timerRunning: boolean
-  started: boolean
-  stopped: boolean
-  startTime: TimeApiProps
-  stopTime: TimeApiProps
-  timerEvents: Array<TimeApiProps>
-  lastPause: TimeApiProps
-  lastResume: TimeApiProps
+export type StationOrderProps = {
+  A: Array<string>
+  B: Array<string>
 }
+
+export type UseState<Type> = [Type, Dispatch<SetStateAction<Type>>]
 
 export type SOARContextProps = {
   loadingState: [boolean, Dispatch<SetStateAction<boolean>>]
   scanningState: [boolean, Dispatch<SetStateAction<boolean>>]
   locationState: [Array<any>, Dispatch<SetStateAction<Array<any>>>]
+  stationOrderState: UseState<StationOrderProps>
   filteredState: [any, Dispatch<SetStateAction<any>>]
   QRState: [
     QRStaticCommandProps,
     Dispatch<SetStateAction<QRStaticCommandProps>>
   ]
 }
+
+type SOARStartState =
+  | {
+      started: true
+      startTime: TimeApiProps
+      lastPause: TimeApiProps
+      lastResume: TimeApiProps
+    }
+  | {
+      started: false
+      startTime: {}
+      lastPause: {}
+      lastResume: {}
+    }
+
+type SOAREndState =
+  | {
+      stopped: true
+      stopTime: TimeApiProps
+    }
+  | {
+      stopped: false
+      stopTime: {}
+    }
+
+export type SOARTeamData = SOARStartState &
+  SOAREndState & {
+    timerRunning: boolean
+    timerEvents: Array<TimeApiProps>
+    direction: 'A' | 'B'
+    points: number
+    stationsCompleted: Array<string>
+  }

@@ -1,7 +1,8 @@
 import { Group, ParticipantsData } from '@/types/participants'
+import { SOARTeamData } from '@/types/SOAR'
 import { objFromArray } from './utils'
 
-const SOARinit = {
+const SOARinit: SOARTeamData = {
   timerRunning: false,
   started: false,
   stopped: false,
@@ -10,6 +11,9 @@ const SOARinit = {
   timerEvents: [],
   lastPause: {},
   lastResume: {},
+  direction: 'A',
+  stationsCompleted: [],
+  points: 0,
 }
 
 const testOne = {
@@ -67,12 +71,16 @@ const testTwo = {
   ],
 }
 
+const SOARDevInit = SOARinit
+
+SOARDevInit.stationsCompleted.push('Slide')
+
 const Developer: Group = {
   groupTitle: 'Dev_loper',
   registeredEvents: {
     SOAR: true,
   },
-  SOAR: SOARinit,
+  SOAR: SOARDevInit,
   members: [
     {
       email: 'adam@gmail.com',

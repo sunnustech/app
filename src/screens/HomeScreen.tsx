@@ -51,13 +51,12 @@ const HomeScreen = () => {
    * >>> <firebase username>
    */
 
-  const { userId, team, schedule } = useContext(UserContext)
-  // console.log(auth.currentUser)
+  const { userId, teamName, schedule, teamData } = useContext(UserContext)
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Image source={SunnusLogo} style={styles.image} />
-      <Text>{`Welcome, ${userId}, of team ${team}`}</Text>
+      <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
           onPress={() => navigation.navigate('SOAR')}
