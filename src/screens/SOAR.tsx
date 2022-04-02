@@ -22,11 +22,15 @@ import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '../components/Buttons'
 import { NUSCoordinates, emptyQR } from '@/data/constants'
+import soar from '@/lib/soar'
+import { UserContext } from '@/contexts/UserContext'
 
 const SOARScreen = () => {
   /* read data from soar context */
   const { locationState, filteredState, loadingState, QRState, scanningState } =
     useContext(SoarContext)
+
+  const { team } = useContext(UserContext)
 
   const locations = locationState[0]
   const isLoading = loadingState[0]
@@ -121,8 +125,8 @@ const SOARScreen = () => {
     }
   }, [filtered, isLoading])
 
-  function handleQRFunction() {
-    console.log('handleQRFunction') // perma
+  function confirmQRAction() {
+    soar[QR.command](team)
     setQR(emptyQR)
   }
 
@@ -134,7 +138,7 @@ const SOARScreen = () => {
           <View style={{ marginBottom: 10 }}></View>
           <Text style={styles.centered}>{QR.summary}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <ButtonGreen onPress={handleQRFunction}>{QR.action}</ButtonGreen>
+          <ButtonGreen onPress={confirmQRAction}>{QR.action}</ButtonGreen>
         </View>
       </Modal>
     )

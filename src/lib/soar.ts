@@ -5,7 +5,7 @@
 import push from '@/data/push'
 import { pullDoc } from '@/data/pull'
 import { TimeApiProps } from '@/types/index'
-import { SoarTeamProps } from '@/types/SOAR'
+import { SoarCommand, SoarTeamProps } from '@/types/SOAR'
 
 const TIMEAPI =
   'https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Singapore'
@@ -134,15 +134,31 @@ const stopFinal = async (groupTitle: string) => {
   push({ collection: 'participants', docs })
 }
 
-// add points to a specified team
-const addPoints = () => {}
-
-const soar = {
+const soar: Record<SoarCommand, any> = {
   start,
   pause,
   resume,
   stopFinal,
-  addPoints,
+  fn01: () => true,
+  fn02: () => true,
+  fn03: () => true,
+  fn04: () => true,
+  fn05: () => true,
+  fn06: () => true,
+  fn07: () => true,
+  fn08: () => true,
+  fn09: () => true,
+  fn10: () => true,
+  fn11: () => true,
+  fn12: () => true,
+  fn13: () => true,
+  fn14: () => true,
+  fn15: () => true,
+  fn16: () => true,
+  fn17: () => true,
+  fn18: () => true,
+  fn19: () => true,
+  fn20: () => true,
 }
 
 export default soar

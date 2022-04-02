@@ -1,6 +1,17 @@
 import { Group, ParticipantsData } from '@/types/participants'
 import { objFromArray } from './utils'
 
+const SOARinit = {
+  timerRunning: false,
+  started: false,
+  stopped: false,
+  startTime: {},
+  stopTime: {},
+  timerEvents: [],
+  lastPause: {},
+  lastResume: {},
+}
+
 const testOne = {
   groupTitle: 'Known_Painters',
   registeredEvents: {
@@ -9,16 +20,7 @@ const testOne = {
     },
     SOAR: true,
   },
-  SOAR: {
-    timerRunning: false,
-    started: false,
-    stopped: false,
-    startTime: {},
-    stopTime: {},
-    timerEvents: [],
-    lastPause: {},
-    lastResume: {},
-  },
+  SOAR: SOARinit,
   members: [
     {
       email: 'alice@gmail.com',
@@ -44,6 +46,7 @@ const testTwo = {
   registeredEvents: {
     SOAR: true,
   },
+  SOAR: SOARinit,
   members: [
     {
       email: 'adam@gmail.com',
@@ -69,6 +72,7 @@ const Developer: Group = {
   registeredEvents: {
     SOAR: true,
   },
+  SOAR: SOARinit,
   members: [
     {
       email: 'adam@gmail.com',

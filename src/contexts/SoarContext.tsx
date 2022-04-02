@@ -9,7 +9,7 @@ import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
 import { db } from '@/sunnus/firebase'
 import { doc, DocumentData, getDoc } from 'firebase/firestore'
 import { GameStation } from '@/types/GameStation'
-import { SOARContextProps } from '@/types/soar-map'
+import { SOARContextProps } from '@/types/SOAR'
 import { emptyQR } from '../data/constants'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
