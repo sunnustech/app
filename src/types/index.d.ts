@@ -8,8 +8,9 @@ export type UserState = {
 }
 
 export type ButtonProps = {
-  onPress: any
+  onPress: () => void
   children: string
+  style?: any
 }
 
 export type DebugButtonProps = ButtonProps & {
