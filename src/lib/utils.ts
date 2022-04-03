@@ -1,5 +1,6 @@
 import { default as RNToast } from 'react-native-root-toast'
 
+// shows a 2-second small notif at the bottom of the screen
 export function Toast(string: string) {
   RNToast.show(string, {
     duration: 2000,

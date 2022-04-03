@@ -10,7 +10,7 @@ import { db } from '@/sunnus/firebase'
 import { doc, DocumentData, getDoc } from 'firebase/firestore'
 import { GameStation } from '@/types/GameStation'
 import { SOARContextProps, StationOrderProps, UseState } from '@/types/SOAR'
-import { emptyQR } from '../data/constants'
+import { emptyQR } from '@/lib/soar/constants'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
 
@@ -93,7 +93,7 @@ const getFirebaseLocations = async (p: {
   p.setLoading(false)
 }
 
-const SoarContext = createContext<SOARContextProps>({
+const SOARContext = createContext<SOARContextProps>({
   loadingState: [false, () => true],
   locationState: [[], () => true],
   stationOrderState: [{ A: [], B: [] }, () => {}],
@@ -103,7 +103,7 @@ const SoarContext = createContext<SOARContextProps>({
 })
 
 // Getters and setters to be used when using context
-function SoarProvider(props: React.PropsWithChildren<{}>) {
+function SOARProvider(props: React.PropsWithChildren<{}>) {
   const loadingState = useState(false)
   const scanningState = useState(false)
   const QRState = useState(emptyQR)
@@ -125,7 +125,7 @@ function SoarProvider(props: React.PropsWithChildren<{}>) {
   }, [])
 
   return (
-    <SoarContext.Provider
+    <SOARContext.Provider
       value={{
         stationOrderState,
         loadingState,
@@ -139,4 +139,4 @@ function SoarProvider(props: React.PropsWithChildren<{}>) {
   )
 }
 
-export { SoarContext, SoarProvider }
+export { SOARContext, SOARProvider }

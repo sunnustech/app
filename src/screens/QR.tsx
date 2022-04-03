@@ -11,9 +11,9 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 import { QR as styles } from '@/styles/fresh'
 import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { SoarContext } from '@/contexts/SoarContext'
-import { QRIndex } from '@/data/commandMap'
-import { QRStaticCommands, invalidQR } from '@/data/constants'
+import { SOARContext } from '@/contexts/SOARContext'
+import { QRIndex } from '@/lib/soar/QRDictionary'
+import { QRStaticCommands, invalidQR } from '@/lib/soar/constants'
 import { SOARTeamData } from '@/types/SOAR'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
@@ -26,7 +26,7 @@ const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
 }
 
 const QRScreen = () => {
-  const { QRState, scanningState } = useContext(SoarContext)
+  const { QRState, scanningState } = useContext(SOARContext)
   const { teamName } = useContext(UserContext)
   const [isScanning, setIsScanning] = scanningState
   const setQR = QRState[1]

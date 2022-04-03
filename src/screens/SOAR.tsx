@@ -14,7 +14,7 @@ import { DrawerPages } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
-import { SoarContext } from '@/contexts/SoarContext'
+import { SOARContext } from '@/contexts/SOARContext'
 import { map as styles } from '@/styles/fresh'
 import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
@@ -22,7 +22,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
-import { NUSCoordinates, emptyQR } from '@/data/constants'
+import { NUSCoordinates, emptyQR } from '@/lib/soar/constants'
 import soar from '@/lib/soar'
 import { UserContext } from '@/contexts/UserContext'
 import { SOARLocation, SOARTeamData } from '@/types/SOAR'
@@ -38,7 +38,7 @@ const SOARScreen = () => {
     QRState,
     scanningState,
     stationOrderState,
-  } = useContext(SoarContext)
+  } = useContext(SOARContext)
   const { teamName, teamData, setTeamData } = useContext(UserContext)
   const displayLocationState = useState<Array<SOARLocation>>([])
 

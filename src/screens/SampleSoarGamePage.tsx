@@ -1,11 +1,11 @@
-import { SoarContext } from '@/contexts/SoarContext'
+import { SOARContext } from '@/contexts/SOARContext'
 import { useContext } from 'react'
 import { View, Text } from 'react-native'
 import { Button } from '../components/Buttons'
 
 const SampleSoarGamePage = () => {
   const { updateFilterLocations, gameLocations, updateGameLocations } =
-    useContext(SoarContext)
+    useContext(SOARContext)
 
   return (
     <View>

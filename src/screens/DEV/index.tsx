@@ -22,11 +22,9 @@ import soar from '@/lib/soar'
 // import { MatchRequest } from '@/types/knockout'
 import { useContext } from 'react'
 import { UserContext } from '@/contexts/UserContext'
-import { generateQR } from '@/data/commandMap'
-import { SoarContext } from '@/contexts/SoarContext'
-import { QRStaticCommands as q } from '@/data/constants'
-import { db } from '@/sunnus/firebase'
-import { doc, onSnapshot } from 'firebase/firestore'
+import { generateQR } from '@/lib/soar/QRDictionary'
+import { SOARContext } from '@/contexts/SOARContext'
+import { QRStaticCommands as q } from '@/lib/soar/constants'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -74,7 +72,7 @@ const DEVScreen = () => {
   // )
 
   const { userId, teamName, schedule } = useContext(UserContext)
-  const { QRState } = useContext(SoarContext)
+  const { QRState } = useContext(SOARContext)
   const QR = QRState[0]
   const getContext = () => {
     console.log('trying to fetch...') // perma

@@ -20,7 +20,7 @@ import DEVScreen from '@/screens/DEV'
 import KnockoutTable from '@/screens/KnockoutTable'
 import TimerScreen from '@/screens/DEV/TimerScreen'
 import QRScreen from '@/screens/QR'
-import { SoarProvider } from '@/contexts/SoarContext'
+import { SOARProvider } from '@/contexts/SOARContext'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { UserProvider } from '@/contexts/UserContext'
 
@@ -31,7 +31,7 @@ const Drawer = createDrawerNavigator()
 
 const Home = () => (
   <UserProvider>
-    <SoarProvider>
+    <SOARProvider>
       <TimerProvider>
         <Drawer.Navigator
           initialRouteName="HomeScreen"
@@ -47,7 +47,7 @@ const Home = () => (
           <Drawer.Screen name="QRScreen" component={QRScreen} />
         </Drawer.Navigator>
       </TimerProvider>
-    </SoarProvider>
+    </SOARProvider>
   </UserProvider>
 )
 
