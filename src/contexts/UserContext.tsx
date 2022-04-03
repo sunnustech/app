@@ -84,11 +84,14 @@ async function handlePushTokens(token: string) {
   const existingPushTokens = data.pushTokens
   if (!existingPushTokens.includes(token)) {
     existingPushTokens.push(token)
+    const clean = existingPushTokens.filter(
+      (t: string) => t.replace(/ /g, '') !== ''
+    )
     push({
       collection: 'notifications',
       docs: {
         expo: {
-          pushTokens: existingPushTokens,
+          pushTokens: clean,
         },
       },
     })

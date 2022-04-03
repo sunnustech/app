@@ -59,11 +59,11 @@ const LoginScreen = () => {
   }
 
   const queryEmailFromFirebase = async () => {
+    setLoginError(false)
     setLoading(true)
     /*
      * pulls a dictionary that maps loginId to groupTitle
      */
-    console.log('gonna access')
     const loginIdDictionary = (
       await pullDoc({
         collection: 'participants',
@@ -78,8 +78,6 @@ const LoginScreen = () => {
     }
     // continue only if user is registered
     setLoginError(false)
-    console.log('loginId', loginId)
-    console.log(loginIdDictionary[loginId])
     setLoading(false)
     return loginIdDictionary[loginId].email
   }
