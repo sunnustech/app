@@ -14,11 +14,22 @@ import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SoarContext } from '@/contexts/SoarContext'
 import { QRIndex } from '@/data/commandMap'
-import { QRStaticCommands, invalidQR } from '@/data/constants'
+import { QRStaticCommands, invalidQR, emptyQR } from '@/data/constants'
+import { SOARTeamData } from '@/types/SOAR'
+import { pullDoc } from '@/data/pull'
+import { UserContext } from '@/contexts/UserContext'
+
+const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
+  // TODO: handle errors on bad pulls
+  const data = (await pullDoc({ collection: 'participants', doc: groupTitle }))
+    ?.data.SOAR
+  return data
+}
 
 const QRScreen = () => {
   const [cameraPermission, setCameraPermission] = useState('')
   const { QRState, scanningState } = useContext(SoarContext)
+  const { teamName } = useContext(UserContext)
   const [isScanning, setIsScanning] = scanningState
   const setQR = QRState[1]
   const navigation = useNavigation<DNP<DrawerPages, 'QRScreen'>>()
@@ -53,7 +64,7 @@ const QRScreen = () => {
    * parse encrypted string to a command object
    * doesn't process anything else
    */
-  const handleQRCode = (code: BarCodeEvent) => {
+  const handleQRCode = async (code: BarCodeEvent) => {
     setIsScanning(false)
     const string: string = code.data
     if (!Object.keys(QRIndex).includes(string)) {
@@ -70,7 +81,55 @@ const QRScreen = () => {
     const data = QRIndex[string]
     const QR = QRStaticCommands[data.command]
     QR.station = data.station
-    setQR(QR)
+
+    // error handling
+    const soarProps = await getSOARProps(teamName)
+    const stn = data.station
+    const cmd = data.command
+    const rem = soarProps.stationsRemaining
+    const correctStn = rem.length > 0 ? rem[0] : stn
+
+    if (cmd === 'start') {
+      if (soarProps.started) {
+        setQR(QRStaticCommands.AlreadyStartedSOAR)
+      }
+    } else if (!soarProps.started) {
+      setQR(QRStaticCommands.HaveNotStartedSOAR)
+    } else {
+      switch (cmd) {
+        case 'pause':
+          if (!soarProps.timerRunning) {
+            setQR(QRStaticCommands.AlreadyPaused)
+          }
+          break
+        case 'resume':
+          if (soarProps.timerRunning) {
+            setQR(QRStaticCommands.AlreadyResumed)
+          }
+          break
+        case 'stopFinal':
+          if (soarProps.stopped) {
+            setQR(QRStaticCommands.AlreadyCompletedSOAR)
+          } else if (!soarProps.timerRunning) {
+            setQR(QRStaticCommands.WarnStopFinal)
+          }
+          break
+        case 'completeStage':
+          if (soarProps.stopped) {
+            setQR(QRStaticCommands.AlreadyCompletedSOAR)
+          } else if (rem.length === 0) {
+            setQR(QRStaticCommands.AlreadyCompletedAllStations)
+          } else if (soarProps.stationsCompleted.includes(stn)) {
+            setQR(QRStaticCommands.AlreadyCompletedStation)
+          } else if (stn !== correctStn) {
+            setQR(QRStaticCommands.WrongStation)
+          }
+          break
+        default:
+          // if there are no errors, send original scanned QR.
+          setQR(QR)
+      }
+    }
     navigation.navigate('SOAR')
   }
 

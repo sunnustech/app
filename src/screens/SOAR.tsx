@@ -176,7 +176,6 @@ const SOARScreen = () => {
   // run only once, after teamName and stationOrder has loaded,
   // to attach a listener to firebase
   useEffect(() => {
-    console.log('ran once')
     if (everythingLoaded === true) {
       onSnapshot(doc(db, 'participants', teamName), (doc) => {
         const liveData = doc.data()
@@ -187,7 +186,6 @@ const SOARScreen = () => {
             members: liveData.members,
             registeredEvents: liveData.registeredEvents,
           }
-          console.log('took a snapshot', updatedTeamData.SOAR.stationsCompleted)
           setDisplayLocations(
             getLocations(locations, filtered, updatedTeamData.SOAR)
           )
@@ -240,7 +238,6 @@ const SOARScreen = () => {
       stationOrder.A.length > 0 &&
       teamData.groupTitle.length > 0
     ) {
-      console.log('loading done', teamName, stationOrder)
       setEverythingLoaded(true)
     }
   }, [teamName, stationOrder, teamData])

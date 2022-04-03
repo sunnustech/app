@@ -66,11 +66,15 @@ export type SoarCommand =
   | 'stopFinal'
   | 'resume'
   | 'completeStage'
-  | 'WrongStationError'
-  | 'AlreadyCompletedSOAR'
+  | 'WrongStation'
   | 'HaveNotStartedSOAR'
   | 'AlreadyPaused'
   | 'AlreadyResumed'
+  | 'AlreadyStartedSOAR'
+  | 'AlreadyCompletedSOAR'
+  | 'AlreadyCompletedAllStations'
+  | 'AlreadyCompletedStation'
+  | 'WarnStopFinal'
   | ''
   | HaventDecided
 
