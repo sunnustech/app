@@ -2,10 +2,15 @@ import { SOARLocation } from '@/sunnus/src/types/SOAR'
 
 const waterPoints: Array<SOARLocation> = [
   {
+    google_map_pin_url: '',
     id: 10,
-    stationType: 'water',
-    title: '_UTown Green',
     location: '',
+    physical: true,
+    stage: 0,
+    stationType: 'water',
+    status: '',
+    timetable: [],
+    title: '_UTown Green',
     content: {
       game_title: '',
       details: '',
@@ -15,29 +20,26 @@ const waterPoints: Array<SOARLocation> = [
       latitude: 1.3049891103654925,
       longitude: 103.77322845557454,
     },
-    physical: true,
-    stage: 0,
-    timetable: [],
-    google_map_pin_url: '',
   },
   {
+    google_map_pin_url: '',
     id: 20,
-    stationType: 'water',
     location: '',
+    physical: true,
+    stage: 0,
+    stationType: 'water',
+    status: '',
+    timetable: [],
+    title: '_NUH',
     content: {
       game_title: '',
       details: '',
     },
-    title: '_NUH',
-    google_map_pin_url: '',
     coordinate: {
       // NUH
       latitude: 1.2941740290024657,
       longitude: 103.78306481546151,
     },
-    physical: true,
-    stage: 0,
-    timetable: [],
   },
 ]
 

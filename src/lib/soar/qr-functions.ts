@@ -2,18 +2,11 @@
  * this will be a suite of functions that SOAR will use to interact with firebase
  */
 
-import { Dispatch, SetStateAction } from 'react'
 import push from '@/data/push'
 import { pullDoc } from '@/data/pull'
 import { TimeApiProps } from '@/types/index'
-import { SunNUSTeamData } from '@/types/participants'
-import {
-  QRStaticCommandProps,
-  SoarCommand,
-  SOARTeamData,
-  UseState,
-} from '@/types/SOAR'
-import { Toast } from './utils'
+import { QRStaticCommandProps, SoarCommand, SOARTeamData } from '@/types/SOAR'
+import { Toast } from '@/lib/utils'
 
 const TIMEAPI =
   'https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Singapore'
@@ -147,11 +140,7 @@ const stopFinal = async (groupTitle: string, QR: QRStaticCommandProps) => {
 }
 
 // end SOAR timer for the last time (final)
-const completeStage = async (
-  groupTitle: string,
-  QR: QRStaticCommandProps,
-  teamDataState: any
-) => {
+const completeStage = async (groupTitle: string, QR: QRStaticCommandProps) => {
   const thisStation = QR.station
   const soarProps = await getSOARProps(groupTitle)
   // checks
@@ -159,10 +148,21 @@ const completeStage = async (
     Toast('You have already completed this station!')
     return
   }
+  if (soarProps.stationsRemaining.length === 0) {
+    Toast('You have already completed all stations!')
+    return
+  }
+  const stationsRemaining = soarProps.stationsRemaining
+  const correctStation = stationsRemaining.shift()
+  if (thisStation !== correctStation) {
+    Toast('This is not the right station.')
+    return
+  }
+
   // only continue if team hasn't completed this station yet
   const stationsCompleted = soarProps.stationsCompleted
-
   stationsCompleted.push(thisStation)
+
   // console.log('completed station:', thisStation)
   const allEvents = soarProps.allEvents
   const newTime = await getTimeAsync()
@@ -170,13 +170,9 @@ const completeStage = async (
   const docs = generatePacket(groupTitle, {
     allEvents,
     stationsCompleted,
+    stationsRemaining,
   })
   push({ collection: 'participants', docs })
-
-  // push changes locally to avoid having to pull again
-  const [teamData, setTeamData] = teamDataState
-  teamData.SOAR.stationsCompleted.push(thisStation)
-  setTeamData(teamData)
 }
 
 const soar: Record<SoarCommand, any> = {

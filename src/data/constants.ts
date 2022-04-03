@@ -17,6 +17,14 @@ export const emptyQR: QRStaticCommandProps = {
   station: '',
 }
 
+export const errorQR: QRStaticCommandProps = {
+  title: 'Error',
+  summary: '',
+  action: 'Okay then',
+  command: '',
+  station: '',
+}
+
 export const invalidQR: QRStaticCommandProps = {
   title: 'invalid QR',
   summary: 'The QR code scanned is not in our index',
@@ -81,5 +89,10 @@ export const QRStaticCommands: Record<SoarCommand, QRStaticCommandProps> = {
   fn18: emptyQR,
   fn19: emptyQR,
   fn20: emptyQR,
+  WrongStationError: errorQR,
+  HaveNotStartedSOAR: errorQR,
+  AlreadyPaused: errorQR,
+  AlreadyCompletedSOAR: errorQR,
+  AlreadyResumed: errorQR,
   '': emptyQR,
 }

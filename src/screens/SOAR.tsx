@@ -26,6 +26,9 @@ import { NUSCoordinates, emptyQR } from '@/data/constants'
 import soar from '@/lib/soar'
 import { UserContext } from '@/contexts/UserContext'
 import { SOARLocation, SOARTeamData } from '@/types/SOAR'
+import { onSnapshot, doc } from 'firebase/firestore'
+import { db } from '@/sunnus/firebase'
+import { Group } from '@/types/participants'
 
 const SOARScreen = () => {
   /* read data from soar context */
@@ -52,7 +55,7 @@ const SOARScreen = () => {
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState(true)
   const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
-  const [nextStation, setNextStation] = useState(true)
+  const [everythingLoaded, setEverythingLoaded] = useState(false)
 
   const mapRef = useRef<MapView>()
 
@@ -100,29 +103,12 @@ const SOARScreen = () => {
     })()
   }, [])
 
-  const toggleAdminStations = () => {
-    const obj = filtered
-    obj.water = !obj.water
-    setFiltered(obj)
-    setDisplayLocations(getLocations(locations, obj, teamData.SOAR))
-  }
-
-  const openQRScanner = () => {
-    setIsScanning(true)
-    navigation.navigate('QRScreen')
-  }
-
-  const handleSOS = () => {
-    setSOSVisible(!SOSVisible)
-  }
-
   function getLocations(
     locations: Array<SOARLocation>,
     filtered: any,
     soarData: SOARTeamData
   ) {
     const stationsCompleted = soarData.stationsCompleted
-    const groupStationOrder = stationOrder[soarData.direction]
 
     /* remove all game stations (so we only add in the next game station) */
     const noGames = locations.filter((loc) => loc.stationType !== 'game')
@@ -142,9 +128,7 @@ const SOARScreen = () => {
      *
      * so it suffices to take the first result that hasn't been completed.
      */
-    const nextStationTitle = groupStationOrder.filter(
-      (stn) => !stationsCompleted.includes(stn)
-    )[0]
+    const nextStationTitle = soarData.stationsRemaining[0]
 
     gameStations.forEach((stn) => {
       if (stationsCompleted.includes(stn.title)) {
@@ -154,49 +138,81 @@ const SOARScreen = () => {
       }
     })
 
+    // console.log('groupStationOrder', groupStationOrder)
+    // console.log('stationsCompleted', stationsCompleted)
+
     /* apply water/medic station filter */
     return [...noGames, ...gameStations].filter(
       (loc) => filtered[loc.stationType]
     )
   }
 
-  /* update display locations if:
-   * 1. admin station toggle has been pressed (this changes filtered)
-   * , OR
-   * 2. teamData received updates
+  /* =====================================================
+   *          HANDLES TOGGLING OF ADMIN STATIONS
+   * =====================================================
+   */
+
+  /* update display locations if admin station toggle has been pressed
+   * (this calls setFiltered and changes filtered)
    */
   useEffect(() => {
-    if (teamData.SOAR) {
+    if (everythingLoaded === true) {
       setDisplayLocations(getLocations(locations, filtered, teamData.SOAR))
     }
-  }, [filtered, teamData])
+  }, [everythingLoaded, filtered])
 
-  /*  update display locations whenever nextStation's value is updated */
+  function toggleAdminStations() {
+    const obj = filtered
+    obj.water = !obj.water
+    setFiltered(obj)
+    setDisplayLocations(getLocations(locations, obj, teamData.SOAR))
+  }
+
+  /* =====================================================
+   * HANDLES ACROSS-THE-TEAM UPDATING OF NEXT GAME STATION
+   * =====================================================
+   */
+
+  // run only once, after teamName and stationOrder has loaded,
+  // to attach a listener to firebase
   useEffect(() => {
-    if (teamData.SOAR && QR !== emptyQR) {
-      const newData = teamData.SOAR
-      newData.stationsCompleted.push(QR.station)
-      setDisplayLocations(getLocations(locations, filtered, newData))
+    console.log('ran once')
+    if (everythingLoaded === true) {
+      onSnapshot(doc(db, 'participants', teamName), (doc) => {
+        const liveData = doc.data()
+        if (liveData) {
+          const updatedTeamData: Group = {
+            groupTitle: liveData.groupTitle,
+            SOAR: liveData.SOAR,
+            members: liveData.members,
+            registeredEvents: liveData.registeredEvents,
+          }
+          console.log('took a snapshot', updatedTeamData.SOAR.stationsCompleted)
+          setDisplayLocations(
+            getLocations(locations, filtered, updatedTeamData.SOAR)
+          )
+        }
+      })
     }
-    setQR(emptyQR)
-  }, [nextStation])
+  }, [everythingLoaded])
+
+  /* =====================================================
+   *            HANDLES QR SCANNER INTERACTIONS
+   * =====================================================
+   */
+
+  function openQRScanner() {
+    setIsScanning(true)
+    navigation.navigate('QRScreen')
+  }
 
   function confirmQRAction() {
     // skip execution for invalid QRs
     if (QR.title === 'invalid QR') {
       return
     }
-
-    if (QR.command == 'completeStage') {
-      soar[QR.command](teamName, QR, [teamData, setTeamData])
-      /* trigger the useEffect to reload displayLocations
-       * note that this useEffect also runs setQR(emptyQR)
-       */
-      setNextStation(!nextStation)
-    } else {
-      setQR(emptyQR)
-      soar[QR.command](teamName, QR)
-    }
+    soar[QR.command](teamName, QR)
+    setQR(emptyQR)
   }
 
   const QRHandler = () => {
@@ -213,6 +229,27 @@ const SOARScreen = () => {
     )
   }
 
+  /* =====================================================
+   *                  LOAD STATE CHECKER
+   * =====================================================
+   */
+
+  useEffect(() => {
+    if (
+      teamName &&
+      stationOrder.A.length > 0 &&
+      teamData.groupTitle.length > 0
+    ) {
+      console.log('loading done', teamName, stationOrder)
+      setEverythingLoaded(true)
+    }
+  }, [teamName, stationOrder, teamData])
+
+  /* =====================================================
+   *            MAIN RENDER COMPONENT FOR SOAR
+   * =====================================================
+   */
+
   if (loading) {
     return <Text>loading...</Text>
   } else {
@@ -225,15 +262,15 @@ const SOARScreen = () => {
             displayLocations={displayLocations}
           />
           <SOS visible={SOSVisible} setState={setSOSVisible} />
-          <QRHandler />
           <UI
             navigation={navigation}
             filtered={filtered}
             flyToCurrentLocation={flyToCurrentLocation}
-            handleSOS={handleSOS}
+            handleSOS={() => setSOSVisible(!SOSVisible)}
             openQRScanner={openQRScanner}
             toggleAdminStations={toggleAdminStations}
           />
+          <QRHandler />
         </NoTouchDiv>
       </RootSiblingParent>
     )

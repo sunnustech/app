@@ -30,7 +30,7 @@ export type SOARLocation = {
 
 export type SOARData = {
   locations: {
-    data: SOARLocation
+    data: Array<SOARLocation>
     stationOrder: {
       A: Array<string>
       B: Array<string>
@@ -66,6 +66,11 @@ export type SoarCommand =
   | 'stopFinal'
   | 'resume'
   | 'completeStage'
+  | 'WrongStationError'
+  | 'AlreadyCompletedSOAR'
+  | 'HaveNotStartedSOAR'
+  | 'AlreadyPaused'
+  | 'AlreadyResumed'
   | ''
   | HaventDecided
 
@@ -139,4 +144,5 @@ export type SOARTeamData = SOARStartState &
     direction: 'A' | 'B'
     points: number
     stationsCompleted: Array<string>
+    stationsRemaining: Array<string>
   }

@@ -1,8 +1,9 @@
 import { Group, ParticipantsData } from '@/types/participants'
 import { SOARTeamData } from '@/types/SOAR'
 import { objFromArray } from './utils'
+import { stationOrder } from './SOAR'
 
-const SOARinit: SOARTeamData = {
+const SOARInit: SOARTeamData = {
   timerRunning: false,
   started: false,
   stopped: false,
@@ -13,8 +14,11 @@ const SOARinit: SOARTeamData = {
   lastResume: {},
   direction: 'A',
   stationsCompleted: [],
+  stationsRemaining: [],
   points: 0,
 }
+
+SOARInit.stationsRemaining = stationOrder[SOARInit.direction]
 
 const testOne = {
   groupTitle: 'Known_Painters',
@@ -24,7 +28,7 @@ const testOne = {
     },
     SOAR: true,
   },
-  SOAR: SOARinit,
+  SOAR: SOARInit,
   members: [
     {
       email: 'alice@gmail.com',
@@ -50,7 +54,7 @@ const testTwo = {
   registeredEvents: {
     SOAR: true,
   },
-  SOAR: SOARinit,
+  SOAR: SOARInit,
   members: [
     {
       email: 'adam@gmail.com',
@@ -76,7 +80,7 @@ const Developer: Group = {
   registeredEvents: {
     SOAR: true,
   },
-  SOAR: SOARinit,
+  SOAR: SOARInit,
   members: [
     {
       email: 'adam@gmail.com',
@@ -151,3 +155,4 @@ participants['allLoginIds'] = allLoginIds
 participants['allEmails'] = allEmails
 
 export default participants
+export { SOARInit }

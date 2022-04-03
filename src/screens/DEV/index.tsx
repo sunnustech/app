@@ -25,6 +25,8 @@ import { UserContext } from '@/contexts/UserContext'
 import { generateQR } from '@/data/commandMap'
 import { SoarContext } from '@/contexts/SoarContext'
 import { QRStaticCommands as q } from '@/data/constants'
+import { db } from '@/sunnus/firebase'
+import { doc, onSnapshot } from 'firebase/firestore'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -61,6 +63,16 @@ const DebugList = () => (
  */
 
 const DEVScreen = () => {
+  /* these three lines attaches a listener to participants/Dev_loper and
+   * re-runs each time there is a change detect on server-side
+   */
+  // const firebaseListener = onSnapshot(
+  //   doc(db, 'participants', 'Dev_loper'),
+  //   (doc) => {
+  //     console.log('current data: ', doc.data())
+  //   }
+  // )
+
   const { userId, teamName, schedule } = useContext(UserContext)
   const { QRState } = useContext(SoarContext)
   const QR = QRState[0]
