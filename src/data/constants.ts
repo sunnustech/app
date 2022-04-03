@@ -64,7 +64,7 @@ export const QRStaticCommands: Record<SoarCommand, QRStaticCommandProps> = {
   },
   completeStage: {
     title: 'stage completed!',
-    summary: 'Congratuations! You have progressed to the next stage!',
+    summary: '',
     action: 'Continue',
     command: 'completeStage',
     station: '',

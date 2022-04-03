@@ -137,14 +137,15 @@ type SOAREndState =
       stopTime: {}
     }
 
-type Event = {
+export type SOAREvent = {
   timestamp: TimeApiProps
   QR: QRStaticCommandProps
 }
+
 export type SOARTeamData = SOARStartState &
   SOAREndState & {
     timerRunning: boolean
-    allEvents: Array<Event>
+    allEvents: Array<SOAREvent>
     direction: 'A' | 'B'
     points: number
     stationsCompleted: Array<string>
