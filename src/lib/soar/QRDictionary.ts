@@ -1,4 +1,4 @@
-import { QRMiniCommandProps, SOARCommand } from '@/types/SOAR'
+import { QRDictionaryGeneratorProps, SOARCommand } from '@/types/SOAR'
 import ten from './tenThousand'
 
 /*
@@ -50,7 +50,7 @@ const stations: Array<[number, string]> = [
 ]
 
 const generateQR = () => {
-  const indexed: Record<string, QRMiniCommandProps> = {}
+  const indexed: Record<string, QRDictionaryGeneratorProps> = {}
   stations.forEach((station) => {
     const [startPoint, name] = station
     for (const [offset, command] of Object.entries(stationCommands)) {

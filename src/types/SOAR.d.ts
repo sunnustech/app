@@ -81,7 +81,7 @@ export type SOARCommand =
   | ''
   | HaventDecided
 
-export type QRMiniCommandProps = {
+export type QRDictionaryGeneratorProps = {
   command: SOARCommand
   station: string
 }
@@ -90,7 +90,7 @@ export type QRCommandProps = {
   title: string
   summary: string
   action: string
-} & QRMiniCommandProps
+} & QRDictionaryGeneratorProps
 
 export type QRDynamicCommandProps = (points: number) => QRCommandProps
 
