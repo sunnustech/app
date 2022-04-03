@@ -120,17 +120,6 @@ const SOARScreen = () => {
       (loc) => loc.stationType === 'game'
     )
 
-    // reset status for each call
-    gameStations.forEach((stn) => {
-      stn.status = ''
-    })
-
-    gameStations.forEach((stn) => {
-      if (stationsCompleted.includes(stn.title)) {
-        stn.status = 'done'
-      }
-    })
-
     /* note that groupStationOrder is a sorted array of stations
      * that the group will go to, in the order of visiting.
      *
@@ -139,15 +128,14 @@ const SOARScreen = () => {
     const nextStationTitle = soarData.stationsRemaining[0]
 
     gameStations.forEach((stn) => {
+      // reset status for each call
+      stn.status = ''
       if (stationsCompleted.includes(stn.title)) {
         stn.status = 'done'
       } else if (stn.title === nextStationTitle) {
         stn.status = 'next'
       }
     })
-
-    // console.log('groupStationOrder', groupStationOrder)
-    // console.log('stationsCompleted', stationsCompleted)
 
     /* apply water/medic station filter */
     return [...noGames, ...gameStations].filter(
