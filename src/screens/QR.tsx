@@ -92,45 +92,51 @@ const QRScreen = () => {
     if (cmd === 'start') {
       if (soarProps.started) {
         setQR(QRStaticCommands.AlreadyStartedSOAR)
+        navigation.navigate('SOAR')
+        return
       }
     } else if (!soarProps.started) {
+      // for all non-start commands,
+      // always check if participant has started SOAR yet
       setQR(QRStaticCommands.HaveNotStartedSOAR)
-    } else {
-      switch (cmd) {
-        case 'pause':
-          if (!soarProps.timerRunning) {
-            setQR(QRStaticCommands.AlreadyPaused)
-          }
-          break
-        case 'resume':
-          if (soarProps.timerRunning) {
-            setQR(QRStaticCommands.AlreadyResumed)
-          }
-          break
-        case 'stopFinal':
-          if (soarProps.stopped) {
-            setQR(QRStaticCommands.AlreadyCompletedSOAR)
-          } else if (!soarProps.timerRunning) {
-            setQR(QRStaticCommands.WarnStopFinal)
-          }
-          break
-        case 'completeStage':
-          if (soarProps.stopped) {
-            setQR(QRStaticCommands.AlreadyCompletedSOAR)
-          } else if (rem.length === 0) {
-            setQR(QRStaticCommands.AlreadyCompletedAllStations)
-          } else if (soarProps.stationsCompleted.includes(stn)) {
-            setQR(QRStaticCommands.AlreadyCompletedStation)
-          } else if (stn !== correctStn) {
-            setQR(QRStaticCommands.WrongStation)
-          }
-          break
-        default:
-          // if there are no errors, send original scanned QR.
-          setQR(QR)
-      }
+      navigation.navigate('SOAR')
+      return
     }
-    navigation.navigate('SOAR')
+
+    switch (cmd) {
+      case 'pause':
+        if (!soarProps.timerRunning) {
+          setQR(QRStaticCommands.AlreadyPaused)
+        }
+        break
+      case 'resume':
+        if (soarProps.timerRunning) {
+          setQR(QRStaticCommands.AlreadyResumed)
+        }
+        break
+      case 'stopFinal':
+        if (soarProps.stopped) {
+          setQR(QRStaticCommands.AlreadyCompletedSOAR)
+        } else if (!soarProps.timerRunning) {
+          setQR(QRStaticCommands.WarnStopFinal)
+        }
+        break
+      case 'completeStage':
+        if (soarProps.stopped) {
+          setQR(QRStaticCommands.AlreadyCompletedSOAR)
+        } else if (rem.length === 0) {
+          setQR(QRStaticCommands.AlreadyCompletedAllStations)
+        } else if (soarProps.stationsCompleted.includes(stn)) {
+          setQR(QRStaticCommands.AlreadyCompletedStation)
+        } else if (stn !== correctStn) {
+          setQR(QRStaticCommands.WrongStation)
+        }
+        break
+      default:
+        // if there are no errors, send original scanned QR.
+        setQR(QR)
+        navigation.navigate('SOAR')
+    }
   }
 
   const handleBackToMap = () => {

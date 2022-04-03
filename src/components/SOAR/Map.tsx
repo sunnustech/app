@@ -7,7 +7,12 @@ import { Text } from 'react-native'
 import { customMapStyle } from './MapStyle'
 import { NUSCoordinates } from '@/data/constants'
 
-const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
+const Map = ({
+  navigation,
+  displayLocations,
+  mapRef,
+  startStatus,
+}: MapProps) => {
   const gameLocations = displayLocations.filter(
     (stn) => stn.stationType === 'game'
   )
@@ -16,7 +21,7 @@ const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
   )
 
   const GameLocations = () => {
-    return (
+    return startStatus ? (
       <>
         {gameLocations.map((e: any, i: number) => (
           <MapPoint
@@ -44,7 +49,7 @@ const Map = ({ navigation, displayLocations, mapRef }: MapProps) => {
         {/*   </Circle> */}
         {/* ))} */}
       </>
-    )
+    ) : null
   }
 
   const NonGameLocations = () => {

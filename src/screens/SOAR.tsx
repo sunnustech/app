@@ -257,6 +257,7 @@ const SOARScreen = () => {
             mapRef={mapRef}
             navigation={navigation}
             displayLocations={displayLocations}
+            startStatus={teamData.SOAR.started}
           />
           <SOS visible={SOSVisible} setState={setSOSVisible} />
           <UI
