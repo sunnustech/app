@@ -90,6 +90,7 @@ export type QRCommandProps = {
   title: string
   summary: string
   action: string
+  points: number
 } & QRDictionaryGeneratorProps
 
 export type QRDynamicCommandProps = (points: number) => QRCommandProps

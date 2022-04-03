@@ -6,14 +6,7 @@ export const emptyQR: QRCommandProps = {
   action: '',
   command: '',
   station: '',
-}
-
-export const errorQR: QRCommandProps = {
-  title: 'Error',
-  summary: '',
-  action: 'Okay then',
-  command: '',
-  station: '',
+  points: 0,
 }
 
 export const invalidQR: QRCommandProps = {
@@ -22,6 +15,7 @@ export const invalidQR: QRCommandProps = {
   action: 'Continue',
   command: '',
   station: '',
+  points: 0,
 }
 
 export const QRCommands: Record<SOARCommand, QRCommandProps> = {
@@ -31,6 +25,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: "Let's go!",
     command: 'start',
     station: '',
+    points: 0,
   },
   resume: {
     title: 'resume',
@@ -38,6 +33,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Confirm',
     command: 'resume',
     station: '',
+    points: 0,
   },
   pause: {
     title: 'pause',
@@ -45,6 +41,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Confirm',
     command: 'pause',
     station: '',
+    points: 0,
   },
   stopFinal: {
     title: 'stop',
@@ -52,6 +49,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Confirm',
     command: 'stopFinal',
     station: '',
+    points: 0,
   },
   completeStage: {
     title: 'stage completed!',
@@ -59,6 +57,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Continue',
     command: 'completeStage',
     station: '',
+    points: 0,
   },
   WrongStation: {
     title: 'Wrong station.',
@@ -66,6 +65,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Continue',
     command: '',
     station: '',
+    points: 0,
   },
   AlreadyStartedSOAR: {
     title: 'Already started.',
@@ -74,6 +74,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Continue',
     command: '',
     station: '',
+    points: 0,
   },
   HaveNotStartedSOAR: {
     title: "Haven't started.",
@@ -82,6 +83,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Continue',
     command: '',
     station: '',
+    points: 0,
   },
   AlreadyPaused: {
     title: 'Already paused.',
@@ -89,6 +91,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Continue',
     command: '',
     station: '',
+    points: 0,
   },
   AlreadyResumed: {
     title: 'Already resumed.',
@@ -96,6 +99,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Continue',
     command: '',
     station: '',
+    points: 0,
   },
   AlreadyCompletedSOAR: {
     title: 'Already completed.',
@@ -104,6 +108,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Continue',
     command: '',
     station: '',
+    points: 0,
   },
   AlreadyCompletedAllStations: {
     title: 'Already completed all stations.',
@@ -111,6 +116,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Confirm',
     command: '',
     station: '',
+    points: 0,
   },
   AlreadyCompletedStation: {
     title: 'Already completed station.',
@@ -118,6 +124,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Continue',
     command: '',
     station: '',
+    points: 0,
   },
   WarnStopFinal: {
     title: 'stop',
@@ -125,6 +132,7 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     action: 'Confirm',
     command: 'stopFinal',
     station: '',
+    points: 0,
   },
   fn01: emptyQR,
   fn02: emptyQR,
