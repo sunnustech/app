@@ -13,8 +13,9 @@ import { auth } from '@/sunnus/firebase'
 import { LoginScreen } from '@/screens/index'
 import { UserState } from '@/types/index'
 import AuthStack from '@/navigations/AuthStack'
+import { UnauthenticatedPages } from '@/types/navigation'
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator<UnauthenticatedPages>()
 
 /*
  * uses a react state to keep track of whether the user is logged in or not.
@@ -53,12 +54,20 @@ const SunNUS = () => {
       if (userState.isRegistered) {
         /* user has logged in with firebase */
         return (
-          <Stack.Screen name="Home" component={AuthStack} options={minOpts} />
+          <Stack.Screen
+            name="HomeScreen"
+            component={AuthStack}
+            options={minOpts}
+          />
         )
       } else {
         /* user has logged in as guest (no firebase) */
         return (
-          <Stack.Screen name="Home" component={AuthStack} options={minOpts} />
+          <Stack.Screen
+            name="HomeScreen"
+            component={AuthStack}
+            options={minOpts}
+          />
         )
         // TODO: handle guest option properly
         // (currently treat guests as registered users)
@@ -66,7 +75,11 @@ const SunNUS = () => {
     } else {
       /* user has yet to log in at all */
       return (
-        <Stack.Screen name="Login" component={LoginScreen} options={minOpts} />
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={minOpts}
+        />
       )
     }
   }

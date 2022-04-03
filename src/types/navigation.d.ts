@@ -19,6 +19,6 @@ export type AuthenticatedPages = {
 }
 
 export type UnauthenticatedPages = {
-  Login: undefined
-  Home: undefined
+  LoginScreen: undefined
+  HomeScreen: undefined
 }
