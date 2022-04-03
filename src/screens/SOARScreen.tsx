@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { RefObject, useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { BarCodeScanner } from 'expo-barcode-scanner'
@@ -61,7 +61,7 @@ const SOARScreen = () => {
   const [checkingCameraPermission, setCheckingCameraPermission] =
     useState(false)
 
-  const mapRef = useRef<MapView>()
+  const mapRef = useRef<MapView | null>(null)
 
   const navigation = useNavigation<AuthPage<'SOARScreen'>>()
 

@@ -8,7 +8,7 @@ import { TimeApiProps } from '@/types/index'
 import {
   QRStaticCommandProps,
   SoarCommand,
-  SOAREvent,
+  SOARTimestamp,
   SOARTeamData,
 } from '@/types/SOAR'
 
@@ -54,7 +54,7 @@ const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
 const propsAndEvents = async (
   groupTitle: string,
   QR: QRStaticCommandProps
-): Promise<[SOARTeamData, Array<SOAREvent>, TimeApiProps]> => {
+): Promise<[SOARTeamData, Array<SOARTimestamp>, TimeApiProps]> => {
   const [SOARProps, ts] = await Promise.all([
     getSOARProps(groupTitle),
     getTimeAsync(),

@@ -1,4 +1,4 @@
-import { SOARData } from '@/types/SOAR'
+import { SOARDatabase } from '@/types/SOAR'
 import gameLocations from './gameLocations'
 import adminLocations from './adminLocations'
 
@@ -21,7 +21,7 @@ export const stationOrder = {
   ],
 }
 
-const SOAR: SOARData = {
+const SOAR: SOARDatabase = {
   locations: {
     data: [...gameLocations, ...adminLocations],
     stationOrder,

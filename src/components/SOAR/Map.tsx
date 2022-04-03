@@ -70,7 +70,7 @@ const Map = ({
     )
   }
 
-  return (
+  return mapRef ? (
     <MapView
       ref={mapRef}
       style={styles.overlap}
@@ -82,7 +82,7 @@ const Map = ({
       <GameLocations />
       <NonGameLocations />
     </MapView>
-  )
+  ) : null
 }
 
 export default Map
