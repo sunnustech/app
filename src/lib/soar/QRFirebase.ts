@@ -11,12 +11,11 @@ import {
   SOAREvent,
   SOARTeamData,
 } from '@/types/SOAR'
-import { Toast } from '@/lib/utils'
 
 /* NOTE
  * there will be no game-related error catching done here.
  * all game-related errors are dealth with using Modals,
- * and are hence located at @/screens/QR.tsx
+ * and are hence located at @/screens/QRScreen.tsx
  */
 
 const TIMEAPI =

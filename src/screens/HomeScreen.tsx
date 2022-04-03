@@ -57,28 +57,28 @@ const HomeScreen = () => {
       <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => navigation.navigate('SOAR')}
+          onPress={() => navigation.navigate('SOARScreen')}
           textStyle={styles.SOARbuttonText}
           containerStyle={styles.SOARbutton}
         >
           SOAR
         </Button>
         <Button
-          onPress={() => navigation.navigate('TSS')}
+          onPress={() => navigation.navigate('TSSScreen')}
           textStyle={styles.TSSbuttonText}
           containerStyle={styles.TSSbutton}
         >
           TSS
         </Button>
         <Button
-          onPress={() => navigation.navigate('WSS')}
+          onPress={() => navigation.navigate('WSSScreen')}
           textStyle={styles.WSSbuttonText}
           containerStyle={styles.WSSbutton}
         >
           WSS
         </Button>
         <Button
-          onPress={() => navigation.navigate('DEV')}
+          onPress={() => navigation.navigate('DEVScreen')}
           textStyle={styles.DEVbuttonText}
           containerStyle={styles.DEVbutton}
         >

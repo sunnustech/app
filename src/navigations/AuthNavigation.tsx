@@ -11,7 +11,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { auth } from '@/sunnus/firebase'
 
 /* screens */
-import Login from '@/screens/LoginScreen'
+import LoginScreen from '@/screens/LoginScreen'
 import HomeScreen from '@/screens/HomeScreen'
 import SOARScreen from '@/screens/SOAR'
 import TSSScreen from '@/screens/TSS'
@@ -19,7 +19,7 @@ import WSSScreen from '@/screens/WSS'
 import DEVScreen from '@/screens/DEV'
 import KnockoutTable from '@/screens/KnockoutTable'
 import TimerScreen from '@/screens/DEV/TimerScreen'
-import QRScreen from '@/screens/QR'
+import QRScreen from '@/screens/QRScreen'
 import { SOARProvider } from '@/contexts/SOARContext'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { UserProvider } from '@/contexts/UserContext'
@@ -29,7 +29,7 @@ import { UserState } from '@/types/index'
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
 
-const Home = () => (
+const AuthenticatedNavigator = () => (
   <UserProvider>
     <SOARProvider>
       <TimerProvider>
@@ -38,11 +38,11 @@ const Home = () => (
           screenOptions={{ headerShown: false }}
         >
           <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-          <Drawer.Screen name="SOAR" component={SOARScreen} />
-          <Drawer.Screen name="TSS" component={TSSScreen} />
-          <Drawer.Screen name="WSS" component={WSSScreen} />
-          <Drawer.Screen name="DEV" component={DEVScreen} />
-          <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
+          <Drawer.Screen name="SOARScreen" component={SOARScreen} />
+          <Drawer.Screen name="TSSScreen" component={TSSScreen} />
+          <Drawer.Screen name="WSSScreen" component={WSSScreen} />
+          <Drawer.Screen name="DEVScreen" component={DEVScreen} />
+          <Drawer.Screen name="KnockoutTableScreen" component={KnockoutTable} />
           <Drawer.Screen name="TimerScreen" component={TimerScreen} />
           <Drawer.Screen name="QRScreen" component={QRScreen} />
         </Drawer.Navigator>
@@ -87,16 +87,30 @@ const AuthNavigation = () => {
     if (userState.isLoggedIn) {
       if (userState.isRegistered) {
         /* user has logged in with firebase */
-        return <Stack.Screen name="Home" component={Home} options={minOpts} />
+        return (
+          <Stack.Screen
+            name="Home"
+            component={AuthenticatedNavigator}
+            options={minOpts}
+          />
+        )
       } else {
         /* user has logged in as guest (no firebase) */
-        return <Stack.Screen name="Home" component={Home} options={minOpts} />
+        return (
+          <Stack.Screen
+            name="Home"
+            component={AuthenticatedNavigator}
+            options={minOpts}
+          />
+        )
         // TODO: handle guest option properly
         // (currently treat guests as registered users)
       }
     } else {
       /* user has yet to log in at all */
-      return <Stack.Screen name="Login" component={Login} options={minOpts} />
+      return (
+        <Stack.Screen name="Login" component={LoginScreen} options={minOpts} />
+      )
     }
   }
 

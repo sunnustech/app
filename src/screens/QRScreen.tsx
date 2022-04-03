@@ -43,7 +43,7 @@ const QRScreen = () => {
     if (!Object.keys(QRIndex).includes(string)) {
       console.log('invalid QR scanned') // perma
       setQR(invalidQR)
-      navigation.navigate('SOAR')
+      navigation.navigate('SOARScreen')
       return
     }
     // TODO: implement a QR code cooldown timer
@@ -62,14 +62,14 @@ const QRScreen = () => {
     if (cmd === 'start') {
       if (SOARProps.started) {
         setQR(QRStaticCommands.AlreadyStartedSOAR)
-        navigation.navigate('SOAR')
+        navigation.navigate('SOARScreen')
         return
       }
     } else if (!SOARProps.started) {
       // for all non-start commands,
       // always check if participant has started SOAR yet
       setQR(QRStaticCommands.HaveNotStartedSOAR)
-      navigation.navigate('SOAR')
+      navigation.navigate('SOARScreen')
       return
     }
 
@@ -107,12 +107,12 @@ const QRScreen = () => {
         }
         break
     }
-    navigation.navigate('SOAR')
+    navigation.navigate('SOARScreen')
   }
 
   const handleBackToMap = () => {
     setIsScanning(false)
-    navigation.navigate('SOAR')
+    navigation.navigate('SOARScreen')
   }
 
   const BackToMap = ({ onPress }: any) => {
