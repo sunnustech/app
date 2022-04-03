@@ -2,7 +2,7 @@
   "expo": {
     "name": "SunNUS",
     "slug": "SunNUS",
-    "version": "3.0.3",
+    "version": "3.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,7 +18,7 @@
       "config": {
         "googleMapsApiKey": "AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk"
       },
-      "buildNumber": "8",
+      "buildNumber": "1",
       "supportsTablet": true,
       "bundleIdentifier": "com.nus.sunnus"
     },
