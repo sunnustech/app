@@ -5,60 +5,12 @@ import React, {
   SetStateAction,
   Dispatch,
 } from 'react'
-import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
 import { db } from '@/sunnus/firebase'
-import { doc, DocumentData, getDoc } from 'firebase/firestore'
-import { GameStation } from '@/types/GameStation'
+import { doc, getDoc } from 'firebase/firestore'
 import { SOARContextProps, StationOrderProps } from '@/types/SOAR'
 import { emptyQR } from '@/lib/SOAR/QRStaticCommands'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
-
-/*
- * parse game location details from Firestore data
- */
-function parseFirestoreGameData(firebaseData: DocumentData) {
-  let locationArray: GameStation[] = []
-  Object.keys(firebaseData).forEach((key) => {
-    const e = firebaseData[key]
-    locationArray.push({
-      id: e.id,
-      name: e.game_title,
-      description: e.details,
-      icon: () => <FO name="beach-slipper" size={42} color="#ef4444" />,
-      coordinate: {
-        latitude: e.latitude,
-        longitude: e.longitude,
-      },
-      type: 'game',
-      stage: e.stage,
-    })
-  })
-  return locationArray
-}
-
-/*
- * parse admin location details from Firestore data
- */
-function parseFirestoreAdminData(firebaseData: DocumentData) {
-  let locationArray: GameStation[] = []
-  Object.keys(firebaseData).forEach((key) => {
-    const e = firebaseData[key]
-    locationArray.push({
-      id: e.id,
-      name: e.game_title,
-      description: e.details,
-      icon: () => <FA name="umbrella-beach" size={42} color="#000000" />,
-      coordinate: {
-        latitude: e.latitude,
-        longitude: e.longitude,
-      },
-      type: 'admin',
-      stage: -1,
-    })
-  })
-  return locationArray
-}
 
 /*
  * pulls all locations from the Firestore
@@ -97,7 +49,14 @@ const SOARContext = createContext<SOARContextProps>({
   loadingState: [false, () => true],
   locationState: [[], () => true],
   stationOrderState: [{ A: [], B: [] }, () => {}],
-  filteredState: [{}, () => {}],
+  filteredState: [
+    {
+      game: true,
+      water: false,
+      medic: false,
+    },
+    () => {},
+  ],
   scanningState: [false, () => true],
   QRState: [emptyQR, () => {}],
 })
