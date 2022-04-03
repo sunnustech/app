@@ -1,11 +1,7 @@
 import { Text, TouchableOpacity } from 'react-native'
-import styles from '../styles/main'
+import { buttons as styles } from '@/styles/fresh'
 
-type ButtonProps = {
-  onPress: () => void
-  children: string
-  style?: any
-}
+import { ButtonProps } from '@/types/index'
 
 const Button = ({ onPress, children }: ButtonProps) => {
   return (

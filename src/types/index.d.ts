@@ -8,8 +8,9 @@ export type UserState = {
 }
 
 export type ButtonProps = {
-  onPress: any
+  onPress: () => void
   children: string
+  style?: any
 }
 
 export type DebugButtonProps = ButtonProps & {
@@ -34,4 +35,9 @@ type TimeApiProps = {
   time: string
   timeZone: string
   year: number
+}
+
+export type SafeDivProps = {
+  style?: any
+  children?: any
 }

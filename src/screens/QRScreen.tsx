@@ -3,17 +3,16 @@ import { Text, View } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { QR as styles } from '@/styles/fresh'
 import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { SoarContext } from '@/contexts/SoarContext'
-import { QRIndex } from '@/data/commandMap'
-import { QRStaticCommands, invalidQR } from '@/data/constants'
+import { SOARContext } from '@/contexts/SOARContext'
+import { QRIndex } from '@/lib/SOAR/QRDictionary'
+import { QRStaticCommands, invalidQR } from '@/lib/SOAR/QRStaticCommands'
 import { SOARTeamData } from '@/types/SOAR'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
@@ -26,11 +25,11 @@ const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
 }
 
 const QRScreen = () => {
-  const { QRState, scanningState } = useContext(SoarContext)
+  const { QRState, scanningState } = useContext(SOARContext)
   const { teamName } = useContext(UserContext)
   const [isScanning, setIsScanning] = scanningState
   const setQR = QRState[1]
-  const navigation = useNavigation<DNP<DrawerPages, 'QRScreen'>>()
+  const navigation = useNavigation<AuthPage<'QRScreen'>>()
 
   /*
    * check validity
@@ -43,7 +42,7 @@ const QRScreen = () => {
     if (!Object.keys(QRIndex).includes(string)) {
       console.log('invalid QR scanned') // perma
       setQR(invalidQR)
-      navigation.navigate('SOAR')
+      navigation.navigate('SOARScreen')
       return
     }
     // TODO: implement a QR code cooldown timer
@@ -53,65 +52,66 @@ const QRScreen = () => {
     QR.station = data.station
 
     // error handling
-    const soarProps = await getSOARProps(teamName)
+    const SOARProps = await getSOARProps(teamName)
     const stn = data.station
     const cmd = data.command
-    const rem = soarProps.stationsRemaining
+    const rem = SOARProps.stationsRemaining
     const correctStn = rem.length > 0 ? rem[0] : stn
 
     if (cmd === 'start') {
-      if (soarProps.started) {
+      if (SOARProps.started) {
         setQR(QRStaticCommands.AlreadyStartedSOAR)
-        navigation.navigate('SOAR')
+        navigation.navigate('SOARScreen')
         return
       }
-    } else if (!soarProps.started) {
+    } else if (!SOARProps.started) {
       // for all non-start commands,
       // always check if participant has started SOAR yet
       setQR(QRStaticCommands.HaveNotStartedSOAR)
-      navigation.navigate('SOAR')
+      navigation.navigate('SOARScreen')
       return
     }
 
-    console.log('got past first two checks')
-
     setQR(QR)
+    console.log('QR command:', cmd)
     switch (cmd) {
       case 'pause':
-        if (!soarProps.timerRunning) {
+        if (!SOARProps.timerRunning) {
           setQR(QRStaticCommands.AlreadyPaused)
         }
+        break
       case 'resume':
-        if (soarProps.timerRunning) {
+        if (SOARProps.timerRunning) {
           setQR(QRStaticCommands.AlreadyResumed)
         }
+        break
       case 'stopFinal':
-        if (soarProps.stopped) {
+        if (SOARProps.stopped) {
           setQR(QRStaticCommands.AlreadyCompletedSOAR)
-        } else if (!soarProps.timerRunning) {
+        } else if (!SOARProps.timerRunning) {
           setQR(QRStaticCommands.WarnStopFinal)
         }
+        break
       case 'completeStage':
-        console.log('completing stage...')
-        console.log(soarProps.stationsCompleted, stn)
-        if (soarProps.stopped) {
+        if (SOARProps.stopped) {
           setQR(QRStaticCommands.AlreadyCompletedSOAR)
         } else if (rem.length === 0) {
           setQR(QRStaticCommands.AlreadyCompletedAllStations)
-        } else if (soarProps.stationsCompleted.includes(stn)) {
+        } else if (SOARProps.stationsCompleted.includes(stn)) {
           setQR(QRStaticCommands.AlreadyCompletedStation)
         } else if (stn !== correctStn) {
           setQR(QRStaticCommands.WrongStation)
+        } else {
+          QR.summary = `Congratuations! You have completed ${stn}!`
         }
-      default:
-        // if there are no errors, send original scanned QR.
-        navigation.navigate('SOAR')
+        break
     }
+    navigation.navigate('SOARScreen')
   }
 
   const handleBackToMap = () => {
     setIsScanning(false)
-    navigation.navigate('SOAR')
+    navigation.navigate('SOARScreen')
   }
 
   const BackToMap = ({ onPress }: any) => {

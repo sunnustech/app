@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { RefObject, useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { BarCodeScanner } from 'expo-barcode-scanner'
@@ -10,20 +10,20 @@ import { Text, View } from 'react-native'
 import { Modal } from 'react-native-paper'
 
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
-import { SoarContext } from '@/contexts/SoarContext'
+import { SOARContext } from '@/contexts/SOARContext'
 import { map as styles } from '@/styles/fresh'
 import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
-import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
-import { NUSCoordinates, emptyQR } from '@/data/constants'
-import soar from '@/lib/soar'
+import { emptyQR } from '@/lib/SOAR/QRStaticCommands'
+import { NUSCoordinates } from '@/data/constants'
+import SOAR from '@/lib/SOAR'
 import { UserContext } from '@/contexts/UserContext'
 import { SOARLocation, SOARTeamData } from '@/types/SOAR'
 import { onSnapshot, doc } from 'firebase/firestore'
@@ -31,15 +31,15 @@ import { db } from '@/sunnus/firebase'
 import { Group } from '@/types/participants'
 
 const SOARScreen = () => {
-  /* read data from soar context */
+  /* read data from SOAR context */
   const {
     locationState,
     filteredState,
     QRState,
     scanningState,
     stationOrderState,
-  } = useContext(SoarContext)
-  const { teamName, teamData, setTeamData } = useContext(UserContext)
+  } = useContext(SOARContext)
+  const { teamName, teamData } = useContext(UserContext)
   const displayLocationState = useState<Array<SOARLocation>>([])
 
   const locations = locationState[0]
@@ -61,9 +61,9 @@ const SOARScreen = () => {
   const [checkingCameraPermission, setCheckingCameraPermission] =
     useState(false)
 
-  const mapRef = useRef<MapView>()
+  const mapRef = useRef<MapView | null>(null)
 
-  const navigation = useNavigation<DrawerNavigationProp<DrawerPages, 'SOAR'>>()
+  const navigation = useNavigation<AuthPage<'SOARScreen'>>()
 
   // first time grab user location
   useEffect(() => {
@@ -109,9 +109,9 @@ const SOARScreen = () => {
   function getLocations(
     locations: Array<SOARLocation>,
     filtered: any,
-    soarData: SOARTeamData
+    SOARData: SOARTeamData
   ) {
-    const stationsCompleted = soarData.stationsCompleted
+    const stationsCompleted = SOARData.stationsCompleted
 
     /* remove all game stations (so we only add in the next game station) */
     const noGames = locations.filter((loc) => loc.stationType !== 'game')
@@ -120,29 +120,22 @@ const SOARScreen = () => {
       (loc) => loc.stationType === 'game'
     )
 
-    gameStations.forEach((stn) => {
-      if (stationsCompleted.includes(stn.title)) {
-        stn.status = 'done'
-      }
-    })
-
     /* note that groupStationOrder is a sorted array of stations
      * that the group will go to, in the order of visiting.
      *
      * so it suffices to take the first result that hasn't been completed.
      */
-    const nextStationTitle = soarData.stationsRemaining[0]
+    const nextStationTitle = SOARData.stationsRemaining[0]
 
     gameStations.forEach((stn) => {
+      // reset status for each call
+      stn.status = ''
       if (stationsCompleted.includes(stn.title)) {
         stn.status = 'done'
       } else if (stn.title === nextStationTitle) {
         stn.status = 'next'
       }
     })
-
-    // console.log('groupStationOrder', groupStationOrder)
-    // console.log('stationsCompleted', stationsCompleted)
 
     /* apply water/medic station filter */
     return [...noGames, ...gameStations].filter(
@@ -216,7 +209,7 @@ const SOARScreen = () => {
     if (QR.title === 'invalid QR') {
       return
     }
-    soar[QR.command](teamName, QR)
+    SOAR[QR.command](teamName, QR)
     setQR(emptyQR)
   }
 

@@ -1,9 +1,8 @@
 // {{{
 import { Text, View, ScrollView } from 'react-native'
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 /* sunnus components */
 import { DEV as styles } from '@/styles/fresh'
 import DebugButton from './DebugButton'
@@ -18,15 +17,13 @@ import DebugButton from './DebugButton'
 /* debug functions */
 import writeSchema from '@/data/writeSchema'
 import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
-import soar from '@/lib/soar'
+import SOAR from '@/lib/SOAR'
 // import { MatchRequest } from '@/types/knockout'
 import { useContext } from 'react'
 import { UserContext } from '@/contexts/UserContext'
-import { generateQR } from '@/data/commandMap'
-import { SoarContext } from '@/contexts/SoarContext'
-import { QRStaticCommands as q } from '@/data/constants'
-import { db } from '@/sunnus/firebase'
-import { doc, onSnapshot } from 'firebase/firestore'
+import { generateQR } from '@/lib/SOAR/QRDictionary'
+import { SOARContext } from '@/contexts/SOARContext'
+import { QRStaticCommands as q } from '@/lib/SOAR/QRStaticCommands'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -74,7 +71,7 @@ const DEVScreen = () => {
   // )
 
   const { userId, teamName, schedule } = useContext(UserContext)
-  const { QRState } = useContext(SoarContext)
+  const { QRState } = useContext(SOARContext)
   const QR = QRState[0]
   const getContext = () => {
     console.log('trying to fetch...') // perma
@@ -82,7 +79,9 @@ const DEVScreen = () => {
     console.log('team:', teamName) // perma
     console.log('schedule:', schedule) // perma
   }
-  const navigation = useNavigation<DNP<DrawerPages, 'DEV'>>()
+
+  const navigation = useNavigation<AuthPage<'DEVScreen'>>()
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -97,22 +96,22 @@ const DEVScreen = () => {
           <Text>SOAR functions (team name: Known_Painters)</Text>
 
           <DebugButton
-            onPress={() => soar.start('Known_Painters', q.start)}
+            onPress={() => SOAR.start('Known_Painters', q.start)}
             children="start"
           />
 
           <DebugButton
-            onPress={() => soar.pause('Known_Painters', q.pause)}
+            onPress={() => SOAR.pause('Known_Painters', q.pause)}
             children="pause"
           />
 
           <DebugButton
-            onPress={() => soar.resume('Known_Painters', q.resume)}
+            onPress={() => SOAR.resume('Known_Painters', q.resume)}
             children="resume"
           />
 
           <DebugButton
-            onPress={() => soar.stopFinal('Known_Painters', q.stopFinal)}
+            onPress={() => SOAR.stopFinal('Known_Painters', q.stopFinal)}
             children="stopFinal"
           />
 

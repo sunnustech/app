@@ -1,5 +1,8 @@
-import { SOARPageProps } from '@/types/navigation'
+import { AuthenticatedPages } from '@/types/navigation'
 import { TimeApiProps } from '@/types/index'
+import { DrawerNavigationProp } from '@react-navigation/drawer'
+import MapView from 'react-native-maps'
+import { MutableRefObject, RefObject } from 'react'
 
 export type SOARTimetable = Array<{
   time: string
@@ -9,11 +12,15 @@ export type SOARTimetable = Array<{
 type SOARLocationStatus = '' | 'next' | 'done'
 
 export type SOARLocation = {
+  google_map_pin_url: string
   id: number
-  status: SOARLocationStatus
-  stationType: string
-  title: string
   location: string
+  physical: boolean
+  stage: number
+  stationType: string
+  status: SOARLocationStatus
+  timetable: Array<any>
+  title: string
   content: {
     game_title: string
     details: string
@@ -22,13 +29,9 @@ export type SOARLocation = {
     latitude: number
     longitude: number
   }
-  timetable: Array<any>
-  stage: number
-  physical: boolean
-  google_map_pin_url: string
 }
 
-export type SOARData = {
+export type SOARDatabase = {
   locations: {
     data: Array<SOARLocation>
     stationOrder: {
@@ -137,16 +140,34 @@ type SOAREndState =
       stopTime: {}
     }
 
-type Event = {
+export type SOARTimestamp = {
   timestamp: TimeApiProps
   QR: QRStaticCommandProps
 }
+
 export type SOARTeamData = SOARStartState &
   SOAREndState & {
     timerRunning: boolean
-    allEvents: Array<Event>
+    allEvents: Array<SOARTimestamp>
     direction: 'A' | 'B'
     points: number
     stationsCompleted: Array<string>
     stationsRemaining: Array<string>
   }
+
+/* Map and SOAR */
+
+export type MapButtonProps = {
+  style?: any
+  icon: any
+  onPress: any
+  activated?: any
+}
+
+export type MapProps = {
+  // getCurrentLocation: any
+  mapRef: MutableRefObject<MapView | null>
+  navigation: DrawerNavigationProp<AuthenticatedPages, 'SOARScreen'>
+  displayLocations: Array<SOARLocation>
+  startStatus: boolean
+}

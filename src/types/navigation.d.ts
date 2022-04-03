@@ -1,27 +1,20 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 
-/* Authentication */
-export type UserState = {
-  isLoggedIn: boolean
-  isRegistered: boolean
-}
-
-/* Navigation Pages */
-export type DrawerPages = {
+export type AuthenticatedPages = {
   HomeScreen: undefined
-  SOAR: undefined
-  TSS: undefined
-  WSS: undefined
-  DEV: undefined
-  KnockoutTable: undefined
+  SOARScreen: undefined
+  TSSScreen: undefined
+  WSSScreen: undefined
+  DEVScreen: undefined
+  KnockoutTableScreen: undefined
   TimerScreen: undefined
   QRScreen: undefined
 }
 
-export type StackPages = {
-  Login: undefined
-  Home: undefined
+export type UnauthenticatedPages = {
+  LoginScreen: undefined
+  HomeScreen: undefined
 }
 
-/* Page Props */
-export type SOARPageProps = DrawerNavigationProp<DrawerPages, 'SOAR'>
+export type AuthPage<Route extends keyof AuthenticatedPages> =
+  DrawerNavigationProp<AuthenticatedPages, Route>

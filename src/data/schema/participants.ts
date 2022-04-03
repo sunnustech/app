@@ -1,6 +1,6 @@
 import { Group, ParticipantsData } from '@/types/participants'
 import { SOARTeamData } from '@/types/SOAR'
-import { objFromArray } from './utils'
+import { objFromArray } from '@/lib/utils'
 import { stationOrder } from './SOAR'
 
 const SOARInit: SOARTeamData = {

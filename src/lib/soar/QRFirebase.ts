@@ -5,8 +5,18 @@
 import push from '@/data/push'
 import { pullDoc } from '@/data/pull'
 import { TimeApiProps } from '@/types/index'
-import { QRStaticCommandProps, SoarCommand, SOARTeamData } from '@/types/SOAR'
-import { Toast } from '@/lib/utils'
+import {
+  QRStaticCommandProps,
+  SoarCommand,
+  SOARTimestamp,
+  SOARTeamData,
+} from '@/types/SOAR'
+
+/* NOTE
+ * there will be no game-related error catching done here.
+ * all game-related errors are dealth with using Modals,
+ * and are hence located at @/screens/QRScreen.tsx
+ */
 
 const TIMEAPI =
   'https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Singapore'
@@ -41,20 +51,24 @@ const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
   return data
 }
 
+const propsAndEvents = async (
+  groupTitle: string,
+  QR: QRStaticCommandProps
+): Promise<[SOARTeamData, Array<SOARTimestamp>, TimeApiProps]> => {
+  const [SOARProps, ts] = await Promise.all([
+    getSOARProps(groupTitle),
+    getTimeAsync(),
+  ])
+  const allEvents = SOARProps.allEvents
+  allEvents.push({ timestamp: ts, QR })
+  return [SOARProps, allEvents, ts]
+}
+
 // start SOAR timer for the first time (flag off)
 const start = async (groupTitle: string, QR: QRStaticCommandProps) => {
-  const soarProps = await getSOARProps(groupTitle)
-  // checks
-  if (soarProps.started) {
-    Toast('You have already started SOAR!')
-    return
-  }
-  // only continue if team hasn't started SOAR yet.
-  const allEvents = soarProps.allEvents
-  const startTime = await getTimeAsync()
-  allEvents.push({ timestamp: startTime, QR })
+  const [_, allEvents, ts] = await propsAndEvents(groupTitle, QR)
   const docs = generatePacket(groupTitle, {
-    startTime,
+    startTime: ts,
     started: true,
     timerRunning: true,
     allEvents,
@@ -64,23 +78,10 @@ const start = async (groupTitle: string, QR: QRStaticCommandProps) => {
 
 // pause SOAR timer for the specified team
 const pause = async (groupTitle: string, QR: QRStaticCommandProps) => {
-  const soarProps = await getSOARProps(groupTitle)
-  // checks
-  if (!soarProps.started) {
-    Toast("You haven't started SOAR yet!")
-    return
-  }
-  if (!soarProps.timerRunning) {
-    Toast('Your timer is already paused.')
-    return
-  }
-  // only continue if team's timer is running
-  const allEvents = soarProps.allEvents
-  const lastPause = await getTimeAsync()
-  allEvents.push({ timestamp: lastPause, QR })
+  const [_, allEvents, ts] = await propsAndEvents(groupTitle, QR)
   const docs = generatePacket(groupTitle, {
     timerRunning: false,
-    lastPause,
+    lastPause: ts,
     allEvents,
   })
   push({ collection: 'participants', docs })
@@ -88,24 +89,10 @@ const pause = async (groupTitle: string, QR: QRStaticCommandProps) => {
 
 // resume the SOAR timer for the specified team
 const resume = async (groupTitle: string, QR: QRStaticCommandProps) => {
-  const soarProps = await getSOARProps(groupTitle)
-  // checks
-  if (!soarProps.started) {
-    Toast("You haven't started SOAR yet!")
-    return
-  }
-  if (soarProps.timerRunning) {
-    console.warn(`${groupTitle}'s timer is currently already running.`)
-    Toast('Your timer is already running.')
-    return
-  }
-  // only continue if team's timer is running
-  const allEvents = soarProps.allEvents
-  const lastResume = await getTimeAsync()
-  allEvents.push({ timestamp: lastResume, QR })
+  const [_, allEvents, ts] = await propsAndEvents(groupTitle, QR)
   const docs = generatePacket(groupTitle, {
     timerRunning: true,
-    lastResume,
+    lastResume: ts,
     allEvents,
   })
   push({ collection: 'participants', docs })
@@ -113,27 +100,12 @@ const resume = async (groupTitle: string, QR: QRStaticCommandProps) => {
 
 // end SOAR timer for the last time (final)
 const stopFinal = async (groupTitle: string, QR: QRStaticCommandProps) => {
-  const soarProps = await getSOARProps(groupTitle)
-  // checks
-  if (!soarProps.started) {
-    Toast("You haven't started SOAR yet!")
-    return
-  }
-  if (soarProps.stopped) {
-    console.warn(`You have already completed SOAR.`)
-    return
-  }
-  if (!soarProps.timerRunning) {
-    console.warn(`${groupTitle}'s timer still running. Stopping anyways.`)
-  }
-  // only continue if team hasn't stopped SOAR yet
-  const allEvents = soarProps.allEvents
-  const stopTime = await getTimeAsync()
-  allEvents.push({ timestamp: stopTime, QR })
+  const [_, allEvents, ts] = await propsAndEvents(groupTitle, QR)
+
   const docs = generatePacket(groupTitle, {
     timerRunning: false,
     stopped: true,
-    stopTime,
+    stopTime: ts,
     allEvents,
   })
   push({ collection: 'participants', docs })
@@ -141,32 +113,15 @@ const stopFinal = async (groupTitle: string, QR: QRStaticCommandProps) => {
 
 // end SOAR timer for the last time (final)
 const completeStage = async (groupTitle: string, QR: QRStaticCommandProps) => {
-  const thisStation = QR.station
-  const soarProps = await getSOARProps(groupTitle)
-  // checks
-  if (soarProps.stationsCompleted.includes(thisStation)) {
-    Toast('You have already completed this station!')
-    return
-  }
-  if (soarProps.stationsRemaining.length === 0) {
-    Toast('You have already completed all stations!')
-    return
-  }
-  const stationsRemaining = soarProps.stationsRemaining
-  const correctStation = stationsRemaining.shift()
-  if (thisStation !== correctStation) {
-    Toast('This is not the right station.')
-    return
-  }
+  const [SOARProps, allEvents, _] = await propsAndEvents(groupTitle, QR)
 
-  // only continue if team hasn't completed this station yet
-  const stationsCompleted = soarProps.stationsCompleted
+  const thisStation = QR.station
+  const stationsRemaining = SOARProps.stationsRemaining
+  const stationsCompleted = SOARProps.stationsCompleted
+
+  stationsRemaining.shift()
   stationsCompleted.push(thisStation)
 
-  // console.log('completed station:', thisStation)
-  const allEvents = soarProps.allEvents
-  const newTime = await getTimeAsync()
-  allEvents.push({ timestamp: newTime, QR })
   const docs = generatePacket(groupTitle, {
     allEvents,
     stationsCompleted,
@@ -177,7 +132,7 @@ const completeStage = async (groupTitle: string, QR: QRStaticCommandProps) => {
 
 const noop = () => {}
 
-const soar: Record<SoarCommand, any> = {
+const SOAR: Record<SoarCommand, any> = {
   start,
   pause,
   resume,
@@ -215,4 +170,4 @@ const soar: Record<SoarCommand, any> = {
   '': noop,
 }
 
-export default soar
+export default SOAR

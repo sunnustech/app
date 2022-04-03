@@ -10,17 +10,16 @@ import {
 import { signOut, Auth } from 'firebase/auth'
 
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
 import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
-import SunnusLogo from '../../assets/sunnus-anniversary.png'
 import { UserContext } from '@/contexts/UserContext'
 import { useContext } from 'react'
+import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -31,7 +30,7 @@ const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
 }
 
 const HomeScreen = () => {
-  const navigation = useNavigation<DNP<DrawerPages, 'HomeScreen'>>()
+  const navigation = useNavigation<AuthPage<'HomeScreen'>>()
 
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
@@ -57,28 +56,28 @@ const HomeScreen = () => {
       <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => navigation.navigate('SOAR')}
+          onPress={() => navigation.navigate('SOARScreen')}
           textStyle={styles.SOARbuttonText}
           containerStyle={styles.SOARbutton}
         >
           SOAR
         </Button>
         <Button
-          onPress={() => navigation.navigate('TSS')}
+          onPress={() => navigation.navigate('TSSScreen')}
           textStyle={styles.TSSbuttonText}
           containerStyle={styles.TSSbutton}
         >
           TSS
         </Button>
         <Button
-          onPress={() => navigation.navigate('WSS')}
+          onPress={() => navigation.navigate('WSSScreen')}
           textStyle={styles.WSSbuttonText}
           containerStyle={styles.WSSbutton}
         >
           WSS
         </Button>
         <Button
-          onPress={() => navigation.navigate('DEV')}
+          onPress={() => navigation.navigate('DEVScreen')}
           textStyle={styles.DEVbuttonText}
           containerStyle={styles.DEVbutton}
         >

@@ -2,12 +2,12 @@
 import { NavigationContainer } from '@react-navigation/native'
 
 /* sunnus contexts */
-import AuthNavigation from './src/navigations/AuthNavigation'
+import SunNUS from '@/navigations/index'
 
 const App = () => {
   return (
     <NavigationContainer>
-      <AuthNavigation />
+      <SunNUS />
     </NavigationContainer>
   )
 }
