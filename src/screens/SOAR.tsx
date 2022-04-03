@@ -16,7 +16,6 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { SoarContext } from '@/contexts/SoarContext'
 import { map as styles } from '@/styles/fresh'
-import { notificationInit } from '@/lib/notifications'
 import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
@@ -64,7 +63,6 @@ const SOARScreen = () => {
 
   const mapRef = useRef<MapView>()
 
-  notificationInit()
   const navigation = useNavigation<DrawerNavigationProp<DrawerPages, 'SOAR'>>()
 
   // first time grab user location

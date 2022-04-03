@@ -3,6 +3,8 @@ import { auth } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
 import { SunNUSTeamData } from '@/types/participants'
 import { SOARTeamData } from '@/types/SOAR'
+import { notificationInit } from '@/lib/notifications'
+import push from '@/data/push'
 
 type UserContextProps = {
   userId: string
@@ -26,6 +28,7 @@ const SOARinit: SOARTeamData = {
   lastResume: {},
   direction: 'A',
   stationsCompleted: [],
+  stationsRemaining: [],
   points: 0,
 }
 
@@ -76,11 +79,30 @@ const rehydrateUserData = async ({
   }
 }
 
+async function handlePushTokens(token: string) {
+  const data = (await pullDoc({ collection: 'test', doc: 'expo' })).data
+  const existingPushTokens = data.pushTokens
+  if (!existingPushTokens.includes(token)) {
+    existingPushTokens.push(token)
+    push({
+      collection: 'notifications',
+      docs: {
+        expo: {
+          pushTokens: existingPushTokens,
+        },
+      },
+    })
+  }
+}
+
 const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [userId, setUserId] = useState('')
   const [teamName, setTeamName] = useState('')
   const [schedule, setSchedule] = useState({})
   const [teamData, setTeamData] = useState<SunNUSTeamData>(teamDataInit)
+
+  const token = notificationInit().expoPushToken
+  handlePushTokens(token)
 
   /*
    * This is needed because expo only remembers firebase credentials,
