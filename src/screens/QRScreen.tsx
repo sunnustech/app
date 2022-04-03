@@ -3,9 +3,8 @@ import { Text, View } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 
 /* navigation */
-import { AuthenticatedPages } from '@/types/navigation'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { QR as styles } from '@/styles/fresh'
@@ -30,7 +29,7 @@ const QRScreen = () => {
   const { teamName } = useContext(UserContext)
   const [isScanning, setIsScanning] = scanningState
   const setQR = QRState[1]
-  const navigation = useNavigation<DNP<AuthenticatedPages, 'QRScreen'>>()
+  const navigation = useNavigation<AuthPage<'QRScreen'>>()
 
   /*
    * check validity

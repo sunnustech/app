@@ -10,7 +10,7 @@ import { Text, View } from 'react-native'
 import { Modal } from 'react-native-paper'
 
 /* navigation */
-import { AuthenticatedPages } from '@/types/navigation'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
@@ -18,7 +18,6 @@ import { SOARContext } from '@/contexts/SOARContext'
 import { map as styles } from '@/styles/fresh'
 import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
-import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
@@ -64,8 +63,7 @@ const SOARScreen = () => {
 
   const mapRef = useRef<MapView>()
 
-  const navigation =
-    useNavigation<DrawerNavigationProp<AuthenticatedPages, 'SOARScreen'>>()
+  const navigation = useNavigation<AuthPage<'SOARScreen'>>()
 
   // first time grab user location
   useEffect(() => {

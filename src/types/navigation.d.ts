@@ -1,12 +1,5 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 
-/* Authentication */
-export type UserState = {
-  isLoggedIn: boolean
-  isRegistered: boolean
-}
-
-/* Navigation Pages */
 export type AuthenticatedPages = {
   HomeScreen: undefined
   SOARScreen: undefined
@@ -22,3 +15,6 @@ export type UnauthenticatedPages = {
   LoginScreen: undefined
   HomeScreen: undefined
 }
+
+export type AuthPage<Route extends keyof AuthenticatedPages> =
+  DrawerNavigationProp<AuthenticatedPages, Route>
