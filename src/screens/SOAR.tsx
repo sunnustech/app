@@ -120,6 +120,11 @@ const SOARScreen = () => {
       (loc) => loc.stationType === 'game'
     )
 
+    // reset status for each call
+    gameStations.forEach((stn) => {
+      stn.status = ''
+    })
+
     gameStations.forEach((stn) => {
       if (stationsCompleted.includes(stn.title)) {
         stn.status = 'done'
