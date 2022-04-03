@@ -73,7 +73,8 @@ const QRScreen = () => {
     }
 
     setQR(QR)
-    console.log('QR command:', cmd)
+    console.log('QR scanned:', QR)
+
     switch (cmd) {
       case 'pause':
         if (!SOARProps.timerRunning) {
@@ -109,15 +110,14 @@ const QRScreen = () => {
     navigation.navigate('SOARScreen')
   }
 
-  const handleBackToMap = () => {
-    setIsScanning(false)
-    navigation.navigate('SOARScreen')
-  }
-
-  const BackToMap = ({ onPress }: any) => {
+  const BackToMap = () => {
+    function closeQRScanner() {
+      setIsScanning(false)
+      navigation.navigate('SOARScreen')
+    }
     return (
       <TouchableOpacity
-        onPress={onPress}
+        onPress={closeQRScanner}
         style={[styles.pillButton, styles.centered]}
       >
         <Text style={styles.pillButtonText}>Back to Map</Text>
@@ -137,7 +137,7 @@ const QRScreen = () => {
       <Overlap>
         <View style={styles.buttonContainer}>
           <View style={{ flex: 1 }} />
-          <BackToMap onPress={handleBackToMap} />
+          <BackToMap />
         </View>
       </Overlap>
     </View>
