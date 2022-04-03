@@ -8,13 +8,13 @@
     "paths": {
       "@/sunnus/*": ["./*"],
       "@/components/*": ["./src/components/*"],
+      "@/contexts/*": ["./src/contexts/*"],
       "@/data/*": ["./src/data/*"],
-      "@/types/*": ["./src/types/*"],
       "@/lib/*": ["./src/lib/*"],
+      "@/navigations/*": ["./src/navigations/*"],
       "@/screens/*": ["./src/screens/*"],
       "@/styles/*": ["./src/styles/*"],
-      "@/types/*": ["./src/types/*"],
-      "@/contexts/*": ["./src/contexts/*"]
+      "@/types/*": ["./src/types/*"]
     }
   },
   "include": ["./src/**/*", "./"],

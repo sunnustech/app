@@ -1,7 +1,7 @@
 // {{{
 import { Text, View, ScrollView } from 'react-native'
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { AuthenticatedPages } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 /* sunnus components */
@@ -80,7 +80,7 @@ const DEVScreen = () => {
     console.log('team:', teamName) // perma
     console.log('schedule:', schedule) // perma
   }
-  const navigation = useNavigation<DNP<DrawerPages, 'DEV'>>()
+  const navigation = useNavigation<DNP<AuthenticatedPages, 'DEVScreen'>>()
   return (
     <View style={styles.container}>
       <ScrollView

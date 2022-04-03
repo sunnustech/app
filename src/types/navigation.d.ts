@@ -7,7 +7,7 @@ export type UserState = {
 }
 
 /* Navigation Pages */
-export type DrawerPages = {
+export type AuthenticatedPages = {
   HomeScreen: undefined
   SOARScreen: undefined
   TSSScreen: undefined
@@ -18,10 +18,7 @@ export type DrawerPages = {
   QRScreen: undefined
 }
 
-export type StackPages = {
+export type UnauthenticatedPages = {
   Login: undefined
   Home: undefined
 }
-
-/* Page Props */
-export type SOARPageProps = DrawerNavigationProp<DrawerPages, 'SOAR'>

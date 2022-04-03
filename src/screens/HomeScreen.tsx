@@ -10,7 +10,7 @@ import {
 import { signOut, Auth } from 'firebase/auth'
 
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { AuthenticatedPages } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
@@ -31,7 +31,7 @@ const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
 }
 
 const HomeScreen = () => {
-  const navigation = useNavigation<DNP<DrawerPages, 'HomeScreen'>>()
+  const navigation = useNavigation<DNP<AuthenticatedPages, 'HomeScreen'>>()
 
   const logoutHandler = (auth: Auth) => {
     signOut(auth)

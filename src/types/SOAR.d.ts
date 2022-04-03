@@ -1,5 +1,6 @@
-import { SOARPageProps } from '@/types/navigation'
+import { AuthenticatedPages } from '@/types/navigation'
 import { TimeApiProps } from '@/types/index'
+import { DrawerNavigationProp } from '@react-navigation/drawer'
 
 export type SOARTimetable = Array<{
   time: string
@@ -164,7 +165,7 @@ export type MapButtonProps = {
 export type MapProps = {
   // getCurrentLocation: any
   mapRef: any
-  navigation: SOARPageProps
+  navigation: DrawerNavigationProp<AuthenticatedPages, 'SOARScreen'>
   displayLocations: Array<SOARLocation>
   startStatus: boolean
 }

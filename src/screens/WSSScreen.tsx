@@ -1,7 +1,7 @@
 import { KeyboardAvoidingView, Text } from 'react-native'
 
 /* navigation */
-import { DrawerPages } from '@/types/navigation'
+import { AuthenticatedPages } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
@@ -9,7 +9,7 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 import { WSS as styles } from '@/styles/fresh'
 
 const WSSScreen = () => {
-  const navigation = useNavigation<DNP<DrawerPages, 'WSS'>>()
+  const navigation = useNavigation<DNP<AuthenticatedPages, 'WSSScreen'>>()
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
