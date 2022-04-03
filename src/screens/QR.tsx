@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Text, View } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 
@@ -9,12 +9,11 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { QR as styles } from '@/styles/fresh'
-import { Button } from '@/components/Buttons'
 import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SoarContext } from '@/contexts/SoarContext'
 import { QRIndex } from '@/data/commandMap'
-import { QRStaticCommands, invalidQR, emptyQR } from '@/data/constants'
+import { QRStaticCommands, invalidQR } from '@/data/constants'
 import { SOARTeamData } from '@/types/SOAR'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
@@ -27,37 +26,11 @@ const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
 }
 
 const QRScreen = () => {
-  const [cameraPermission, setCameraPermission] = useState('')
   const { QRState, scanningState } = useContext(SoarContext)
   const { teamName } = useContext(UserContext)
   const [isScanning, setIsScanning] = scanningState
   const setQR = QRState[1]
   const navigation = useNavigation<DNP<DrawerPages, 'QRScreen'>>()
-
-  /* handles camera permissions */
-  // {{{
-  const enableCameraPermission = async () => {
-    let { status } = await BarCodeScanner.requestPermissionsAsync()
-    if (status !== 'granted') {
-      alert('Please enable the camera to keep using the app!')
-      return
-    }
-    setCameraPermission('granted')
-  }
-  useEffect(() => {
-    enableCameraPermission()
-  }, [])
-  if (cameraPermission !== 'granted') {
-    return (
-      <View style={styles.container}>
-        <Text>It seems like camera access wasn't granted. :c</Text>
-        <Button onPress={enableCameraPermission}>
-          Click to enable permissions!
-        </Button>
-      </View>
-    )
-  }
-  // }}}
 
   /*
    * check validity
@@ -75,9 +48,6 @@ const QRScreen = () => {
     }
     // TODO: implement a QR code cooldown timer
     // only continue for valid QR codes
-    // TODO: implement checks right here
-    // to prevent showing the user the wrong Modal
-    // (show errors right in the Modal)
     const data = QRIndex[string]
     const QR = QRStaticCommands[data.command]
     QR.station = data.station
@@ -105,43 +75,36 @@ const QRScreen = () => {
 
     console.log('got past first two checks')
 
+    setQR(QR)
     switch (cmd) {
       case 'pause':
         if (!soarProps.timerRunning) {
           setQR(QRStaticCommands.AlreadyPaused)
-          break
         }
       case 'resume':
         if (soarProps.timerRunning) {
           setQR(QRStaticCommands.AlreadyResumed)
-          break
         }
       case 'stopFinal':
         if (soarProps.stopped) {
           setQR(QRStaticCommands.AlreadyCompletedSOAR)
-          break
         } else if (!soarProps.timerRunning) {
           setQR(QRStaticCommands.WarnStopFinal)
-          break
         }
       case 'completeStage':
         console.log('completing stage...')
+        console.log(soarProps.stationsCompleted, stn)
         if (soarProps.stopped) {
           setQR(QRStaticCommands.AlreadyCompletedSOAR)
-          break
         } else if (rem.length === 0) {
           setQR(QRStaticCommands.AlreadyCompletedAllStations)
-          break
         } else if (soarProps.stationsCompleted.includes(stn)) {
           setQR(QRStaticCommands.AlreadyCompletedStation)
-          break
         } else if (stn !== correctStn) {
           setQR(QRStaticCommands.WrongStation)
-          break
         }
       default:
         // if there are no errors, send original scanned QR.
-        setQR(QR)
         navigation.navigate('SOAR')
     }
   }

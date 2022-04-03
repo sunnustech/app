@@ -35,6 +35,23 @@ const QR = StyleSheet.create({
     color: '#323232',
     textAlign: 'center',
   },
+  modalContainer: {
+    width: '70%',
+    backgroundColor: 'white',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 18,
+    borderRadius: 10,
+  },
+  modalTitle: {
+    fontSize: 28,
+    color: '#323232',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 10,
+  },
 })
 
 export default QR

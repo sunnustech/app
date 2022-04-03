@@ -158,6 +158,7 @@ const map = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 28,
+    textAlign: 'center',
     color: '#323232',
     marginLeft: 'auto',
     marginRight: 'auto',
