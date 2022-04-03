@@ -103,35 +103,42 @@ const QRScreen = () => {
       return
     }
 
+    console.log('got past first two checks')
+
     switch (cmd) {
       case 'pause':
         if (!soarProps.timerRunning) {
           setQR(QRStaticCommands.AlreadyPaused)
+          break
         }
-        break
       case 'resume':
         if (soarProps.timerRunning) {
           setQR(QRStaticCommands.AlreadyResumed)
+          break
         }
-        break
       case 'stopFinal':
         if (soarProps.stopped) {
           setQR(QRStaticCommands.AlreadyCompletedSOAR)
+          break
         } else if (!soarProps.timerRunning) {
           setQR(QRStaticCommands.WarnStopFinal)
+          break
         }
-        break
       case 'completeStage':
+        console.log('completing stage...')
         if (soarProps.stopped) {
           setQR(QRStaticCommands.AlreadyCompletedSOAR)
+          break
         } else if (rem.length === 0) {
           setQR(QRStaticCommands.AlreadyCompletedAllStations)
+          break
         } else if (soarProps.stationsCompleted.includes(stn)) {
           setQR(QRStaticCommands.AlreadyCompletedStation)
+          break
         } else if (stn !== correctStn) {
           setQR(QRStaticCommands.WrongStation)
+          break
         }
-        break
       default:
         // if there are no errors, send original scanned QR.
         setQR(QR)

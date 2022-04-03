@@ -56,6 +56,7 @@ const SOARScreen = () => {
   const [loading, setLoading] = useState(true)
   const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
   const [everythingLoaded, setEverythingLoaded] = useState(false)
+  const [startStatus, setStartStatus] = useState(false)
 
   const mapRef = useRef<MapView>()
 
@@ -189,6 +190,7 @@ const SOARScreen = () => {
           setDisplayLocations(
             getLocations(locations, filtered, updatedTeamData.SOAR)
           )
+          setStartStatus(updatedTeamData.SOAR.started)
         }
       })
     }
@@ -257,7 +259,7 @@ const SOARScreen = () => {
             mapRef={mapRef}
             navigation={navigation}
             displayLocations={displayLocations}
-            startStatus={teamData.SOAR.started}
+            startStatus={startStatus}
           />
           <SOS visible={SOSVisible} setState={setSOSVisible} />
           <UI
