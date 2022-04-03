@@ -8,7 +8,7 @@ import React, {
 import { db } from '@/sunnus/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import { SOARContextProps, StationOrderProps } from '@/types/SOAR'
-import { emptyQR } from '@/lib/SOAR/QRStaticCommands'
+import { emptyQR } from '@/lib/SOAR/QRCommands'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
 

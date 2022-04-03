@@ -12,7 +12,7 @@ import { Overlap } from '../components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SOARContext } from '@/contexts/SOARContext'
 import { QRIndex } from '@/lib/SOAR/QRDictionary'
-import { QRStaticCommands, invalidQR } from '@/lib/SOAR/QRStaticCommands'
+import { QRCommands, invalidQR } from '@/lib/SOAR/QRCommands'
 import { SOARTeamData } from '@/types/SOAR'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
@@ -48,7 +48,7 @@ const QRScreen = () => {
     // TODO: implement a QR code cooldown timer
     // only continue for valid QR codes
     const data = QRIndex[string]
-    const QR = QRStaticCommands[data.command]
+    const QR = QRCommands[data.command]
     QR.station = data.station
 
     // error handling
@@ -60,14 +60,14 @@ const QRScreen = () => {
 
     if (cmd === 'start') {
       if (SOARProps.started) {
-        setQR(QRStaticCommands.AlreadyStartedSOAR)
+        setQR(QRCommands.AlreadyStartedSOAR)
         navigation.navigate('SOARScreen')
         return
       }
     } else if (!SOARProps.started) {
       // for all non-start commands,
       // always check if participant has started SOAR yet
-      setQR(QRStaticCommands.HaveNotStartedSOAR)
+      setQR(QRCommands.HaveNotStartedSOAR)
       navigation.navigate('SOARScreen')
       return
     }
@@ -77,30 +77,30 @@ const QRScreen = () => {
     switch (cmd) {
       case 'pause':
         if (!SOARProps.timerRunning) {
-          setQR(QRStaticCommands.AlreadyPaused)
+          setQR(QRCommands.AlreadyPaused)
         }
         break
       case 'resume':
         if (SOARProps.timerRunning) {
-          setQR(QRStaticCommands.AlreadyResumed)
+          setQR(QRCommands.AlreadyResumed)
         }
         break
       case 'stopFinal':
         if (SOARProps.stopped) {
-          setQR(QRStaticCommands.AlreadyCompletedSOAR)
+          setQR(QRCommands.AlreadyCompletedSOAR)
         } else if (!SOARProps.timerRunning) {
-          setQR(QRStaticCommands.WarnStopFinal)
+          setQR(QRCommands.WarnStopFinal)
         }
         break
       case 'completeStage':
         if (SOARProps.stopped) {
-          setQR(QRStaticCommands.AlreadyCompletedSOAR)
+          setQR(QRCommands.AlreadyCompletedSOAR)
         } else if (rem.length === 0) {
-          setQR(QRStaticCommands.AlreadyCompletedAllStations)
+          setQR(QRCommands.AlreadyCompletedAllStations)
         } else if (SOARProps.stationsCompleted.includes(stn)) {
-          setQR(QRStaticCommands.AlreadyCompletedStation)
+          setQR(QRCommands.AlreadyCompletedStation)
         } else if (stn !== correctStn) {
-          setQR(QRStaticCommands.WrongStation)
+          setQR(QRCommands.WrongStation)
         } else {
           QR.summary = `Congratuations! You have completed ${stn}!`
         }

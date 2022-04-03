@@ -12,8 +12,8 @@ export type AuthenticatedPages = {
 }
 
 export type UnauthenticatedPages = {
-  LoginScreen: undefined
-  HomeScreen: undefined
+  Unauthenticated: undefined
+  Authenticated: undefined
 }
 
 export type AuthPage<Route extends keyof AuthenticatedPages> =

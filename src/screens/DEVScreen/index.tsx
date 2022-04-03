@@ -23,7 +23,7 @@ import { useContext } from 'react'
 import { UserContext } from '@/contexts/UserContext'
 import { generateQR } from '@/lib/SOAR/QRDictionary'
 import { SOARContext } from '@/contexts/SOARContext'
-import { QRStaticCommands as q } from '@/lib/SOAR/QRStaticCommands'
+import { QRCommands as q } from '@/lib/SOAR/QRCommands'
 
 /* use this space to hard-code test inputs to functions */
 

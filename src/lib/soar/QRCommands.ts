@@ -24,7 +24,7 @@ export const invalidQR: QRStaticCommandProps = {
   station: '',
 }
 
-export const QRStaticCommands: Record<SoarCommand, QRStaticCommandProps> = {
+export const QRCommands: Record<SoarCommand, QRStaticCommandProps> = {
   start: {
     title: 'start',
     summary: 'Ready to kickstart your adventure?',

@@ -55,7 +55,7 @@ const SunNUS = () => {
         /* user has logged in with firebase */
         return (
           <Stack.Screen
-            name="HomeScreen"
+            name="Authenticated"
             component={AuthStack}
             options={minOpts}
           />
@@ -64,7 +64,7 @@ const SunNUS = () => {
         /* user has logged in as guest (no firebase) */
         return (
           <Stack.Screen
-            name="HomeScreen"
+            name="Authenticated"
             component={AuthStack}
             options={minOpts}
           />
@@ -76,7 +76,7 @@ const SunNUS = () => {
       /* user has yet to log in at all */
       return (
         <Stack.Screen
-          name="LoginScreen"
+          name="Unauthenticated"
           component={LoginScreen}
           options={minOpts}
         />
