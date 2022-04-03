@@ -7,10 +7,8 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { TSS as styles } from '@/styles/fresh'
-import { notificationInit } from '@/lib/notifications'
 
 const TSSScreen = () => {
-  notificationInit()
   const navigation = useNavigation<DNP<DrawerPages, 'TSS'>>()
 
   return (

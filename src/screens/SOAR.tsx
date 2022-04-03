@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
+import { BarCodeScanner } from 'expo-barcode-scanner'
 import {
   getCurrentPositionAsync,
   requestForegroundPermissionsAsync,
@@ -15,13 +16,12 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { SoarContext } from '@/contexts/SoarContext'
 import { map as styles } from '@/styles/fresh'
-import { notificationInit } from '@/lib/notifications'
 import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
-import { ButtonGreen } from '../components/Buttons'
+import { ButtonGreen } from '@/components/Buttons'
 import { NUSCoordinates, emptyQR } from '@/data/constants'
 import soar from '@/lib/soar'
 import { UserContext } from '@/contexts/UserContext'
@@ -56,10 +56,13 @@ const SOARScreen = () => {
   const [loading, setLoading] = useState(true)
   const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
   const [everythingLoaded, setEverythingLoaded] = useState(false)
+  const [startStatus, setStartStatus] = useState(false)
+  const [cameraPermission, setCameraPermission] = useState('')
+  const [checkingCameraPermission, setCheckingCameraPermission] =
+    useState(false)
 
   const mapRef = useRef<MapView>()
 
-  notificationInit()
   const navigation = useNavigation<DrawerNavigationProp<DrawerPages, 'SOAR'>>()
 
   // first time grab user location
@@ -176,7 +179,6 @@ const SOARScreen = () => {
   // run only once, after teamName and stationOrder has loaded,
   // to attach a listener to firebase
   useEffect(() => {
-    console.log('ran once')
     if (everythingLoaded === true) {
       onSnapshot(doc(db, 'participants', teamName), (doc) => {
         const liveData = doc.data()
@@ -187,10 +189,10 @@ const SOARScreen = () => {
             members: liveData.members,
             registeredEvents: liveData.registeredEvents,
           }
-          console.log('took a snapshot', updatedTeamData.SOAR.stationsCompleted)
           setDisplayLocations(
             getLocations(locations, filtered, updatedTeamData.SOAR)
           )
+          setStartStatus(updatedTeamData.SOAR.started)
         }
       })
     }
@@ -203,7 +205,10 @@ const SOARScreen = () => {
 
   function openQRScanner() {
     setIsScanning(true)
-    navigation.navigate('QRScreen')
+    setCheckingCameraPermission(true)
+    if (cameraPermission === 'granted') {
+      navigation.navigate('QRScreen')
+    }
   }
 
   function confirmQRAction() {
@@ -240,10 +245,54 @@ const SOARScreen = () => {
       stationOrder.A.length > 0 &&
       teamData.groupTitle.length > 0
     ) {
-      console.log('loading done', teamName, stationOrder)
       setEverythingLoaded(true)
     }
   }, [teamName, stationOrder, teamData])
+
+  /* =====================================================
+   *                  CAMERA PERMISSIONS
+   * =====================================================
+   */
+
+  const enableCameraPermission = async () => {
+    setCheckingCameraPermission(false)
+    let { status } = await BarCodeScanner.requestPermissionsAsync()
+    if (status === 'granted') {
+      setCameraPermission('granted')
+    }
+  }
+
+  // run once to check for existing camera permissions
+  useEffect(() => {
+    enableCameraPermission()
+  }, [])
+
+  const HandleCameraPermission = () => {
+    if (cameraPermission !== 'granted' && checkingCameraPermission) {
+      return (
+        <View style={styles.container}>
+          <Modal
+            visible={true}
+            dismissable={true}
+            onDismiss={() => setCheckingCameraPermission(false)}
+          >
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>Permissions needed</Text>
+              <View style={{ marginBottom: 10 }}></View>
+              <Text style={styles.centered}>
+                This app needs camera access for QR code scanning.
+              </Text>
+              <View style={{ marginBottom: 10 }}></View>
+              <ButtonGreen onPress={enableCameraPermission}>
+                Enable Camera
+              </ButtonGreen>
+            </View>
+          </Modal>
+        </View>
+      )
+    }
+    return null
+  }
 
   /* =====================================================
    *            MAIN RENDER COMPONENT FOR SOAR
@@ -260,6 +309,7 @@ const SOARScreen = () => {
             mapRef={mapRef}
             navigation={navigation}
             displayLocations={displayLocations}
+            startStatus={startStatus}
           />
           <SOS visible={SOSVisible} setState={setSOSVisible} />
           <UI
@@ -270,6 +320,7 @@ const SOARScreen = () => {
             openQRScanner={openQRScanner}
             toggleAdminStations={toggleAdminStations}
           />
+          <HandleCameraPermission />
           <QRHandler />
         </NoTouchDiv>
       </RootSiblingParent>

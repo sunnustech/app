@@ -18,7 +18,6 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 import { auth } from '@/sunnus/firebase'
 import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
-import { notificationInit } from '@/lib/notifications'
 import SunnusLogo from '../../assets/sunnus-anniversary.png'
 import { UserContext } from '@/contexts/UserContext'
 import { useContext } from 'react'
@@ -32,7 +31,6 @@ const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
 }
 
 const HomeScreen = () => {
-  notificationInit()
   const navigation = useNavigation<DNP<DrawerPages, 'HomeScreen'>>()
 
   const logoutHandler = (auth: Auth) => {

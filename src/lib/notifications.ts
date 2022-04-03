@@ -63,7 +63,10 @@ async function registerForPushNotificationsAsync() {
   return token
 }
 
-function notificationInit() {
+function notificationInit(): {
+  expoPushToken: string
+  notification: Notification
+} {
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,

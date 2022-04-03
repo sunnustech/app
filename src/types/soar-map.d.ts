@@ -15,6 +15,7 @@ export type MapProps = {
   mapRef: any
   navigation: SOARPageProps
   displayLocations: Array<SOARLocation>
+  startStatus: boolean
 }
 
 export type SafeDivProps = {

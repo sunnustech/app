@@ -7,10 +7,8 @@ import { DrawerNavigationProp as DNP } from '@react-navigation/drawer'
 
 /* sunnus components */
 import { WSS as styles } from '@/styles/fresh'
-import { notificationInit } from '@/lib/notifications'
 
 const WSSScreen = () => {
-  notificationInit()
   const navigation = useNavigation<DNP<DrawerPages, 'WSS'>>()
 
   return (
