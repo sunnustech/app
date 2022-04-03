@@ -5,7 +5,7 @@ import { map as styles } from '@/styles/fresh'
 import { MapProps } from '@/types/soar-map'
 import { Text } from 'react-native'
 import { customMapStyle } from './MapStyle'
-import { NUSCoordinates } from '@/lib/soar/constants'
+import { NUSCoordinates } from '@/data/constants'
 
 const Map = ({
   navigation,

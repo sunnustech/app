@@ -22,7 +22,8 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
-import { NUSCoordinates, emptyQR } from '@/lib/soar/constants'
+import { emptyQR } from '@/lib/soar/QRStaticCommands'
+import { NUSCoordinates } from '@/data/constants'
 import soar from '@/lib/soar'
 import { UserContext } from '@/contexts/UserContext'
 import { SOARLocation, SOARTeamData } from '@/types/SOAR'
@@ -39,7 +40,7 @@ const SOARScreen = () => {
     scanningState,
     stationOrderState,
   } = useContext(SOARContext)
-  const { teamName, teamData, setTeamData } = useContext(UserContext)
+  const { teamName, teamData } = useContext(UserContext)
   const displayLocationState = useState<Array<SOARLocation>>([])
 
   const locations = locationState[0]

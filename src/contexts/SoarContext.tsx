@@ -10,7 +10,7 @@ import { db } from '@/sunnus/firebase'
 import { doc, DocumentData, getDoc } from 'firebase/firestore'
 import { GameStation } from '@/types/GameStation'
 import { SOARContextProps, StationOrderProps, UseState } from '@/types/SOAR'
-import { emptyQR } from '@/lib/soar/constants'
+import { emptyQR } from '@/lib/soar/QRStaticCommands'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
 
