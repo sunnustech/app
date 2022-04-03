@@ -11,15 +11,19 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { auth } from '@/sunnus/firebase'
 
 /* screens */
-import LoginScreen from '@/screens/LoginScreen'
-import HomeScreen from '@/screens/HomeScreen'
-import SOARScreen from '@/screens/SOAR'
-import TSSScreen from '@/screens/TSS'
-import WSSScreen from '@/screens/WSS'
-import DEVScreen from '@/screens/DEV'
-import KnockoutTable from '@/screens/KnockoutTable'
-import TimerScreen from '@/screens/DEV/TimerScreen'
-import QRScreen from '@/screens/QRScreen'
+import {
+  LoginScreen,
+  HomeScreen,
+  SOARScreen,
+  TSSScreen,
+  WSSScreen,
+  DEVScreen,
+  KnockoutTable,
+  TimerScreen,
+  QRScreen,
+} from '@/screens/index'
+
+/* providers */
 import { SOARProvider } from '@/contexts/SOARContext'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { UserProvider } from '@/contexts/UserContext'
