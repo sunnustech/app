@@ -1,6 +1,6 @@
-import { QRStaticCommandProps, SoarCommand } from '@/types/SOAR'
+import { QRCommandProps, SOARCommand } from '@/types/SOAR'
 
-export const emptyQR: QRStaticCommandProps = {
+export const emptyQR: QRCommandProps = {
   title: '',
   summary: '',
   action: '',
@@ -8,7 +8,7 @@ export const emptyQR: QRStaticCommandProps = {
   station: '',
 }
 
-export const errorQR: QRStaticCommandProps = {
+export const errorQR: QRCommandProps = {
   title: 'Error',
   summary: '',
   action: 'Okay then',
@@ -16,7 +16,7 @@ export const errorQR: QRStaticCommandProps = {
   station: '',
 }
 
-export const invalidQR: QRStaticCommandProps = {
+export const invalidQR: QRCommandProps = {
   title: 'invalid QR',
   summary: 'The QR code scanned is not in our index',
   action: 'Continue',
@@ -24,7 +24,7 @@ export const invalidQR: QRStaticCommandProps = {
   station: '',
 }
 
-export const QRCommands: Record<SoarCommand, QRStaticCommandProps> = {
+export const QRCommands: Record<SOARCommand, QRCommandProps> = {
   start: {
     title: 'start',
     summary: 'Ready to kickstart your adventure?',

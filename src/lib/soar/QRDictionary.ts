@@ -1,4 +1,4 @@
-import { QRMiniCommandProps, SoarCommand } from '@/types/SOAR'
+import { QRMiniCommandProps, SOARCommand } from '@/types/SOAR'
 import ten from './tenThousand'
 
 /*
@@ -11,7 +11,7 @@ import ten from './tenThousand'
  * 6. Nerf Battle
  */
 
-type StationCommandList = Record<number, SoarCommand>
+type StationCommandList = Record<number, SOARCommand>
 
 const stationCommands: StationCommandList = {
   0: 'start',

@@ -63,7 +63,7 @@ type HaventDecided =
   | 'fn19'
   | 'fn20'
 
-export type SoarCommand =
+export type SOARCommand =
   | 'start'
   | 'pause'
   | 'stopFinal'
@@ -82,17 +82,17 @@ export type SoarCommand =
   | HaventDecided
 
 export type QRMiniCommandProps = {
-  command: SoarCommand
+  command: SOARCommand
   station: string
 }
 
-export type QRStaticCommandProps = {
+export type QRCommandProps = {
   title: string
   summary: string
   action: string
 } & QRMiniCommandProps
 
-export type QRDynamicCommandProps = (points: number) => QRStaticCommandProps
+export type QRDynamicCommandProps = (points: number) => QRCommandProps
 
 export type StationOrderProps = {
   A: Array<string>
@@ -113,7 +113,7 @@ export type SOARContextProps = {
   locationState: UseState<Array<SOARLocation>>
   stationOrderState: UseState<StationOrderProps>
   filteredState: UseState<SOARFilterProps>
-  QRState: UseState<QRStaticCommandProps>
+  QRState: UseState<QRCommandProps>
 }
 
 type SOARStartState =
@@ -142,7 +142,7 @@ type SOAREndState =
 
 export type SOARTimestamp = {
   timestamp: TimeApiProps
-  QR: QRStaticCommandProps
+  QR: QRCommandProps
 }
 
 export type SOARTeamData = SOARStartState &

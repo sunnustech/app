@@ -6,8 +6,8 @@ import push from '@/data/push'
 import { pullDoc } from '@/data/pull'
 import { TimeApiProps } from '@/types/index'
 import {
-  QRStaticCommandProps,
-  SoarCommand,
+  QRCommandProps,
+  SOARCommand,
   SOARTimestamp,
   SOARTeamData,
 } from '@/types/SOAR'
@@ -53,7 +53,7 @@ const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
 
 const propsAndEvents = async (
   groupTitle: string,
-  QR: QRStaticCommandProps
+  QR: QRCommandProps
 ): Promise<[SOARTeamData, Array<SOARTimestamp>, TimeApiProps]> => {
   const [SOARProps, ts] = await Promise.all([
     getSOARProps(groupTitle),
@@ -65,7 +65,7 @@ const propsAndEvents = async (
 }
 
 // start SOAR timer for the first time (flag off)
-const start = async (groupTitle: string, QR: QRStaticCommandProps) => {
+const start = async (groupTitle: string, QR: QRCommandProps) => {
   const [_, allEvents, ts] = await propsAndEvents(groupTitle, QR)
   const docs = generatePacket(groupTitle, {
     startTime: ts,
@@ -77,7 +77,7 @@ const start = async (groupTitle: string, QR: QRStaticCommandProps) => {
 }
 
 // pause SOAR timer for the specified team
-const pause = async (groupTitle: string, QR: QRStaticCommandProps) => {
+const pause = async (groupTitle: string, QR: QRCommandProps) => {
   const [_, allEvents, ts] = await propsAndEvents(groupTitle, QR)
   const docs = generatePacket(groupTitle, {
     timerRunning: false,
@@ -88,7 +88,7 @@ const pause = async (groupTitle: string, QR: QRStaticCommandProps) => {
 }
 
 // resume the SOAR timer for the specified team
-const resume = async (groupTitle: string, QR: QRStaticCommandProps) => {
+const resume = async (groupTitle: string, QR: QRCommandProps) => {
   const [_, allEvents, ts] = await propsAndEvents(groupTitle, QR)
   const docs = generatePacket(groupTitle, {
     timerRunning: true,
@@ -99,7 +99,7 @@ const resume = async (groupTitle: string, QR: QRStaticCommandProps) => {
 }
 
 // end SOAR timer for the last time (final)
-const stopFinal = async (groupTitle: string, QR: QRStaticCommandProps) => {
+const stopFinal = async (groupTitle: string, QR: QRCommandProps) => {
   const [_, allEvents, ts] = await propsAndEvents(groupTitle, QR)
 
   const docs = generatePacket(groupTitle, {
@@ -112,7 +112,7 @@ const stopFinal = async (groupTitle: string, QR: QRStaticCommandProps) => {
 }
 
 // end SOAR timer for the last time (final)
-const completeStage = async (groupTitle: string, QR: QRStaticCommandProps) => {
+const completeStage = async (groupTitle: string, QR: QRCommandProps) => {
   const [SOARProps, allEvents, _] = await propsAndEvents(groupTitle, QR)
 
   const thisStation = QR.station
@@ -132,7 +132,7 @@ const completeStage = async (groupTitle: string, QR: QRStaticCommandProps) => {
 
 const noop = () => {}
 
-const SOAR: Record<SoarCommand, any> = {
+const SOAR: Record<SOARCommand, any> = {
   start,
   pause,
   resume,
