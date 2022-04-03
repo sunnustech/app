@@ -35,3 +35,8 @@ type TimeApiProps = {
   timeZone: string
   year: number
 }
+
+export type SafeDivProps = {
+  style?: any
+  children?: any
+}

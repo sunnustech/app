@@ -30,7 +30,7 @@ const DATA: DataTest[] = [
   },
 ]
 
-const soarComparison = (x: DataTest, y: DataTest) => {
+const SOARComparison = (x: DataTest, y: DataTest) => {
   if (x.score > y.score) {
     return -1
   } else if (x.score < y.score) {
@@ -41,7 +41,7 @@ const soarComparison = (x: DataTest, y: DataTest) => {
 }
 
 const sortLeaderboard = (arr: DataTest[]) => {
-  return arr.sort(soarComparison)
+  return arr.sort(SOARComparison)
 }
 
 const ScoreboardScreen = () => {

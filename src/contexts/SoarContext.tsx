@@ -9,8 +9,8 @@ import { Fontisto as FO, FontAwesome5 as FA } from '@expo/vector-icons'
 import { db } from '@/sunnus/firebase'
 import { doc, DocumentData, getDoc } from 'firebase/firestore'
 import { GameStation } from '@/types/GameStation'
-import { SOARContextProps, StationOrderProps, UseState } from '@/types/SOAR'
-import { emptyQR } from '@/lib/soar/QRStaticCommands'
+import { SOARContextProps, StationOrderProps } from '@/types/SOAR'
+import { emptyQR } from '@/lib/SOAR/QRStaticCommands'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
 

@@ -56,13 +56,13 @@ const propsAndEvents = async (
   groupTitle: string,
   QR: QRStaticCommandProps
 ): Promise<[SOARTeamData, Array<SOAREvent>, TimeApiProps]> => {
-  const [soarProps, ts] = await Promise.all([
+  const [SOARProps, ts] = await Promise.all([
     getSOARProps(groupTitle),
     getTimeAsync(),
   ])
-  const allEvents = soarProps.allEvents
+  const allEvents = SOARProps.allEvents
   allEvents.push({ timestamp: ts, QR })
-  return [soarProps, allEvents, ts]
+  return [SOARProps, allEvents, ts]
 }
 
 // start SOAR timer for the first time (flag off)
@@ -114,11 +114,11 @@ const stopFinal = async (groupTitle: string, QR: QRStaticCommandProps) => {
 
 // end SOAR timer for the last time (final)
 const completeStage = async (groupTitle: string, QR: QRStaticCommandProps) => {
-  const [soarProps, allEvents, _] = await propsAndEvents(groupTitle, QR)
+  const [SOARProps, allEvents, _] = await propsAndEvents(groupTitle, QR)
 
   const thisStation = QR.station
-  const stationsRemaining = soarProps.stationsRemaining
-  const stationsCompleted = soarProps.stationsCompleted
+  const stationsRemaining = SOARProps.stationsRemaining
+  const stationsCompleted = SOARProps.stationsCompleted
 
   stationsRemaining.shift()
   stationsCompleted.push(thisStation)
@@ -133,7 +133,7 @@ const completeStage = async (groupTitle: string, QR: QRStaticCommandProps) => {
 
 const noop = () => {}
 
-const soar: Record<SoarCommand, any> = {
+const SOAR: Record<SoarCommand, any> = {
   start,
   pause,
   resume,
@@ -171,4 +171,4 @@ const soar: Record<SoarCommand, any> = {
   '': noop,
 }
 
-export default soar
+export default SOAR

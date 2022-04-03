@@ -2,7 +2,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import MapPoint from '@/components/SOAR/MapPoint'
 
 import { map as styles } from '@/styles/fresh'
-import { MapProps } from '@/types/soar-map'
+import { MapProps } from '@/types/SOAR'
 import { Text } from 'react-native'
 import { customMapStyle } from './MapStyle'
 import { NUSCoordinates } from '@/data/constants'

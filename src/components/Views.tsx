@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import { map as styles } from '@/styles/fresh'
-import { SafeDivProps } from '@/types/soar-map'
+import { SafeDivProps } from '@/types/index'
 
 const NoTouchDiv = ({ style, children }: SafeDivProps) => (
   <View style={style} pointerEvents="box-none">

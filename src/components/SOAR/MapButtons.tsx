@@ -1,6 +1,6 @@
 import { map as styles } from '@/styles/fresh'
-import { MapButtonProps } from '@/types/soar-map'
-import { TouchableOpacity, View } from 'react-native'
+import { MapButtonProps } from '@/types/SOAR'
+import { TouchableOpacity } from 'react-native'
 import {
   MaterialCommunityIcons as MCI,
   MaterialIcons as MI,

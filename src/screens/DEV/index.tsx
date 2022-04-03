@@ -18,13 +18,13 @@ import DebugButton from './DebugButton'
 /* debug functions */
 import writeSchema from '@/data/writeSchema'
 import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
-import soar from '@/lib/soar'
+import SOAR from '@/lib/SOAR'
 // import { MatchRequest } from '@/types/knockout'
 import { useContext } from 'react'
 import { UserContext } from '@/contexts/UserContext'
-import { generateQR } from '@/lib/soar/QRDictionary'
+import { generateQR } from '@/lib/SOAR/QRDictionary'
 import { SOARContext } from '@/contexts/SOARContext'
-import { QRStaticCommands as q } from '@/lib/soar/QRStaticCommands'
+import { QRStaticCommands as q } from '@/lib/SOAR/QRStaticCommands'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -95,22 +95,22 @@ const DEVScreen = () => {
           <Text>SOAR functions (team name: Known_Painters)</Text>
 
           <DebugButton
-            onPress={() => soar.start('Known_Painters', q.start)}
+            onPress={() => SOAR.start('Known_Painters', q.start)}
             children="start"
           />
 
           <DebugButton
-            onPress={() => soar.pause('Known_Painters', q.pause)}
+            onPress={() => SOAR.pause('Known_Painters', q.pause)}
             children="pause"
           />
 
           <DebugButton
-            onPress={() => soar.resume('Known_Painters', q.resume)}
+            onPress={() => SOAR.resume('Known_Painters', q.resume)}
             children="resume"
           />
 
           <DebugButton
-            onPress={() => soar.stopFinal('Known_Painters', q.stopFinal)}
+            onPress={() => SOAR.stopFinal('Known_Painters', q.stopFinal)}
             children="stopFinal"
           />
 

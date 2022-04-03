@@ -151,3 +151,20 @@ export type SOARTeamData = SOARStartState &
     stationsCompleted: Array<string>
     stationsRemaining: Array<string>
   }
+
+/* Map and SOAR */
+
+export type MapButtonProps = {
+  style?: any
+  icon: any
+  onPress: any
+  activated?: any
+}
+
+export type MapProps = {
+  // getCurrentLocation: any
+  mapRef: any
+  navigation: SOARPageProps
+  displayLocations: Array<SOARLocation>
+  startStatus: boolean
+}
