@@ -45,7 +45,7 @@ const pullDoc = async ({ collection, doc }: DocumentRequest) => {
       }
     })
     .catch((err) => {
-      console.warn('error fetching admin locations data from Firestore', err) // perma
+      console.warn('error fetching data from Firestore', err) // perma
       return { status: 'error: firebase error' }
     })
   return result

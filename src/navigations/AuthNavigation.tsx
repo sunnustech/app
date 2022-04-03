@@ -20,6 +20,9 @@ import DEVScreen from '@/screens/DEV'
 import KnockoutTable from '@/screens/KnockoutTable'
 import TimerScreen from '@/screens/DEV/TimerScreen'
 import QRScreen from '@/screens/QR'
+import { SoarProvider } from '@/contexts/SoarContext'
+import { TimerProvider } from '@/contexts/TimerContext'
+import { UserProvider } from '@/contexts/UserContext'
 
 import { UserState } from '@/types/index'
 
@@ -27,19 +30,25 @@ const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
 
 const Home = () => (
-  <Drawer.Navigator
-    initialRouteName="HomeScreen"
-    screenOptions={{ headerShown: false }}
-  >
-    <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-    <Drawer.Screen name="SOAR" component={SOARScreen} />
-    <Drawer.Screen name="TSS" component={TSSScreen} />
-    <Drawer.Screen name="WSS" component={WSSScreen} />
-    <Drawer.Screen name="DEV" component={DEVScreen} />
-    <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
-    <Drawer.Screen name="TimerScreen" component={TimerScreen} />
-    <Drawer.Screen name="QRScreen" component={QRScreen} />
-  </Drawer.Navigator>
+  <UserProvider>
+    <SoarProvider>
+      <TimerProvider>
+        <Drawer.Navigator
+          initialRouteName="HomeScreen"
+          screenOptions={{ headerShown: false }}
+        >
+          <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+          <Drawer.Screen name="SOAR" component={SOARScreen} />
+          <Drawer.Screen name="TSS" component={TSSScreen} />
+          <Drawer.Screen name="WSS" component={WSSScreen} />
+          <Drawer.Screen name="DEV" component={DEVScreen} />
+          <Drawer.Screen name="KnockoutTable" component={KnockoutTable} />
+          <Drawer.Screen name="TimerScreen" component={TimerScreen} />
+          <Drawer.Screen name="QRScreen" component={QRScreen} />
+        </Drawer.Navigator>
+      </TimerProvider>
+    </SoarProvider>
+  </UserProvider>
 )
 
 /*

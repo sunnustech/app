@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import {
   ActivityIndicator,
   View,
@@ -15,8 +15,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/sunnus/firebase'
 import { login as styles } from '@/styles/fresh'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
-import { UserContext } from '../contexts/UserContext'
-import { pullDoc } from '../data/pull'
+import { pullDoc } from '@/data/pull'
 
 const PASSWORD = 'sunnus'
 
@@ -41,8 +40,6 @@ const Input = ({
 }
 
 const LoginScreen = () => {
-  const { setUserId, setTeamName, setSchedule, setTeamData } =
-    useContext(UserContext)
   const [loginId, setLoginId] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
@@ -66,11 +63,14 @@ const LoginScreen = () => {
     /*
      * pulls a dictionary that maps loginId to groupTitle
      */
-    const loginIdDictionary = await pullDoc({
-      collection: 'participants',
-      doc: 'allLoginIds',
-    })
-    const registeredUsers = Object.keys(loginIdDictionary.data)
+    console.log('gonna access')
+    const loginIdDictionary = (
+      await pullDoc({
+        collection: 'participants',
+        doc: 'allLoginIds',
+      })
+    ).data
+    const registeredUsers = Object.keys(loginIdDictionary)
     if (!registeredUsers.includes(loginId)) {
       setLoginError(true)
       setLoading(false)
@@ -78,36 +78,14 @@ const LoginScreen = () => {
     }
     // continue only if user is registered
     setLoginError(false)
-    const user = loginIdDictionary.data[loginId]
-    const res2: any = await pullDoc({
-      collection: 'participants',
-      doc: user.groupTitle,
-    })
-    const teamData = res2.data
-    setUserId(loginId)
-    setTeamName(user.groupTitle.split('_').join(' '))
-    setTeamData(teamData)
-    const email = teamData.members[user.index].email
-    if (teamData.registeredEvents.TSS) {
-      setSchedule(teamData.schedule)
-    }
+    console.log('loginId', loginId)
+    console.log(loginIdDictionary[loginId])
     setLoading(false)
-    return email
+    return loginIdDictionary[loginId].email
   }
 
   const forgotHandler = () => {
     // https://firebase.google.com/products/extensions/firebase-firestore-send-email
-  }
-
-  /* for devs to log in quickly;
-   * to be removed from production build
-   */
-  const breakInHandler = () => {
-    signInWithEmailAndPassword(auth, 'sunnus@gmail.com', 'test1234')
-      .then((credential) => {
-        console.log('successful login as:', credential.user.email) // perma
-      })
-      .catch((err) => console.log(err)) // perma
   }
 
   return (
@@ -143,13 +121,6 @@ const LoginScreen = () => {
           onPress={forgotHandler}
         >
           <Text style={styles.buttonText}>Forgot ID?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={loading ? styles.disabledButton : styles.button}
-          disabled={loading}
-          onPress={breakInHandler}
-        >
-          <Text style={styles.buttonText}>Break In</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
