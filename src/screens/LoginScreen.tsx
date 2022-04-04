@@ -58,6 +58,20 @@ const LoginScreen = () => {
     }
   }
 
+  const debugLoginHandler = async () => {
+    const email = 'e0725213@u.nus.edu'
+    if (email) {
+      signInWithEmailAndPassword(auth, await email, PASSWORD)
+        .then((credential) => {
+          console.log('successful login as:', credential.user.email) // perma
+        })
+        .catch((err) => {
+          setLoginError(true)
+          console.log(err) // perma
+        })
+    }
+  }
+
   const queryEmailFromFirebase = async () => {
     setLoginError(false)
     setLoading(true)
@@ -119,6 +133,13 @@ const LoginScreen = () => {
           onPress={forgotHandler}
         >
           <Text style={styles.buttonText}>Forgot ID?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={loading ? styles.disabledButton : styles.button}
+          disabled={loading}
+          onPress={debugLoginHandler}
+        >
+          <Text style={styles.buttonText}>Dev Login</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
