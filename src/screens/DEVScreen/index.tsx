@@ -24,13 +24,24 @@ import { UserContext } from '@/contexts/UserContext'
 import { generateQR } from '@/lib/SOAR/QRDictionary'
 import { SOARContext } from '@/contexts/SOARContext'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from 'firebase/auth'
 import { auth } from '@/sunnus/firebase'
 
 /* use this space to hard-code test inputs to functions */
 
 function createUser() {
   createUserWithEmailAndPassword(auth, 'auto-user2@gmail.com', 'sunnus')
+}
+
+function resetPassword() {
+  console.log('resetting password...')
+  const email = 'e0725213@u.nus.edu'
+  sendPasswordResetEmail(auth, email).then((e) => {
+    console.log('email sent!', e, email)
+  })
 }
 
 /* add button that links to debug function */
@@ -131,6 +142,10 @@ const DEVScreen = () => {
 
           <DebugButton onPress={createUser} color="#ec4899">
             Create a new user
+          </DebugButton>
+
+          <DebugButton onPress={resetPassword} color="#ec4899">
+            Reset Password
           </DebugButton>
         </View>
       </ScrollView>
