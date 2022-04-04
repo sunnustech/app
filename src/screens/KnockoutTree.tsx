@@ -7,7 +7,6 @@ import styles from '@/styles/main'
 import { delimiter } from '@/lib/knockout'
 import { Sport } from '@/data/schema/TSS.d'
 import { useState } from 'react'
-import tw from 'twrnc'
 import { Knockout } from '@/components/Knockout'
 // }}}
 

@@ -8,6 +8,7 @@ export type Round =
   | 'quarterfinals'
   | 'semifinals'
   | 'finals'
+  | 'end'
 
 export type MatchRequest = {
   sport: Sport
@@ -47,9 +48,12 @@ export type TSSEvents = {
 }
 
 export type TSSSchedule = Array<{
+  id: number
   title: string
+  sport: string
   time: string
   venue: string
+  teams: Array[string]
 }>
 
 /*

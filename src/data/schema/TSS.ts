@@ -47,14 +47,36 @@ const sampleKnockoutTable: TSSKnockoutTable = {
 
 const schedule: TSSSchedule = [
   {
+    id: 1,
     title: 'Dodgeball Semi-finals',
+    sport: 'dodgeball',
     time: '15:00',
     venue: 'Court 3',
+    teams: ['HS123', 'Known_Painters'],
   },
   {
+    id: 2,
+    title: 'Volleyball Qualifiers',
+    sport: 'volleyball',
+    time: '15:00',
+    venue: 'Court 4',
+    teams: ['HS123', 'Modest_Liberators'],
+  },
+  {
+    id: 3,
+    title: 'Frisbee Finals',
+    sport: 'frisbee',
+    time: '15:00',
+    venue: 'Court 5',
+    teams: ['Modest_Liberators', 'Known_Painters'],
+  },
+  {
+    id: 4,
     title: 'Prize Presentation',
+    sport: 'misc',
     time: '16:00',
     venue: 'Stage',
+    teams: [],
   },
 ]
 

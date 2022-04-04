@@ -25,6 +25,7 @@ const testOne = {
   registeredEvents: {
     TSS: {
       volleyball: true,
+      dodgeball: true,
     },
     SOAR: true,
   },
@@ -52,6 +53,10 @@ const testOne = {
 const testTwo = {
   groupTitle: 'Modest_Liberators',
   registeredEvents: {
+    TSS: {
+      volleyball: true,
+      frisbee: true,
+    },
     SOAR: true,
   },
   SOAR: SOARInit,
@@ -71,6 +76,46 @@ const testTwo = {
     {
       email: 'dana@gmail.com',
       phone: '78449264',
+    },
+  ],
+}
+
+const testThree = {
+  groupTitle: 'HS123',
+  registeredEvents: {
+    TSS: {
+      volleyball: true,
+      dodgeball: true,
+      frisbee: true,
+    },
+    SOAR: false,
+  },
+  SOAR: {
+    timerRunning: false,
+    started: false,
+    stopped: false,
+    startTime: {},
+    stopTime: {},
+    timerEvents: [],
+    lastPause: {},
+    lastResume: {},
+  },
+  members: [
+    {
+      email: 'hongsheng@gmail.com',
+      phone: '11111111',
+    },
+    {
+      email: 'ryan@gmail.com',
+      phone: '22222222',
+    },
+    {
+      email: 'khang@gmail.com',
+      phone: '88888888',
+    },
+    {
+      email: 'junhong@gmail.com',
+      phone: '99999999',
     },
   ],
 }
@@ -110,7 +155,7 @@ const trimGroupNameToLowercase = (grp: string) => {
 }
 
 const generateRandomID = () => {
-  return Math.random().toString(10).substring(2, 8)
+  return Math.random().toString(10).substring(2, 5)
 }
 
 const addLoginId = (obj: any): Group => {
@@ -124,6 +169,7 @@ const addLoginId = (obj: any): Group => {
 const allTeams: Array<Group> = [
   addLoginId(testOne),
   addLoginId(testTwo),
+  addLoginId(testThree),
   Developer,
 ]
 

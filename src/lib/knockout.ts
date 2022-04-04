@@ -9,6 +9,9 @@ import {
 } from '@/types/TSS'
 import { pullCollection } from '@/data/pull'
 
+/**
+ * Returns the current date, to be used for database recording
+ */
 const delimiter = () => {
   const date = new Date().toString()
   const line = '='.repeat(date.length)
@@ -44,14 +47,15 @@ function resetTSS() {
  *
  */
 
+/**
+ * Transitions teams to the next round. If team is in final, it has no more rounds and thus ends.
+ * @param round Round that the team is currently in
+ * @returns Next round that the team will be in
+ */
 const getNextRound = (round: Round) => {
   const currentOrder = roundList.indexOf(round)
   const nextOrder = currentOrder + 1
-  if (nextOrder <= roundList.length) {
-    return roundList[currentOrder + 1]
-  } else {
-    return roundList[-1]
-  }
+  return nextOrder <= roundList.length ? roundList[currentOrder + 1] : 'end'
 }
 
 const getNextMatchNumber = (matchNumber: number) => {
