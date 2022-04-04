@@ -8,6 +8,8 @@ import {
   Sport,
 } from '@/types/TSS'
 import { pullCollection } from '@/data/pull'
+import { db } from '@/sunnus/firebase'
+import { getDoc, doc } from 'firebase/firestore'
 
 /**
  * Returns the current date, to be used for database recording
@@ -55,11 +57,37 @@ function resetTSS() {
 const getNextRound = (round: Round) => {
   const currentOrder = roundList.indexOf(round)
   const nextOrder = currentOrder + 1
-  return nextOrder <= roundList.length ? roundList[currentOrder + 1] : 'end'
+  return nextOrder <= roundList.length ? roundList[currentOrder + 1] : 'finals'
 }
 
 const getNextMatchNumber = (matchNumber: number) => {
   return Math.floor(matchNumber / 2)
+}
+
+const cascadeUpdate = async ({
+  sport,
+  round,
+  matchNumber,
+  winner,
+}: MatchRequest) => {
+  // Nothing to check to update if team is in finals
+  if (round === 'finals') {
+    return
+  }
+  await getDoc(doc(db, 'TSS', sport))
+    .then((doc) => {
+      const docData = doc.data()
+      if (docData) {
+        const matchInstance = docData[round][matchNumber]
+        // New entry, winner has not been decided. No need to check if there is a need to update other entries.
+        if (matchInstance.winner === 'U') {
+          return
+        }
+      }
+    })
+    .catch((err) => {
+      console.warn('error fetching tss match data from Firestore', err)
+    })
 }
 
 function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
@@ -67,7 +95,7 @@ function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
 
   // get that exact match
   const matchParticipants: MatchParticipants = TSS[sport][round][matchNumber]
-  const winnerName = matchParticipants[winner]
+  const winnerName = matchParticipants[winner.toString() === 'A' ? 'A' : 'B']
 
   var packet
   if (round === 'finals') {

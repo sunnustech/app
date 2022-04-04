@@ -1,6 +1,6 @@
 export type Sport = 'dodgeball' | 'frisbee' | 'volleyball' | 'tchoukball'
 
-export type Winner = 'A' | 'B'
+export type Winner = 'A' | 'B' | 'U'
 
 export type Round =
   | 'round_of_32'
@@ -8,7 +8,6 @@ export type Round =
   | 'quarterfinals'
   | 'semifinals'
   | 'finals'
-  | 'end'
 
 export type MatchRequest = {
   sport: Sport
@@ -20,25 +19,24 @@ export type MatchRequest = {
 export type MatchParticipants = {
   A: string
   B: string
+  winner: Winner
 }
-
-export type Sport = 'dodgeball' | 'frisbee' | 'volleyball' | 'tchoukball'
 
 export type TSSKnockoutTable = {
   round_of_32: {
-    [key: number]: { A: string; B: string; winner?: string }
+    [key: number]: { A: string; B: string; winner: Winner }
   }
   round_of_16: {
-    [key: number]: { A: string; B: string; winner?: string }
+    [key: number]: { A: string; B: string; winner: Winner }
   }
   quarterfinals: {
-    [key: number]: { A: string; B: string; winner?: string }
+    [key: number]: { A: string; B: string; winner: Winner }
   }
   semifinals: {
-    [key: number]: { A: string; B: string; winner?: string }
+    [key: number]: { A: string; B: string; winner: Winner }
   }
   finals: {
-    [key: number]: { A: string; B: string; winner?: string }
+    [key: number]: { A: string; B: string; winner: Winner }
   }
   champions: string
 }
