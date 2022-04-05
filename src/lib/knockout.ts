@@ -64,42 +64,10 @@ const getNextMatchNumber = (matchNumber: number) => {
   return Math.floor(matchNumber / 2)
 }
 
-const cascadeUpdate = async ({
-  sport,
-  round,
-  matchNumber,
-  winner,
-}: MatchRequest) => {
-  // Nothing to check to update if team is in finals
-  if (round === 'finals') {
-    return
-  }
-  await getDoc(doc(db, 'TSS', sport))
-    .then((doc) => {
-      const docData = doc.data()
-      if (docData) {
-        const matchInstance = docData[round][matchNumber]
-        // New entry, winner has not been decided. No need to check if there is a need to update other entries.
-        if (matchInstance.winner === 'U') {
-          return
-        }
-        // Recursive call, should
-        const nextRound: Round = getNextRound(round) as Round
-        const nextMatchNumber = getNextMatchNumber(matchNumber)
-        const newInstance: MatchRequest = {
-          sport: sport,
-          round: nextRound,
-          matchNumber: nextMatchNumber,
-          winner: winner,
-        }
-        handleMatch(newInstance)
-      }
-    })
-    .catch((err) => {
-      console.warn('error fetching tss match data from Firestore', err)
-    })
-}
-
+/**
+ * Adds or updates the database based on the outcome specified
+ * @param {MatchRequest} MatchRequestObject An object representing the outcome a match
+ */
 const handleMatch = async ({
   sport,
   round,
@@ -116,6 +84,7 @@ const handleMatch = async ({
       const docData = doc.data()
       if (docData) {
         const matchParticipants: MatchParticipants = docData[round][matchNumber]
+
         const winnerName =
           matchParticipants[winner.toString() === 'A' ? 'A' : 'B']
         var packet
@@ -141,29 +110,25 @@ const handleMatch = async ({
         const nextMatch = TSS[sport][nextRound][nextMatchNumber]
         const nextSlot: Winner = matchNumber % 2 === 0 ? 'A' : 'B'
 
-        // Winnder has not been decided yet, not an update but just an add entry
-        if (matchParticipants.winner === 'U') {
-          packet = {
-            [sport]: {
-              // update the outcome of that match
-              [round]: {
-                [matchNumber]: { ...matchParticipants, winner },
-              },
-              // apend the schedule for next match
-              [nextRound]: {
-                [nextMatchNumber]: {
-                  ...nextMatch,
-                  [nextSlot]: winnerName,
-                  winner: 'U',
-                },
+        // Be it add or update, only need to check one layer deeper
+        packet = {
+          [sport]: {
+            // update the outcome of that match
+            [round]: {
+              [matchNumber]: { ...matchParticipants, winner },
+            },
+            // apend the schedule for next match
+            [nextRound]: {
+              [nextMatchNumber]: {
+                ...nextMatch,
+                [nextSlot]: winnerName,
+                winner: 'U',
               },
             },
-          }
-          push({ collection: 'TSS', docs: packet })
-          return
+          },
         }
-
-        // An update entry, need to cascade down and check 
+        push({ collection: 'TSS', docs: packet })
+        return
       }
     })
     .catch((err) => {

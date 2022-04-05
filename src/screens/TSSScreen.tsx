@@ -35,8 +35,8 @@ const TSSScreen = () => {
     let obj: MatchRequest = {
       sport: 'dodgeball',
       matchNumber: 0,
-      winner: 'A',
-      round: 'round_of_16',
+      winner: 'B',
+      round: 'round_of_32',
     }
     handleMatch(obj)
   }
