@@ -12,7 +12,7 @@ import { db } from '@/sunnus/firebase'
 import { getDoc, doc } from 'firebase/firestore'
 
 /**
- * Returns the current date, to be used for database recording
+ * Prints the current date to the terminal
  */
 const delimiter = () => {
   const date = new Date().toString()
@@ -100,29 +100,31 @@ const cascadeUpdate = async ({
     })
 }
 
-async function handleMatch({
+const handleMatch = async ({
   sport,
   round,
   matchNumber,
   winner,
-}: MatchRequest) {
+}: MatchRequest) => {
+  // Prints down current date in terminal, to be used for debugging
   delimiter()
 
-  // get that exact match
+  // Gets a snapshot of the doc related to the sport
   await getDoc(doc(db, 'TSS', sport))
     .then((doc) => {
+      // Queried only once
       const docData = doc.data()
       if (docData) {
         const matchParticipants: MatchParticipants = docData[round][matchNumber]
         const winnerName =
           matchParticipants[winner.toString() === 'A' ? 'A' : 'B']
-        console.log("Match parts ", matchParticipants)
-        console.log("winnername ", winnerName)
         var packet
+
+        // If the round is finals, we only need to update this round
         if (round === 'finals') {
           packet = {
             [sport]: {
-              // update the outcome of that match
+              // Update the outcome of the current match
               [round]: {
                 [matchNumber]: { ...matchParticipants, winner },
               },
@@ -132,11 +134,14 @@ async function handleMatch({
           push({ collection: 'TSS', docs: packet })
           return
         }
+
+        // For any other round, we need to update the winner of current, and next round
         const nextRound: Round = getNextRound(round)
         const nextMatchNumber = getNextMatchNumber(matchNumber)
         const nextMatch = TSS[sport][nextRound][nextMatchNumber]
         const nextSlot: Winner = matchNumber % 2 === 0 ? 'A' : 'B'
-        // New entry, winner has not been decided. No need to check if there is a need to update other entries.
+
+        // Winnder has not been decided yet, not an update but just an add entry
         if (matchParticipants.winner === 'U') {
           packet = {
             [sport]: {
@@ -146,14 +151,19 @@ async function handleMatch({
               },
               // apend the schedule for next match
               [nextRound]: {
-                [nextMatchNumber]: { ...nextMatch, [nextSlot]: winnerName, winner: 'U' },
+                [nextMatchNumber]: {
+                  ...nextMatch,
+                  [nextSlot]: winnerName,
+                  winner: 'U',
+                },
               },
             },
           }
           push({ collection: 'TSS', docs: packet })
           return
         }
-        // Case where wrong entry, we need to update firebase
+
+        // An update entry, need to cascade down and check 
       }
     })
     .catch((err) => {
