@@ -83,6 +83,16 @@ const cascadeUpdate = async ({
         if (matchInstance.winner === 'U') {
           return
         }
+        // Recursive call, should
+        const nextRound: Round = getNextRound(round) as Round
+        const nextMatchNumber = getNextMatchNumber(matchNumber)
+        const newInstance: MatchRequest = {
+          sport: sport,
+          round: nextRound,
+          matchNumber: nextMatchNumber,
+          winner: winner,
+        }
+        handleMatch(newInstance)
       }
     })
     .catch((err) => {
@@ -90,45 +100,65 @@ const cascadeUpdate = async ({
     })
 }
 
-function handleMatch({ sport, round, matchNumber, winner }: MatchRequest) {
+async function handleMatch({
+  sport,
+  round,
+  matchNumber,
+  winner,
+}: MatchRequest) {
   delimiter()
 
   // get that exact match
-  const matchParticipants: MatchParticipants = TSS[sport][round][matchNumber]
-  const winnerName = matchParticipants[winner.toString() === 'A' ? 'A' : 'B']
-
-  var packet
-  if (round === 'finals') {
-    packet = {
-      [sport]: {
-        // update the outcome of that match
-        [round]: {
-          [matchNumber]: { ...matchParticipants, winner },
-        },
-        champions: winnerName,
-      },
-    }
-  } else {
-    const nextRound: Round = getNextRound(round)
-    const nextMatchNumber = getNextMatchNumber(matchNumber)
-    const nextMatch = TSS[sport][nextRound][nextMatchNumber]
-    const nextSlot: Winner = matchNumber % 2 === 0 ? 'A' : 'B'
-    packet = {
-      [sport]: {
-        // update the outcome of that match
-        [round]: {
-          [matchNumber]: { ...matchParticipants, winner },
-        },
-        // apend the schedule for next match
-        [nextRound]: {
-          [nextMatchNumber]: { ...nextMatch, [nextSlot]: winnerName },
-        },
-      },
-    }
-  }
-
-  // update the database
-  push({ collection: 'TSS', docs: packet })
+  await getDoc(doc(db, 'TSS', sport))
+    .then((doc) => {
+      const docData = doc.data()
+      if (docData) {
+        const matchParticipants: MatchParticipants = docData[round][matchNumber]
+        const winnerName =
+          matchParticipants[winner.toString() === 'A' ? 'A' : 'B']
+        console.log("Match parts ", matchParticipants)
+        console.log("winnername ", winnerName)
+        var packet
+        if (round === 'finals') {
+          packet = {
+            [sport]: {
+              // update the outcome of that match
+              [round]: {
+                [matchNumber]: { ...matchParticipants, winner },
+              },
+              champions: winnerName,
+            },
+          }
+          push({ collection: 'TSS', docs: packet })
+          return
+        }
+        const nextRound: Round = getNextRound(round)
+        const nextMatchNumber = getNextMatchNumber(matchNumber)
+        const nextMatch = TSS[sport][nextRound][nextMatchNumber]
+        const nextSlot: Winner = matchNumber % 2 === 0 ? 'A' : 'B'
+        // New entry, winner has not been decided. No need to check if there is a need to update other entries.
+        if (matchParticipants.winner === 'U') {
+          packet = {
+            [sport]: {
+              // update the outcome of that match
+              [round]: {
+                [matchNumber]: { ...matchParticipants, winner },
+              },
+              // apend the schedule for next match
+              [nextRound]: {
+                [nextMatchNumber]: { ...nextMatch, [nextSlot]: winnerName, winner: 'U' },
+              },
+            },
+          }
+          push({ collection: 'TSS', docs: packet })
+          return
+        }
+        // Case where wrong entry, we need to update firebase
+      }
+    })
+    .catch((err) => {
+      console.warn('error fetching tss match data from Firestore', err)
+    })
 }
 
 async function getKnockoutTable({ sport }: { sport: Sport }) {

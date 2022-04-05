@@ -20,6 +20,7 @@ const sampleKnockoutTable: TSSKnockoutTable = {
     15: { A: 'Representative_Witnesses', B: 'Prone_Artists', winner: 'U' },
   },
   round_of_16: {
+    /*
     0: { A: 'Independent_Decorators', B: 'Modest_Liberators', winner: 'U' },
     1: { A: 'Poor_Philosophers', B: 'Remaining_Masters', winner: 'U' },
     2: { A: 'Vulnerable_Council', B: 'Sophisticated_Crystals', winner: 'U' },
@@ -28,19 +29,26 @@ const sampleKnockoutTable: TSSKnockoutTable = {
     5: { A: 'Intimate_Creditors', B: 'Mass_Activators', winner: 'U' },
     6: { A: 'Emotional_Writers', B: 'Coastal_Housers', winner: 'U' },
     7: { A: 'Useful_Wanters', B: 'Prone_Artists', winner: 'U' },
+    */
   },
   quarterfinals: {
+    /*
     0: { A: 'Independent_Decorators', B: 'Remaining_Masters', winner: 'U' },
     1: { A: 'Vulnerable_Council', B: 'Lingustic_Reformers', winner: 'U' },
     2: { A: 'Unfortunate_Landlords', B: 'Mass_Activators', winner: 'U' },
     3: { A: 'Emotional_Writers', B: 'Prone_Artists', winner: 'U' },
+    */
   },
   semifinals: {
+    /*
     0: { A: 'Independent_Decorators', B: 'Lingustic_Reformers', winner: 'U' },
     1: { A: 'Unfortunate_Landlords', B: 'Prone_Artists', winner: 'U' },
+    */
   },
   finals: {
+    /*
     0: { A: 'Independent_Decorators', B: 'Prone_Artists', winner: 'U' },
+    */
   },
   champions: '',
 }

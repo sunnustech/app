@@ -9,13 +9,12 @@ import { TSS as styles } from '@/styles/fresh'
 
 // DELETE AFTER USE
 import { Button } from '../components/Buttons'
-import { getKnockoutTable } from '../lib/knockout'
-import { Sport } from '../types/TSS'
+import { getKnockoutTable, handleMatch } from '../lib/knockout'
+import { MatchRequest, Sport } from '../types/TSS'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/sunnus/firebase'
 
 const TSSScreen = () => {
-
   const s: Sport = 'dodgeball' as Sport
 
   // const navigation = useNavigation<DrawerNavigationProp<AuthenticatedPages, 'TSSScreen'>>()
@@ -23,14 +22,23 @@ const TSSScreen = () => {
 
   const navigation = useNavigation<AuthPage<'TSSScreen'>>()
 
+  /* TEST OBJECTS
+  let obj: MatchRequest = {
+      sport: 'dodgeball',
+      matchNumber: 1,
+      winner: 'A',
+      round: 'round_of_32'
+  }
+
+*/
   const tempFunction = async () => {
-    await getDoc(doc(db, 'TSS', 'dodgeball'))
-    .then((doc) => {
-      const docData = doc.data()
-      if (docData) {
-        console.log(docData['semifinals'][0])
-      }
-    })
+    let obj: MatchRequest = {
+      sport: 'dodgeball',
+      matchNumber: 0,
+      winner: 'A',
+      round: 'round_of_16',
+    }
+    handleMatch(obj)
   }
 
   return (
