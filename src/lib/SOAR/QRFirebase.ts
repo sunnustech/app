@@ -190,6 +190,7 @@ const SOAR: Record<SOARCommand, any> = {
   AlreadyStartedSOAR: noop,
   stopFinal,
   WarnStopFinal: noop,
+  TimerNotRunning: noop,
   completeStage,
   AlreadyCompletedAllStations: noop,
   AlreadyCompletedStation: noop,

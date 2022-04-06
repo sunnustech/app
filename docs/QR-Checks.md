@@ -28,3 +28,7 @@ Commands
 [pause, stop]:
 
 - timer must be running
+
+[completeStage]:
+
+- timer must be running

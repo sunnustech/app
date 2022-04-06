@@ -59,10 +59,15 @@ const QRScreen = () => {
     const cmd = data.command
     const rem = teamData.SOARStationsRemaining
     const com = teamData.SOARStationsCompleted
-    const nextStn = rem.length > 0 ? rem[0] : stn
-    const prevStn = com.length > 0 ? com[com.length - 1] : stn
+    const nextStn = rem.length > 0 ? rem[0] : ''
+    const prevStn = com.length > 0 ? com[com.length - 1] : ''
 
     console.log('QR scanned:', QR)
+    console.log('completed', com)
+    console.log('remaining', rem)
+    console.log('next', nextStn)
+    console.log('prev', prevStn)
+    console.log('this', stn)
     setQR(QR)
 
     function send(QRCommand: QRCommandProps) {
@@ -125,6 +130,12 @@ const QRScreen = () => {
     /* warn user if they have already completed all stations */
     if (cmd === 'completeStage' && rem.length === 0) {
       send(QRCommands.AlreadyCompletedAllStations)
+      return
+    }
+
+    /* don't allow stage completion if timer is paused */
+    if (cmd === 'completeStage' && !SOAR.timerRunning) {
+      send(QRCommands.TimerNotRunning)
       return
     }
 

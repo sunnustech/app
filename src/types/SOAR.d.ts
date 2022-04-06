@@ -68,6 +68,7 @@ export type SOARCommand =
   | 'pause'
   | 'stopFinal'
   | 'resume'
+  | 'TimerNotRunning'
   | 'completeStage'
   | 'WrongStation'
   | 'HaveNotStartedSOAR'

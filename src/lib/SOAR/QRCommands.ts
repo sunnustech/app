@@ -85,6 +85,14 @@ export const QRCommands: Record<SOARCommand, QRCommandProps> = {
     station: '',
     points: 0,
   },
+  TimerNotRunning: {
+    title: 'Timer not running.',
+    summary: 'Please resume your timer to continue',
+    action: 'Continue',
+    command: '',
+    station: '',
+    points: 0,
+  },
   AlreadyPaused: {
     title: 'Already paused.',
     summary: '',
