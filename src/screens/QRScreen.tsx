@@ -16,6 +16,7 @@ import { QRCommands, invalidQR } from '@/lib/SOAR/QRCommands'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
 import { Group } from '@/types/participants'
+import { QRCommandProps } from '@/types/SOAR'
 
 const getTeamData = async (groupTitle: string): Promise<Group> => {
   // TODO: handle errors on bad pulls
@@ -53,62 +54,91 @@ const QRScreen = () => {
 
     // error handling
     const teamData = await getTeamData(teamName)
-    const SOARProps = teamData.SOAR
+    const SOAR = teamData.SOAR
     const stn = data.station
     const cmd = data.command
     const rem = teamData.SOARStationsRemaining
-    const correctStn = rem.length > 0 ? rem[0] : stn
+    const com = teamData.SOARStationsCompleted
+    const nextStn = rem.length > 0 ? rem[0] : stn
+    const prevStn = com.length > 0 ? com[com.length - 1] : stn
 
-    if (cmd === 'start') {
-      if (SOARProps.started) {
-        setQR(QRCommands.AlreadyStartedSOAR)
-        navigation.navigate('SOARScreen')
-        return
-      }
-    } else if (!SOARProps.started) {
-      // for all non-start commands,
-      // always check if participant has started SOAR yet
-      setQR(QRCommands.HaveNotStartedSOAR)
+    console.log('QR scanned:', QR)
+    setQR(QR)
+
+    function send(QRCommand: QRCommandProps) {
+      setQR(QRCommand)
       navigation.navigate('SOARScreen')
+    }
+
+    /* if the team has completed SOAR, thank
+     * them for participation and stop execution.
+     */
+    if (SOAR.stopped === true) {
+      send(QRCommands.AlreadyCompletedSOAR)
       return
     }
 
-    setQR(QR)
-    console.log('QR scanned:', QR)
-
-    switch (cmd) {
-      case 'pause':
-        if (!SOARProps.timerRunning) {
-          setQR(QRCommands.AlreadyPaused)
-        }
-        break
-      case 'resume':
-        if (SOARProps.timerRunning) {
-          setQR(QRCommands.AlreadyResumed)
-        }
-        break
-      case 'stopFinal':
-        if (SOARProps.stopped) {
-          setQR(QRCommands.AlreadyCompletedSOAR)
-        } else if (!SOARProps.timerRunning) {
-          setQR(QRCommands.WarnStopFinal)
-        }
-        break
-      case 'completeStage':
-        if (SOARProps.stopped) {
-          setQR(QRCommands.AlreadyCompletedSOAR)
-        } else if (rem.length === 0) {
-          setQR(QRCommands.AlreadyCompletedAllStations)
-        } else if (teamData.SOARStationsCompleted.includes(stn)) {
-          setQR(QRCommands.AlreadyCompletedStation)
-        } else if (stn !== correctStn) {
-          setQR(QRCommands.WrongStation)
-        } else {
-          QR.summary = `Congratuations! You have completed ${stn}!`
-        }
-        break
+    /* only continue if the team is at the
+     * current or previous station.
+     */
+    if (stn !== nextStn && stn !== prevStn) {
+      send(QRCommands.WrongStation)
+      return
     }
-    navigation.navigate('SOARScreen')
+
+    /* don't let teams start SOAR twice */
+    if (cmd === 'start' && SOAR.started) {
+      send(QRCommands.AlreadyStartedSOAR)
+      return
+    }
+
+    /* for non-start commands, only allow for teams
+     * that have started SOAR
+     */
+    if (cmd !== 'start' && !SOAR.started) {
+      send(QRCommands.HaveNotStartedSOAR)
+      return
+    }
+
+    /* don't pause the timer if already paused */
+    if (cmd === 'pause' && !SOAR.timerRunning) {
+      send(QRCommands.AlreadyPaused)
+      return
+    }
+
+    /* don't resume the timer if already running */
+    if (cmd === 'resume' && SOAR.timerRunning) {
+      send(QRCommands.AlreadyResumed)
+      return
+    }
+
+    /*
+     * warn the user that their timer is paused,
+     * and they are trying to finish, but still allow completion
+     * (probably forgot to resume the timer earlier)
+     */
+    if (cmd === 'stopFinal' && !SOAR.timerRunning) {
+      send(QRCommands.WarnStopFinal)
+      return
+    }
+
+    /* warn user if they have already completed all stations */
+    if (cmd === 'completeStage' && rem.length === 0) {
+      send(QRCommands.AlreadyCompletedAllStations)
+      return
+    }
+
+    /* warn user if they have already completed this station */
+    if (
+      cmd === 'completeStage' &&
+      teamData.SOARStationsCompleted.includes(stn)
+    ) {
+      send(QRCommands.AlreadyCompletedStation)
+      return
+    }
+
+    send(QR)
+    return
   }
 
   const BackToMap = () => {
