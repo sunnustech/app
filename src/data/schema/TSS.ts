@@ -1,6 +1,6 @@
 import { TSSSchedule, Rounds, TSSDatabase } from '@/types/TSS'
 
-const sampleRounds: Rounds = {
+export const sampleRounds: Rounds = {
   round_of_32: {
     0: { A: 'Independent_Decorators', B: 'Gentle_Sweaters', winner: 'U' },
     1: { A: 'Known_Painters', B: 'Modest_Liberators', winner: 'U' },

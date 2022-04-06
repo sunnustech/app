@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { Match, Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import PagerView from 'react-native-pager-view'
+import { sampleRounds } from '@/data/schema/TSS'
 
 const VSpacer = ({ h }: { h: number }) => <View style={{ height: h }} />
 
@@ -45,14 +46,14 @@ const MatchNode = ({ match }: { match: Match }) => {
 }
 
 const RoundOf32 = () => {
+  const data = sampleRounds.round_of_32
   return (
     <PagerView style={styles.pagerView} initialPage={0}>
-      <View key="1">
-        <Text>First page</Text>
-      </View>
-      <View key="2">
-        <Text>Second page</Text>
-      </View>
+      {Object.keys(data).map((e, i) => (
+        <View key={i}>
+          <MatchNode match={data[e]} />
+        </View>
+      ))}
     </PagerView>
   )
 }
