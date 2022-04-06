@@ -28,15 +28,6 @@ const getTimeAsync = async (): Promise<TimeApiProps> => {
   return time
 }
 
-const generatePacket = (teamName: string, packet: any) => {
-  const obj = {
-    [teamName]: {
-      SOAR: packet,
-    },
-  }
-  return obj
-}
-
 /*
  * checks if the team has started SOAR or not.
  * This is key because if not the original start time may be overwritten.
