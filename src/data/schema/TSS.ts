@@ -1,4 +1,4 @@
-import { TSSSchedule, TSSKnockoutTable, TSSData } from '@/types/TSS'
+import { TSSSchedule, TSSKnockoutTable, TSSDatabase } from '@/types/TSS'
 
 const sampleKnockoutTable: TSSKnockoutTable = {
   round_of_32: {
@@ -88,7 +88,7 @@ const schedule: TSSSchedule = [
   },
 ]
 
-const TSS: TSSData = {
+const TSS: TSSDatabase = {
   dodgeball: sampleKnockoutTable,
   frisbee: sampleKnockoutTable,
   volleyball: sampleKnockoutTable,

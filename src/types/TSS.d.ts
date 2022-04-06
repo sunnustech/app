@@ -22,28 +22,13 @@ export type MatchParticipants = {
   winner: Winner
 }
 
-export type TSSKnockoutTable = {
-  round_of_32: {
-    [key: number]: { A: string; B: string; winner: Winner }
-  }
-  round_of_16: {
-    [key: number]: { A: string; B: string; winner: Winner }
-  }
-  quarterfinals: {
-    [key: number]: { A: string; B: string; winner: Winner }
-  }
-  semifinals: {
-    [key: number]: { A: string; B: string; winner: Winner }
-  }
-  finals: {
-    [key: number]: { A: string; B: string; winner: Winner }
-  }
+type TSSKnockoutRound = Record<number, MatchParticipants>
+
+export type TSSKnockoutTable = Record<Round, TSSKnockoutRound> & {
   champions: string
 }
 
-export type TSSEvents = {
-  [key: string]: TSSKnockoutTable
-}
+export type TSSEvents = Record<Sport, TSSKnockoutTable>
 
 export type TSSSchedule = Array<{
   id: number
@@ -51,18 +36,14 @@ export type TSSSchedule = Array<{
   sport: string
   time: string
   venue: string
-  teams: Array[string]
+  teams: Array<string>
 }>
 
 /*
  * To be Firestore-friendly, the final form has to be an object,
  * and first-level values cannot be arrays
  */
-export type TSSData = {
-  dodgeball: TSSKnockoutTable
-  frisbee: TSSKnockoutTable
-  volleyball: TSSKnockoutTable
-  tchoukball: TSSKnockoutTable
+export type TSSDatabase = TSSEvents & {
   data: {
     schedule: TSSSchedule
   }
