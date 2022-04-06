@@ -1,4 +1,4 @@
-import { SOARTeamData } from './SOAR'
+import { SOARTeamProps } from './SOAR'
 
 type SOARRegistration = {
   SOAR: boolean
@@ -26,7 +26,7 @@ export type TeamProps = {
   teamName: string
   members: Array<Member>
   registeredEvents?: RegisteredEvents
-  SOAR: SOARTeamData
+  SOAR: SOARTeamProps
   SOARTimerEvents: Array<number>
   SOARStart: number
   SOARPausedAt: number

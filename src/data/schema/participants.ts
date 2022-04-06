@@ -4,11 +4,11 @@ import {
   RegisteredEvents,
   TeamProps,
 } from '@/types/participants'
-import { SOARTeamData } from '@/types/SOAR'
+import { SOARTeamProps } from '@/types/SOAR'
 import { objFromArray } from '@/lib/utils'
 import { stationOrder } from './SOAR'
 
-const SOARInit: SOARTeamData = {
+const SOARInit: SOARTeamProps = {
   timerRunning: false,
   started: false,
   stopped: false,

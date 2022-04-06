@@ -123,7 +123,7 @@ export type SOARTimestamp = {
   QR: QRCommandProps
 }
 
-export type SOARTeamData = {
+export type SOARTeamProps = {
   started: boolean
   stopped: boolean
   startTime: number

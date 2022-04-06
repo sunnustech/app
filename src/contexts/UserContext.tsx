@@ -2,7 +2,7 @@ import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 import { auth } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
 import { TeamProps } from '@/types/participants'
-import { SOARTeamData } from '@/types/SOAR'
+import { SOARTeamProps } from '@/types/SOAR'
 import { notificationInit } from '@/lib/notifications'
 import push from '@/data/push'
 
@@ -17,16 +17,14 @@ type UserContextProps = {
   setTeamData: Dispatch<SetStateAction<TeamProps>>
 }
 
-const SOARinit: SOARTeamData = {
+const SOARinit: SOARTeamProps = {
   timerRunning: false,
   started: false,
   stopped: false,
-  startTime: {},
-  stopTime: {},
+  startTime: 0,
+  stopTime: 0,
   allEvents: [],
   direction: 'A',
-  stationsCompleted: [],
-  stationsRemaining: [],
   points: 0,
 }
 
