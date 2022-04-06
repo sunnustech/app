@@ -69,7 +69,7 @@ const UI = ({
           <MapSOSButton onPress={handleSOS} />
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
-          <Debug />
+          {/* <Debug /> */}
           <MapCurretLocationButton onPress={flyToCurrentLocation} />
           <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
         </NoTouchDiv>
