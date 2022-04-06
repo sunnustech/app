@@ -176,6 +176,7 @@ const SOARScreen = () => {
       )
       return () => {
         /* detach firebase listener on unmount */
+        console.log('detach firebase listener on SOAR screen')
         unsubscribeFirebase()
       }
     }
@@ -237,7 +238,7 @@ const SOARScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('focused on SOAR')
+      console.log('focused on SOAR screen')
       setEverythingLoaded(false)
       if (
         teamName &&
@@ -247,7 +248,7 @@ const SOARScreen = () => {
         setEverythingLoaded(true)
       }
       return () => {
-        console.log('cleanup time')
+        console.log('unfocused SOAR screen')
         setEverythingLoaded(false)
       }
     }, [teamName, stationOrder, teamData])
