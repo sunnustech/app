@@ -16,13 +16,13 @@ export type MatchRequest = {
   round: Round
 }
 
-export type MatchProps = {
+export type Match = {
   A: string
   B: string
   winner: Winner
 }
 
-type TSSKnockoutRound = Record<number, MatchProps>
+type TSSKnockoutRound = Record<number, Match>
 
 export type TSSKnockoutTable = Record<Round, TSSKnockoutRound> & {
   champions: string
