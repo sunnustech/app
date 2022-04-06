@@ -29,7 +29,6 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth'
 import { auth } from '@/sunnus/firebase'
-import { TimerText } from '@/components/Timer'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -114,9 +113,6 @@ const DEVScreen = () => {
           <DebugList />
 
           <Text>SOAR functions (team name: Dev_loper)</Text>
-          <Text>
-            <TimerText start={testStart} totalBreak={0} isRunning={true} pausedAt={420} />
-          </Text>
 
           <DebugButton
             onPress={() => SOAR.start('Dev_loper', q.start)}
