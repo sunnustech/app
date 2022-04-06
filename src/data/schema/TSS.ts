@@ -1,6 +1,6 @@
-import { TSSSchedule, TSSKnockoutTable, TSSData } from '@/types/TSS'
+import { TSSSchedule, Rounds, TSSDatabase } from '@/types/TSS'
 
-const sampleKnockoutTable: TSSKnockoutTable = {
+const sampleRounds: Rounds = {
   round_of_32: {
     0: { A: 'Independent_Decorators', B: 'Gentle_Sweaters', winner: 'U' },
     1: { A: 'Known_Painters', B: 'Modest_Liberators', winner: 'U' },
@@ -88,11 +88,11 @@ const schedule: TSSSchedule = [
   },
 ]
 
-const TSS: TSSData = {
-  dodgeball: sampleKnockoutTable,
-  frisbee: sampleKnockoutTable,
-  volleyball: sampleKnockoutTable,
-  tchoukball: sampleKnockoutTable,
+const TSS: TSSDatabase = {
+  dodgeball: sampleRounds,
+  frisbee: sampleRounds,
+  volleyball: sampleRounds,
+  tchoukball: sampleRounds,
   data: {
     schedule,
   },

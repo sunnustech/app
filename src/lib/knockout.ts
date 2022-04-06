@@ -1,7 +1,7 @@
 import TSS from '@/data/schema/TSS'
 import push from '@/data/push'
 import {
-  MatchParticipants,
+  Match,
   MatchRequest,
   Round,
   Winner,
@@ -83,7 +83,7 @@ const handleMatch = async ({
       // Queried only once
       const docData = doc.data()
       if (docData) {
-        const matchParticipants: MatchParticipants = docData[round][matchNumber]
+        const matchParticipants: Match = docData[round][matchNumber]
 
         const winnerName =
           matchParticipants[winner.toString() === 'A' ? 'A' : 'B']

@@ -1,4 +1,6 @@
 import {
+  EmailProps,
+  LoginIdProps,
   Member,
   ParticipantsDatabase,
   RegisteredEvents,
@@ -190,13 +192,8 @@ const allTeams: Array<TeamProps> = [
   Developer,
 ]
 
-const allLoginIds: {
-  [key: string]: { teamName: string; index: number; email: string }
-} = {}
-
-const allEmails: {
-  [key: string]: { teamName: string; index: number; loginId: string }
-} = {}
+const allLoginIds: Record<string, LoginIdProps> = {}
+const allEmails: Record<string, EmailProps> = {}
 
 allTeams.forEach((team) => {
   team.members.forEach((member, index) => {
