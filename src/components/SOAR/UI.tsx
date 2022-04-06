@@ -24,6 +24,9 @@ const UI = ({
   Timer,
 }: any) => {
   const TopUI = () => {
+    function backToHomeScreen() {
+      navigation.navigate('HomeScreen')
+    }
     return (
       <NoTouchDiv style={styles.mapTopContainer}>
         <Overlap style={styles.mapRightContainer}>
@@ -41,7 +44,7 @@ const UI = ({
           <NoTouchDiv style={styles.navigationContainer}>
             <MapNavigationButton
               icon={[IC, 'arrow-back']}
-              onPress={() => navigation.navigate('HomeScreen')}
+              onPress={backToHomeScreen}
             />
           </NoTouchDiv>
         </Overlap>

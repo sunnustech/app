@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { BarCodeScanner } from 'expo-barcode-scanner'
@@ -30,6 +30,7 @@ import { onSnapshot, doc } from 'firebase/firestore'
 import { db } from '@/sunnus/firebase'
 import { Group } from '@/types/participants'
 import TimerComponent from '@/components/Timer'
+import { useFocusEffect } from '@react-navigation/native'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
@@ -143,9 +144,10 @@ const SOARScreen = () => {
   // to attach a listener to firebase
   useEffect(() => {
     if (everythingLoaded === true) {
-      onSnapshot(doc(db, 'participants', teamName), (doc) => {
+      const u = onSnapshot(doc(db, 'participants', teamName), (doc) => {
         const liveData = doc.data()
         if (liveData) {
+          console.log('received firebase updates at', new Date())
           const updatedTeamData: Group = {
             SOARTimerEvents: liveData.SOARTimerEvents,
             SOARStart: liveData.SOARStart,
@@ -155,7 +157,7 @@ const SOARScreen = () => {
             registeredEvents: liveData.registeredEvents,
             SOARPausedAt: liveData.SOARPausedAt,
             SOARStationsCompleted: liveData.SOARStationsCompleted,
-            SOARStationsRemaining: liveData.SOARStationsRemaining
+            SOARStationsRemaining: liveData.SOARStationsRemaining,
           }
           setDisplayLocations(
             getLocations(locations, filtered, updatedTeamData)
@@ -225,18 +227,23 @@ const SOARScreen = () => {
    * =====================================================
    */
 
-  useEffect(() => {
-    if (
-      teamName &&
-      stationOrder.A.length > 0 &&
-      teamData.groupTitle.length > 0
-    ) {
-      setEverythingLoaded(true)
-    }
-    return () => {
+  useFocusEffect(
+    useCallback(() => {
+      console.log('focused on SOAR')
       setEverythingLoaded(false)
-    }
-  }, [teamName, stationOrder, teamData])
+      if (
+        teamName &&
+        stationOrder.A.length > 0 &&
+        teamData.groupTitle.length > 0
+      ) {
+        setEverythingLoaded(true)
+      }
+      return () => {
+        console.log('cleanup time')
+      setEverythingLoaded(false)
+      }
+    }, [teamName, stationOrder, teamData])
+  )
 
   /* =====================================================
    *                  CAMERA PERMISSIONS

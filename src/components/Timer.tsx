@@ -29,17 +29,12 @@ const TimerText = ({
   const [elapsed, setElapsed] = useState('')
 
   function tick() {
+    console.log('tick')
     const now = new Date()
-
     const sum = SOARTimerEvents.reduce((a, b) => a + b, 0)
     const sign = (sum > 0) ? -1: 1
     const finalSum = Math.abs(sum + sign * now.getTime())
-
-    console.log('SOARTimerEvents', SOARTimerEvents)
-    console.log('sum', finalSum)
-
     const displayTime = secondsToHHMMSS(Math.round(finalSum / 1000))
-
     setElapsed(displayTime)
   }
 
