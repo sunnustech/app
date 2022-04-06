@@ -19,6 +19,7 @@ export type UnauthenticatedPages = {
 
 export type TSSPages = {
   TSSScreen: undefined
+  TSSKnockoutTable: undefined
 }
 
 export type AuthPage<Route extends keyof AuthenticatedPages> =

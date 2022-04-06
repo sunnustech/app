@@ -3,16 +3,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 /* screens */
-import {
-  HomeScreen,
-  SOARScreen,
-  WSSScreen,
-  DEVScreen,
-  KnockoutTable,
-  TimerScreen,
-  QRScreen,
-} from '@/screens/index'
+import { HomeScreen, SOARScreen, WSSScreen, DEVScreen } from '@/screens/index'
 import TSSScreen from '@/screens/TSS'
+import TSSKnockoutTable from '@/screens/TSS/KnockoutTable'
 
 /* providers */
 import { SOARProvider } from '@/contexts/SOARContext'
@@ -25,7 +18,8 @@ const TSSTabs = createBottomTabNavigator()
 
 const TSSNavigator = () => (
   <TSSTabs.Navigator>
-    <TSSTabs.Screen name="TSSScreen" component={TSSScreen}/>
+    <TSSTabs.Screen name="TSSScreen" component={TSSScreen} />
+    <TSSTabs.Screen name="KnockoutTable" component={TSSKnockoutTable} />
   </TSSTabs.Navigator>
 )
 
@@ -39,9 +33,6 @@ const Navigator = () => (
     <Drawer.Screen name="TSSNavigator" component={TSSNavigator} />
     <Drawer.Screen name="WSSScreen" component={WSSScreen} />
     <Drawer.Screen name="DEVScreen" component={DEVScreen} />
-    <Drawer.Screen name="KnockoutTableScreen" component={KnockoutTable} />
-    <Drawer.Screen name="TimerScreen" component={TimerScreen} />
-    <Drawer.Screen name="QRScreen" component={QRScreen} />
   </Drawer.Navigator>
 )
 
