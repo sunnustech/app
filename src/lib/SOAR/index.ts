@@ -18,12 +18,6 @@ export function getLocations(
     (loc) => loc.stationType === 'game'
   )
 
-  /* note that groupStationOrder is a sorted array of stations
-   * that the group will go to, in the order of visiting.
-   *
-   * so it suffices to take the first result that hasn't been completed.
-   */
-
   const com = teamData.SOARStationsCompleted
   const rem = teamData.SOARStationsRemaining
 
