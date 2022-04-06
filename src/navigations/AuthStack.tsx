@@ -1,5 +1,6 @@
 /* navigation */
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 /* screens */
 import {
@@ -20,6 +21,13 @@ import { UserProvider } from '@/contexts/UserContext'
 import { AuthenticatedPages } from '@/types/navigation'
 
 const Drawer = createDrawerNavigator<AuthenticatedPages>()
+const TSSTabs = createBottomTabNavigator()
+
+const TSSNavigator = () => (
+  <TSSTabs.Navigator>
+    <TSSTabs.Screen name="TSSScreen" component={TSSScreen}/>
+  </TSSTabs.Navigator>
+)
 
 const Navigator = () => (
   <Drawer.Navigator
@@ -28,7 +36,7 @@ const Navigator = () => (
   >
     <Drawer.Screen name="HomeScreen" component={HomeScreen} />
     <Drawer.Screen name="SOARScreen" component={SOARScreen} />
-    <Drawer.Screen name="TSSScreen" component={TSSScreen} />
+    <Drawer.Screen name="TSSNavigator" component={TSSNavigator} />
     <Drawer.Screen name="WSSScreen" component={WSSScreen} />
     <Drawer.Screen name="DEVScreen" component={DEVScreen} />
     <Drawer.Screen name="KnockoutTableScreen" component={KnockoutTable} />

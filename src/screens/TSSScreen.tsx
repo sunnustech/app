@@ -2,7 +2,7 @@ import { KeyboardAvoidingView, Text } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 
 /* navigation */
-import { AuthPage } from '@/types/navigation'
+import { TSSPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
@@ -23,7 +23,7 @@ const TSSScreen = () => {
   // const navigation = useNavigation<DrawerNavigationProp<AuthenticatedPages, 'TSSScreen'>>()
   // const navigation = useNavigation<DrawerNavigationProp<AuthenticatedPages, 'TSSScren'>>()
 
-  const navigation = useNavigation<AuthPage<'TSSScreen'>>()
+  const navigation = useNavigation<TSSPage<'TSSScreen'>>()
 
   const tempFunction = async () => {
     let obj: MatchRequest = {
