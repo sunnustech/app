@@ -24,4 +24,17 @@ export default StyleSheet.create({
   text: {
     color: 'black',
   },
+  page: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'green',
+  },
+  pagerView: {
+    flex: 1,
+    width: '100%',
+  },
+  text: {
+    color: 'black',
+    fontSize: 40,
+  },
 })

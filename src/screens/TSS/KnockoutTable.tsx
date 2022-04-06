@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Text } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 
 /* navigation */
@@ -6,10 +6,24 @@ import { TSSPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
-import { TSS as styles } from '@/styles/fresh'
+import { knockout as styles } from '@/styles/fresh'
 import { useState } from 'react'
 import { Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
+import PagerView from 'react-native-pager-view'
+
+const RoundOf32 = () => {
+  return (
+    <PagerView style={styles.pagerView} initialPage={0}>
+      <View key="1">
+        <Text>First page</Text>
+      </View>
+      <View key="2">
+        <Text>Second page</Text>
+      </View>
+    </PagerView>
+  )
+}
 
 const KnockoutTable = ({ sportState }: any) => {
   const navigation = useNavigation<TSSPage<'TSSKnockoutTable'>>()
@@ -36,6 +50,7 @@ const KnockoutTable = ({ sportState }: any) => {
       />
       <Text>Welcome to the TSS Knockout Table!</Text>
       <Text>Sport: {sport}</Text>
+      <RoundOf32 />
     </KeyboardAvoidingView>
   )
 }
