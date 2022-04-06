@@ -22,28 +22,30 @@ export type Match = {
   winner: Winner
 }
 
-type MatchesOfRound = Record<number, Match>
+type Matches = Record<number, Match>
 
-export type RoundsOfSport = Record<Round, MatchesOfRound> & {
+export type Rounds = Record<Round, Matches> & {
   champions: string
 }
 
-export type TSSEvents = Record<Sport, RoundsOfSport>
+type Sports = Record<Sport, Rounds>
 
-export type TSSSchedule = Array<{
+type TSSScheduleEvent = {
   id: number
   title: string
   sport: string
   time: string
   venue: string
   teams: Array<string>
-}>
+}
+
+export type TSSSchedule = Array<TSSScheduleEvent>
 
 /*
  * To be Firestore-friendly, the final form has to be an object,
  * and first-level values cannot be arrays
  */
-export type TSSDatabase = TSSEvents & {
+export type TSSDatabase = Sports & {
   data: {
     schedule: TSSSchedule
   }
