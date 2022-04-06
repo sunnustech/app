@@ -131,8 +131,6 @@ export type SOARTeamData = {
   allEvents: Array<SOARTimestamp>
   direction: 'A' | 'B'
   points: number
-  stationsCompleted: Array<string>
-  stationsRemaining: Array<string>
 }
 
 /* Map and SOAR */
