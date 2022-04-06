@@ -24,11 +24,11 @@ export type Match = {
 
 type MatchesOfRound = Record<number, Match>
 
-export type TSSKnockoutTable = Record<Round, MatchesOfRound> & {
+export type RoundsOfSport = Record<Round, MatchesOfRound> & {
   champions: string
 }
 
-export type TSSEvents = Record<Sport, TSSKnockoutTable>
+export type TSSEvents = Record<Sport, RoundsOfSport>
 
 export type TSSSchedule = Array<{
   id: number
