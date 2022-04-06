@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native'
-import opts from './opts'
 
 export default StyleSheet.create({
   container: {
@@ -37,17 +36,62 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 40,
   },
+
+  /* match node CSS */
   matchNodeContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '50%',
     backgroundColor: '#ffffff',
-    padding: 20,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
     borderRadius: 6,
     shadowColor: '#000000',
     shadowRadius: 2,
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 5 },
   },
-  matchNodeText: {
+
+  matchNodeRow: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    // backgroundColor: '#c4b5fd',
+  },
+
+  // last containers
+  matchNodeTeam: {
+    borderWidth: 2,
+    borderColor: 'rgba(0,0,0,0)',
+    flex: 1,
     fontSize: 16,
-    color: '#323232',
+    fontWeight: '700',
+    color: '#4b5563',
+    overflow: 'hidden',
+    // backgroundColor: '#fde047',
+  },
+  matchNodeScore: {
+    width: 36,
+    borderColor: '#e5e7eb',
+    borderWidth: 2,
+    borderRadius: 4,
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#4b5563',
+    textAlign: 'center',
+    // backgroundColor: '#86efac',
+  },
+
+  // text only
+  matchNodeTeamText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#4b5563',
+  },
+  matchNodeScoreText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#4b5563',
+    textAlign: 'center',
   },
 })
