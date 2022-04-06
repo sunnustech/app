@@ -7,8 +7,11 @@ type SOARRegistration = {
 type TSSRegistration = {} | {}
 
 export type Group = {
+  SOARStart: number
+  SOARPausedAt: number
   groupTitle: string
   SOAR: SOARTeamData
+  SOARTimerEvents: Array<number>
   members: Array<{
     email: string
     phone: string

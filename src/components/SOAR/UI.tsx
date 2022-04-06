@@ -6,9 +6,13 @@ import {
   MapNavigationButton,
   MapSOSButton,
   MapAdminToggle,
-  Timer,
 } from '@/components/SOAR'
 import { MapCurretLocationButton } from './MapButtons'
+import { Text } from 'react-native'
+
+import SOAR from '@/lib/SOAR'
+import { QRCommands as q } from '@/lib/SOAR/QRCommands'
+import writeSchema from '../../data/writeSchema'
 
 const UI = ({
   navigation,
@@ -17,6 +21,7 @@ const UI = ({
   handleSOS,
   openQRScanner,
   flyToCurrentLocation,
+  Timer,
 }: any) => {
   const TopUI = () => {
     return (
@@ -44,6 +49,18 @@ const UI = ({
     )
   }
 
+  const Debug = () => {
+    return (
+      <>
+        <MapSOSButton onPress={writeSchema} />
+        <MapSOSButton onPress={() => SOAR.start("Dev_loper", q.start)} />
+        <MapSOSButton onPress={() => SOAR.pause('Dev_loper', q.pause)} />
+        <MapSOSButton onPress={() => SOAR.resume('Dev_loper', q.resume)} />
+        <MapSOSButton onPress={() => SOAR.stopFinal('Dev_loper', q.stopFinal)} />
+      </>
+    )
+  }
+
   const BottomUI = () => {
     return (
       <NoTouchDiv style={styles.mapBottomContainer}>
@@ -52,6 +69,7 @@ const UI = ({
           <MapSOSButton onPress={handleSOS} />
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
+          <Debug />
           <MapCurretLocationButton onPress={flyToCurrentLocation} />
           <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
         </NoTouchDiv>

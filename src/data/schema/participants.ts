@@ -10,12 +10,26 @@ const SOARInit: SOARTeamData = {
   startTime: {},
   stopTime: {},
   allEvents: [],
-  lastPause: {},
-  lastResume: {},
   direction: 'A',
   stationsCompleted: [],
   stationsRemaining: [],
   points: 0,
+}
+
+const groupInit = {
+  SOARStart: 0,
+  SOARTimerEvents : [],
+  SOARPausedAt: 0,
+  groupTitle: '',
+  registeredEvents: {
+    TSS: {
+      volleyball: false,
+      dodgeball: false,
+    },
+    SOAR: false,
+  },
+  SOAR: SOARInit,
+  members: [],
 }
 
 SOARInit.stationsRemaining = stationOrder[SOARInit.direction]
@@ -97,8 +111,6 @@ const testThree = {
     startTime: {},
     stopTime: {},
     timerEvents: [],
-    lastPause: {},
-    lastResume: {},
   },
   members: [
     {
@@ -125,7 +137,6 @@ const Developer: Group = {
   registeredEvents: {
     SOAR: true,
   },
-  SOAR: SOARInit,
   members: [
     {
       email: 'adam@gmail.com',
@@ -148,6 +159,11 @@ const Developer: Group = {
       loginId: 'dev_loper120386',
     },
   ],
+  // SOAR stuff
+  SOAR: SOARInit,
+  SOARStart: 0,
+  SOARTimerEvents : [],
+  SOARPausedAt: 0,
 }
 
 const trimGroupNameToLowercase = (grp: string) => {

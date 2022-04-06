@@ -27,7 +27,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.nus.sunnus"
+      "package": "com.nus.sunnus",
+      "versionCode": 11
     },
     "web": {
       "favicon": "./assets/favicon.png"
