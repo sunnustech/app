@@ -1,4 +1,5 @@
 import { Camera } from 'react-native-maps'
+import { Sport, Round } from '@/types/TSS'
 
 export const NUSCoordinates: Camera = {
   center: { latitude: 1.296674, longitude: 103.77639 },
@@ -7,3 +8,18 @@ export const NUSCoordinates: Camera = {
   heading: 0,
   altitude: 0,
 }
+
+export const sportList: Array<Sport> = [
+  'dodgeball',
+  'frisbee',
+  'volleyball',
+  'tchoukball',
+]
+
+export const roundList: Array<Round> = [
+  'round_of_32',
+  'round_of_16',
+  'quarterfinals',
+  'semifinals',
+  'finals',
+]

@@ -63,7 +63,7 @@ const HomeScreen = () => {
           SOAR
         </Button>
         <Button
-          onPress={() => navigation.navigate('TSSScreen')}
+          onPress={() => navigation.navigate('TSSNavigator')}
           textStyle={styles.TSSbuttonText}
           containerStyle={styles.TSSbutton}
         >
