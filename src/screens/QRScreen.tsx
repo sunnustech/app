@@ -15,12 +15,12 @@ import { QRIndex } from '@/lib/SOAR/QRDictionary'
 import { QRCommands, invalidQR } from '@/lib/SOAR/QRCommands'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
-import { Group } from '@/types/participants'
+import { TeamProps } from '@/types/participants'
 import { QRCommandProps } from '@/types/SOAR'
 
-const getTeamData = async (groupTitle: string): Promise<Group> => {
+const getTeamData = async (teamName: string): Promise<TeamProps> => {
   // TODO: handle errors on bad pulls
-  const data = (await pullDoc({ collection: 'participants', doc: groupTitle }))
+  const data = (await pullDoc({ collection: 'participants', doc: teamName }))
     ?.data
   return data
 }

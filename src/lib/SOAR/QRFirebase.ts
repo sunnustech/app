@@ -7,7 +7,7 @@ import { TimeApiProps } from '@/types/index'
 import { QRCommandProps, SOARCommand, SOARTimestamp } from '@/types/SOAR'
 import { db } from '@/sunnus/firebase'
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
-import { Group } from '@/types/participants'
+import { TeamProps } from '@/types/participants'
 
 /* NOTE
  * there will be no game-related error catching done here.
@@ -28,32 +28,23 @@ const getTimeAsync = async (): Promise<TimeApiProps> => {
   return time
 }
 
-const generatePacket = (groupTitle: string, packet: any) => {
-  const obj = {
-    [groupTitle]: {
-      SOAR: packet,
-    },
-  }
-  return obj
-}
-
 /*
- * checks if the group has started SOAR or not.
+ * checks if the team has started SOAR or not.
  * This is key because if not the original start time may be overwritten.
  */
-const getSOARProps = async (groupTitle: string): Promise<Group> => {
+const getSOARProps = async (teamName: string): Promise<TeamProps> => {
   // TODO: handle errors on bad pulls
-  const data = (await pullDoc({ collection: 'participants', doc: groupTitle }))
+  const data = (await pullDoc({ collection: 'participants', doc: teamName }))
     ?.data
   return data
 }
 
 const propsAndEvents = async (
-  groupTitle: string,
+  teamName: string,
   QR: QRCommandProps
-): Promise<[Group, Array<SOARTimestamp>, number]> => {
+): Promise<[TeamProps, Array<SOARTimestamp>, number]> => {
   const [teamData, time] = await Promise.all([
-    getSOARProps(groupTitle),
+    getSOARProps(teamName),
     getTimeAsync(),
   ])
   const allEvents = teamData.SOAR.allEvents
@@ -66,9 +57,9 @@ const propsAndEvents = async (
  * │  START	 │
  * ╰─────────╯
  */
-const start = async (groupTitle: string, QR: QRCommandProps) => {
-  console.log(`-- START @ ${groupTitle} --`)
-  const [teamData, allEvents, ts] = await propsAndEvents(groupTitle, QR)
+const start = async (teamName: string, QR: QRCommandProps) => {
+  console.log(`-- START @ ${teamName} --`)
+  const [teamData, allEvents, ts] = await propsAndEvents(teamName, QR)
 
   const SOAR = teamData.SOAR
   SOAR.startTime = ts
@@ -76,7 +67,7 @@ const start = async (groupTitle: string, QR: QRCommandProps) => {
   SOAR.timerRunning = true
   SOAR.allEvents = allEvents
 
-  updateDoc(doc(db, 'participants', groupTitle), {
+  updateDoc(doc(db, 'participants', teamName), {
     SOARTimerEvents: [ts],
     SOARStart: ts,
     SOAR,
@@ -87,8 +78,8 @@ const start = async (groupTitle: string, QR: QRCommandProps) => {
  * │  STOP  │
  * ╰────────╯
  */
-const stopFinal = async (groupTitle: string, QR: QRCommandProps) => {
-  const [teamData, allEvents, ts] = await propsAndEvents(groupTitle, QR)
+const stopFinal = async (teamName: string, QR: QRCommandProps) => {
+  const [teamData, allEvents, ts] = await propsAndEvents(teamName, QR)
 
   if (teamData.SOAR.stopped) {
     console.log('SOAR is already completed.')
@@ -105,7 +96,7 @@ const stopFinal = async (groupTitle: string, QR: QRCommandProps) => {
   SOAR.allEvents = allEvents
 
 
-  updateDoc(doc(db, 'participants', groupTitle), {
+  updateDoc(doc(db, 'participants', teamName), {
     SOARTimerEvents: arrayUnion(-ts),
     SOARPausedAt,
     SOAR,
@@ -116,9 +107,9 @@ const stopFinal = async (groupTitle: string, QR: QRCommandProps) => {
  * │  PAUSE	 │
  * ╰─────────╯
  */
-const pause = async (groupTitle: string, QR: QRCommandProps) => {
-  console.log(`-- PAUSE @ ${groupTitle} --`)
-  const [teamData, allEvents, ts] = await propsAndEvents(groupTitle, QR)
+const pause = async (teamName: string, QR: QRCommandProps) => {
+  console.log(`-- PAUSE @ ${teamName} --`)
+  const [teamData, allEvents, ts] = await propsAndEvents(teamName, QR)
 
   const ev = teamData.SOARTimerEvents
   if (ev[ev.length - 1] < 0) {
@@ -133,7 +124,7 @@ const pause = async (groupTitle: string, QR: QRCommandProps) => {
   SOAR.timerRunning = false
   SOAR.allEvents = allEvents
 
-  updateDoc(doc(db, 'participants', groupTitle), {
+  updateDoc(doc(db, 'participants', teamName), {
     SOARTimerEvents: arrayUnion(-ts),
     SOARPausedAt,
     SOAR,
@@ -144,9 +135,9 @@ const pause = async (groupTitle: string, QR: QRCommandProps) => {
  * │  RESUME  │
  * ╰──────────╯
  */
-const resume = async (groupTitle: string, QR: QRCommandProps) => {
-  console.log(`-- RESUME @ ${groupTitle} --`)
-  const [teamData, allEvents, ts] = await propsAndEvents(groupTitle, QR)
+const resume = async (teamName: string, QR: QRCommandProps) => {
+  console.log(`-- RESUME @ ${teamName} --`)
+  const [teamData, allEvents, ts] = await propsAndEvents(teamName, QR)
 
   const ev = teamData.SOARTimerEvents
   if (ev[ev.length - 1] > 0) {
@@ -158,19 +149,19 @@ const resume = async (groupTitle: string, QR: QRCommandProps) => {
   SOAR.timerRunning = true
   SOAR.allEvents = allEvents
 
-  updateDoc(doc(db, 'participants', groupTitle), {
+  updateDoc(doc(db, 'participants', teamName), {
     SOARTimerEvents: arrayUnion(ts),
     SOAR,
   })
 }
 
 // end SOAR timer for the last time (final)
-const completeStage = async (groupTitle: string, QR: QRCommandProps) => {
-  const [teamProps, allEvents, _] = await propsAndEvents(groupTitle, QR)
+const completeStage = async (teamName: string, QR: QRCommandProps) => {
+  const [teamProps, allEvents, _] = await propsAndEvents(teamName, QR)
 
   const thisStation = QR.station
 
-  updateDoc(doc(db, 'participants', groupTitle), {
+  updateDoc(doc(db, 'participants', teamName), {
     SOARStationsRemaining: arrayRemove(thisStation),
     SOARStationsCompleted: arrayUnion(thisStation)
   })

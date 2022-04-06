@@ -4,12 +4,12 @@
 
 import SOAR from './QRFirebase'
 import { SOARLocation } from '@/types/SOAR'
-import { Group } from '@/types/participants'
+import { TeamProps } from '@/types/participants'
 
 export function getLocations(
   locations: Array<SOARLocation>,
   filtered: any,
-  teamData: Group
+  teamData: TeamProps
 ) {
   /* remove all game stations (so we only add in the next game station) */
   const noGames = locations.filter((loc) => loc.stationType !== 'game')
@@ -17,12 +17,6 @@ export function getLocations(
   const gameStations: Array<SOARLocation> = locations.filter(
     (loc) => loc.stationType === 'game'
   )
-
-  /* note that groupStationOrder is a sorted array of stations
-   * that the group will go to, in the order of visiting.
-   *
-   * so it suffices to take the first result that hasn't been completed.
-   */
 
   const com = teamData.SOARStationsCompleted
   const rem = teamData.SOARStationsRemaining

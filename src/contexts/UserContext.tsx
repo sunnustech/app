@@ -1,8 +1,8 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 import { auth } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
-import { SunNUSTeamData } from '@/types/participants'
-import { SOARTeamData } from '@/types/SOAR'
+import { TeamProps } from '@/types/participants'
+import { SOARTeamProps } from '@/types/SOAR'
 import { notificationInit } from '@/lib/notifications'
 import push from '@/data/push'
 
@@ -13,27 +13,25 @@ type UserContextProps = {
   setTeamName: Dispatch<SetStateAction<string>>
   schedule: object
   setSchedule: Dispatch<SetStateAction<object>>
-  teamData: SunNUSTeamData
-  setTeamData: Dispatch<SetStateAction<SunNUSTeamData>>
+  teamData: TeamProps
+  setTeamData: Dispatch<SetStateAction<TeamProps>>
 }
 
-const SOARinit: SOARTeamData = {
+const SOARinit: SOARTeamProps = {
   timerRunning: false,
   started: false,
   stopped: false,
-  startTime: {},
-  stopTime: {},
+  startTime: 0,
+  stopTime: 0,
   allEvents: [],
   direction: 'A',
-  stationsCompleted: [],
-  stationsRemaining: [],
   points: 0,
 }
 
 const teamDataInit = {
   members: [{ email: '', phone: '', loginId: '' }],
   SOAR: SOARinit,
-  groupTitle: '',
+  teamName: '',
 }
 
 const UserContext = createContext<UserContextProps>({
@@ -64,10 +62,10 @@ const rehydrateUserData = async ({
      */
     const user = emailDictionary.data[auth.currentUser?.email]
     setUserId(user.loginId)
-    setTeamName(user.groupTitle)
+    setTeamName(user.teamName)
     const res2: any = await pullDoc({
       collection: 'participants',
-      doc: user.groupTitle,
+      doc: user.teamName,
     })
     const teamData = res2.data
     setTeamData(teamData)
@@ -100,7 +98,7 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [userId, setUserId] = useState('')
   const [teamName, setTeamName] = useState('')
   const [schedule, setSchedule] = useState({})
-  const [teamData, setTeamData] = useState<SunNUSTeamData>(teamDataInit)
+  const [teamData, setTeamData] = useState<TeamProps>(teamDataInit)
 
   const token = notificationInit().expoPushToken
   handlePushTokens(token)

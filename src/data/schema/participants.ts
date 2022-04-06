@@ -1,14 +1,14 @@
 import {
-  Group,
   Member,
-  ParticipantsData,
+  ParticipantsDatabase,
   RegisteredEvents,
+  TeamProps,
 } from '@/types/participants'
-import { SOARTeamData } from '@/types/SOAR'
+import { SOARTeamProps } from '@/types/SOAR'
 import { objFromArray } from '@/lib/utils'
 import { stationOrder } from './SOAR'
 
-const SOARInit: SOARTeamData = {
+const SOARInit: SOARTeamProps = {
   timerRunning: false,
   started: false,
   stopped: false,
@@ -23,7 +23,7 @@ function newSunNUSTeam(props: {
   members: Array<Member>
   registeredEvents: RegisteredEvents
   direction: 'A' | 'B'
-  groupTitle: string
+  teamName: string
 }) {
   return {
     SOAR: SOARInit,
@@ -32,7 +32,7 @@ function newSunNUSTeam(props: {
     SOARPausedAt: 0,
     SOARStationsCompleted: [],
 
-    groupTitle: props.groupTitle,
+    teamName: props.teamName,
     SOARStationsRemaining: stationOrder[props.direction],
     members: props.members,
     registeredEvents: props.registeredEvents,
@@ -40,7 +40,7 @@ function newSunNUSTeam(props: {
 }
 
 const testOne = {
-  groupTitle: 'Known_Painters',
+  teamName: 'Known_Painters',
   registeredEvents: {
     TSS: {
       volleyball: true,
@@ -70,7 +70,7 @@ const testOne = {
 }
 
 const testTwo = {
-  groupTitle: 'Modest_Liberators',
+  teamName: 'Modest_Liberators',
   registeredEvents: {
     TSS: {
       volleyball: true,
@@ -100,7 +100,7 @@ const testTwo = {
 }
 
 const testThree = {
-  groupTitle: 'HS123',
+  teamName: 'HS123',
   registeredEvents: {
     TSS: {
       volleyball: true,
@@ -138,7 +138,7 @@ const testThree = {
 }
 
 const Developer = newSunNUSTeam({
-  groupTitle: 'Developer',
+  teamName: 'Developer',
   direction: 'A',
   registeredEvents: {
     SOAR: true,
@@ -167,23 +167,23 @@ const Developer = newSunNUSTeam({
   ],
 })
 
-const trimGroupNameToLowercase = (grp: string) => {
-  return grp.split('_').join('').split(' ').join('').toLowerCase()
+const trimTeamNameToLowercase = (teamName: string) => {
+  return teamName.split('_').join('').split(' ').join('').toLowerCase()
 }
 
 const generateRandomID = () => {
   return Math.random().toString(10).substring(2, 5)
 }
 
-const addLoginId = (obj: any): Group => {
-  let grpNameTitle = trimGroupNameToLowercase(obj.groupTitle)
+const addLoginId = (obj: any): TeamProps => {
+  let teamName = trimTeamNameToLowercase(obj.teamName)
   obj.members.forEach((e: any) => {
-    e['loginId'] = grpNameTitle + generateRandomID()
+    e['loginId'] = teamName + generateRandomID()
   })
   return obj
 }
 
-const allTeams: Array<Group> = [
+const allTeams: Array<TeamProps> = [
   addLoginId(testOne),
   addLoginId(testTwo),
   addLoginId(testThree),
@@ -191,29 +191,29 @@ const allTeams: Array<Group> = [
 ]
 
 const allLoginIds: {
-  [key: string]: { groupTitle: string; index: number; email: string }
+  [key: string]: { teamName: string; index: number; email: string }
 } = {}
 
 const allEmails: {
-  [key: string]: { groupTitle: string; index: number; loginId: string }
+  [key: string]: { teamName: string; index: number; loginId: string }
 } = {}
 
 allTeams.forEach((team) => {
   team.members.forEach((member, index) => {
     allLoginIds[member.loginId] = {
-      groupTitle: team.groupTitle,
+      teamName: team.teamName,
       index,
       email: member.email,
     }
     allEmails[member.email] = {
-      groupTitle: team.groupTitle,
+      teamName: team.teamName,
       index,
       loginId: member.loginId,
     }
   })
 })
 
-const participants: ParticipantsData = objFromArray(allTeams, 'groupTitle')
+const participants: ParticipantsDatabase = objFromArray(allTeams, 'teamName')
 participants['allLoginIds'] = allLoginIds
 participants['allEmails'] = allEmails
 

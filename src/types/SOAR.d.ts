@@ -6,7 +6,7 @@ import { MutableRefObject, RefObject } from 'react'
 
 export type SOARTimetable = Array<{
   time: string
-  groupTitle: string
+  teamName: string
 }>
 
 type SOARLocationStatus = '' | 'next' | 'done'
@@ -123,7 +123,7 @@ export type SOARTimestamp = {
   QR: QRCommandProps
 }
 
-export type SOARTeamData = {
+export type SOARTeamProps = {
   started: boolean
   stopped: boolean
   startTime: number
