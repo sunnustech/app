@@ -22,9 +22,9 @@ export type Match = {
   winner: Winner
 }
 
-type TSSKnockoutRound = Record<number, Match>
+type MatchesOfRound = Record<number, Match>
 
-export type TSSKnockoutTable = Record<Round, TSSKnockoutRound> & {
+export type TSSKnockoutTable = Record<Round, MatchesOfRound> & {
   champions: string
 }
 
