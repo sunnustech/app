@@ -167,8 +167,8 @@ const Developer = newSunNUSTeam({
   ],
 })
 
-const trimGroupNameToLowercase = (grp: string) => {
-  return grp.split('_').join('').split(' ').join('').toLowerCase()
+const trimTeamNameToLowercase = (teamName: string) => {
+  return teamName.split('_').join('').split(' ').join('').toLowerCase()
 }
 
 const generateRandomID = () => {
@@ -176,9 +176,9 @@ const generateRandomID = () => {
 }
 
 const addLoginId = (obj: any): TeamProps => {
-  let grpNameTitle = trimGroupNameToLowercase(obj.teamName)
+  let teamName = trimTeamNameToLowercase(obj.teamName)
   obj.members.forEach((e: any) => {
-    e['loginId'] = grpNameTitle + generateRandomID()
+    e['loginId'] = teamName + generateRandomID()
   })
   return obj
 }
