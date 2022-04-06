@@ -24,8 +24,6 @@ const SOARinit: SOARTeamData = {
   startTime: {},
   stopTime: {},
   allEvents: [],
-  lastPause: {},
-  lastResume: {},
   direction: 'A',
   stationsCompleted: [],
   stationsRemaining: [],

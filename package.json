@@ -11,7 +11,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "build": "expo build:ios",
-    "eas": "eas build -p ios"
+    "ei": "eas build -p ios",
+    "ea": "eas build -p android"
   },
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",

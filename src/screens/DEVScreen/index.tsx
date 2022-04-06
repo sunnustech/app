@@ -99,6 +99,8 @@ const DEVScreen = () => {
 
   const navigation = useNavigation<AuthPage<'DEVScreen'>>()
 
+  const testStart = new Date(2022, 3, 6, 11)
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -110,25 +112,25 @@ const DEVScreen = () => {
         <View style={{ width: '60%', marginTop: 32 }}>
           <DebugList />
 
-          <Text>SOAR functions (team name: Known_Painters)</Text>
+          <Text>SOAR functions (team name: Dev_loper)</Text>
 
           <DebugButton
-            onPress={() => SOAR.start('Known_Painters', q.start)}
+            onPress={() => SOAR.start('Dev_loper', q.start)}
             children="start"
           />
 
           <DebugButton
-            onPress={() => SOAR.pause('Known_Painters', q.pause)}
+            onPress={() => SOAR.pause('Dev_loper', q.pause)}
             children="pause"
           />
 
           <DebugButton
-            onPress={() => SOAR.resume('Known_Painters', q.resume)}
+            onPress={() => SOAR.resume('Dev_loper', q.resume)}
             children="resume"
           />
 
           <DebugButton
-            onPress={() => SOAR.stopFinal('Known_Painters', q.stopFinal)}
+            onPress={() => SOAR.stopFinal('Dev_loper', q.stopFinal)}
             children="stopFinal"
           />
 

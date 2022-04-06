@@ -1,4 +1,4 @@
-import { RefObject, useContext, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import MapView, { Camera } from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { BarCodeScanner } from 'expo-barcode-scanner'
@@ -23,12 +23,15 @@ import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
 import { emptyQR } from '@/lib/SOAR/QRCommands'
 import { NUSCoordinates } from '@/data/constants'
-import SOAR from '@/lib/SOAR'
+import SOAR, { getLocations } from '@/lib/SOAR'
 import { UserContext } from '@/contexts/UserContext'
-import { SOARLocation, SOARTeamData } from '@/types/SOAR'
+import { SOARLocation } from '@/types/SOAR'
 import { onSnapshot, doc } from 'firebase/firestore'
 import { db } from '@/sunnus/firebase'
 import { Group } from '@/types/participants'
+import TimerComponent from '@/components/Timer'
+import { useFocusEffect } from '@react-navigation/native'
+import { Unsubscribe } from 'firebase/auth'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
@@ -57,6 +60,12 @@ const SOARScreen = () => {
   const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
   const [everythingLoaded, setEverythingLoaded] = useState(false)
   const [startStatus, setStartStatus] = useState(false)
+
+  // Timer stuff
+  const [isRunning, setIsRunning] = useState(false)
+  const [pausedAt, setPausedAt] = useState(0)
+  const [timerEvents, setTimerEvents] = useState<Array<number>>([])
+
   const [cameraPermission, setCameraPermission] = useState('')
   const [checkingCameraPermission, setCheckingCameraPermission] =
     useState(false)
@@ -106,43 +115,6 @@ const SOARScreen = () => {
     })()
   }, [])
 
-  function getLocations(
-    locations: Array<SOARLocation>,
-    filtered: any,
-    SOARData: SOARTeamData
-  ) {
-    const stationsCompleted = SOARData.stationsCompleted
-
-    /* remove all game stations (so we only add in the next game station) */
-    const noGames = locations.filter((loc) => loc.stationType !== 'game')
-
-    const gameStations: Array<SOARLocation> = locations.filter(
-      (loc) => loc.stationType === 'game'
-    )
-
-    /* note that groupStationOrder is a sorted array of stations
-     * that the group will go to, in the order of visiting.
-     *
-     * so it suffices to take the first result that hasn't been completed.
-     */
-    const nextStationTitle = SOARData.stationsRemaining[0]
-
-    gameStations.forEach((stn) => {
-      // reset status for each call
-      stn.status = ''
-      if (stationsCompleted.includes(stn.title)) {
-        stn.status = 'done'
-      } else if (stn.title === nextStationTitle) {
-        stn.status = 'next'
-      }
-    })
-
-    /* apply water/medic station filter */
-    return [...noGames, ...gameStations].filter(
-      (loc) => filtered[loc.stationType]
-    )
-  }
-
   /* =====================================================
    *          HANDLES TOGGLING OF ADMIN STATIONS
    * =====================================================
@@ -153,7 +125,7 @@ const SOARScreen = () => {
    */
   useEffect(() => {
     if (everythingLoaded === true) {
-      setDisplayLocations(getLocations(locations, filtered, teamData.SOAR))
+      setDisplayLocations(getLocations(locations, filtered, teamData))
     }
   }, [everythingLoaded, filtered])
 
@@ -161,7 +133,7 @@ const SOARScreen = () => {
     const obj = filtered
     obj.water = !obj.water
     setFiltered(obj)
-    setDisplayLocations(getLocations(locations, obj, teamData.SOAR))
+    setDisplayLocations(getLocations(locations, obj, teamData))
   }
 
   /* =====================================================
@@ -173,23 +145,54 @@ const SOARScreen = () => {
   // to attach a listener to firebase
   useEffect(() => {
     if (everythingLoaded === true) {
-      onSnapshot(doc(db, 'participants', teamName), (doc) => {
-        const liveData = doc.data()
-        if (liveData) {
-          const updatedTeamData: Group = {
-            groupTitle: liveData.groupTitle,
-            SOAR: liveData.SOAR,
-            members: liveData.members,
-            registeredEvents: liveData.registeredEvents,
+      const unsubscribeFirebase = onSnapshot(
+        doc(db, 'participants', teamName),
+        (doc) => {
+          const liveData = doc.data()
+          if (liveData) {
+            console.log('received firebase updates at', new Date())
+            const updatedTeamData: Group = {
+              SOARTimerEvents: liveData.SOARTimerEvents,
+              SOARStart: liveData.SOARStart,
+              groupTitle: liveData.groupTitle,
+              SOAR: liveData.SOAR,
+              members: liveData.members,
+              registeredEvents: liveData.registeredEvents,
+              SOARPausedAt: liveData.SOARPausedAt,
+              SOARStationsCompleted: liveData.SOARStationsCompleted,
+              SOARStationsRemaining: liveData.SOARStationsRemaining,
+            }
+            setDisplayLocations(
+              getLocations(locations, filtered, updatedTeamData)
+            )
+            setStartStatus(updatedTeamData.SOAR.started)
+
+            // Timer props
+            setIsRunning(updatedTeamData.SOAR.timerRunning)
+            setPausedAt(updatedTeamData.SOARPausedAt)
+            setTimerEvents(updatedTeamData.SOARTimerEvents)
           }
-          setDisplayLocations(
-            getLocations(locations, filtered, updatedTeamData.SOAR)
-          )
-          setStartStatus(updatedTeamData.SOAR.started)
         }
-      })
+      )
+      return () => {
+        /* detach firebase listener on unmount */
+        unsubscribeFirebase()
+      }
     }
   }, [everythingLoaded])
+
+  const Timer = () => {
+    if (!everythingLoaded) {
+      return null
+    }
+    return (
+      <TimerComponent
+        SOARTimerEvents={timerEvents}
+        pausedAt={pausedAt}
+        isRunning={isRunning}
+      />
+    )
+  }
 
   /* =====================================================
    *            HANDLES QR SCANNER INTERACTIONS
@@ -232,15 +235,23 @@ const SOARScreen = () => {
    * =====================================================
    */
 
-  useEffect(() => {
-    if (
-      teamName &&
-      stationOrder.A.length > 0 &&
-      teamData.groupTitle.length > 0
-    ) {
-      setEverythingLoaded(true)
-    }
-  }, [teamName, stationOrder, teamData])
+  useFocusEffect(
+    useCallback(() => {
+      console.log('focused on SOAR')
+      setEverythingLoaded(false)
+      if (
+        teamName &&
+        stationOrder.A.length > 0 &&
+        teamData.groupTitle.length > 0
+      ) {
+        setEverythingLoaded(true)
+      }
+      return () => {
+        console.log('cleanup time')
+        setEverythingLoaded(false)
+      }
+    }, [teamName, stationOrder, teamData])
+  )
 
   /* =====================================================
    *                  CAMERA PERMISSIONS
@@ -312,6 +323,7 @@ const SOARScreen = () => {
             handleSOS={() => setSOSVisible(!SOSVisible)}
             openQRScanner={openQRScanner}
             toggleAdminStations={toggleAdminStations}
+            Timer={Timer}
           />
           <HandleCameraPermission />
           <QRHandler />

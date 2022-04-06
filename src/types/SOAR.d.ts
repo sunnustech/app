@@ -68,6 +68,7 @@ export type SOARCommand =
   | 'pause'
   | 'stopFinal'
   | 'resume'
+  | 'TimerNotRunning'
   | 'completeStage'
   | 'WrongStation'
   | 'HaveNotStartedSOAR'
@@ -117,44 +118,21 @@ export type SOARContextProps = {
   QRState: UseState<QRCommandProps>
 }
 
-type SOARStartState =
-  | {
-      started: true
-      startTime: TimeApiProps
-      lastPause: TimeApiProps
-      lastResume: TimeApiProps
-    }
-  | {
-      started: false
-      startTime: {}
-      lastPause: {}
-      lastResume: {}
-    }
-
-type SOAREndState =
-  | {
-      stopped: true
-      stopTime: TimeApiProps
-    }
-  | {
-      stopped: false
-      stopTime: {}
-    }
-
 export type SOARTimestamp = {
-  timestamp: TimeApiProps
+  timestamp: number
   QR: QRCommandProps
 }
 
-export type SOARTeamData = SOARStartState &
-  SOAREndState & {
-    timerRunning: boolean
-    allEvents: Array<SOARTimestamp>
-    direction: 'A' | 'B'
-    points: number
-    stationsCompleted: Array<string>
-    stationsRemaining: Array<string>
-  }
+export type SOARTeamData = {
+  started: boolean
+  stopped: boolean
+  startTime: number
+  stopTime: number
+  timerRunning: boolean
+  allEvents: Array<SOARTimestamp>
+  direction: 'A' | 'B'
+  points: number
+}
 
 /* Map and SOAR */
 

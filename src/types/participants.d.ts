@@ -6,23 +6,32 @@ type SOARRegistration = {
 
 type TSSRegistration = {} | {}
 
+export type Member = {
+  email: string
+  phone: string
+  loginId: string
+}
+
+export type RegisteredEvents = {
+  TSS?: {
+    volleyball?: boolean
+    dodgeball?: boolean
+    tchoukball?: boolean
+    frisbee?: boolean
+  }
+  SOAR?: boolean
+}
+
 export type Group = {
   groupTitle: string
+  members: Array<Member>
+  registeredEvents?: RegisteredEvents
   SOAR: SOARTeamData
-  members: Array<{
-    email: string
-    phone: string
-    loginId: string
-  }>
-  registeredEvents?: {
-    TSS?: {
-      volleyball?: boolean
-      dodgeball?: boolean
-      tchoukball?: boolean
-      frisbee?: boolean
-    }
-    SOAR?: boolean
-  }
+  SOARTimerEvents: Array<number>
+  SOARStart: number
+  SOARPausedAt: number
+  SOARStationsCompleted: Array<string>
+  SOARStationsRemaining: Array<string>
 }
 
 export type SunNUSTeamData = Group
