@@ -38,7 +38,7 @@ const generatePacket = (teamName: string, packet: any) => {
 }
 
 /*
- * checks if the group has started SOAR or not.
+ * checks if the team has started SOAR or not.
  * This is key because if not the original start time may be overwritten.
  */
 const getSOARProps = async (teamName: string): Promise<TeamProps> => {

@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator<UnauthenticatedPages>()
 /*
  * uses a react state to keep track of whether the user is logged in or not.
  * this prevent the accidental navigation to a screen that a particular user
- * group is not supposed to see.
+ * team is not supposed to see.
  */
 const SunNUS = () => {
   /* initialize user's state */
