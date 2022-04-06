@@ -8,9 +8,18 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { knockout as styles } from '@/styles/fresh'
 import { useState } from 'react'
-import { Sport } from '@/types/TSS'
+import { Match, Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import PagerView from 'react-native-pager-view'
+
+const MatchNode = ({ match }: { match: Match }) => {
+  return (
+    <View style={styles.matchNodeContainer}>
+      <Text style={styles.matchNodeText}>{match.A}</Text>
+      <Text style={styles.matchNodeText}>{match.B}</Text>
+    </View>
+  )
+}
 
 const RoundOf32 = () => {
   return (
@@ -37,6 +46,11 @@ const KnockoutTable = ({ sportState }: any) => {
    *
    * may not need to fix if method of choosing sport changes later
    */
+  const testMatch: Match = {
+    A: 'Independent_Decorators',
+    B: 'Gentle_Sweaters',
+    winner: 'U',
+  }
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <RNPickerSelect
@@ -51,6 +65,7 @@ const KnockoutTable = ({ sportState }: any) => {
       <Text>Welcome to the TSS Knockout Table!</Text>
       <Text>Sport: {sport}</Text>
       <RoundOf32 />
+      <MatchNode match={testMatch} />
     </KeyboardAvoidingView>
   )
 }

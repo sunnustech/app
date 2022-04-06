@@ -37,4 +37,17 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 40,
   },
+  matchNodeContainer: {
+    backgroundColor: '#ffffff',
+    padding: 20,
+    borderRadius: 6,
+    shadowColor: '#000000',
+    shadowRadius: 2,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 5 },
+  },
+  matchNodeText: {
+    fontSize: 16,
+    color: '#323232',
+  },
 })
