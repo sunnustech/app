@@ -154,7 +154,7 @@ const SOARScreen = () => {
             const updatedTeamData: TeamProps = {
               SOARTimerEvents: liveData.SOARTimerEvents,
               SOARStart: liveData.SOARStart,
-              groupTitle: liveData.groupTitle,
+              teamName: liveData.teamName,
               SOAR: liveData.SOAR,
               members: liveData.members,
               registeredEvents: liveData.registeredEvents,
@@ -242,7 +242,7 @@ const SOARScreen = () => {
       if (
         teamName &&
         stationOrder.A.length > 0 &&
-        teamData.groupTitle.length > 0
+        teamData.teamName.length > 0
       ) {
         setEverythingLoaded(true)
       }

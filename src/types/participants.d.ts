@@ -23,7 +23,7 @@ export type RegisteredEvents = {
 }
 
 export type TeamProps = {
-  groupTitle: string
+  teamName: string
   members: Array<Member>
   registeredEvents?: RegisteredEvents
   SOAR: SOARTeamData

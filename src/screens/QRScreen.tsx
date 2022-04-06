@@ -18,9 +18,9 @@ import { UserContext } from '@/contexts/UserContext'
 import { TeamProps } from '@/types/participants'
 import { QRCommandProps } from '@/types/SOAR'
 
-const getTeamData = async (groupTitle: string): Promise<TeamProps> => {
+const getTeamData = async (teamName: string): Promise<TeamProps> => {
   // TODO: handle errors on bad pulls
-  const data = (await pullDoc({ collection: 'participants', doc: groupTitle }))
+  const data = (await pullDoc({ collection: 'participants', doc: teamName }))
     ?.data
   return data
 }

@@ -33,7 +33,7 @@ const SOARinit: SOARTeamData = {
 const teamDataInit = {
   members: [{ email: '', phone: '', loginId: '' }],
   SOAR: SOARinit,
-  groupTitle: '',
+  teamName: '',
 }
 
 const UserContext = createContext<UserContextProps>({
@@ -64,10 +64,10 @@ const rehydrateUserData = async ({
      */
     const user = emailDictionary.data[auth.currentUser?.email]
     setUserId(user.loginId)
-    setTeamName(user.groupTitle)
+    setTeamName(user.teamName)
     const res2: any = await pullDoc({
       collection: 'participants',
-      doc: user.groupTitle,
+      doc: user.teamName,
     })
     const teamData = res2.data
     setTeamData(teamData)

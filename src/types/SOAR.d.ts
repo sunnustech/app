@@ -6,7 +6,7 @@ import { MutableRefObject, RefObject } from 'react'
 
 export type SOARTimetable = Array<{
   time: string
-  groupTitle: string
+  teamName: string
 }>
 
 type SOARLocationStatus = '' | 'next' | 'done'

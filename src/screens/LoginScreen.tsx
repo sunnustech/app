@@ -76,7 +76,7 @@ const LoginScreen = () => {
     setLoginError(false)
     setLoading(true)
     /*
-     * pulls a dictionary that maps loginId to groupTitle
+     * pulls a dictionary that maps loginId to teamName
      */
     const loginIdDictionary = (
       await pullDoc({

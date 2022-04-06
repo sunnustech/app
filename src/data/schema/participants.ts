@@ -23,7 +23,7 @@ function newSunNUSTeam(props: {
   members: Array<Member>
   registeredEvents: RegisteredEvents
   direction: 'A' | 'B'
-  groupTitle: string
+  teamName: string
 }) {
   return {
     SOAR: SOARInit,
@@ -32,7 +32,7 @@ function newSunNUSTeam(props: {
     SOARPausedAt: 0,
     SOARStationsCompleted: [],
 
-    groupTitle: props.groupTitle,
+    teamName: props.teamName,
     SOARStationsRemaining: stationOrder[props.direction],
     members: props.members,
     registeredEvents: props.registeredEvents,
@@ -40,7 +40,7 @@ function newSunNUSTeam(props: {
 }
 
 const testOne = {
-  groupTitle: 'Known_Painters',
+  teamName: 'Known_Painters',
   registeredEvents: {
     TSS: {
       volleyball: true,
@@ -70,7 +70,7 @@ const testOne = {
 }
 
 const testTwo = {
-  groupTitle: 'Modest_Liberators',
+  teamName: 'Modest_Liberators',
   registeredEvents: {
     TSS: {
       volleyball: true,
@@ -100,7 +100,7 @@ const testTwo = {
 }
 
 const testThree = {
-  groupTitle: 'HS123',
+  teamName: 'HS123',
   registeredEvents: {
     TSS: {
       volleyball: true,
@@ -138,7 +138,7 @@ const testThree = {
 }
 
 const Developer = newSunNUSTeam({
-  groupTitle: 'Developer',
+  teamName: 'Developer',
   direction: 'A',
   registeredEvents: {
     SOAR: true,
@@ -176,7 +176,7 @@ const generateRandomID = () => {
 }
 
 const addLoginId = (obj: any): TeamProps => {
-  let grpNameTitle = trimGroupNameToLowercase(obj.groupTitle)
+  let grpNameTitle = trimGroupNameToLowercase(obj.teamName)
   obj.members.forEach((e: any) => {
     e['loginId'] = grpNameTitle + generateRandomID()
   })
@@ -191,29 +191,29 @@ const allTeams: Array<TeamProps> = [
 ]
 
 const allLoginIds: {
-  [key: string]: { groupTitle: string; index: number; email: string }
+  [key: string]: { teamName: string; index: number; email: string }
 } = {}
 
 const allEmails: {
-  [key: string]: { groupTitle: string; index: number; loginId: string }
+  [key: string]: { teamName: string; index: number; loginId: string }
 } = {}
 
 allTeams.forEach((team) => {
   team.members.forEach((member, index) => {
     allLoginIds[member.loginId] = {
-      groupTitle: team.groupTitle,
+      teamName: team.teamName,
       index,
       email: member.email,
     }
     allEmails[member.email] = {
-      groupTitle: team.groupTitle,
+      teamName: team.teamName,
       index,
       loginId: member.loginId,
     }
   })
 })
 
-const participants: ParticipantsData = objFromArray(allTeams, 'groupTitle')
+const participants: ParticipantsData = objFromArray(allTeams, 'teamName')
 participants['allLoginIds'] = allLoginIds
 participants['allEmails'] = allEmails
 
