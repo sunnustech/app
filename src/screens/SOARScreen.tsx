@@ -145,7 +145,7 @@ const SOARScreen = () => {
   // to attach a listener to firebase
   useEffect(() => {
     if (everythingLoaded === true) {
-      const unsubscribeFirebase = onSnapshot(
+      const unsubscribeFirebase: Unsubscribe = onSnapshot(
         doc(db, 'participants', teamName),
         (doc) => {
           const liveData = doc.data()
