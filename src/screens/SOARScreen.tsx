@@ -31,6 +31,7 @@ import { db } from '@/sunnus/firebase'
 import { Group } from '@/types/participants'
 import TimerComponent from '@/components/Timer'
 import { useFocusEffect } from '@react-navigation/native'
+import { Unsubscribe } from 'firebase/auth'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
@@ -144,32 +145,39 @@ const SOARScreen = () => {
   // to attach a listener to firebase
   useEffect(() => {
     if (everythingLoaded === true) {
-      const u = onSnapshot(doc(db, 'participants', teamName), (doc) => {
-        const liveData = doc.data()
-        if (liveData) {
-          console.log('received firebase updates at', new Date())
-          const updatedTeamData: Group = {
-            SOARTimerEvents: liveData.SOARTimerEvents,
-            SOARStart: liveData.SOARStart,
-            groupTitle: liveData.groupTitle,
-            SOAR: liveData.SOAR,
-            members: liveData.members,
-            registeredEvents: liveData.registeredEvents,
-            SOARPausedAt: liveData.SOARPausedAt,
-            SOARStationsCompleted: liveData.SOARStationsCompleted,
-            SOARStationsRemaining: liveData.SOARStationsRemaining,
-          }
-          setDisplayLocations(
-            getLocations(locations, filtered, updatedTeamData)
-          )
-          setStartStatus(updatedTeamData.SOAR.started)
+      const unsubscribeFirebase = onSnapshot(
+        doc(db, 'participants', teamName),
+        (doc) => {
+          const liveData = doc.data()
+          if (liveData) {
+            console.log('received firebase updates at', new Date())
+            const updatedTeamData: Group = {
+              SOARTimerEvents: liveData.SOARTimerEvents,
+              SOARStart: liveData.SOARStart,
+              groupTitle: liveData.groupTitle,
+              SOAR: liveData.SOAR,
+              members: liveData.members,
+              registeredEvents: liveData.registeredEvents,
+              SOARPausedAt: liveData.SOARPausedAt,
+              SOARStationsCompleted: liveData.SOARStationsCompleted,
+              SOARStationsRemaining: liveData.SOARStationsRemaining,
+            }
+            setDisplayLocations(
+              getLocations(locations, filtered, updatedTeamData)
+            )
+            setStartStatus(updatedTeamData.SOAR.started)
 
-          // Timer props
-          setIsRunning(updatedTeamData.SOAR.timerRunning)
-          setPausedAt(updatedTeamData.SOARPausedAt)
-          setTimerEvents(updatedTeamData.SOARTimerEvents)
+            // Timer props
+            setIsRunning(updatedTeamData.SOAR.timerRunning)
+            setPausedAt(updatedTeamData.SOARPausedAt)
+            setTimerEvents(updatedTeamData.SOARTimerEvents)
+          }
         }
-      })
+      )
+      return () => {
+        /* detach firebase listener on unmount */
+        unsubscribeFirebase()
+      }
     }
   }, [everythingLoaded])
 
@@ -240,7 +248,7 @@ const SOARScreen = () => {
       }
       return () => {
         console.log('cleanup time')
-      setEverythingLoaded(false)
+        setEverythingLoaded(false)
       }
     }, [teamName, stationOrder, teamData])
   )
