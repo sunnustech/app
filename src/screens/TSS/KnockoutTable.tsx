@@ -8,10 +8,11 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { knockout as styles } from '@/styles/fresh'
 import { useState } from 'react'
-import { Match, Sport } from '@/types/TSS'
+import { Match, Round, Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import PagerView from 'react-native-pager-view'
-import { sampleRounds } from '@/data/schema/TSS'
+import { filledRounds } from '@/data/schema/TSS'
+import { roundList } from '@/lib/knockout'
 
 const VSpacer = ({ h }: { h: number }) => <View style={{ height: h }} />
 
@@ -46,18 +47,59 @@ const MatchNode = ({ match }: { match: Match }) => {
 }
 
 const RoundOf32 = () => {
-  const data = sampleRounds.round_of_32
+  const data = filledRounds.round_of_32
   return (
-    <PagerView style={styles.pagerView} initialPage={0} pageMargin={-10}>
+    <PagerView
+      style={styles.pagerView}
+      initialPage={0}
+      showPageIndicator={true}
+      pageMargin={0}
+    >
       {Object.keys(data).map((e: string, i) => {
         const key = parseInt(e)
         return (
-          <View key={i} style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <View
+            key={i}
+            style={{ flexDirection: 'row', justifyContent: 'center' }}
+          >
             <MatchNode match={data[key]} />
           </View>
         )
       })}
     </PagerView>
+  )
+}
+
+const PagerRound = ({ round, key }: { round: Round; key: number }) => {
+  const data = filledRounds[round]
+  return (
+    <PagerView
+      key={key}
+      style={styles.pagerView}
+      initialPage={0}
+    >
+      {Object.keys(data).map((e: string, i) => {
+        const key = parseInt(e)
+        return (
+          <View
+            key={i}
+            style={{ flexDirection: 'row', justifyContent: 'center' }}
+          >
+            <MatchNode match={data[key]} />
+          </View>
+        )
+      })}
+    </PagerView>
+  )
+}
+
+const All = () => {
+  return (
+    <>
+      {roundList.reverse().map((round, i) => {
+        return <PagerRound round={round} key={i} />
+      })}
+    </>
   )
 }
 
@@ -91,8 +133,7 @@ const KnockoutTable = ({ sportState }: any) => {
       />
       <Text>Welcome to the TSS Knockout Table!</Text>
       <Text>Sport: {sport}</Text>
-      <RoundOf32 />
-      <MatchNode match={testMatch} />
+      <All />
     </KeyboardAvoidingView>
   )
 }

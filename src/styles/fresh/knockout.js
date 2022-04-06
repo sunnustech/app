@@ -29,8 +29,9 @@ export default StyleSheet.create({
     backgroundColor: 'green',
   },
   pagerView: {
-    flex: 1,
     width: '100%',
+    height: 100,
+    // backgroundColor: '#c4b5fd',
   },
   text: {
     color: 'black',
@@ -39,9 +40,11 @@ export default StyleSheet.create({
 
   /* match node CSS */
   matchNodeContainer: {
+    height: 90,
     display: 'flex',
     flexDirection: 'column',
-    width: '50%',
+    justifyContent: 'center',
+    width: '80%',
     backgroundColor: '#ffffff',
     paddingHorizontal: 18,
     paddingVertical: 16,
