@@ -19,7 +19,7 @@ const MatchNode = ({ match }: { match: Match }) => {
   // TODO: incorporate scores into Match classes
   const scores = [1, 0]
 
-  const Row = ({ team, score }: {team: string, score: number}) => {
+  const Row = ({ team, score }: { team: string; score: number }) => {
     return (
       <View style={styles.matchNodeRow}>
         <View style={styles.matchNodeTeam}>
@@ -48,12 +48,15 @@ const MatchNode = ({ match }: { match: Match }) => {
 const RoundOf32 = () => {
   const data = sampleRounds.round_of_32
   return (
-    <PagerView style={styles.pagerView} initialPage={0}>
-      {Object.keys(data).map((e, i) => (
-        <View key={i}>
-          <MatchNode match={data[e]} />
-        </View>
-      ))}
+    <PagerView style={styles.pagerView} initialPage={0} pageMargin={-10}>
+      {Object.keys(data).map((e: string, i) => {
+        const key = parseInt(e)
+        return (
+          <View key={i} style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <MatchNode match={data[key]} />
+          </View>
+        )
+      })}
     </PagerView>
   )
 }
