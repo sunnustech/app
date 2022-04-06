@@ -10,6 +10,7 @@ import {
 import { pullCollection } from '@/data/pull'
 import { db } from '@/sunnus/firebase'
 import { getDoc, doc } from 'firebase/firestore'
+import { sportList, roundList } from '@/data/constants'
 
 /**
  * Prints the current date to the terminal
@@ -19,15 +20,6 @@ const delimiter = () => {
   const line = '='.repeat(date.length)
   console.log(`\n\n\n${line}\n${date}\n${line}\n`) // perma
 }
-
-const sportList = ['dodgeball', 'frisbee', 'volleyball', 'tchoukball']
-const roundList: Array<Round> = [
-  'round_of_32',
-  'round_of_16',
-  'quarterfinals',
-  'semifinals',
-  'finals',
-]
 
 function resetTSS() {
   push({ collection: 'TSS', docs: TSS, merge: false })

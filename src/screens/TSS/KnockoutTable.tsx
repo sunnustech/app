@@ -9,23 +9,30 @@ import { useNavigation } from '@react-navigation/native'
 import { TSS as styles } from '@/styles/fresh'
 import { useState } from 'react'
 import { Sport } from '@/types/TSS'
+import { sportList } from '@/data/constants'
 
 const KnockoutTable = ({ sportState }: any) => {
   const navigation = useNavigation<TSSPage<'TSSKnockoutTable'>>()
   const [sport, setSport] = sportState
-  const [tempSport, setTempSport] = useState<Sport>()
+  const [tempSport, setTempSport] = useState<Sport>(sport)
 
+  /* currently when you change the sport using the picker,
+   * the picker seems to jump back to showing
+   * "Select an item...". This is because it calls setSport,
+   * which triggers a re-render of this entire component
+   *
+   * may not need to fix if method of choosing sport changes later
+   */
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <RNPickerSelect
         onValueChange={(value) => setTempSport(value)}
         onDonePress={() => setSport(tempSport)}
-        items={[
-          { label: 'dodgeball', value: 'dodgeball', key: 0 },
-          { label: 'frisbee', value: 'frisbee', key: 1 },
-          { label: 'tchoukball', value: 'tchoukball', key: 2 },
-          { label: 'volleyball', value: 'volleyball', key: 3 },
-        ]}
+        items={sportList.map((sport, i) => ({
+          label: sport,
+          value: sport,
+          key: i,
+        }))}
       />
       <Text>Welcome to the TSS Knockout Table!</Text>
       <Text>Sport: {sport}</Text>
