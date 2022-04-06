@@ -9,9 +9,9 @@ import { useNavigation } from '@react-navigation/native'
 import { TSS as styles } from '@/styles/fresh'
 
 // DELETE AFTER USE
-import { Button } from '../components/Buttons'
-import { getKnockoutTable, handleMatch } from '../lib/knockout'
-import { MatchRequest, Round, Sport, Winner } from '../types/TSS'
+import { Button } from '@/components/Buttons'
+import { getKnockoutTable, handleMatch } from '@/lib/knockout'
+import { MatchRequest, Round, Sport, Winner } from '@/types/TSS'
 import { useState } from 'react'
 
 const TSSScreen = () => {

@@ -6,13 +6,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   HomeScreen,
   SOARScreen,
-  TSSScreen,
   WSSScreen,
   DEVScreen,
   KnockoutTable,
   TimerScreen,
   QRScreen,
 } from '@/screens/index'
+import TSSScreen from '@/screens/TSS'
 
 /* providers */
 import { SOARProvider } from '@/contexts/SOARContext'
