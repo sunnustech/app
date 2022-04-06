@@ -13,14 +13,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SOARContext } from '@/contexts/SOARContext'
 import { QRIndex } from '@/lib/SOAR/QRDictionary'
 import { QRCommands, invalidQR } from '@/lib/SOAR/QRCommands'
-import { SOARTeamData } from '@/types/SOAR'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
+import { Group } from '@/types/participants'
 
-const getSOARProps = async (groupTitle: string): Promise<SOARTeamData> => {
+const getTeamData = async (groupTitle: string): Promise<Group> => {
   // TODO: handle errors on bad pulls
   const data = (await pullDoc({ collection: 'participants', doc: groupTitle }))
-    ?.data.SOAR
+    ?.data
   return data
 }
 
@@ -52,10 +52,11 @@ const QRScreen = () => {
     QR.station = data.station
 
     // error handling
-    const SOARProps = await getSOARProps(teamName)
+    const teamData = await getTeamData(teamName)
+    const SOARProps = teamData.SOAR
     const stn = data.station
     const cmd = data.command
-    const rem = SOARProps.stationsRemaining
+    const rem = teamData.SOARStationsRemaining
     const correctStn = rem.length > 0 ? rem[0] : stn
 
     if (cmd === 'start') {
@@ -98,7 +99,7 @@ const QRScreen = () => {
           setQR(QRCommands.AlreadyCompletedSOAR)
         } else if (rem.length === 0) {
           setQR(QRCommands.AlreadyCompletedAllStations)
-        } else if (SOARProps.stationsCompleted.includes(stn)) {
+        } else if (teamData.SOARStationsCompleted.includes(stn)) {
           setQR(QRCommands.AlreadyCompletedStation)
         } else if (stn !== correctStn) {
           setQR(QRCommands.WrongStation)

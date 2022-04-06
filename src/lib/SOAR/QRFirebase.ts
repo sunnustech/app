@@ -2,12 +2,11 @@
  * this will be a suite of functions that SOAR will use to interact with firebase
  */
 
-import push from '@/data/push'
 import { pullDoc } from '@/data/pull'
 import { TimeApiProps } from '@/types/index'
 import { QRCommandProps, SOARCommand, SOARTimestamp } from '@/types/SOAR'
 import { db } from '@/sunnus/firebase'
-import { doc, updateDoc, arrayUnion } from 'firebase/firestore'
+import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { Group } from '@/types/participants'
 
 /* NOTE
@@ -170,18 +169,11 @@ const completeStage = async (groupTitle: string, QR: QRCommandProps) => {
   const [teamProps, allEvents, _] = await propsAndEvents(groupTitle, QR)
 
   const thisStation = QR.station
-  const stationsRemaining = teamProps.SOAR.stationsRemaining
-  const stationsCompleted = teamProps.SOAR.stationsCompleted
 
-  stationsRemaining.shift()
-  stationsCompleted.push(thisStation)
-
-  const docs = generatePacket(groupTitle, {
-    allEvents,
-    stationsCompleted,
-    stationsRemaining,
+  updateDoc(doc(db, 'participants', groupTitle), {
+    SOARStationsRemaining: arrayRemove(thisStation),
+    SOARStationsCompleted: arrayUnion(thisStation)
   })
-  push({ collection: 'participants', docs })
 }
 
 const noop = () => {}

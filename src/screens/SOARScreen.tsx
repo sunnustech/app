@@ -123,7 +123,7 @@ const SOARScreen = () => {
    */
   useEffect(() => {
     if (everythingLoaded === true) {
-      setDisplayLocations(getLocations(locations, filtered, teamData.SOAR))
+      setDisplayLocations(getLocations(locations, filtered, teamData))
     }
   }, [everythingLoaded, filtered])
 
@@ -131,7 +131,7 @@ const SOARScreen = () => {
     const obj = filtered
     obj.water = !obj.water
     setFiltered(obj)
-    setDisplayLocations(getLocations(locations, obj, teamData.SOAR))
+    setDisplayLocations(getLocations(locations, obj, teamData))
   }
 
   /* =====================================================
@@ -154,9 +154,11 @@ const SOARScreen = () => {
             members: liveData.members,
             registeredEvents: liveData.registeredEvents,
             SOARPausedAt: liveData.SOARPausedAt,
+            SOARStationsCompleted: liveData.SOARStationsCompleted,
+            SOARStationsRemaining: liveData.SOARStationsRemaining
           }
           setDisplayLocations(
-            getLocations(locations, filtered, updatedTeamData.SOAR)
+            getLocations(locations, filtered, updatedTeamData)
           )
           setStartStatus(updatedTeamData.SOAR.started)
 

@@ -1,4 +1,9 @@
-import { Group, ParticipantsData } from '@/types/participants'
+import {
+  Group,
+  Member,
+  ParticipantsData,
+  RegisteredEvents,
+} from '@/types/participants'
 import { SOARTeamData } from '@/types/SOAR'
 import { objFromArray } from '@/lib/utils'
 import { stationOrder } from './SOAR'
@@ -7,32 +12,32 @@ const SOARInit: SOARTeamData = {
   timerRunning: false,
   started: false,
   stopped: false,
-  startTime: {},
-  stopTime: {},
+  startTime: 0,
+  stopTime: 0,
   allEvents: [],
   direction: 'A',
-  stationsCompleted: [],
-  stationsRemaining: [],
   points: 0,
 }
 
-const groupInit = {
-  SOARStart: 0,
-  SOARTimerEvents : [],
-  SOARPausedAt: 0,
-  groupTitle: '',
-  registeredEvents: {
-    TSS: {
-      volleyball: false,
-      dodgeball: false,
-    },
-    SOAR: false,
-  },
-  SOAR: SOARInit,
-  members: [],
-}
+function newSunNUSTeam(props: {
+  members: Array<Member>
+  registeredEvents: RegisteredEvents
+  direction: 'A' | 'B'
+  groupTitle: string
+}) {
+  return {
+    SOAR: SOARInit,
+    SOARStart: 0,
+    SOARTimerEvents: [0],
+    SOARPausedAt: 0,
+    SOARStationsCompleted: [],
 
-SOARInit.stationsRemaining = stationOrder[SOARInit.direction]
+    groupTitle: props.groupTitle,
+    SOARStationsRemaining: stationOrder[props.direction],
+    members: props.members,
+    registeredEvents: props.registeredEvents,
+  }
+}
 
 const testOne = {
   groupTitle: 'Known_Painters',
@@ -132,8 +137,9 @@ const testThree = {
   ],
 }
 
-const Developer: Group = {
-  groupTitle: 'Dev_loper',
+const Developer = newSunNUSTeam({
+  groupTitle: 'Developer',
+  direction: 'A',
   registeredEvents: {
     SOAR: true,
   },
@@ -159,12 +165,7 @@ const Developer: Group = {
       loginId: 'dev_loper120386',
     },
   ],
-  // SOAR stuff
-  SOAR: SOARInit,
-  SOARStart: 0,
-  SOARTimerEvents : [],
-  SOARPausedAt: 0,
-}
+})
 
 const trimGroupNameToLowercase = (grp: string) => {
   return grp.split('_').join('').split(' ').join('').toLowerCase()
