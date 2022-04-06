@@ -1,8 +1,8 @@
 import {
-  Group,
   Member,
   ParticipantsData,
   RegisteredEvents,
+  TeamProps,
 } from '@/types/participants'
 import { SOARTeamData } from '@/types/SOAR'
 import { objFromArray } from '@/lib/utils'
@@ -175,7 +175,7 @@ const generateRandomID = () => {
   return Math.random().toString(10).substring(2, 5)
 }
 
-const addLoginId = (obj: any): Group => {
+const addLoginId = (obj: any): TeamProps => {
   let grpNameTitle = trimGroupNameToLowercase(obj.groupTitle)
   obj.members.forEach((e: any) => {
     e['loginId'] = grpNameTitle + generateRandomID()
@@ -183,7 +183,7 @@ const addLoginId = (obj: any): Group => {
   return obj
 }
 
-const allTeams: Array<Group> = [
+const allTeams: Array<TeamProps> = [
   addLoginId(testOne),
   addLoginId(testTwo),
   addLoginId(testThree),

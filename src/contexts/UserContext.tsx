@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 import { auth } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
-import { SunNUSTeamData } from '@/types/participants'
+import { TeamProps } from '@/types/participants'
 import { SOARTeamData } from '@/types/SOAR'
 import { notificationInit } from '@/lib/notifications'
 import push from '@/data/push'
@@ -13,8 +13,8 @@ type UserContextProps = {
   setTeamName: Dispatch<SetStateAction<string>>
   schedule: object
   setSchedule: Dispatch<SetStateAction<object>>
-  teamData: SunNUSTeamData
-  setTeamData: Dispatch<SetStateAction<SunNUSTeamData>>
+  teamData: TeamProps
+  setTeamData: Dispatch<SetStateAction<TeamProps>>
 }
 
 const SOARinit: SOARTeamData = {
@@ -100,7 +100,7 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [userId, setUserId] = useState('')
   const [teamName, setTeamName] = useState('')
   const [schedule, setSchedule] = useState({})
-  const [teamData, setTeamData] = useState<SunNUSTeamData>(teamDataInit)
+  const [teamData, setTeamData] = useState<TeamProps>(teamDataInit)
 
   const token = notificationInit().expoPushToken
   handlePushTokens(token)

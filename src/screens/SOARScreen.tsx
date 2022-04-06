@@ -28,7 +28,7 @@ import { UserContext } from '@/contexts/UserContext'
 import { SOARLocation } from '@/types/SOAR'
 import { onSnapshot, doc } from 'firebase/firestore'
 import { db } from '@/sunnus/firebase'
-import { Group } from '@/types/participants'
+import { TeamProps } from '@/types/participants'
 import TimerComponent from '@/components/Timer'
 import { useFocusEffect } from '@react-navigation/native'
 import { Unsubscribe } from 'firebase/auth'
@@ -151,7 +151,7 @@ const SOARScreen = () => {
           const liveData = doc.data()
           if (liveData) {
             console.log('received firebase updates at', new Date())
-            const updatedTeamData: Group = {
+            const updatedTeamData: TeamProps = {
               SOARTimerEvents: liveData.SOARTimerEvents,
               SOARStart: liveData.SOARStart,
               groupTitle: liveData.groupTitle,

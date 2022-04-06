@@ -22,7 +22,7 @@ export type RegisteredEvents = {
   SOAR?: boolean
 }
 
-export type Group = {
+export type TeamProps = {
   groupTitle: string
   members: Array<Member>
   registeredEvents?: RegisteredEvents
@@ -34,8 +34,6 @@ export type Group = {
   SOARStationsRemaining: Array<string>
 }
 
-export type SunNUSTeamData = Group
-
 /*
  * To be Firestore-friendly, the final form has to be an object,
  * and first-level values cannot be arrays
@@ -43,5 +41,5 @@ export type SunNUSTeamData = Group
 export type ParticipantsData = {
   allLoginIds: any
   allEmails: any
-  [key: string]: Group
+  [key: string]: TeamProps
 }

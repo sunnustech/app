@@ -7,7 +7,7 @@ import { TimeApiProps } from '@/types/index'
 import { QRCommandProps, SOARCommand, SOARTimestamp } from '@/types/SOAR'
 import { db } from '@/sunnus/firebase'
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
-import { Group } from '@/types/participants'
+import { TeamProps } from '@/types/participants'
 
 /* NOTE
  * there will be no game-related error catching done here.
@@ -41,7 +41,7 @@ const generatePacket = (groupTitle: string, packet: any) => {
  * checks if the group has started SOAR or not.
  * This is key because if not the original start time may be overwritten.
  */
-const getSOARProps = async (groupTitle: string): Promise<Group> => {
+const getSOARProps = async (groupTitle: string): Promise<TeamProps> => {
   // TODO: handle errors on bad pulls
   const data = (await pullDoc({ collection: 'participants', doc: groupTitle }))
     ?.data
@@ -51,7 +51,7 @@ const getSOARProps = async (groupTitle: string): Promise<Group> => {
 const propsAndEvents = async (
   groupTitle: string,
   QR: QRCommandProps
-): Promise<[Group, Array<SOARTimestamp>, number]> => {
+): Promise<[TeamProps, Array<SOARTimestamp>, number]> => {
   const [teamData, time] = await Promise.all([
     getSOARProps(groupTitle),
     getTimeAsync(),

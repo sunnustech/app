@@ -4,12 +4,12 @@
 
 import SOAR from './QRFirebase'
 import { SOARLocation } from '@/types/SOAR'
-import { Group } from '@/types/participants'
+import { TeamProps } from '@/types/participants'
 
 export function getLocations(
   locations: Array<SOARLocation>,
   filtered: any,
-  teamData: Group
+  teamData: TeamProps
 ) {
   /* remove all game stations (so we only add in the next game station) */
   const noGames = locations.filter((loc) => loc.stationType !== 'game')
