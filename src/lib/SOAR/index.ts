@@ -3,12 +3,13 @@
  */
 
 import SOAR from './QRFirebase'
-import { SOARLocation, SOARTeamData } from '@/types/SOAR'
+import { SOARLocation } from '@/types/SOAR'
+import { Group } from '@/types/participants'
 
 export function getLocations(
   locations: Array<SOARLocation>,
   filtered: any,
-  SOARData: SOARTeamData
+  teamData: Group
 ) {
   /* remove all game stations (so we only add in the next game station) */
   const noGames = locations.filter((loc) => loc.stationType !== 'game')
@@ -22,8 +23,9 @@ export function getLocations(
    *
    * so it suffices to take the first result that hasn't been completed.
    */
-  const rem = SOARData.stationsRemaining
-  const com = SOARData.stationsCompleted
+
+  const com = teamData.SOARStationsCompleted
+  const rem = teamData.SOARStationsRemaining
 
   gameStations.forEach((stn) => {
     // reset status for each call
