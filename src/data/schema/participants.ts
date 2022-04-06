@@ -1,6 +1,6 @@
 import {
   Member,
-  ParticipantsData,
+  ParticipantsDatabase,
   RegisteredEvents,
   TeamProps,
 } from '@/types/participants'
@@ -213,7 +213,7 @@ allTeams.forEach((team) => {
   })
 })
 
-const participants: ParticipantsData = objFromArray(allTeams, 'teamName')
+const participants: ParticipantsDatabase = objFromArray(allTeams, 'teamName')
 participants['allLoginIds'] = allLoginIds
 participants['allEmails'] = allEmails
 

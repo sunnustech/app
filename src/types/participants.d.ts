@@ -1,11 +1,5 @@
 import { SOARTeamProps } from './SOAR'
 
-type SOARRegistration = {
-  SOAR: boolean
-}
-
-type TSSRegistration = {} | {}
-
 export type Member = {
   email: string
   phone: string
@@ -34,12 +28,25 @@ export type TeamProps = {
   SOARStationsRemaining: Array<string>
 }
 
+type TeamsDatabase = Record<string, TeamProps>
+
+type LoginIdProps = {
+  email: string
+  teamName: string
+  index: number
+}
+
+type EmailProps = {
+  loginId: string
+  teamName: string
+  index: number
+}
+
 /*
  * To be Firestore-friendly, the final form has to be an object,
  * and first-level values cannot be arrays
  */
-export type ParticipantsData = {
-  allLoginIds: any
-  allEmails: any
-  [key: string]: TeamProps
+export type ParticipantsDatabase = TeamsDatabase & {
+  allLoginIds: Record<string, LoginIdProps>
+  allEmails: Record<string, EmailProps>
 }
