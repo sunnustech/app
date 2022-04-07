@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 const pageIndicatorSize = 5
+const pageIndicatorSpacing = 2
 
 export default StyleSheet.create({
   container: {
@@ -51,7 +52,8 @@ export default StyleSheet.create({
     width: '80%',
     backgroundColor: '#ffffff',
     paddingHorizontal: 18,
-    paddingVertical: 16,
+    paddingTop: 16,
+    paddingBottom: 6,
     borderRadius: 6,
     shadowColor: '#000000',
     shadowRadius: 2,
@@ -60,25 +62,21 @@ export default StyleSheet.create({
   },
 
   pageIndicatorContainer: {
-    position: 'relative',
-    top: 10,
-    height: 12,
     width: '100%',
-    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
   },
 
   inactivePage: {
     backgroundColor: '#d1d5db',
-    marginHorizontal: 2,
+    marginHorizontal: pageIndicatorSpacing,
     height: pageIndicatorSize,
     width: pageIndicatorSize,
     borderRadius: 100,
   },
   activePage: {
     backgroundColor: '#60a5fa',
-    marginHorizontal: 2,
+    marginHorizontal: pageIndicatorSpacing,
     height: pageIndicatorSize,
     width: pageIndicatorSize,
     borderRadius: 100,
@@ -114,6 +112,28 @@ export default StyleSheet.create({
     // backgroundColor: '#86efac',
   },
 
+  // empty match node
+  emptyMatchNodeScore: {
+    width: 36,
+    borderColor: 'rgba(0,0,0,0)',
+    borderWidth: 2,
+    borderRadius: 4,
+    color: 'rgba(0,0,0,0)',
+    textAlign: 'center',
+    // backgroundColor: '#86efac',
+  },
+  emptyMatchNodeTeamText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: 'rgba(0,0,0,0)',
+  },
+  emptyMatchNodeScoreText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: 'rgba(0,0,0,0)',
+    textAlign: 'center',
+  },
+
   // text only
   matchNodeTeamText: {
     fontSize: 16,
@@ -126,6 +146,7 @@ export default StyleSheet.create({
     color: '#4b5563',
     textAlign: 'center',
   },
+
   displayNone: {
     display: 'none',
   },
