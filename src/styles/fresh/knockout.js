@@ -146,18 +146,23 @@ export default StyleSheet.create({
     justifyContent: 'center',
     display: 'flex',
   },
-  verticalCenter: {
-    display: 'flex',
+  pickerChevronContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: 20,
+  },
+  pickerTextContainer: {
+    flex: 1,
+    width: "100%",
     flexDirection: 'column',
     justifyContent: 'center',
   },
   pickerText: {
+    width: '100%',
     fontSize: 18,
     color: '#4b5563',
     fontWeight: '700',
-  },
-  pickerChevronContainer: {
-    backgroundColor: 'yellow',
+    textAlign: 'center',
   },
   pickerChevron: {
     color: '#4b5563',

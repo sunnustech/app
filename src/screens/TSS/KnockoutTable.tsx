@@ -19,10 +19,10 @@ import { UseState } from '@/types/SOAR'
 
 const SportPicker = ({
   pickerRef,
-  sport,
+  tempSport,
 }: {
   pickerRef: MutableRefObject<Picker | null>
-  sport: Sport
+  tempSport: Sport
 }) => {
   function openPicker() {
     pickerRef.current?.togglePicker()
@@ -30,10 +30,11 @@ const SportPicker = ({
 
   return (
     <TouchableOpacity onPress={openPicker} style={styles.pickerContainer}>
-      <View style={styles.verticalCenter}>
-        <Text style={styles.pickerText}>{sport}</Text>
+      <View style={styles.pickerChevronContainer}/>
+      <View style={styles.pickerTextContainer}>
+        <Text style={styles.pickerText}>{tempSport}</Text>
       </View>
-      <View style={styles.verticalCenter}>
+      <View style={styles.pickerChevronContainer}>
         <Ionicons name="chevron-down" size={20} style={styles.pickerChevron} />
       </View>
     </TouchableOpacity>
@@ -96,7 +97,7 @@ const KnockoutTable = ({
         }))}
         style={showNone}
       />
-      <SportPicker pickerRef={pickerRef} sport={sport} />
+      <SportPicker pickerRef={pickerRef} tempSport={tempSport} />
       <AllRounds />
     </KeyboardAvoidingView>
   )
