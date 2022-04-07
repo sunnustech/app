@@ -20,7 +20,6 @@ const MatchNode = ({
   const scores = [1, 0]
 
   const Row = ({ team, score }: { team: string; score: number }) => {
-    const present = team !== ''
     return (
       <View style={styles.matchNodeRow}>
         <View style={styles.matchNodeTeam}>
@@ -42,12 +41,7 @@ const MatchNode = ({
       <View style={styles.matchNodeRow}>
         <View style={styles.matchNodeTeam}>
           <Text style={styles.emptyMatchNodeTeamText} numberOfLines={1}>
-            t
-          </Text>
-        </View>
-        <View style={styles.emptyMatchNodeScore}>
-          <Text style={styles.emptyMatchNodeScoreText} numberOfLines={1}>
-            s
+            ---
           </Text>
         </View>
       </View>

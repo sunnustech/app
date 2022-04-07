@@ -123,9 +123,10 @@ export default StyleSheet.create({
     // backgroundColor: '#86efac',
   },
   emptyMatchNodeTeamText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '700',
-    color: 'rgba(0,0,0,0)',
+    color: '#9ca3af',
+    textAlign: 'center',
   },
   emptyMatchNodeScoreText: {
     fontSize: 16,
