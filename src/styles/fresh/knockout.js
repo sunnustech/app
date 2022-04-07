@@ -55,6 +55,31 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 5 },
   },
 
+  pageIndicatorContainer: {
+    position: 'relative',
+    top: 8,
+    height: 12,
+    width: '100%',
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+
+  inactivePage: {
+    backgroundColor: '#d1d5db',
+    marginHorizontal: 2,
+    height: 6,
+    width: 6,
+    borderRadius: 100,
+  },
+  activePage: {
+    backgroundColor: '#60a5fa',
+    marginHorizontal: 2,
+    height: 6,
+    width: 6,
+    borderRadius: 100,
+  },
+
   matchNodeRow: {
     width: '100%',
     display: 'flex',

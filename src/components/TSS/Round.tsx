@@ -4,6 +4,7 @@ import { knockout as styles } from '@/styles/fresh'
 import { Text, View } from 'react-native'
 import { CurrentPageState, Match, Round } from '@/types/TSS'
 import { UseState } from '@/types/SOAR'
+import PageIndicator from '@/components/TSS/PageIndicator'
 
 const VSpacer = ({ h }: { h: number }) => <View style={{ height: h }} />
 
@@ -33,6 +34,7 @@ const MatchNode = ({ match }: { match: Match }) => {
       <Row team={match.A} score={scores[0]} />
       <VSpacer h={8} />
       <Row team={match.B} score={scores[1]} />
+      <PageIndicator total={4} current={1}/>
     </View>
   )
 }
@@ -65,7 +67,10 @@ const PagerRound = ({
         return (
           <View
             key={i}
-            style={{ flexDirection: 'row', justifyContent: 'center' }}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}
           >
             <MatchNode match={data[key]} />
           </View>

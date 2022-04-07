@@ -25,12 +25,14 @@ const All = ({
     <>
       {reversedRoundList.map((round, idx) => {
         return (
-          <PagerRound
-            round={round}
-            key={idx}
-            _ref={refList[idx]}
-            currentPageState={currentPageState}
-          />
+          <>
+            <PagerRound
+              round={round}
+              key={idx}
+              _ref={refList[idx]}
+              currentPageState={currentPageState}
+            />
+          </>
         )
       })}
     </>
