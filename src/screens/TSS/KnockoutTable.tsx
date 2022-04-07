@@ -10,23 +10,12 @@ import { Ionicons } from '@expo/vector-icons'
 /* sunnus components */
 import { knockout as styles } from '@/styles/fresh'
 import { MutableRefObject, useRef, useState } from 'react'
-import { Sport } from '@/types/TSS'
+import { Rounds, Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import { reversedRoundList } from '@/data/constants'
 import PagerRound from '@/components/TSS/Round'
 import { TouchableOpacity } from 'react-native'
-
-const All = () => (
-  <>
-    {reversedRoundList.map((round, idx) => {
-      return (
-        <>
-          <PagerRound round={round} key={idx} />
-        </>
-      )
-    })}
-  </>
-)
+import { UseState } from '@/types/SOAR'
 
 const SportPicker = ({
   pickerRef,
@@ -45,17 +34,19 @@ const SportPicker = ({
         <Text style={styles.pickerText}>{sport}</Text>
       </View>
       <View style={styles.verticalCenter}>
-        <Ionicons
-          name="chevron-down"
-          size={20}
-          style={styles.pickerChevron}
-        />
+        <Ionicons name="chevron-down" size={20} style={styles.pickerChevron} />
       </View>
     </TouchableOpacity>
   )
 }
 
-const KnockoutTable = ({ sportState }: any) => {
+const KnockoutTable = ({
+  sportState,
+  data,
+}: {
+  sportState: UseState<Sport>
+  data: Rounds
+}) => {
   // const navigation = useNavigation<TSSPage<'TSSKnockoutTable'>>()
   const [sport, setSport] = sportState
   const [tempSport, setTempSport] = useState<Sport>(sport)
@@ -79,6 +70,18 @@ const KnockoutTable = ({ sportState }: any) => {
     inputWeb: styles.displayNone,
   }
 
+  const AllRounds = () => (
+    <>
+      {reversedRoundList.map((round, idx) => {
+        return (
+          <>
+            <PagerRound round={round} key={idx} />
+          </>
+        )
+      })}
+    </>
+  )
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <RNPickerSelect
@@ -93,7 +96,7 @@ const KnockoutTable = ({ sportState }: any) => {
         style={showNone}
       />
       <SportPicker pickerRef={pickerRef} sport={sport} />
-      <All />
+      <AllRounds />
     </KeyboardAvoidingView>
   )
 }

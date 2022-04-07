@@ -1,5 +1,14 @@
 import { TSSSchedule, Rounds, TSSDatabase } from '@/types/TSS'
 
+export const emptyRounds: Rounds = {
+  round_of_32: {},
+  round_of_16: {},
+  quarterfinals: {},
+  semifinals: {},
+  finals: {},
+  champions: '',
+}
+
 export const sampleRounds: Rounds = {
   round_of_32: {
     0: { A: 'Independent_Decorators', B: 'Gentle_Sweaters', winner: 'U' },
