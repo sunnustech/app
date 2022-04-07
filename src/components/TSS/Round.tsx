@@ -1,8 +1,7 @@
 import PagerView from 'react-native-pager-view'
-import { filledRounds } from '@/data/schema/TSS'
 import { knockout as styles } from '@/styles/fresh'
 import { Text, View } from 'react-native'
-import { Match, Matches, Round } from '@/types/TSS'
+import { Match, Matches } from '@/types/TSS'
 import PageIndicator from '@/components/TSS/PageIndicator'
 
 const VSpacer = ({ h }: { h: number }) => <View style={{ height: h }} />
@@ -16,9 +15,6 @@ const MatchNode = ({
   total: number
   current: number
 }) => {
-  // TODO: incorporate scores into Match classes
-  const scores = [1, 0]
-
   const Row = ({ team, score }: { team: string; score: number }) => {
     return (
       <View style={styles.matchNodeRow}>
@@ -50,10 +46,10 @@ const MatchNode = ({
 
   return (
     <View style={styles.matchNodeContainer}>
-      <View style={{flex: 1}}>
-      {match.A ? <Row team={match.A} score={scores[0]} /> : <EmptyRow />}
-      <VSpacer h={8} />
-      {match.B ? <Row team={match.B} score={scores[0]} /> : <EmptyRow />}
+      <View style={{ flex: 1 }}>
+        {match.A ? <Row team={match.A} score={match.scoreA} /> : <EmptyRow />}
+        <VSpacer h={8} />
+        {match.B ? <Row team={match.B} score={match.scoreB} /> : <EmptyRow />}
       </View>
       <PageIndicator total={total} current={current} />
     </View>
