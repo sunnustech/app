@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Text } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 
 /* navigation */
@@ -7,56 +7,28 @@ import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
 import { knockout as styles } from '@/styles/fresh'
-import { useRef, useState } from 'react'
-import { Sport, CurrentPageState } from '@/types/TSS'
+import { useState } from 'react'
+import { Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import { reversedRoundList } from '@/data/constants'
 import PagerRound from '@/components/TSS/Round'
-import { UseState } from '@/types/SOAR'
 
-const All = ({
-  refList,
-  currentPageState,
-}: {
-  refList: Array<any>
-  currentPageState: UseState<CurrentPageState>
-}) => {
-  return (
-    <>
-      {reversedRoundList.map((round, idx) => {
-        return (
-          <>
-            <PagerRound
-              round={round}
-              key={idx}
-              _ref={refList[idx]}
-              currentPageState={currentPageState}
-            />
-          </>
-        )
-      })}
-    </>
-  )
-}
+const All = () => (
+  <>
+    {reversedRoundList.map((round, idx) => {
+      return (
+        <>
+          <PagerRound round={round} key={idx} />
+        </>
+      )
+    })}
+  </>
+)
 
 const KnockoutTable = ({ sportState }: any) => {
-  const navigation = useNavigation<TSSPage<'TSSKnockoutTable'>>()
+  // const navigation = useNavigation<TSSPage<'TSSKnockoutTable'>>()
   const [sport, setSport] = sportState
   const [tempSport, setTempSport] = useState<Sport>(sport)
-  const currentPageState = useState<CurrentPageState>({
-    round_of_32: 0,
-    round_of_16: 0,
-    quarterfinals: 0,
-    semifinals: 0,
-    finals: 0,
-  })
-  const [currentPages, setCurrentPages] = currentPageState
-  const ref32 = useRef()
-  const ref16 = useRef()
-  const refQuarterFinal = useRef()
-  const refSemiFinal = useRef()
-  const refFinal = useRef()
-  const refList = [ref32, ref16, refQuarterFinal, refSemiFinal, refFinal]
 
   /* currently when you change the sport using the picker,
    * the picker seems to jump back to showing
@@ -78,7 +50,7 @@ const KnockoutTable = ({ sportState }: any) => {
       />
       <Text>Welcome to the TSS Knockout Table!</Text>
       <Text>Sport: {sport}</Text>
-      <All refList={refList} currentPageState={currentPageState} />
+      <All />
     </KeyboardAvoidingView>
   )
 }

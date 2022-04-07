@@ -47,34 +47,23 @@ const MatchNode = ({
   )
 }
 
-const PagerRound = ({
-  round,
-  _ref,
-  currentPageState,
-}: {
-  round: Round
-  _ref: any
-  currentPageState: UseState<CurrentPageState>
-}) => {
+const PagerRound = ({ round }: { round: Round }) => {
   const data = filledRounds[round]
   const arr = Object.keys(data)
 
   return (
-    <PagerView style={styles.pagerView} initialPage={0} ref={_ref}>
-      {arr.map((e: string, i) => {
-        const key = parseInt(e)
-        return (
-          <View
-            key={i}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}
-          >
-            <MatchNode match={data[key]} total={arr.length} current={i} />
-          </View>
-        )
-      })}
+    <PagerView style={styles.pagerView} initialPage={0}>
+      {arr.map((_, i) => (
+        <View
+          key={i}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
+        >
+          <MatchNode match={data[i]} total={arr.length} current={i} />
+        </View>
+      ))}
     </PagerView>
   )
 }

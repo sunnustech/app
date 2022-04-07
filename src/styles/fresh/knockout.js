@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native'
 
+const pageIndicatorSize = 5
+
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -57,7 +59,7 @@ export default StyleSheet.create({
 
   pageIndicatorContainer: {
     position: 'relative',
-    top: 8,
+    top: 10,
     height: 12,
     width: '100%',
     backgroundColor: 'white',
@@ -68,15 +70,15 @@ export default StyleSheet.create({
   inactivePage: {
     backgroundColor: '#d1d5db',
     marginHorizontal: 2,
-    height: 6,
-    width: 6,
+    height: pageIndicatorSize,
+    width: pageIndicatorSize,
     borderRadius: 100,
   },
   activePage: {
     backgroundColor: '#60a5fa',
     marginHorizontal: 2,
-    height: 6,
-    width: 6,
+    height: pageIndicatorSize,
+    width: pageIndicatorSize,
     borderRadius: 100,
   },
 
