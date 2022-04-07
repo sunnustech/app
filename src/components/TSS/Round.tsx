@@ -1,5 +1,5 @@
 import PagerView from 'react-native-pager-view'
-import {filledRounds} from '@/data/schema/TSS'
+import { filledRounds } from '@/data/schema/TSS'
 import { knockout as styles } from '@/styles/fresh'
 import { Text, View } from 'react-native'
 import { Match, Round } from '@/types/TSS'
@@ -36,15 +36,16 @@ const MatchNode = ({ match }: { match: Match }) => {
   )
 }
 
-
-const PagerRound = ({ round, key }: { round: Round; key: number }) => {
+const PagerRound = ({
+  round,
+  _ref,
+}: {
+  round: Round
+  _ref: any
+}) => {
   const data = filledRounds[round]
   return (
-    <PagerView
-      key={key}
-      style={styles.pagerView}
-      initialPage={0}
-    >
+    <PagerView style={styles.pagerView} initialPage={0} ref={_ref}>
       {Object.keys(data).map((e: string, i) => {
         const key = parseInt(e)
         return (

@@ -7,18 +7,18 @@ import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
 import { knockout as styles } from '@/styles/fresh'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import { roundList } from '@/lib/knockout'
 import PagerRound from '@/components/TSS/Round'
 
-const All = () => {
+const All = ({ refList }: { refList: Array<any> }) => {
   const reversedRoundList = roundList.reverse()
   return (
     <>
       {reversedRoundList.map((round, idx) => {
-        return <PagerRound round={round} key={idx} />
+        return <PagerRound round={round} key={idx} _ref={refList[idx]} />
       })}
     </>
   )
@@ -29,6 +29,16 @@ const KnockoutTable = ({ sportState }: any) => {
   const [sport, setSport] = sportState
   const [tempSport, setTempSport] = useState<Sport>(sport)
   const [page32, setPage32] = useState(0)
+  const [page16, setPage16] = useState(0)
+  const [pageQuarterFinal, setPageQuarterFinal] = useState(0)
+  const [pageSemiFinal, setPageSemiFinal] = useState(0)
+  const [pageFinal, setPageFinal] = useState(0)
+  const ref32 = useRef()
+  const ref16 = useRef()
+  const refQuarterFinal = useRef()
+  const refSemiFinal = useRef()
+  const refFinal = useRef()
+  const refList = [ref32, ref16, refQuarterFinal, refSemiFinal, refFinal]
 
   /* currently when you change the sport using the picker,
    * the picker seems to jump back to showing
@@ -50,7 +60,7 @@ const KnockoutTable = ({ sportState }: any) => {
       />
       <Text>Welcome to the TSS Knockout Table!</Text>
       <Text>Sport: {sport}</Text>
-      <All />
+      <All refList={refList} />
     </KeyboardAvoidingView>
   )
 }
