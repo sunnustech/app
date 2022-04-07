@@ -8,17 +8,30 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { knockout as styles } from '@/styles/fresh'
 import { useRef, useState } from 'react'
-import { Sport } from '@/types/TSS'
+import { Sport, CurrentPageState } from '@/types/TSS'
 import { sportList } from '@/data/constants'
-import { roundList } from '@/lib/knockout'
+import { reversedRoundList } from '@/data/constants'
 import PagerRound from '@/components/TSS/Round'
+import { UseState } from '@/types/SOAR'
 
-const All = ({ refList }: { refList: Array<any> }) => {
-  const reversedRoundList = roundList.reverse()
+const All = ({
+  refList,
+  currentPageState,
+}: {
+  refList: Array<any>
+  currentPageState: UseState<CurrentPageState>
+}) => {
   return (
     <>
       {reversedRoundList.map((round, idx) => {
-        return <PagerRound round={round} key={idx} _ref={refList[idx]} />
+        return (
+          <PagerRound
+            round={round}
+            key={idx}
+            _ref={refList[idx]}
+            currentPageState={currentPageState}
+          />
+        )
       })}
     </>
   )
@@ -28,11 +41,14 @@ const KnockoutTable = ({ sportState }: any) => {
   const navigation = useNavigation<TSSPage<'TSSKnockoutTable'>>()
   const [sport, setSport] = sportState
   const [tempSport, setTempSport] = useState<Sport>(sport)
-  const [page32, setPage32] = useState(0)
-  const [page16, setPage16] = useState(0)
-  const [pageQuarterFinal, setPageQuarterFinal] = useState(0)
-  const [pageSemiFinal, setPageSemiFinal] = useState(0)
-  const [pageFinal, setPageFinal] = useState(0)
+  const currentPageState = useState<CurrentPageState>({
+    round_of_32: 0,
+    round_of_16: 0,
+    quarterfinals: 0,
+    semifinals: 0,
+    finals: 0,
+  })
+  const [currentPages, setCurrentPages] = currentPageState
   const ref32 = useRef()
   const ref16 = useRef()
   const refQuarterFinal = useRef()
@@ -60,7 +76,7 @@ const KnockoutTable = ({ sportState }: any) => {
       />
       <Text>Welcome to the TSS Knockout Table!</Text>
       <Text>Sport: {sport}</Text>
-      <All refList={refList} />
+      <All refList={refList} currentPageState={currentPageState} />
     </KeyboardAvoidingView>
   )
 }

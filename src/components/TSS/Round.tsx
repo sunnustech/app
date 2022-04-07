@@ -2,7 +2,8 @@ import PagerView from 'react-native-pager-view'
 import { filledRounds } from '@/data/schema/TSS'
 import { knockout as styles } from '@/styles/fresh'
 import { Text, View } from 'react-native'
-import { Match, Round } from '@/types/TSS'
+import { CurrentPageState, Match, Round } from '@/types/TSS'
+import { UseState } from '@/types/SOAR'
 
 const VSpacer = ({ h }: { h: number }) => <View style={{ height: h }} />
 
@@ -39,13 +40,26 @@ const MatchNode = ({ match }: { match: Match }) => {
 const PagerRound = ({
   round,
   _ref,
+  currentPageState,
 }: {
   round: Round
   _ref: any
+  currentPageState: UseState<CurrentPageState>
 }) => {
   const data = filledRounds[round]
+  const [currentPages, setCurrentPages] = currentPageState
+
+  function debug() {
+    console.log(currentPages, round)
+  }
+
   return (
-    <PagerView style={styles.pagerView} initialPage={0} ref={_ref}>
+    <PagerView
+      style={styles.pagerView}
+      initialPage={0}
+      ref={_ref}
+      onPageSelected={debug}
+    >
       {Object.keys(data).map((e: string, i) => {
         const key = parseInt(e)
         return (

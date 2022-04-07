@@ -50,3 +50,9 @@ export type TSSDatabase = Sports & {
     schedule: TSSSchedule
   }
 }
+
+/*
+ * knockout table Front-end
+ */
+
+export type CurrentPageState = Record<Round, number>
