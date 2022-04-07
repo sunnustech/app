@@ -56,7 +56,7 @@ const HomeScreen = () => {
       <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => navigation.navigate('SOARScreen')}
+          onPress={() => navigation.navigate('SOARNavigator')}
           textStyle={styles.SOARbuttonText}
           containerStyle={styles.SOARbutton}
         >

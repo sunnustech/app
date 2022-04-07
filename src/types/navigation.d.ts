@@ -1,9 +1,10 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 export type AuthenticatedPages = {
   HomeScreen: undefined
-  SOARScreen: undefined
+  SOARNavigator: undefined
   TSSNavigator: undefined
   WSSScreen: undefined
   DEVScreen: undefined
@@ -22,8 +23,16 @@ export type TSSPages = {
   TSSKnockoutTable: undefined
 }
 
+export type SOARPages = {
+  SOARScreen: undefined
+  QRScreen: undefined
+}
+
 export type AuthPage<Route extends keyof AuthenticatedPages> =
   DrawerNavigationProp<AuthenticatedPages, Route>
 
 export type TSSPage<Route extends keyof TSSPages> =
   BottomTabNavigationProp<TSSPages, Route>
+
+export type SOARPage<Route extends keyof SOARPages> =
+  NativeStackNavigationProp<TSSPages, Route>
