@@ -1,4 +1,10 @@
-import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react'
 import { auth, db } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
 import { TeamProps } from '@/types/participants'
@@ -81,7 +87,12 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [teamData, setTeamData] = useState<TeamProps>(teamDataInit)
 
   const token = notificationInit().expoPushToken
-  handlePushTokens(token)
+
+  useEffect(() => {
+    if (token !== '') {
+      handlePushTokens(token)
+    }
+  }, [token])
 
   /*
    * This is needed because expo only remembers firebase credentials,
