@@ -5,8 +5,10 @@ const pageIndicatorSize = 5
 export default StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: 'green',
   },
   innerContainer: {
     flex: 1,
@@ -123,5 +125,41 @@ export default StyleSheet.create({
     fontWeight: '700',
     color: '#4b5563',
     textAlign: 'center',
+  },
+  displayNone: {
+    display: 'none',
+  },
+
+  pickerContainer: {
+    width: '80%',
+    height: 48,
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 18,
+    paddingVertical: 8,
+    borderRadius: 6,
+    shadowColor: '#000000',
+    shadowRadius: 2,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 5 },
+    marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    display: 'flex',
+  },
+  verticalCenter: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  pickerText: {
+    fontSize: 18,
+    color: '#4b5563',
+    fontWeight: '700',
+  },
+  pickerChevronContainer: {
+    backgroundColor: 'yellow',
+  },
+  pickerChevron: {
+    color: '#4b5563',
   },
 })
