@@ -2,7 +2,13 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 /* screens */
-import { HomeScreen, SOARScreen, WSSScreen, DEVScreen } from '@/screens/index'
+import {
+  HomeScreen,
+  SOARScreen,
+  WSSScreen,
+  GeneratorScreen,
+  DEVScreen,
+} from '@/screens/index'
 
 /* providers */
 import { SOARProvider } from '@/contexts/SOARContext'
@@ -22,6 +28,7 @@ const Navigator = () => (
     <Drawer.Screen name="SOARScreen" component={SOARScreen} />
     <Drawer.Screen name="TSSNavigator" component={TSSNavigator} />
     <Drawer.Screen name="WSSScreen" component={WSSScreen} />
+    <Drawer.Screen name="GeneratorScreen" component={GeneratorScreen} />
     <Drawer.Screen name="DEVScreen" component={DEVScreen} />
   </Drawer.Navigator>
 )

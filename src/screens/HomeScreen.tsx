@@ -77,6 +77,13 @@ const HomeScreen = () => {
           WSS
         </Button>
         <Button
+          onPress={() => navigation.navigate('GeneratorScreen')}
+          textStyle={styles.WSSbuttonText}
+          containerStyle={styles.WSSbutton}
+        >
+          Generate QR
+        </Button>
+        <Button
           onPress={() => navigation.navigate('DEVScreen')}
           textStyle={styles.DEVbuttonText}
           containerStyle={styles.DEVbutton}

@@ -21,7 +21,7 @@ import SOAR from '@/lib/SOAR'
 // import { MatchRequest } from '@/types/knockout'
 import { useContext } from 'react'
 import { UserContext } from '@/contexts/UserContext'
-import { generateQR } from '@/lib/SOAR/QRDictionary'
+import { generateStationQR } from '@/lib/SOAR/QRDictionary'
 import { SOARContext } from '@/contexts/SOARContext'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
 import {
@@ -64,7 +64,7 @@ const DebugList = () => (
 
     <Text>QR Command List</Text>
 
-    <DebugButton onPress={generateQR} color="#ec4899">
+    <DebugButton onPress={generateStationQR} color="#ec4899">
       Generate QR (to send to SOAR)
     </DebugButton>
   </>
