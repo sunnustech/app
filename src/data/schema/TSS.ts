@@ -29,35 +29,27 @@ export const sampleRounds: Rounds = {
     15: { A: 'Representative_Witnesses', B: 'Prone_Artists', winner: 'U' },
   },
   round_of_16: {
-    /*
-    0: { A: 'Independent_Decorators', B: 'Modest_Liberators', winner: 'U' },
-    1: { A: 'Poor_Philosophers', B: 'Remaining_Masters', winner: 'U' },
-    2: { A: 'Vulnerable_Council', B: 'Sophisticated_Crystals', winner: 'U' },
-    3: { A: 'Influential_Realtors', B: 'Lingustic_Reformers', winner: 'U' },
-    4: { A: 'Unfortunate_Landlords', B: 'Eventual_Resters', winner: 'U' },
-    5: { A: 'Intimate_Creditors', B: 'Mass_Activators', winner: 'U' },
-    6: { A: 'Emotional_Writers', B: 'Coastal_Housers', winner: 'U' },
-    7: { A: 'Useful_Wanters', B: 'Prone_Artists', winner: 'U' },
-    */
+    0: { A: '', B: '', winner: 'U' },
+    1: { A: '', B: '', winner: 'U' },
+    2: { A: '', B: '', winner: 'U' },
+    3: { A: '', B: '', winner: 'U' },
+    4: { A: '', B: '', winner: 'U' },
+    5: { A: '', B: '', winner: 'U' },
+    6: { A: '', B: '', winner: 'U' },
+    7: { A: '', B: '', winner: 'U' },
   },
   quarterfinals: {
-    /*
-    0: { A: 'Independent_Decorators', B: 'Remaining_Masters', winner: 'U' },
-    1: { A: 'Vulnerable_Council', B: 'Lingustic_Reformers', winner: 'U' },
-    2: { A: 'Unfortunate_Landlords', B: 'Mass_Activators', winner: 'U' },
-    3: { A: 'Emotional_Writers', B: 'Prone_Artists', winner: 'U' },
-    */
+    0: { A: '', B: '', winner: 'U' },
+    1: { A: '', B: '', winner: 'U' },
+    2: { A: '', B: '', winner: 'U' },
+    3: { A: '', B: '', winner: 'U' },
   },
   semifinals: {
-    /*
-    0: { A: 'Independent_Decorators', B: 'Lingustic_Reformers', winner: 'U' },
-    1: { A: 'Unfortunate_Landlords', B: 'Prone_Artists', winner: 'U' },
-    */
+    0: { A: '', B: '', winner: 'U' },
+    1: { A: '', B: '', winner: 'U' },
   },
   finals: {
-    /*
-    0: { A: 'Independent_Decorators', B: 'Prone_Artists', winner: 'U' },
-    */
+    0: { A: '', B: '', winner: 'U' },
   },
   champions: '',
 }
