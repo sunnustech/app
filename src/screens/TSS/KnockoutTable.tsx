@@ -75,7 +75,7 @@ const KnockoutTable = ({
       {reversedRoundList.map((round, idx) => {
         return (
           <>
-            <PagerRound round={round} key={idx} />
+            <PagerRound matches={data[round]} key={idx} />
           </>
         )
       })}
@@ -85,6 +85,7 @@ const KnockoutTable = ({
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <RNPickerSelect
+        placeholder={{}}
         ref={pickerRef}
         onValueChange={(value) => setTempSport(value)}
         onDonePress={() => setSport(tempSport)}

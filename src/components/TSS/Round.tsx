@@ -2,8 +2,7 @@ import PagerView from 'react-native-pager-view'
 import { filledRounds } from '@/data/schema/TSS'
 import { knockout as styles } from '@/styles/fresh'
 import { Text, View } from 'react-native'
-import { CurrentPageState, Match, Round } from '@/types/TSS'
-import { UseState } from '@/types/SOAR'
+import { Match, Matches, Round } from '@/types/TSS'
 import PageIndicator from '@/components/TSS/PageIndicator'
 
 const VSpacer = ({ h }: { h: number }) => <View style={{ height: h }} />
@@ -47,9 +46,8 @@ const MatchNode = ({
   )
 }
 
-const PagerRound = ({ round }: { round: Round }) => {
-  const data = filledRounds[round]
-  const arr = Object.keys(data)
+const PagerRound = ({ matches }: { matches: Matches }) => {
+  const arr = Object.keys(matches)
 
   return (
     <PagerView style={styles.pagerView} initialPage={0}>
@@ -61,7 +59,7 @@ const PagerRound = ({ round }: { round: Round }) => {
             justifyContent: 'center',
           }}
         >
-          <MatchNode match={data[i]} total={arr.length} current={i} />
+          <MatchNode match={matches[i]} total={arr.length} current={i} />
         </View>
       ))}
     </PagerView>
