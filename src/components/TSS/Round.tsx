@@ -8,7 +8,15 @@ import PageIndicator from '@/components/TSS/PageIndicator'
 
 const VSpacer = ({ h }: { h: number }) => <View style={{ height: h }} />
 
-const MatchNode = ({ match }: { match: Match }) => {
+const MatchNode = ({
+  match,
+  total,
+  current,
+}: {
+  match: Match
+  total: number
+  current: number
+}) => {
   // TODO: incorporate scores into Match classes
   const scores = [1, 0]
 
@@ -34,7 +42,7 @@ const MatchNode = ({ match }: { match: Match }) => {
       <Row team={match.A} score={scores[0]} />
       <VSpacer h={8} />
       <Row team={match.B} score={scores[1]} />
-      <PageIndicator total={4} current={1}/>
+      <PageIndicator total={total} current={current} />
     </View>
   )
 }
@@ -49,20 +57,11 @@ const PagerRound = ({
   currentPageState: UseState<CurrentPageState>
 }) => {
   const data = filledRounds[round]
-  const [currentPages, setCurrentPages] = currentPageState
-
-  function debug() {
-    console.log(currentPages, round)
-  }
+  const arr = Object.keys(data)
 
   return (
-    <PagerView
-      style={styles.pagerView}
-      initialPage={0}
-      ref={_ref}
-      onPageSelected={debug}
-    >
-      {Object.keys(data).map((e: string, i) => {
+    <PagerView style={styles.pagerView} initialPage={0} ref={_ref}>
+      {arr.map((e: string, i) => {
         const key = parseInt(e)
         return (
           <View
@@ -72,7 +71,7 @@ const PagerRound = ({
               justifyContent: 'center',
             }}
           >
-            <MatchNode match={data[key]} />
+            <MatchNode match={data[key]} total={arr.length} current={i} />
           </View>
         )
       })}
