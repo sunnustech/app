@@ -49,7 +49,7 @@ const stations: Array<[number, string]> = [
   [600, 'Nerf Battle'],
 ]
 
-const generateQR = () => {
+const generateStationQR = () => {
   const indexed: Record<string, QRDictionaryGeneratorProps> = {}
   stations.forEach((station) => {
     const [startPoint, name] = station
@@ -61,6 +61,6 @@ const generateQR = () => {
   return indexed
 }
 
-const QRIndex = generateQR()
+const QRIndex = generateStationQR()
 
-export { generateQR, QRIndex }
+export { generateStationQR, QRIndex }

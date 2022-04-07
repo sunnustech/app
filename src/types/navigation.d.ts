@@ -7,6 +7,7 @@ export type AuthenticatedPages = {
   SOARNavigator: undefined
   TSSNavigator: undefined
   WSSScreen: undefined
+  GeneratorScreen: undefined
   DEVScreen: undefined
   TimerScreen: undefined
   QRScreen: undefined

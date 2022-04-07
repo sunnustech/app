@@ -4,7 +4,7 @@ import { ButtonProps } from '@/types/index'
 
 const Button = ({ onPress, children, style }: ButtonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[style, styles.button]}>
+    <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
       <Text style={styles.buttonText}>{children}</Text>
     </TouchableOpacity>
   )
@@ -12,12 +12,12 @@ const Button = ({ onPress, children, style }: ButtonProps) => {
 
 const ButtonRed = (props: ButtonProps) => {
   const { style, ...otherProps } = props
-  return <Button {...otherProps} style={[style, styles.redBg]} />
+  return <Button {...otherProps} style={[styles.redBg, style]} />
 }
 
 const ButtonGreen = (props: ButtonProps) => {
   const { style, ...otherProps } = props
-  return <Button {...otherProps} style={[style, styles.greenBg]} />
+  return <Button {...otherProps} style={[styles.greenBg, style]} />
 }
 
 export { Button, ButtonRed, ButtonGreen }

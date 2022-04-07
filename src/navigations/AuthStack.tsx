@@ -8,6 +8,7 @@ import {
   WSSScreen,
   DEVScreen,
   QRScreen,
+  GeneratorScreen,
 } from '@/screens/index'
 
 /* providers */
@@ -30,6 +31,7 @@ const Navigator = () => (
     <Drawer.Screen name="SOARNavigator" component={SOARNavigator} />
     <Drawer.Screen name="TSSNavigator" component={TSSNavigator} />
     <Drawer.Screen name="WSSScreen" component={WSSScreen} />
+    <Drawer.Screen name="GeneratorScreen" component={GeneratorScreen} />
     <Drawer.Screen name="DEVScreen" component={DEVScreen} />
   </Drawer.Navigator>
 )
