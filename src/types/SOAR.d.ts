@@ -1,4 +1,4 @@
-import { AuthenticatedPages } from '@/types/navigation'
+import { AuthenticatedPages, SOARPage } from '@/types/navigation'
 import { TimeApiProps } from '@/types/index'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import MapView from 'react-native-maps'
@@ -10,6 +10,11 @@ export type SOARTimetable = Array<{
 }>
 
 type SOARLocationStatus = '' | 'next' | 'done'
+
+type Coordinate = {
+  latitude: number
+  longitude: number
+}
 
 export type SOARLocation = {
   google_map_pin_url: string
@@ -25,10 +30,7 @@ export type SOARLocation = {
     game_title: string
     details: string
   }
-  coordinate: {
-    latitude: number
-    longitude: number
-  }
+  coordinate: Coordinate
 }
 
 export type SOARDatabase = {
@@ -143,10 +145,38 @@ export type MapButtonProps = {
   activated?: any
 }
 
+/* some constants */
+type SOARNavigator = SOARPage<'SOARScreen'>
+type StationStatus = 'done' | 'next' | ''
+// TODO: standardize all pointType and stationType variable names
+type PointType = 'game' | 'water' | 'admin'
+type NavTarget = keyof AuthenticatedPages
+
 export type MapProps = {
-  // getCurrentLocation: any
   mapRef: MutableRefObject<MapView | null>
-  navigation: DrawerNavigationProp<AuthenticatedPages, 'SOARScreen'>
+  navigation: SOARNavigator
   displayLocations: Array<SOARLocation>
   startStatus: boolean
+}
+
+export type MapPointProps = {
+  navigation: SOARNavigator
+  coordinate: Coordinate
+  navTarget: NavTarget
+  content: string
+  pointType: PointType
+  status: StationStatus
+  children: any
+}
+
+export type MapPointPopupProps = {
+  navigation: SOARNavigator
+  navTarget: NavTarget
+  content: string
+  status: StationStatus
+}
+
+export type MapPointIconProps = {
+  status: StationStatus
+  pointType: PointType
 }

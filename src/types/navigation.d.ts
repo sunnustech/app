@@ -8,7 +8,6 @@ export type AuthenticatedPages = {
   TSSNavigator: undefined
   WSSScreen: undefined
   DEVScreen: undefined
-  KnockoutTableScreen: undefined
   TimerScreen: undefined
   QRScreen: undefined
 }
@@ -35,4 +34,4 @@ export type TSSPage<Route extends keyof TSSPages> =
   BottomTabNavigationProp<TSSPages, Route>
 
 export type SOARPage<Route extends keyof SOARPages> =
-  NativeStackNavigationProp<TSSPages, Route>
+  NativeStackNavigationProp<SOARPages, Route>

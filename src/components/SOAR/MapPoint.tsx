@@ -1,19 +1,24 @@
 import { Marker, Callout } from 'react-native-maps'
-import { StyleSheet, View, Text } from 'react-native'
+import { View } from 'react-native'
 import { MaterialCommunityIcons as MCI } from '@expo/vector-icons'
 import Popup from './Popup'
 import Gem from './Gem'
 import { map as styles } from '@/styles/fresh'
+import {
+  MapPointIconProps,
+  MapPointPopupProps,
+  MapPointProps,
+} from '@/types/SOAR'
 
 const MapPoint = ({
   navigation,
   coordinate,
-  children,
   navTarget,
   content,
   pointType,
   status,
-}: any) => {
+  children,
+}: MapPointProps) => {
   return (
     <Marker coordinate={coordinate} opacity={status === '' ? 0 : 1}>
       <HandleIcon children={children} pointType={pointType} status={status} />
@@ -27,7 +32,12 @@ const MapPoint = ({
   )
 }
 
-const HandlePopup = ({ navigation, navTarget, content, status }: any) => {
+const HandlePopup = ({
+  navigation,
+  navTarget,
+  content,
+  status,
+}: MapPointPopupProps) => {
   if (status === 'next') {
     return (
       <Callout
@@ -41,24 +51,16 @@ const HandlePopup = ({ navigation, navTarget, content, status }: any) => {
   return null
 }
 
-const GemContainer = ({ children }: any) => {
-  return (
-    <View style={styles.debug}>
-      <View style={styles.GemContainer}>{children}</View>
-    </View>
-  )
-}
-
-const HandleIcon = ({ children, pointType, status }: any) => {
+const HandleIcon = ({ pointType, status }: MapPointIconProps) => {
   if (pointType === 'game') {
     if (status === 'done') {
       return <MCI name="marker-check" color="#10b981" size={24} />
     }
     if (status === 'next') {
       return (
-        <GemContainer>
+        <View style={styles.GemContainer}>
           <Gem />
-        </GemContainer>
+        </View>
       )
     }
     if (status === '') {

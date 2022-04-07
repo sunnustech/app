@@ -3,7 +3,6 @@ import HomeScreen from './HomeScreen'
 import SOARScreen from './SOARScreen'
 import WSSScreen from './WSSScreen'
 import DEVScreen from './DEVScreen'
-import KnockoutTable from './KnockoutTableScreen'
 import TimerScreen from './DEVScreen/TimerScreen'
 import QRScreen from './QRScreen'
 
@@ -13,7 +12,6 @@ export {
   SOARScreen,
   WSSScreen,
   DEVScreen,
-  KnockoutTable,
   TimerScreen,
   QRScreen,
 }

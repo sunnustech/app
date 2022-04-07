@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 
 /* navigation */
-import { AuthPage } from '@/types/navigation'
+import { SOARPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
@@ -30,7 +30,7 @@ const QRScreen = () => {
   const { teamName } = useContext(UserContext)
   const [isScanning, setIsScanning] = scanningState
   const setQR = QRState[1]
-  const navigation = useNavigation<AuthPage<'QRScreen'>>()
+  const navigation = useNavigation<SOARPage<'QRScreen'>>()
 
   /*
    * check validity

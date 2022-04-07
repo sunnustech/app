@@ -1,20 +1,17 @@
-/*
- * Authentication
- */
+import { ReactNode } from 'react'
+import {
+  GestureResponderEvent,
+  NativeSyntheticEvent,
+  NativeTouchEvent,
+  StyleProp,
+  TouchableOpacityProps,
+  ViewStyle,
+} from 'react-native'
 
+/* Authentication */
 export type UserState = {
   isLoggedIn: boolean
   isRegistered: boolean
-}
-
-export type ButtonProps = {
-  onPress: () => void
-  children: string
-  style?: any
-}
-
-export type DebugButtonProps = ButtonProps & {
-  color?: string
 }
 
 /*
@@ -40,4 +37,13 @@ type TimeApiProps = {
 export type SafeDivProps = {
   style?: any
   children?: any
+}
+
+export type ButtonProps = Pick<
+  TouchableOpacityProps,
+  'onPress' | 'children' | 'style'
+>
+
+export type DebugButtonProps = ButtonProps & {
+  color?: string
 }
