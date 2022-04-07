@@ -153,7 +153,7 @@ export default StyleSheet.create({
   },
   pickerTextContainer: {
     flex: 1,
-    width: "100%",
+    width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
   },
@@ -166,5 +166,9 @@ export default StyleSheet.create({
   },
   pickerChevron: {
     color: '#4b5563',
+  },
+  rowCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 })

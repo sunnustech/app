@@ -52,13 +52,7 @@ const PagerRound = ({ matches }: { matches: Matches }) => {
   return (
     <PagerView style={styles.pagerView} initialPage={0}>
       {arr.map((_, i) => (
-        <View
-          key={i}
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}
-        >
+        <View key={i} style={styles.rowCenter}>
           <MatchNode match={matches[i]} total={arr.length} current={i} />
         </View>
       ))}
