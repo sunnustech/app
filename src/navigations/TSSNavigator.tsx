@@ -50,7 +50,11 @@ const TSSNavigator = () => {
   return (
     <TSSTabs.Navigator>
       <TSSTabs.Screen name="TSSScreen" component={TSSScreen} />
-      <TSSTabs.Screen name="KnockoutTable" component={KnockoutTableWrapper} />
+      <TSSTabs.Screen
+        name="KnockoutTable"
+        component={KnockoutTableWrapper}
+        options={{ headerShown: false }}
+      />
     </TSSTabs.Navigator>
   )
 }
