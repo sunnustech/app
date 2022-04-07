@@ -30,7 +30,7 @@ const SportPicker = ({
 
   return (
     <TouchableOpacity onPress={openPicker} style={styles.pickerContainer}>
-      <View style={styles.pickerChevronContainer}/>
+      <View style={styles.pickerChevronContainer} />
       <View style={styles.pickerTextContainer}>
         <Text style={styles.pickerText}>{tempSport}</Text>
       </View>
@@ -74,11 +74,7 @@ const KnockoutTable = ({
   const AllRounds = () => (
     <>
       {reversedRoundList.map((round, idx) => {
-        return (
-          <>
-            <PagerRound matches={data[round]} key={idx} />
-          </>
-        )
+        return <PagerRound matches={data[round]} key={idx} />
       })}
     </>
   )
