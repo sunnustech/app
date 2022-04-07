@@ -39,8 +39,16 @@ const SOARNavigator = () => (
     initialRouteName="SOARScreen"
     screenOptions={{ headerShown: false }}
   >
-    <Stack.Screen name="SOARScreen" component={SOARScreen} />
-    <Stack.Screen name="QRScreen" component={QRScreen} />
+    <Stack.Screen
+      name="SOARScreen"
+      component={SOARScreen}
+      options={{ animation: 'none' }}
+    />
+    <Stack.Screen
+      name="QRScreen"
+      component={QRScreen}
+      options={{ animation: 'none' }}
+    />
   </Stack.Navigator>
 )
 

@@ -10,7 +10,7 @@ import { Text, View } from 'react-native'
 import { Modal } from 'react-native-paper'
 
 /* navigation */
-import { AuthPage } from '@/types/navigation'
+import { SOARPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
@@ -72,7 +72,7 @@ const SOARScreen = () => {
 
   const mapRef = useRef<MapView | null>(null)
 
-  const navigation = useNavigation<AuthPage<'SOARScreen'>>()
+  const navigation = useNavigation<SOARPage<'SOARScreen'>>()
 
   // first time grab user location
   useEffect(() => {
