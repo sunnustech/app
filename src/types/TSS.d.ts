@@ -20,6 +20,8 @@ export type Match = {
   A: string
   B: string
   winner: Winner
+  scoreA: number
+  scoreB: number
 }
 
 type Matches = Record<number, Match>
