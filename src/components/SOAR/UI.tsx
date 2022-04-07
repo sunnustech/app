@@ -7,8 +7,7 @@ import {
   MapSOSButton,
   MapAdminToggle,
 } from '@/components/SOAR'
-import { MapCurretLocationButton } from './MapButtons'
-import { Text } from 'react-native'
+import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
 
 import SOAR from '@/lib/SOAR'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
@@ -73,7 +72,7 @@ const UI = ({
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
           {/* <Debug /> */}
-          <MapCurretLocationButton onPress={flyToCurrentLocation} />
+          <MapGoToSchoolButton onPress={flyToCurrentLocation} />
           <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
         </NoTouchDiv>
       </NoTouchDiv>

@@ -1,6 +1,6 @@
 import { map as styles } from '@/styles/fresh'
 import { MapButtonProps } from '@/types/SOAR'
-import { TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import {
   MaterialCommunityIcons as MCI,
   MaterialIcons as MI,
@@ -38,6 +38,23 @@ const MapCurretLocationButton = ({ onPress }: any) => {
   )
 }
 
+const MapGoToSchoolButton = ({ onPress }: any) => {
+  return (
+    <TouchableOpacity
+      style={[
+        styles.mapSideButton,
+        styles.mapBottomButton,
+        styles.mapCurrentLocationButton,
+      ]}
+      onPress={onPress}
+    >
+      <Text style={{ fontWeight: '800', color: 'white', textAlign: 'center' }}>
+        NUS
+      </Text>
+    </TouchableOpacity>
+  )
+}
+
 const MapTopButton = ({ icon, onPress, activated = false }: MapButtonProps) => {
   const style = activated
     ? [styles.mapSideButton, styles.mapTopButton, styles.mapActivatedButton]
@@ -70,5 +87,6 @@ export {
   MapAdminToggle,
   MapSOSButton,
   MapCurretLocationButton,
+  MapGoToSchoolButton,
 }
 export default MapButton
