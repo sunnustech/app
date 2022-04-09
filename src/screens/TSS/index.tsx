@@ -16,7 +16,7 @@ import { Dispatch, Fragment, MutableRefObject, useRef, useState } from 'react'
 import { functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker from 'react-native-picker-select'
-import { UseState } from '../../types/SOAR'
+import { UseState } from '@/types/SOAR'
 
 function getItems(arr: Array<string | number | Sport | Round>): Array<Item> {
   return arr.map((e, i) => ({
