@@ -1,6 +1,7 @@
 import { initializeApp, getApp, getApps } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
+import { getFunctions } from 'firebase/functions'
 import secrets from './secrets'
 
 // Your web app's Firebase configuration
@@ -19,5 +20,6 @@ if (getApps.length === 0) {
 
 const auth = getAuth(app)
 const db = getFirestore(app)
+const functions = getFunctions(app)
 
-export { auth, db }
+export { auth, db, functions }

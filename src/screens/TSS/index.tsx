@@ -1,5 +1,6 @@
 import { KeyboardAvoidingView, Text } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
+import { httpsCallable } from 'firebase/functions'
 
 /* navigation */
 import { TSSPage } from '@/types/navigation'
@@ -11,13 +12,14 @@ import { TSS as styles } from '@/styles/fresh'
 // DELETE AFTER USE
 import { Button } from '@/components/Buttons'
 import { getKnockoutTable, handleMatch } from '@/lib/knockout'
-import { MatchRequest, Round, Sport, Winner } from '@/types/TSS'
+import { Round, Sport, Winner } from '@/types/TSS'
 import { useState } from 'react'
+import { functions } from '@/sunnus/firebase'
 
 const TSSScreen = () => {
   const [sport, setSport] = useState<Sport>('dodgeball')
   const [matchNumber, setMatchNumber] = useState(0)
-  const [winner, setWinner] = useState<Winner>('U')
+  const [winner, setWinner] = useState<Winner>('A')
   const [round, setRound] = useState<Round>('round_of_32')
 
   // const navigation = useNavigation<DrawerNavigationProp<AuthenticatedPages, 'TSSScreen'>>()
@@ -25,14 +27,31 @@ const TSSScreen = () => {
 
   const navigation = useNavigation<TSSPage<'TSSScreen'>>()
 
+  function Firebase() {
+    const authTest = httpsCallable(functions, 'authTest3')
+    authTest({
+      data: {
+        something: 'is up',
+      },
+    }).then((response) => {
+      console.log('response', response)
+    })
+
+  }
+
   const tempFunction = async () => {
-    let obj: MatchRequest = {
-      sport: sport,
-      matchNumber: matchNumber,
-      winner: winner,
-      round: round,
-    }
-    handleMatch(obj)
+    // let obj: MatchRequest = {
+    //   sport: sport,
+    //   matchNumber: matchNumber,
+    //   winner: winner,
+    //   round: round,
+    // }
+    // handleMatch(obj)
+    
+    Firebase()
+
+    // console.log(Object.keys(auth))
+    // console.log(auth.currentUser)
   }
 
   return (
@@ -40,6 +59,7 @@ const TSSScreen = () => {
       <Text>Welcome to the TSS page!</Text>
       <Text>Choose sport</Text>
       <RNPickerSelect
+        value={sport}
         onValueChange={(value) => setSport(value)}
         items={[
           { label: 'dodgeball', value: 'dodgeball', key: 0 },
@@ -50,6 +70,7 @@ const TSSScreen = () => {
       />
       <Text>Choose match Number</Text>
       <RNPickerSelect
+        value={matchNumber}
         onValueChange={(value) => setMatchNumber(value)}
         items={[
           { label: '0', value: 0, key: 0 },
@@ -72,6 +93,7 @@ const TSSScreen = () => {
       />
       <Text>Choose winner</Text>
       <RNPickerSelect
+        value={winner}
         onValueChange={(value) => setWinner(value)}
         items={[
           { label: 'A', value: 'A', key: 0 },
@@ -80,6 +102,7 @@ const TSSScreen = () => {
       />
       <Text>Choose round</Text>
       <RNPickerSelect
+        value={round}
         onValueChange={(value) => setRound(value)}
         items={[
           { label: '32', value: 'round_of_32', key: 0 },
