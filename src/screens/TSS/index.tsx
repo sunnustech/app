@@ -1,4 +1,9 @@
-import { KeyboardAvoidingView, Text, View, TouchableOpacity } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native'
 import { httpsCallable } from 'firebase/functions'
 
 /* navigation */
@@ -65,6 +70,10 @@ const TSSScreen = () => {
     winner: getItems(['A', 'B']),
   }
 
+  const [a, setA] = useState<Sport>('volleyball')
+  const [d, setD] = useState<Sport>('volleyball')
+  const r = useRef<Picker>(null)
+
   const InitializePickers = () => (
     <>
       {fields.map((field, idx) => (
@@ -101,8 +110,22 @@ const TSSScreen = () => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text>Welcome to the TSS page!</Text>
-      <InitializePickers />
-      <CustomPicker pickerRef={refs.sport} display={display.sport[0]}/>
+      {fields.map((field, idx) => (
+        <PickerProvider
+          _ref={refs[field]}
+          setState={states[field][1]}
+          display={display[field]}
+          items={items[field]}
+          key={idx}
+        />
+      ))}
+      {fields.map((field, idx) => (
+        <CustomPicker
+          pickerRef={refs[field]}
+          display={display[field]}
+          key={idx}
+        />
+      ))}
       <Text>(you can navigate back by swiping in from the left)</Text>
       <Button onPress={tempFunction}>Test</Button>
     </KeyboardAvoidingView>
