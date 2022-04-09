@@ -82,8 +82,9 @@ const KnockoutTable = ({
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <RNPickerSelect
-        placeholder={{}}
         ref={pickerRef}
+        placeholder={{}}
+        value={tempSport}
         onValueChange={(value) => setTempSport(value)}
         onDonePress={() => setSport(tempSport)}
         items={sportList.map((sport, i) => ({
