@@ -40,18 +40,7 @@ const TSSScreen = () => {
   }
 
   const tempFunction = async () => {
-    // let obj: MatchRequest = {
-    //   sport: sport,
-    //   matchNumber: matchNumber,
-    //   winner: winner,
-    //   round: round,
-    // }
-    // handleMatch(obj)
-    
     Firebase()
-
-    // console.log(Object.keys(auth))
-    // console.log(auth.currentUser)
   }
 
   return (
