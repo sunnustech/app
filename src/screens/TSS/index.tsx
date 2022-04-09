@@ -11,12 +11,11 @@ import { TSS as styles } from '@/styles/fresh'
 // DELETE AFTER USE
 import { Button } from '@/components/Buttons'
 import CustomPicker from '@/components/TSS/CustomPicker'
-import { Round, Sport, Winner } from '@/types/TSS'
-import { Fragment, MutableRefObject, useRef, useState } from 'react'
+import { FieldStates, Round, Sport, Winner } from '@/types/TSS'
+import { MutableRefObject, useRef, useState } from 'react'
 import { functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker from 'react-native-picker-select'
-import { UseState } from '@/types/SOAR'
 import { getItems } from '@/lib/utils'
 
 type Field = 'sport' | 'round' | 'matchNumber' | 'winner'
@@ -26,21 +25,14 @@ const TSSScreen = () => {
 
   const navigation = useNavigation<TSSPage<'TSSScreen'>>()
 
-  type UseStates = {
-    sport: UseState<Sport>
-    round: UseState<Round>
-    matchNumber: UseState<number>
-    winner: UseState<Winner>
-  }
-
-  const states: UseStates = {
+  const states: FieldStates = {
     sport: useState<Sport>('dodgeball'),
     matchNumber: useState(0),
     winner: useState<Winner>('A'),
     round: useState<Round>('round_of_32'),
   }
 
-  const display: UseStates = {
+  const display: FieldStates = {
     sport: useState<Sport>(states.sport[0]),
     round: useState<Round>(states.round[0]),
     matchNumber: useState(states.matchNumber[0]),
