@@ -27,3 +27,12 @@ export function objFromArray(
   })
   return obj
 }
+
+export function getItems(arr: Array<string | number | Sport | Round>): Array<Item> {
+  return arr.map((e, i) => ({
+    label: e.toString(),
+    value: e.toString(),
+    key: i,
+  }))
+}
+
