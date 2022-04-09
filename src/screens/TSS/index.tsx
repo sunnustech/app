@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Text } from 'react-native'
+import { KeyboardAvoidingView, Text, View, TouchableOpacity } from 'react-native'
 import { httpsCallable } from 'firebase/functions'
 
 /* navigation */
@@ -10,7 +10,7 @@ import { TSS as styles } from '@/styles/fresh'
 
 // DELETE AFTER USE
 import { Button } from '@/components/Buttons'
-import CustomPicker from '@/components/TSS/CustomPicker'
+import PickerProvider from '@/components/TSS/PickerProvider'
 import { FieldStates, Round, Sport, Winner } from '@/types/TSS'
 import { MutableRefObject, useRef, useState } from 'react'
 import { functions } from '@/sunnus/firebase'
@@ -33,10 +33,10 @@ const TSSScreen = () => {
   }
 
   const display: FieldStates = {
-    sport: useState<Sport>(states.sport[0]),
-    round: useState<Round>(states.round[0]),
-    matchNumber: useState(states.matchNumber[0]),
-    winner: useState<Winner>(states.winner[0]),
+    sport: useState<Sport>('dodgeball'),
+    matchNumber: useState(0),
+    winner: useState<Winner>('A'),
+    round: useState<Round>('round_of_32'),
   }
 
   const refs: Record<Field, MutableRefObject<Picker | null>> = {
@@ -68,7 +68,7 @@ const TSSScreen = () => {
   const InitializePickers = () => (
     <>
       {fields.map((field, idx) => (
-        <CustomPicker
+        <PickerProvider
           _ref={refs[field]}
           setState={states[field][1]}
           display={display[field]}
@@ -79,10 +79,30 @@ const TSSScreen = () => {
     </>
   )
 
+  const CustomPicker = ({
+    pickerRef,
+    display,
+  }: {
+    pickerRef: MutableRefObject<Picker | null>
+    display: any
+  }) => {
+    function openPicker() {
+      pickerRef.current?.togglePicker()
+    }
+    return (
+      <TouchableOpacity onPress={openPicker} style={styles.pickerContainer}>
+        <View style={styles.pickerTextContainer}>
+          <Text style={styles.pickerText}>{display}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text>Welcome to the TSS page!</Text>
       <InitializePickers />
+      <CustomPicker pickerRef={refs.sport} display={display.sport[0]}/>
       <Text>(you can navigate back by swiping in from the left)</Text>
       <Button onPress={tempFunction}>Test</Button>
     </KeyboardAvoidingView>

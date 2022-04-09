@@ -3,7 +3,7 @@ import RNPickerSelect, { Item } from 'react-native-picker-select'
 import { UseState } from '@/types/SOAR'
 import { showNone } from '@/lib/utils'
 
-const CustomPicker = ({
+const PickerProvider = ({
   _ref,
   display,
   setState,
@@ -14,17 +14,18 @@ const CustomPicker = ({
   setState: Dispatch<any>
   items: Array<Item>
 }) => {
+  const setDisplay = display[1]
   return (
     <RNPickerSelect
       ref={_ref}
       value={display[0]}
       placeholder={{}}
       style={showNone}
-      onValueChange={(value) => display[1](value)}
+      onValueChange={(value) => setDisplay(value)}
       onDonePress={() => setState(display[0])}
       items={items}
     />
   )
 }
 
-export default CustomPicker
+export default PickerProvider
