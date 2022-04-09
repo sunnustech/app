@@ -16,6 +16,7 @@ import { reversedRoundList } from '@/data/constants'
 import PagerRound from '@/components/TSS/Round'
 import { TouchableOpacity } from 'react-native'
 import { UseState } from '@/types/SOAR'
+import { showNone } from '@/lib/utils'
 
 const SportPicker = ({
   pickerRef,
@@ -61,15 +62,6 @@ const KnockoutTable = ({
    *
    * may not need to fix if method of choosing sport changes later
    */
-
-  const showNone = {
-    placeholder: styles.displayNone,
-    inputAndroid: styles.displayNone,
-    inputAndroidContainer: styles.displayNone,
-    inputIOS: styles.displayNone,
-    inputIOSContainer: styles.displayNone,
-    inputWeb: styles.displayNone,
-  }
 
   const AllRounds = () => (
     <>

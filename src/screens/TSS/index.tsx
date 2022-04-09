@@ -1,5 +1,9 @@
-import { KeyboardAvoidingView, Text } from 'react-native'
-import RNPickerSelect from 'react-native-picker-select'
+import {
+  KeyboardAvoidingView,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native'
 import { httpsCallable } from 'firebase/functions'
 
 /* navigation */
@@ -11,96 +15,117 @@ import { TSS as styles } from '@/styles/fresh'
 
 // DELETE AFTER USE
 import { Button } from '@/components/Buttons'
-import { getKnockoutTable, handleMatch } from '@/lib/knockout'
-import { Round, Sport, Winner } from '@/types/TSS'
-import { useState } from 'react'
+import PickerProvider from '@/components/TSS/PickerProvider'
+import { FieldStates, Round, Sport, Winner } from '@/types/TSS'
+import { MutableRefObject, useRef, useState } from 'react'
 import { functions } from '@/sunnus/firebase'
+import { matchNumbers, sportList, roundList } from '@/data/constants'
+import Picker from 'react-native-picker-select'
+import { getItems } from '@/lib/utils'
+
+type Field = 'sport' | 'round' | 'matchNumber' | 'winner'
 
 const TSSScreen = () => {
-  const [sport, setSport] = useState<Sport>('dodgeball')
-  const [matchNumber, setMatchNumber] = useState(0)
-  const [winner, setWinner] = useState<Winner>('A')
-  const [round, setRound] = useState<Round>('round_of_32')
-
-  // const navigation = useNavigation<DrawerNavigationProp<AuthenticatedPages, 'TSSScreen'>>()
-  // const navigation = useNavigation<DrawerNavigationProp<AuthenticatedPages, 'TSSScren'>>()
+  const fields: Array<Field> = ['sport', 'round', 'matchNumber', 'winner']
 
   const navigation = useNavigation<TSSPage<'TSSScreen'>>()
 
-  function Firebase() {
-    const authTest = httpsCallable(functions, 'authTest3')
-    authTest({
-      data: {
-        something: 'is up',
-      },
-    }).then((response) => {
-      console.log('response', response)
-    })
+  const states: FieldStates = {
+    sport: useState<Sport>('dodgeball'),
+    matchNumber: useState(0),
+    winner: useState<Winner>('A'),
+    round: useState<Round>('round_of_32'),
+  }
 
+  const display: FieldStates = {
+    sport: useState<Sport>('dodgeball'),
+    matchNumber: useState(0),
+    winner: useState<Winner>('A'),
+    round: useState<Round>('round_of_32'),
+  }
+
+  const refs: Record<Field, MutableRefObject<Picker | null>> = {
+    sport: useRef<Picker>(null),
+    round: useRef<Picker>(null),
+    matchNumber: useRef<Picker>(null),
+    winner: useRef<Picker>(null),
   }
 
   const tempFunction = async () => {
-    Firebase()
+    console.log('sport:', sport)
+    console.log('round:', round)
+    console.log('matchNumber:', matchNumber)
+    console.log('winner:', winner)
+  }
+
+  const sport = states.sport[0]
+  const round = states.round[0]
+  const matchNumber = states.matchNumber[0]
+  const winner = states.winner[0]
+
+  const items = {
+    sport: getItems(sportList),
+    round: getItems(roundList),
+    matchNumber: getItems(matchNumbers[round]),
+    winner: getItems(['A', 'B']),
+  }
+
+  const [a, setA] = useState<Sport>('volleyball')
+  const [d, setD] = useState<Sport>('volleyball')
+  const r = useRef<Picker>(null)
+
+  const InitializePickers = () => (
+    <>
+      {fields.map((field, idx) => (
+        <PickerProvider
+          _ref={refs[field]}
+          setState={states[field][1]}
+          display={display[field]}
+          items={items[field]}
+          key={idx}
+        />
+      ))}
+    </>
+  )
+
+  const CustomPicker = ({
+    pickerRef,
+    display,
+  }: {
+    pickerRef: MutableRefObject<Picker | null>
+    display: any
+  }) => {
+    function openPicker() {
+      pickerRef.current?.togglePicker()
+    }
+    return (
+      <TouchableOpacity onPress={openPicker} style={styles.pickerContainer}>
+        <View style={styles.pickerTextContainer}>
+          <Text style={styles.pickerText}>{display}</Text>
+        </View>
+      </TouchableOpacity>
+    )
   }
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text>Welcome to the TSS page!</Text>
-      <Text>Choose sport</Text>
-      <RNPickerSelect
-        value={sport}
-        onValueChange={(value) => setSport(value)}
-        items={[
-          { label: 'dodgeball', value: 'dodgeball', key: 0 },
-          { label: 'frisbee', value: 'frisbee', key: 1 },
-          { label: 'tchoukball', value: 'tchoukball', key: 2 },
-          { label: 'volleyball', value: 'volleyball', key: 3 },
-        ]}
-      />
-      <Text>Choose match Number</Text>
-      <RNPickerSelect
-        value={matchNumber}
-        onValueChange={(value) => setMatchNumber(value)}
-        items={[
-          { label: '0', value: 0, key: 0 },
-          { label: '1', value: 1, key: 1 },
-          { label: '2', value: 2, key: 2 },
-          { label: '3', value: 3, key: 3 },
-          { label: '4', value: 4, key: 4 },
-          { label: '5', value: 5, key: 5 },
-          { label: '6', value: 6, key: 6 },
-          { label: '7', value: 7, key: 7 },
-          { label: '8', value: 8, key: 8 },
-          { label: '9', value: 9, key: 9 },
-          { label: '10', value: 10, key: 10 },
-          { label: '11', value: 11, key: 11 },
-          { label: '12', value: 12, key: 12 },
-          { label: '13', value: 13, key: 13 },
-          { label: '14', value: 14, key: 14 },
-          { label: '15', value: 15, key: 15 },
-        ]}
-      />
-      <Text>Choose winner</Text>
-      <RNPickerSelect
-        value={winner}
-        onValueChange={(value) => setWinner(value)}
-        items={[
-          { label: 'A', value: 'A', key: 0 },
-          { label: 'B', value: 'B', key: 1 },
-        ]}
-      />
-      <Text>Choose round</Text>
-      <RNPickerSelect
-        value={round}
-        onValueChange={(value) => setRound(value)}
-        items={[
-          { label: '32', value: 'round_of_32', key: 0 },
-          { label: '16', value: 'round_of_16', key: 1 },
-          { label: '8', value: 'quarterfinals', key: 2 },
-          { label: '4', value: 'semifinals', key: 3 },
-          { label: '2', value: 'finals', key: 4 },
-        ]}
-      />
+      {fields.map((field, idx) => (
+        <PickerProvider
+          _ref={refs[field]}
+          setState={states[field][1]}
+          display={display[field]}
+          items={items[field]}
+          key={idx}
+        />
+      ))}
+      {fields.map((field, idx) => (
+        <CustomPicker
+          pickerRef={refs[field]}
+          display={display[field]}
+          key={idx}
+        />
+      ))}
       <Text>(you can navigate back by swiping in from the left)</Text>
       <Button onPress={tempFunction}>Test</Button>
     </KeyboardAvoidingView>
