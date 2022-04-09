@@ -9,5 +9,6 @@ import knockout from './knockout'
 import timer from './timer'
 import QR from './QR'
 import buttons from './buttons'
+import utils from './utils'
 
-export { login, home, map, SOAR, TSS, WSS, DEV, knockout, timer, QR, buttons }
+export { login, home, map, SOAR, TSS, WSS, DEV, knockout, timer, QR, buttons, utils }

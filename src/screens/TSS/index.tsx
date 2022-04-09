@@ -76,15 +76,13 @@ const TSSScreen = () => {
   const InitializePickers = () => (
     <>
       {fields.map((field, idx) => (
-        <Fragment key={idx}>
-          <Text>Choose {field}</Text>
-          <CustomPicker
-            _ref={refs[field]}
-            setState={states[field][1]}
-            display={display[field]}
-            items={items[field]}
-          />
-        </Fragment>
+        <CustomPicker
+          _ref={refs[field]}
+          setState={states[field][1]}
+          display={display[field]}
+          items={items[field]}
+          key={idx}
+        />
       ))}
     </>
   )
