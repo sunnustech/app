@@ -22,6 +22,7 @@ import { functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker from 'react-native-picker-select'
 import { getItems } from '@/lib/utils'
+import CustomPicker from '@/components/TSS/CustomPicker'
 
 type Field = 'sport' | 'round' | 'matchNumber' | 'winner'
 
@@ -68,43 +69,6 @@ const TSSScreen = () => {
     round: getItems(roundList),
     matchNumber: getItems(matchNumbers[round]),
     winner: getItems(['A', 'B']),
-  }
-
-  const [a, setA] = useState<Sport>('volleyball')
-  const [d, setD] = useState<Sport>('volleyball')
-  const r = useRef<Picker>(null)
-
-  const InitializePickers = () => (
-    <>
-      {fields.map((field, idx) => (
-        <PickerProvider
-          _ref={refs[field]}
-          setState={states[field][1]}
-          display={display[field]}
-          items={items[field]}
-          key={idx}
-        />
-      ))}
-    </>
-  )
-
-  const CustomPicker = ({
-    pickerRef,
-    display,
-  }: {
-    pickerRef: MutableRefObject<Picker | null>
-    display: any
-  }) => {
-    function openPicker() {
-      pickerRef.current?.togglePicker()
-    }
-    return (
-      <TouchableOpacity onPress={openPicker} style={styles.pickerContainer}>
-        <View style={styles.pickerTextContainer}>
-          <Text style={styles.pickerText}>{display}</Text>
-        </View>
-      </TouchableOpacity>
-    )
   }
 
   return (
