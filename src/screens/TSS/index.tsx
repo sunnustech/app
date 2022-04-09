@@ -12,7 +12,7 @@ import { TSS as styles } from '@/styles/fresh'
 // DELETE AFTER USE
 import { Button } from '@/components/Buttons'
 import { Round, Sport, Winner } from '@/types/TSS'
-import { Dispatch, MutableRefObject, useRef, useState } from 'react'
+import { Dispatch, Fragment, MutableRefObject, useRef, useState } from 'react'
 import { functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker from 'react-native-picker-select'
@@ -103,11 +103,10 @@ const TSSScreen = () => {
     winner: getItems(['A', 'B']),
   }
 
-  return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text>Welcome to the TSS page!</Text>
-      {fields.map((field) => (
-        <>
+  const InitializePickers = () => (
+    <>
+      {fields.map((field, idx) => (
+        <Fragment key={idx}>
           <Text>Choose {field}</Text>
           <CustomPicker
             _ref={refs[field]}
@@ -115,8 +114,15 @@ const TSSScreen = () => {
             display={display[field]}
             items={items[field]}
           />
-        </>
+        </Fragment>
       ))}
+    </>
+  )
+
+  return (
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <Text>Welcome to the TSS page!</Text>
+      <InitializePickers />
       <Text>(you can navigate back by swiping in from the left)</Text>
       <Button onPress={tempFunction}>Test</Button>
     </KeyboardAvoidingView>
