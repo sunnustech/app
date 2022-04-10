@@ -21,6 +21,9 @@ export function capitalizeFirstLettersAndJoin(string: string) {
 }
 
 export function replaceUnderscoresWithSpaces(string: string) {
+  if (!string) {
+    return ''
+  }
   return string.replace(/_/g, ' ')
 }
 
@@ -39,7 +42,7 @@ export function getItems(
   arr: Array<string | number | Sport | Round>
 ): Array<Item> {
   return arr.map((e, i) => ({
-    label: e.toString(),
+    label: replaceUnderscoresWithSpaces(e.toString()),
     value: e.toString(),
     key: i,
   }))
