@@ -15,12 +15,16 @@ export default StyleSheet.create({
     color: '#4b5563',
   },
 
-  /* picker stuff */
-  confirmContainer: {
-    marginTop: 24,
+  /* buttons below */
+  bottomAreaButtonContainer: {
     width: '80%',
+    flexDirection: 'row',
+    // backgroundColor: 'red',
+  },
+  baseButton: {
+    flex: 1,
+    marginTop: 24,
     height: 64,
-    backgroundColor: '#10b981',
     paddingHorizontal: 18,
     paddingVertical: 8,
     borderRadius: 6,
@@ -32,17 +36,39 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     display: 'flex',
+    borderWidth: 4,
+    borderColor: 'rgba(0,0,0,0)',
   },
-  confirmTextContainer: {
+  confirmButton: {
+    backgroundColor: '#10b981',
+  },
+  confirmText: {
+    color: 'white',
+  },
+  backButton: {
+    backgroundColor: '#f87171',
+  },
+  backText: {
+    borderColor: '#6b7280',
+    color: 'white',
+  },
+  pushButton: {
+    backgroundColor: '#10b981',
+  },
+  pushText: {
+    color: 'white',
+  },
+
+  /* bottom button texts */
+  buttonTextContainer: {
     flex: 1,
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  confirmText: {
+  buttonBaseText: {
     width: '100%',
     fontSize: 18,
-    color: 'white',
     fontWeight: '700',
     textAlign: 'center',
   },

@@ -61,11 +61,16 @@ export type TSSDatabase = Sports & {
 
 export type CurrentPageState = Record<Round, number>
 
+export type Field = 'sport' | 'round' | 'matchNumber'
 export type FieldStates = {
   sport: UseState<Sport>
   round: UseState<Round>
   matchNumber: UseState<number>
-  winner: UseState<Winner>
 }
 
-export type PageStatus = 'no-one' | 'one-in' | 'both-in' | 'completed' | 'in-progress'
+export type PageStatus =
+  | 'no-one'
+  | 'one-in'
+  | 'both-in'
+  | 'completed'
+  | 'in-progress'

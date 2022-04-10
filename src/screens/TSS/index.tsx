@@ -4,6 +4,10 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  StyleProp,
+  TouchableOpacityProperties,
+  ViewStyle,
+  TextStyle,
 } from 'react-native'
 import { httpsCallable } from 'firebase/functions'
 
@@ -16,7 +20,7 @@ import { TSS as styles } from '@/styles/fresh'
 
 // DELETE AFTER USE
 import PickerProvider from '@/components/TSS/PickerProvider'
-import { Round, Sport, Winner } from '@/types/TSS'
+import { Field, FieldStates, Round, Sport, Winner } from '@/types/TSS'
 import {
   MutableRefObject,
   useContext,
@@ -29,40 +33,52 @@ import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker, { Item } from 'react-native-picker-select'
 import { getItems, replaceUnderscoresWithSpaces } from '@/lib/utils'
 import CustomPicker from '@/components/TSS/CustomPicker'
-import { UseState } from '@/types/SOAR'
 import { LastContext } from '@/contexts/LastContext'
+import { OnPress } from '@/types/index'
 
-type Field = 'sport' | 'round' | 'matchNumber'
+const FinalButton = ({
+  onPress,
+  containerStyle,
+  textStyle,
+  text,
+}: {
+  onPress: OnPress
+  containerStyle: StyleProp<ViewStyle>
+  textStyle: StyleProp<TextStyle>
+  text: string
+}) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.baseButton, containerStyle]}
+    >
+      <View style={styles.buttonTextContainer}>
+        <Text style={[styles.buttonBaseText, textStyle]}>{text}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
 
 const TSSScreen = () => {
   // const navigation = useNavigation<TSSPage<'TSSScreen'>>()
-  const fields: Array<Field> = ['sport', 'round', 'matchNumber']
+  const fields: Field[] = ['sport', 'round', 'matchNumber']
   const { roundData, sport, setSport } = useContext(LastContext)
-
-  type DisplayStates = {
-    sport: UseState<Sport>
-    round: UseState<Round>
-    matchNumber: UseState<number>
-  }
-
   const roundState = useState<Round>('round_of_32')
   const matchNumberState = useState(0)
-
   const round = roundState[0]
   const matchNumber = matchNumberState[0]
 
-  const states: DisplayStates = {
+  /* requirements for picker handling */
+  const states: FieldStates = {
     sport: [sport, setSport],
     matchNumber: matchNumberState,
     round: roundState,
   }
-
-  const display: DisplayStates = {
+  const display: FieldStates = {
     sport: useState<Sport>(sport),
     matchNumber: useState(0),
     round: useState<Round>('round_of_32'),
   }
-
   const refs: Record<Field, MutableRefObject<Picker | null>> = {
     sport: useRef<Picker>(null),
     round: useRef<Picker>(null),
@@ -78,7 +94,6 @@ const TSSScreen = () => {
 
   /* when the round changes, reset the match number to zero */
   useEffect(() => {
-    // console.log('!round -> match number')
     items.matchNumber[1](getItems(matchNumbers[round]))
     states.matchNumber[1](0)
     display.matchNumber[1](0)
@@ -89,6 +104,7 @@ const TSSScreen = () => {
   }, [round])
 
   const handleConfirm = () => {
+    setGonnaSend(false)
     const email = auth.currentUser ? auth.currentUser.email : 'noreply-mail.com'
     const outcome: Winner =
       scoreA === scoreB ? 'U' : scoreA > scoreB ? 'A' : 'B'
@@ -144,6 +160,9 @@ const TSSScreen = () => {
   useEffect(() => {
     display.sport[1](sport)
   }, [sport])
+
+  /* confirmation handling */
+  const [gonnaSend, setGonnaSend] = useState(false)
 
   return (
     <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
@@ -203,11 +222,32 @@ const TSSScreen = () => {
         />
       ))}
 
-      <TouchableOpacity onPress={handleConfirm} style={styles.confirmContainer}>
-        <View style={styles.confirmTextContainer}>
-          <Text style={styles.confirmText}>Confirm</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={styles.bottomAreaButtonContainer}>
+        {gonnaSend ? (
+          <>
+          <FinalButton
+            onPress={() => setGonnaSend(false)}
+            containerStyle={styles.backButton}
+            textStyle={styles.backText}
+            text="Back"
+          />
+            <View style={{width: 10}}/>
+          <FinalButton
+            onPress={handleConfirm}
+            containerStyle={styles.confirmButton}
+            textStyle={styles.confirmText}
+            text="Confirm"
+          />
+            </>
+        ) : (
+          <FinalButton
+            onPress={() => setGonnaSend(true)}
+            containerStyle={styles.pushButton}
+            textStyle={styles.pushText}
+            text="Push"
+          />
+        )}
+      </View>
     </ScrollView>
   )
 }
