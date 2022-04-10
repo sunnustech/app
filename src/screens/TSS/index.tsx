@@ -23,7 +23,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { functions } from '@/sunnus/firebase'
+import { auth, functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker, { Item } from 'react-native-picker-select'
 import { getItems } from '@/lib/utils'
@@ -130,24 +130,32 @@ const TSSScreen = () => {
     display.winner[1](roundData[round][matchNumber][winnerCode])
   }, [roundData])
 
-  function show(state: DisplayStates) {
-    console.log(state.sport[0])
-    console.log(state.round[0])
-    console.log(state.matchNumber[0])
-    console.log(state.winner[0])
-  }
-
-  const tempFunction = () => {
-    // console.log('\n\n\n\n\n\nreal states')
-    // show(states)
-    // console.log('\ndisplay states')
-    // show(display)
-    // console.log('\nwinner code:', winnerCode)
-    console.log('current data', roundData.finals)
-  }
-
   const handleConfirm = () => {
-    tempFunction()
+    const sport = states.sport[0]
+    const round = states.round[0]
+    const matchNumber = states.matchNumber[0]
+    const email = auth.currentUser
+      ? auth.currentUser.email
+      : 'no-email@nomail.com'
+    const request = {
+      series: 'TSS',
+      sport,
+      round,
+      matchNumber,
+      A: roundData[round][matchNumber].A,
+      B: roundData[round][matchNumber].B,
+      winner: winnerCode,
+      scoreA: 10,
+      scoreB: 5,
+      facilitatorEmail: email,
+    }
+    if (winnerCode !== 'A' && winnerCode !== 'B') {
+      console.log('internal error: winner code is invalid', winnerCode)
+      return
+    }
+    const firebaseHandleMatch = httpsCallable(functions, 'handleMatch')
+    firebaseHandleMatch(request)
+    console.log('request sent:', request)
   }
 
   const items = {
