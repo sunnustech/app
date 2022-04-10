@@ -18,6 +18,7 @@ import { UserProvider } from '@/contexts/UserContext'
 import { AuthenticatedPages } from '@/types/navigation'
 import TSSNavigator from '@/navigations/TSSNavigator'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { LastProvider } from '@/contexts/LastContext'
 
 const Drawer = createDrawerNavigator<AuthenticatedPages>()
 const Stack = createNativeStackNavigator()
@@ -58,7 +59,9 @@ const AuthStack = () => (
   <UserProvider>
     <SOARProvider>
       <TimerProvider>
-        <Navigator />
+        <LastProvider>
+          <Navigator />
+        </LastProvider>
       </TimerProvider>
     </SOARProvider>
   </UserProvider>

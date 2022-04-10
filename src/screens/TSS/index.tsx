@@ -16,26 +16,27 @@ import { TSS as styles } from '@/styles/fresh'
 // DELETE AFTER USE
 import PickerProvider from '@/components/TSS/PickerProvider'
 import { Match, Round, Sport, Winner } from '@/types/TSS'
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import {
+  MutableRefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker from 'react-native-picker-select'
 import { getItems } from '@/lib/utils'
 import CustomPicker from '@/components/TSS/CustomPicker'
 import { UseState } from '@/types/SOAR'
-import { Rounds } from '@/types/TSS'
+import { LastContext } from '@/contexts/LastContext'
 
 type Field = 'sport' | 'round' | 'matchNumber' | 'winner'
 
-const TSSScreen = ({
-  sportState,
-  data,
-}: {
-  sportState: UseState<Sport>
-  data: Rounds
-}) => {
+const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
   const navigation = useNavigation<TSSPage<'TSSScreen'>>()
   const fields: Array<Field> = ['sport', 'round', 'matchNumber', 'winner']
+  const { roundData } = useContext(LastContext)
 
   type DisplayStates = {
     sport: UseState<Sport>
@@ -54,7 +55,7 @@ const TSSScreen = ({
     sport: sportState,
     matchNumber: matchNumberState,
     round: roundState,
-    winner: useState<string>(data[round][matchNumber].A),
+    winner: useState<string>(roundData[round][matchNumber].A),
   }
 
   const sport = states.sport[0]
@@ -77,8 +78,8 @@ const TSSScreen = ({
   /* when the match number changes, refresh the team names */
   useEffect(() => {
     // console.log('!match number -> winner')
-    states.winner[1](data[round][matchNumber].A)
-    display.winner[1](data[round][matchNumber].A)
+    states.winner[1](roundData[round][matchNumber].A)
+    display.winner[1](roundData[round][matchNumber].A)
   }, [matchNumber])
 
   /* when the round changes, reset the match number to zero */
@@ -95,18 +96,25 @@ const TSSScreen = ({
     console.log(state.winner[0])
   }
 
-  const tempFunction = async () => {
+  const tempFunction = () => {
     console.log('\n\n\n\n\n\nreal states')
     show(states)
     console.log('\ndisplay states')
     show(display)
   }
 
+  const handleConfirm = () => {
+    console.log('roundData, round of 32', roundData.round_of_32)
+  }
+
   const items = {
     sport: getItems(sportList),
     round: getItems(roundList),
     matchNumber: getItems(matchNumbers[round]),
-    winner: getItems([data[round][matchNumber].A, data[round][matchNumber].B]),
+    winner: getItems([
+      roundData[round][matchNumber].A,
+      roundData[round][matchNumber].B,
+    ]),
   }
 
   return (
@@ -132,7 +140,7 @@ const TSSScreen = ({
           />
         )
       })}
-      <TouchableOpacity onPress={tempFunction} style={styles.confirmContainer}>
+      <TouchableOpacity onPress={handleConfirm} style={styles.confirmContainer}>
         <View style={styles.confirmTextContainer}>
           <Text style={styles.confirmText}>Confirm</Text>
         </View>

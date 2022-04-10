@@ -2,11 +2,12 @@ import TSSScreen from '@/screens/TSS'
 import TSSKnockoutTable from '@/screens/TSS/KnockoutTable'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useFocusEffect } from '@react-navigation/native'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { onSnapshot, doc } from 'firebase/firestore'
 import { Rounds, Sport } from '@/types/TSS'
 import { db } from '@/sunnus/firebase'
 import { emptyRounds } from '@/data/schema/TSS'
+import { LastContext } from '@/contexts/LastContext'
 
 const TSSTabs = createBottomTabNavigator()
 
@@ -20,7 +21,8 @@ const TSSNavigator = () => {
    */
   const sportState = useState<Sport>('volleyball')
   const [sport, _] = sportState
-  const [data, setData] = useState<Rounds>(emptyRounds)
+  const { roundData, setRoundData } = useContext(LastContext)
+
   useEffect(() => {
     if (TSSNavActive) {
       const unsubscribeFirebase = onSnapshot(doc(db, 'TSS', sport), (doc) => {
@@ -35,7 +37,7 @@ const TSSNavigator = () => {
             round_of_16: liveData.round_of_16,
             round_of_32: liveData.round_of_32,
           }
-          setData(updatedData)
+          setRoundData(updatedData)
         }
       })
       return () => {
@@ -50,11 +52,11 @@ const TSSNavigator = () => {
    * to pass props to the other screens
    */
   const KnockoutTableWrapper = () => {
-    return <TSSKnockoutTable sportState={sportState} data={data} />
+    return <TSSKnockoutTable sportState={sportState} data={roundData} />
   }
 
   const TSSMatchUpdaterWrapper = () => {
-    return <TSSScreen sportState={sportState} data={data} />
+    return <TSSScreen sportState={sportState} />
   }
 
   useFocusEffect(
