@@ -78,7 +78,7 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
     sport: sportState,
     matchNumber: matchNumberState,
     round: roundState,
-    winner: useState<string>(roundData[round][matchNumber][winnerCode]),
+    winner: useState<string>('Daddy Hong Sheng'),
   }
 
   const sport = states.sport[0]
@@ -140,7 +140,7 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
   }
 
   const handleConfirm = () => {
-    console.log('roundData, round of 32', roundData.round_of_32)
+    tempFunction()
   }
 
   const items = {
