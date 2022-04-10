@@ -38,13 +38,6 @@ const TSSScreen = () => {
   const fields: Array<Field> = ['sport', 'round', 'matchNumber', 'winner']
   const { roundData, sport, setSport } = useContext(LastContext)
 
-  function getTeamName(e: Winner): string {
-    if (e === 'U') {
-      return ''
-    }
-    return roundData[round][matchNumber][e]
-  }
-
   function getSlotFromTeamName(teamName: string): 'A' | 'B' {
     const match: Match = roundData[round][matchNumber]
     for (const [key, value] of Object.entries(match)) {
@@ -78,7 +71,7 @@ const TSSScreen = () => {
     sport: [sport, setSport],
     matchNumber: matchNumberState,
     round: roundState,
-    winner: useState<string>('Daddy Hong Sheng'),
+    winner: useState<string>('---'),
   }
 
   const winner = states.winner[0]
@@ -99,16 +92,16 @@ const TSSScreen = () => {
 
   /* when the winner team name changes, update the winner code */
   useEffect(() => {
-    // console.log('!match number -> winner')
     setWinnerCode(getSlotFromTeamName(winner))
   }, [winner])
 
   /* when the match number changes, refresh the team names */
   useEffect(() => {
-    // console.log('!match number -> winner')
+    // use match number to update winner
     states.winner[1](roundData[round][matchNumber].A)
     display.winner[1](roundData[round][matchNumber].A)
 
+    // update winner items
     items.winner[1](
       getItems([
         roundData[round][matchNumber].A,
@@ -126,13 +119,14 @@ const TSSScreen = () => {
 
   /* when the data changes, only change team names */
   useEffect(() => {
-    // console.log('!round -> match number')
+    // update winner items
     items.winner[1](
       getItems([
         roundData[round][matchNumber].A,
         roundData[round][matchNumber].B,
       ])
     )
+    // reattach display state properly using current winner code
     states.winner[1](roundData[round][matchNumber][winnerCode])
     display.winner[1](roundData[round][matchNumber][winnerCode])
   }, [roundData])
@@ -156,10 +150,6 @@ const TSSScreen = () => {
     tempFunction()
   }
 
-  const showCurrentData = () => {
-    console.log('current data:', roundData[round])
-  }
-
   const items = {
     sport: useState<Item[]>([]),
     round: useState<Item[]>([]),
@@ -167,17 +157,12 @@ const TSSScreen = () => {
     winner: useState<Item[]>([]),
   }
 
+  // initialize default items (don't let this depend on roundData)
   useEffect(() => {
     items.sport[1](getItems(sportList))
     items.round[1](getItems(roundList))
     items.matchNumber[1](getItems(matchNumbers[round]))
-    items.winner[1](getItems(['hi', 'bye']))
-    // items.winner[1](
-    //   getItems([
-    //     roundData[round][matchNumber].A,
-    //     roundData[round][matchNumber].B,
-    //   ])
-    // )
+    items.winner[1](getItems(['---', '---']))
   }, [])
 
   return (
@@ -206,11 +191,6 @@ const TSSScreen = () => {
       <TouchableOpacity onPress={handleConfirm} style={styles.confirmContainer}>
         <View style={styles.confirmTextContainer}>
           <Text style={styles.confirmText}>Confirm</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={showCurrentData} style={styles.confirmContainer}>
-        <View style={styles.confirmTextContainer}>
-          <Text style={styles.confirmText}>Current Data</Text>
         </View>
       </TouchableOpacity>
     </KeyboardAvoidingView>
