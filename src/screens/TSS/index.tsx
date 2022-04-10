@@ -139,6 +139,11 @@ const TSSScreen = () => {
     const email = auth.currentUser
       ? auth.currentUser.email
       : 'no-email@nomail.com'
+    var outcome: Winner
+    if (scoreA === scoreB) {
+      outcome = 'U'
+    }
+    outcome = scoreA > scoreB ? 'A' : 'B'
     const request = {
       series: 'TSS',
       sport,
@@ -146,15 +151,10 @@ const TSSScreen = () => {
       matchNumber,
       A: roundData[round][matchNumber].A,
       B: roundData[round][matchNumber].B,
-      winner: winnerCode,
+      winner: outcome,
       scoreA,
       scoreB,
       facilitatorEmail: email,
-    }
-    /* if somehow the winner code isn't A or B, return an error */
-    if (winnerCode !== 'A' && winnerCode !== 'B') {
-      console.log('internal error: winner code is invalid', winnerCode)
-      return
     }
     /* if the scores are untouched, send a toast */
     if (scoreA === -1 || scoreB === -1) {
@@ -226,8 +226,8 @@ const TSSScreen = () => {
           </View>
           <TextInput
             onChangeText={(text) => setScoreA(parseInt(text))}
-            placeholder='_'
-            placeholderTextColor='#d4d4d8'
+            placeholder="_"
+            placeholderTextColor="#d4d4d8"
             style={styles.numberInput}
             keyboardType="number-pad"
             returnKeyType="done"
@@ -242,8 +242,8 @@ const TSSScreen = () => {
           </View>
           <TextInput
             onChangeText={(text) => setScoreB(parseInt(text))}
-            placeholder='_'
-            placeholderTextColor='#d4d4d8'
+            placeholder="_"
+            placeholderTextColor="#d4d4d8"
             style={styles.numberInput}
             keyboardType="number-pad"
             returnKeyType="done"
