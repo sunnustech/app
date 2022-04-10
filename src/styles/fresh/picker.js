@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   pickerContainer: {
     width: '80%',
-    height: 48,
+    height: 64,
     backgroundColor: '#ffffff',
     paddingHorizontal: 18,
     paddingVertical: 8,
