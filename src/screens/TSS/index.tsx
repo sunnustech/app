@@ -32,7 +32,6 @@ import { getItems, replaceUnderscoresWithSpaces } from '@/lib/utils'
 import CustomPicker from '@/components/TSS/CustomPicker'
 import { UseState } from '@/types/SOAR'
 import { LastContext } from '@/contexts/LastContext'
-import { TextInputProps } from 'react-native-paper/lib/typescript/components/TextInput/TextInput'
 
 type Field = 'sport' | 'round' | 'matchNumber' | 'winner'
 
@@ -197,6 +196,11 @@ const TSSScreen = () => {
   const teamNameB = replaceUnderscoresWithSpaces(
     roundData[round][matchNumber].B
   )
+
+  /* to sync up value of sport/tempSport with match handler page */
+  useEffect(() => {
+    display.sport[1](sport)
+  }, [sport])
 
   return (
     <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>

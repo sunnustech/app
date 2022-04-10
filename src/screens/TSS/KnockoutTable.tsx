@@ -9,14 +9,14 @@ import { Ionicons } from '@expo/vector-icons'
 
 /* sunnus components */
 import { knockout as styles } from '@/styles/fresh'
-import { MutableRefObject, useRef, useState } from 'react'
-import { Rounds, Sport } from '@/types/TSS'
+import { MutableRefObject, useContext, useEffect, useRef, useState } from 'react'
+import { Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import { reversedRoundList } from '@/data/constants'
 import PagerRound from '@/components/TSS/Round'
 import { TouchableOpacity } from 'react-native'
-import { UseState } from '@/types/SOAR'
 import { showNone } from '@/lib/utils'
+import { LastContext } from '@/contexts/LastContext'
 
 const SportPicker = ({
   pickerRef,
@@ -42,15 +42,9 @@ const SportPicker = ({
   )
 }
 
-const KnockoutTable = ({
-  sportState,
-  data,
-}: {
-  sportState: UseState<Sport>
-  data: Rounds
-}) => {
+const KnockoutTable = () => {
   // const navigation = useNavigation<TSSPage<'TSSKnockoutTable'>>()
-  const [sport, setSport] = sportState
+  const { sport, setSport, roundData } = useContext(LastContext)
   const [tempSport, setTempSport] = useState<Sport>(sport)
 
   const pickerRef = useRef<Picker>(null)
@@ -66,10 +60,15 @@ const KnockoutTable = ({
   const AllRounds = () => (
     <>
       {reversedRoundList.map((round, idx) => {
-        return <PagerRound matches={data[round]} key={idx} />
+        return <PagerRound matches={roundData[round]} key={idx} />
       })}
     </>
   )
+
+  /* to sync up value of sport/tempSport with match handler page */
+  useEffect(() => {
+    setTempSport(sport)
+  }, [sport])
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
