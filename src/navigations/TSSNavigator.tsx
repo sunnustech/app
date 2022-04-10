@@ -45,43 +45,16 @@ const TSSNavigator = () => {
       }
     }
   }, [TSSNavActive, sport])
+
+  /* wrappers
+   * to pass props to the other screens
+   */
   const KnockoutTableWrapper = () => {
     return <TSSKnockoutTable sportState={sportState} data={data} />
   }
 
-  /*
-   * listener for match updater
-   * (to show actual team names instead of A and B)
-   */
-  const _sportState = useState<Sport>('volleyball')
-  const [_sport, _setSport] = _sportState
-  const [_data, _setData] = useState<Rounds>(emptyRounds)
-  useEffect(() => {
-    if (TSSNavActive) {
-      const unsubscribeFirebase = onSnapshot(doc(db, 'TSS', _sport), (doc) => {
-        const liveData = doc.data()
-        if (liveData) {
-          console.log(`[match updater] firebase updated for ${_sport} at`, new Date())
-          const updatedData: Rounds = {
-            champions: liveData.champions,
-            finals: liveData.finals,
-            semifinals: liveData.semifinals,
-            quarterfinals: liveData.quarterfinals,
-            round_of_16: liveData.round_of_16,
-            round_of_32: liveData.round_of_32,
-          }
-          _setData(updatedData)
-        }
-      })
-      return () => {
-        /* detach firebase listener on unmount */
-        console.log('detach firebase listener on TSS navigator')
-        unsubscribeFirebase()
-      }
-    }
-  }, [TSSNavActive, _sport])
   const TSSMatchUpdaterWrapper = () => {
-    return <TSSScreen sportState={_sportState} data={_data} />
+    return <TSSScreen sportState={sportState} data={data} />
   }
 
   useFocusEffect(
