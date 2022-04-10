@@ -147,12 +147,18 @@ const TSSScreen = () => {
       A: roundData[round][matchNumber].A,
       B: roundData[round][matchNumber].B,
       winner: winnerCode,
-      scoreA: 10,
-      scoreB: 5,
+      scoreA,
+      scoreB,
       facilitatorEmail: email,
     }
+    /* if somehow the winner code isn't A or B, return an error */
     if (winnerCode !== 'A' && winnerCode !== 'B') {
       console.log('internal error: winner code is invalid', winnerCode)
+      return
+    }
+    /* if the scores are untouched, send a toast */
+    if (scoreA === -1 || scoreB === -1) {
+      console.log('please key in both scores', winnerCode)
       return
     }
     const firebaseHandleMatch = httpsCallable(functions, 'handleMatch')
@@ -175,8 +181,8 @@ const TSSScreen = () => {
     items.winner[1](getItems(['---', '---']))
   }, [])
 
-  const [scoreA, setScoreA] = useState(0)
-  const [scoreB, setScoreB] = useState(0)
+  const [scoreA, setScoreA] = useState(-1)
+  const [scoreB, setScoreB] = useState(-1)
 
   const teamNameA = replaceUnderscoresWithSpaces(
     roundData[round][matchNumber].A
@@ -219,6 +225,7 @@ const TSSScreen = () => {
             </Text>
           </View>
           <TextInput
+            onChangeText={(text) => setScoreA(parseInt(text))}
             placeholder='_'
             placeholderTextColor='#d4d4d8'
             style={styles.numberInput}
@@ -234,6 +241,7 @@ const TSSScreen = () => {
             </Text>
           </View>
           <TextInput
+            onChangeText={(text) => setScoreB(parseInt(text))}
             placeholder='_'
             placeholderTextColor='#d4d4d8'
             style={styles.numberInput}
