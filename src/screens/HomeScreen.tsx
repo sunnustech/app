@@ -48,7 +48,7 @@ const HomeScreen = () => {
    * >>> <firebase username>
    */
 
-  const { userId, teamName, schedule, teamData } = useContext(UserContext)
+  const { userId, teamName } = useContext(UserContext)
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
