@@ -19,7 +19,7 @@ const TSSNavigator = () => {
    * listener for knockout table display
    */
   const sportState = useState<Sport>('volleyball')
-  const [sport, setSport] = sportState
+  const [sport, _] = sportState
   const [data, setData] = useState<Rounds>(emptyRounds)
   useEffect(() => {
     if (TSSNavActive) {
