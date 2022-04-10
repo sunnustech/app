@@ -20,6 +20,10 @@ export function capitalizeFirstLettersAndJoin(string: string) {
   return separateWord.join('')
 }
 
+export function replaceUnderscoresWithSpaces(string: string) {
+  return string.replace(/_/g, ' ')
+}
+
 export function objFromArray(
   arr: Array<{ [key: string]: any }>,
   identifierKey: string
