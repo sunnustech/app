@@ -14,11 +14,15 @@ const CustomPicker = ({
   function openPicker() {
     pickerRef.current?.togglePicker()
   }
-  const prettyText = replaceUnderscoresWithSpaces(display)
+  const prettyText = (display: string): string => {
+    const spaced = replaceUnderscoresWithSpaces(display)
+    const dashed = spaced !== '' ? spaced : '---'
+    return dashed
+  }
   return (
     <TouchableOpacity onPress={openPicker} style={styles.pickerContainer}>
       <View style={styles.pickerTextContainer}>
-        <Text style={styles.pickerText}>{prettyText}</Text>
+        <Text style={styles.pickerText}>{prettyText(display)}</Text>
       </View>
     </TouchableOpacity>
   )

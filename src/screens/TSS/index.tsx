@@ -102,12 +102,10 @@ const TSSScreen = () => {
     display.winner[1](roundData[round][matchNumber].A)
 
     // update winner items
-    items.winner[1](
-      getItems([
-        roundData[round][matchNumber].A,
-        roundData[round][matchNumber].B,
-      ])
-    )
+    const A = roundData[round][matchNumber].A
+    const B = roundData[round][matchNumber].B
+    console.log('tried to use', A)
+    items.winner[1](getItems([A !== '' ? A : '---', B !== '' ? B : '---']))
   }, [matchNumber])
 
   /* when the round changes, reset the match number to zero */
@@ -120,12 +118,10 @@ const TSSScreen = () => {
   /* when the data changes, only change team names */
   useEffect(() => {
     // update winner items
-    items.winner[1](
-      getItems([
-        roundData[round][matchNumber].A,
-        roundData[round][matchNumber].B,
-      ])
-    )
+    const A = roundData[round][matchNumber].A
+    const B = roundData[round][matchNumber].B
+    console.log('tried to use', A)
+    items.winner[1](getItems([A !== '' ? A : '---', B !== '' ? B : '---']))
     // reattach display state properly using current winner code
     states.winner[1](roundData[round][matchNumber][winnerCode])
     display.winner[1](roundData[round][matchNumber][winnerCode])
