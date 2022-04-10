@@ -32,6 +32,7 @@ import { getItems, replaceUnderscoresWithSpaces } from '@/lib/utils'
 import CustomPicker from '@/components/TSS/CustomPicker'
 import { UseState } from '@/types/SOAR'
 import { LastContext } from '@/contexts/LastContext'
+import { TextInputProps } from 'react-native-paper/lib/typescript/components/TextInput/TextInput'
 
 type Field = 'sport' | 'round' | 'matchNumber' | 'winner'
 
@@ -107,6 +108,8 @@ const TSSScreen = () => {
 
     // update winner items
     items.winner[1](getItems([A !== '' ? A : '---', B !== '' ? B : '---']))
+    scoreRefA.current?.clear()
+    scoreRefB.current?.clear()
   }, [matchNumber])
 
   /* when the round changes, reset the match number to zero */
@@ -119,6 +122,8 @@ const TSSScreen = () => {
     const A = roundData[round][0].A
     states.winner[1](A ? A : '---')
     display.winner[1](A ? A : '---')
+    scoreRefA.current?.clear()
+    scoreRefB.current?.clear()
   }, [round])
 
   /* when the data changes, only change team names */
@@ -183,6 +188,8 @@ const TSSScreen = () => {
 
   const [scoreA, setScoreA] = useState(-1)
   const [scoreB, setScoreB] = useState(-1)
+  const scoreRefA = useRef<TextInput>(null)
+  const scoreRefB = useRef<TextInput>(null)
 
   const teamNameA = replaceUnderscoresWithSpaces(
     roundData[round][matchNumber].A
@@ -225,6 +232,7 @@ const TSSScreen = () => {
             </Text>
           </View>
           <TextInput
+            ref={scoreRefA}
             onChangeText={(text) => setScoreA(parseInt(text))}
             placeholder="_"
             placeholderTextColor="#d4d4d8"
@@ -241,6 +249,7 @@ const TSSScreen = () => {
             </Text>
           </View>
           <TextInput
+            ref={scoreRefB}
             onChangeText={(text) => setScoreB(parseInt(text))}
             placeholder="_"
             placeholderTextColor="#d4d4d8"
