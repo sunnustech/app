@@ -20,6 +20,13 @@ export function capitalizeFirstLettersAndJoin(string: string) {
   return separateWord.join('')
 }
 
+export function replaceUnderscoresWithSpaces(string: string) {
+  if (!string) {
+    return ''
+  }
+  return string.replace(/_/g, ' ')
+}
+
 export function objFromArray(
   arr: Array<{ [key: string]: any }>,
   identifierKey: string
@@ -34,11 +41,14 @@ export function objFromArray(
 export function getItems(
   arr: Array<string | number | Sport | Round>
 ): Array<Item> {
-  return arr.map((e, i) => ({
-    label: e.toString(),
-    value: e.toString(),
-    key: i,
-  }))
+  return arr.map((e, i) => {
+    const string = e.toString()
+    return {
+      label: replaceUnderscoresWithSpaces(string),
+      value: string,
+      key: i,
+    }
+  })
 }
 
 export const showNone = {
