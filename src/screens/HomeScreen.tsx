@@ -20,6 +20,7 @@ import { ButtonRed } from '@/components/Buttons'
 import { UserContext } from '@/contexts/UserContext'
 import { useContext } from 'react'
 import SunnusLogo from '../../assets/sunnus-anniversary.png'
+import Sunnus from '@/components/svgs/sun2'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -52,7 +53,7 @@ const HomeScreen = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Image source={SunnusLogo} style={styles.image} />
+      <Sunnus fill='#33b5e5'/>
       <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
