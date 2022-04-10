@@ -28,7 +28,7 @@ import {
 import { auth, functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker, { Item } from 'react-native-picker-select'
-import { getItems } from '@/lib/utils'
+import { getItems, replaceUnderscoresWithSpaces } from '@/lib/utils'
 import CustomPicker from '@/components/TSS/CustomPicker'
 import { UseState } from '@/types/SOAR'
 import { LastContext } from '@/contexts/LastContext'
@@ -178,6 +178,13 @@ const TSSScreen = () => {
   const [scoreA, setScoreA] = useState(0)
   const [scoreB, setScoreB] = useState(0)
 
+  const teamNameA = replaceUnderscoresWithSpaces(
+    roundData[round][matchNumber].A
+  )
+  const teamNameB = replaceUnderscoresWithSpaces(
+    roundData[round][matchNumber].B
+  )
+
   return (
     <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
       <Text style={styles.titleText}>TSS Match Update Tool</Text>
@@ -193,27 +200,47 @@ const TSSScreen = () => {
         )
       })}
       {fields.map((field, idx) => {
-        return (
-          <CustomPicker
-            pickerRef={refs[field]}
-            display={display[field][0]}
-            key={idx}
-          />
-        )
+        if (field !== 'winner') {
+          return (
+            <CustomPicker
+              pickerRef={refs[field]}
+              display={display[field][0]}
+              key={idx}
+            />
+          )
+        }
       })}
 
       <View style={styles.numberInputContainer}>
-        <TextInput
-          style={styles.numberInput}
-          keyboardType="number-pad"
-          returnKeyType="done"
-        />
+        <View style={styles.numberInputTeamContainer}>
+          <View style={styles.numberInputTeamNameContainer}>
+            <Text numberOfLines={2} style={styles.numberInputTeamName}>
+              {teamNameA}
+            </Text>
+          </View>
+          <TextInput
+            placeholder='_'
+            placeholderTextColor='#d4d4d8'
+            style={styles.numberInput}
+            keyboardType="number-pad"
+            returnKeyType="done"
+          />
+        </View>
         <View style={styles.numberInputSpacer} />
-        <TextInput
-          style={styles.numberInput}
-          keyboardType="number-pad"
-          returnKeyType="done"
-        />
+        <View style={styles.numberInputTeamContainer}>
+          <View style={styles.numberInputTeamNameContainer}>
+            <Text numberOfLines={2} style={styles.numberInputTeamName}>
+              {teamNameB}
+            </Text>
+          </View>
+          <TextInput
+            placeholder='_'
+            placeholderTextColor='#d4d4d8'
+            style={styles.numberInput}
+            keyboardType="number-pad"
+            returnKeyType="done"
+          />
+        </View>
       </View>
 
       <TouchableOpacity onPress={handleConfirm} style={styles.confirmContainer}>

@@ -50,22 +50,42 @@ export default StyleSheet.create({
     width: '80%',
     flexDirection: 'row',
     justifyContent: 'center',
-    // backgroundColor: '#fef08a'
+  },
+
+  numberInputTeamContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    borderColor: '#d4d4d8',
+    marginTop: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    borderWidth: 3,
+    borderRadius: 6,
   },
   numberInputSpacer: {
     width: 10,
   },
 
+  numberInputTeamNameContainer: {
+    height: 48,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  numberInputTeamName: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#4b5563',
+  },
   numberInput: {
     textAlign: 'center',
     fontSize: 36,
     fontWeight: '600',
     color: '#4b5563',
     borderRadius: 6,
-    flex: 1,
     backgroundColor: 'white',
     height: 100,
-    width: 50,
     shadowColor: '#000000',
     shadowRadius: 2,
     shadowOpacity: 0.2,
