@@ -11,6 +11,10 @@ import { LastContext } from '@/contexts/LastContext'
 
 const TSSTabs = createBottomTabNavigator()
 
+const TSSMatchUpdaterWrapper = () => {
+  return <TSSScreen />
+}
+
 const TSSNavigator = () => {
   // TSS page active state
   // (de-activates when navigating out)
@@ -20,8 +24,7 @@ const TSSNavigator = () => {
    * listener for knockout table display
    */
   const sportState = useState<Sport>('volleyball')
-  const [sport, _] = sportState
-  const { roundData, setRoundData } = useContext(LastContext)
+  const { roundData, setRoundData, sport } = useContext(LastContext)
 
   useEffect(() => {
     if (TSSNavActive) {
@@ -53,10 +56,6 @@ const TSSNavigator = () => {
    */
   const KnockoutTableWrapper = () => {
     return <TSSKnockoutTable sportState={sportState} data={roundData} />
-  }
-
-  const TSSMatchUpdaterWrapper = () => {
-    return <TSSScreen sportState={sportState} />
   }
 
   useFocusEffect(

@@ -33,10 +33,10 @@ import { LastContext } from '@/contexts/LastContext'
 
 type Field = 'sport' | 'round' | 'matchNumber' | 'winner'
 
-const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
+const TSSScreen = () => {
   const navigation = useNavigation<TSSPage<'TSSScreen'>>()
   const fields: Array<Field> = ['sport', 'round', 'matchNumber', 'winner']
-  const { roundData } = useContext(LastContext)
+  const { roundData, sport, setSport } = useContext(LastContext)
 
   function getTeamName(e: Winner): string {
     if (e === 'U') {
@@ -75,13 +75,12 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
   const matchNumber = matchNumberState[0]
 
   const states: DisplayStates = {
-    sport: sportState,
+    sport: [sport, setSport],
     matchNumber: matchNumberState,
     round: roundState,
     winner: useState<string>('Daddy Hong Sheng'),
   }
 
-  const sport = states.sport[0]
   const winner = states.winner[0]
 
   const display: DisplayStates = {
@@ -150,16 +149,6 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
     tempFunction()
   }
 
-  const items = {
-    sport: getItems(sportList),
-    round: getItems(roundList),
-    matchNumber: getItems(matchNumbers[round]),
-    winner: getItems([
-      roundData[round][matchNumber].A,
-      roundData[round][matchNumber].B,
-    ]),
-  }
-
   const _items = {
     sport: useState<Item[]>([]),
     round: useState<Item[]>([]),
@@ -171,12 +160,13 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
     _items.sport[1](getItems(sportList))
     _items.round[1](getItems(roundList))
     _items.matchNumber[1](getItems(matchNumbers[round]))
-    _items.winner[1](
-      getItems([
-        roundData[round][matchNumber].A,
-        roundData[round][matchNumber].B,
-      ])
-    )
+    _items.winner[1](getItems(['hi', 'bye']))
+    // _items.winner[1](
+    //   getItems([
+    //     roundData[round][matchNumber].A,
+    //     roundData[round][matchNumber].B,
+    //   ])
+    // )
   }, [])
 
   return (
