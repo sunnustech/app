@@ -42,10 +42,10 @@ export function getItems(
   arr: Array<string | number | Sport | Round>
 ): Array<Item> {
   return arr.map((e, i) => {
-    const s = e.toString ? e.toString() : '---'
+    const string = e.toString()
     return {
-      label: replaceUnderscoresWithSpaces(s),
-      value: s,
+      label: replaceUnderscoresWithSpaces(string),
+      value: string,
       key: i,
     }
   })

@@ -98,21 +98,25 @@ const TSSScreen = () => {
   /* when the match number changes, refresh the team names */
   useEffect(() => {
     // use match number to update winner
-    states.winner[1](roundData[round][matchNumber].A)
-    display.winner[1](roundData[round][matchNumber].A)
-
-    // update winner items
     const A = roundData[round][matchNumber].A
     const B = roundData[round][matchNumber].B
-    console.log('tried to use', A)
+    states.winner[1](A ? A : '---')
+    display.winner[1](A ? A : '---')
+
+    // update winner items
     items.winner[1](getItems([A !== '' ? A : '---', B !== '' ? B : '---']))
   }, [matchNumber])
 
   /* when the round changes, reset the match number to zero */
   useEffect(() => {
     // console.log('!round -> match number')
+    items.matchNumber[1](getItems(matchNumbers[round]))
     states.matchNumber[1](0)
     display.matchNumber[1](0)
+
+    const A = roundData[round][0].A
+    states.winner[1](A ? A : '---')
+    display.winner[1](A ? A : '---')
   }, [round])
 
   /* when the data changes, only change team names */
@@ -120,7 +124,6 @@ const TSSScreen = () => {
     // update winner items
     const A = roundData[round][matchNumber].A
     const B = roundData[round][matchNumber].B
-    console.log('tried to use', A)
     items.winner[1](getItems([A !== '' ? A : '---', B !== '' ? B : '---']))
     // reattach display state properly using current winner code
     states.winner[1](roundData[round][matchNumber][winnerCode])
@@ -135,11 +138,12 @@ const TSSScreen = () => {
   }
 
   const tempFunction = () => {
-    console.log('\n\n\n\n\n\nreal states')
-    show(states)
-    console.log('\ndisplay states')
-    show(display)
-    console.log('\nwinner code:', winnerCode)
+    // console.log('\n\n\n\n\n\nreal states')
+    // show(states)
+    // console.log('\ndisplay states')
+    // show(display)
+    // console.log('\nwinner code:', winnerCode)
+    console.log('current data', roundData.finals)
   }
 
   const handleConfirm = () => {
