@@ -38,12 +38,35 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
   const fields: Array<Field> = ['sport', 'round', 'matchNumber', 'winner']
   const { roundData } = useContext(LastContext)
 
+  function getTeamName(e: Winner): string {
+    if (e === 'U') {
+      return ''
+    }
+    return roundData[round][matchNumber][e]
+  }
+
+  function getSlotFromTeamName(teamName: string): 'A' | 'B' {
+    const match: Match = roundData[round][matchNumber]
+    for (const [key, value] of Object.entries(match)) {
+      if (value === teamName) {
+        if (key === 'A') {
+          return 'A'
+        } else if (key === 'B') {
+          return 'B'
+        }
+      }
+    }
+    return 'A'
+  }
+
   type DisplayStates = {
     sport: UseState<Sport>
     round: UseState<Round>
     matchNumber: UseState<number>
     winner: UseState<string>
   }
+
+  const [winnerCode, setWinnerCode] = useState<'A' | 'B'>('A')
 
   const roundState = useState<Round>('round_of_32')
   const matchNumberState = useState(0)
@@ -55,7 +78,7 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
     sport: sportState,
     matchNumber: matchNumberState,
     round: roundState,
-    winner: useState<string>(roundData[round][matchNumber].A),
+    winner: useState<string>(roundData[round][matchNumber][winnerCode]),
   }
 
   const sport = states.sport[0]
@@ -75,6 +98,12 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
     winner: useRef<Picker>(null),
   }
 
+  /* when the winner team name changes, update the winner code */
+  useEffect(() => {
+    // console.log('!match number -> winner')
+    setWinnerCode(getSlotFromTeamName(winner))
+  }, [winner])
+
   /* when the match number changes, refresh the team names */
   useEffect(() => {
     // console.log('!match number -> winner')
@@ -88,6 +117,13 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
     states.matchNumber[1](0)
     display.matchNumber[1](0)
   }, [round])
+
+  /* when the data changes, only change team names */
+  useEffect(() => {
+    // console.log('!round -> match number')
+    states.winner[1](roundData[round][matchNumber][winnerCode])
+    display.winner[1](roundData[round][matchNumber][winnerCode])
+  }, [roundData])
 
   function show(state: DisplayStates) {
     console.log(state.sport[0])
