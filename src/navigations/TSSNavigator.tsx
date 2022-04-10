@@ -2,13 +2,18 @@ import TSSScreen from '@/screens/TSS'
 import TSSKnockoutTable from '@/screens/TSS/KnockoutTable'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useFocusEffect } from '@react-navigation/native'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { onSnapshot, doc } from 'firebase/firestore'
 import { Rounds, Sport } from '@/types/TSS'
 import { db } from '@/sunnus/firebase'
 import { emptyRounds } from '@/data/schema/TSS'
+import { LastContext } from '@/contexts/LastContext'
 
 const TSSTabs = createBottomTabNavigator()
+
+const TSSMatchUpdaterWrapper = () => {
+  return <TSSScreen />
+}
 
 const TSSNavigator = () => {
   // TSS page active state
@@ -19,8 +24,8 @@ const TSSNavigator = () => {
    * listener for knockout table display
    */
   const sportState = useState<Sport>('volleyball')
-  const [sport, setSport] = sportState
-  const [data, setData] = useState<Rounds>(emptyRounds)
+  const { roundData, setRoundData, sport } = useContext(LastContext)
+
   useEffect(() => {
     if (TSSNavActive) {
       const unsubscribeFirebase = onSnapshot(doc(db, 'TSS', sport), (doc) => {
@@ -35,7 +40,7 @@ const TSSNavigator = () => {
             round_of_16: liveData.round_of_16,
             round_of_32: liveData.round_of_32,
           }
-          setData(updatedData)
+          setRoundData(updatedData)
         }
       })
       return () => {
@@ -45,43 +50,12 @@ const TSSNavigator = () => {
       }
     }
   }, [TSSNavActive, sport])
-  const KnockoutTableWrapper = () => {
-    return <TSSKnockoutTable sportState={sportState} data={data} />
-  }
 
-  /*
-   * listener for match updater
-   * (to show actual team names instead of A and B)
+  /* wrappers
+   * to pass props to the other screens
    */
-  const _sportState = useState<Sport>('volleyball')
-  const [_sport, _setSport] = _sportState
-  const [_data, _setData] = useState<Rounds>(emptyRounds)
-  useEffect(() => {
-    if (TSSNavActive) {
-      const unsubscribeFirebase = onSnapshot(doc(db, 'TSS', _sport), (doc) => {
-        const liveData = doc.data()
-        if (liveData) {
-          console.log(`[match updater] firebase updated for ${_sport} at`, new Date())
-          const updatedData: Rounds = {
-            champions: liveData.champions,
-            finals: liveData.finals,
-            semifinals: liveData.semifinals,
-            quarterfinals: liveData.quarterfinals,
-            round_of_16: liveData.round_of_16,
-            round_of_32: liveData.round_of_32,
-          }
-          _setData(updatedData)
-        }
-      })
-      return () => {
-        /* detach firebase listener on unmount */
-        console.log('detach firebase listener on TSS navigator')
-        unsubscribeFirebase()
-      }
-    }
-  }, [TSSNavActive, _sport])
-  const TSSMatchUpdaterWrapper = () => {
-    return <TSSScreen sportState={_sportState} data={_data} />
+  const KnockoutTableWrapper = () => {
+    return <TSSKnockoutTable sportState={sportState} data={roundData} />
   }
 
   useFocusEffect(
