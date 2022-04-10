@@ -19,8 +19,7 @@ import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
 import { UserContext } from '@/contexts/UserContext'
 import { useContext } from 'react'
-import SunnusLogo from '../../assets/sunnus-anniversary.png'
-import Sunnus from '@/components/svgs/sun2'
+import Sunnus from '@/components/svgs'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
