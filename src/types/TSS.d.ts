@@ -67,3 +67,5 @@ export type FieldStates = {
   matchNumber: UseState<number>
   winner: UseState<Winner>
 }
+
+export type PageStatus = 'no-one' | 'one-in' | 'both-in' | 'completed' | 'in-progress'

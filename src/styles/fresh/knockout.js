@@ -67,19 +67,35 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
 
+  basePage: {
+    marginHorizontal: pageIndicatorSpacing,
+    height: pageIndicatorSize,
+    width: pageIndicatorSize,
+    borderRadius: 100,
+    borderColor: 'rgba(0,0,0,0)',
+    borderWidth: 1.4,
+  },
+  oneInPage: {
+    backgroundColor: '#fde68a',
+  },
+  bothInPage: {
+    backgroundColor: '#fbbf24',
+  },
+  inProgressPage: {
+    backgroundColor: '#60a5fa',
+  },
+  completedPage: {
+    backgroundColor: '#34d399',
+  },
   inactivePage: {
     backgroundColor: '#d1d5db',
-    marginHorizontal: pageIndicatorSpacing,
-    height: pageIndicatorSize,
-    width: pageIndicatorSize,
-    borderRadius: 100,
+    borderColor: 'rgba(0,0,0,0)',
+  },
+  noOnePage: {
+    backgroundColor: '#e5e7eb',
   },
   activePage: {
-    backgroundColor: '#60a5fa',
-    marginHorizontal: pageIndicatorSpacing,
-    height: pageIndicatorSize,
-    width: pageIndicatorSize,
-    borderRadius: 100,
+    borderColor: '#374151',
   },
 
   matchNodeRow: {
