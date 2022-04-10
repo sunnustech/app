@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native'
+import colors from '@/styles/colors'
 
 const sideButton = {
   size: 56,
-  color: '#fff',
+  color: colors.white,
 }
 
 const gemSize = 36
@@ -29,28 +30,19 @@ const map = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  navigationContainer: {
-    // backgroundColor: '#bbf7d0',
-    // opacity: 0.7,
-  },
+  navigationContainer: {},
   timerContainer: {
     marginTop: 10,
     marginLeft: 'auto',
     marginRight: 'auto',
-    // backgroundColor: '#bbf7d0',
-    // opacity: 0.7,
   },
   mapTopContainer: {
     flex: 1,
     alignItems: 'flex-end',
-    // backgroundColor: '#bbf7d0',
-    // opacity: 0.7,
   },
   mapBottomContainer: {
     display: 'flex',
     flexDirection: 'row',
-    // backgroundColor: '#93c5fd',
-    // opacity: 0.6,
   },
   mapRightContainer: {
     alignItems: 'flex-end',
@@ -100,7 +92,7 @@ const map = StyleSheet.create({
     borderRadius: 100,
     justifyContent: 'space-around',
     alignItems: 'center',
-    shadowColor: '#282828',
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
     shadowRadius: 3,
@@ -109,10 +101,10 @@ const map = StyleSheet.create({
     marginBottom: 14,
   },
   mapActivatedButton: {
-    backgroundColor: '#60A5FA',
+    backgroundColor: colors.blue[400],
   },
   mapCurrentLocationButton: {
-    backgroundColor: '#60A5FA',
+    backgroundColor: colors.blue[400],
   },
   mapBottomButton: {
     marginTop: 14,
@@ -124,7 +116,7 @@ const map = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.15);',
     width: sideButton.size,
     height: sideButton.size,
-    shadowColor: '#282828',
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
     shadowRadius: 3,
@@ -151,7 +143,7 @@ const map = StyleSheet.create({
   },
   SOSTitle: {
     fontSize: 32,
-    color: '#323232',
+    color:colors.gray[700],
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 10,
@@ -159,7 +151,7 @@ const map = StyleSheet.create({
   modalTitle: {
     fontSize: 28,
     textAlign: 'center',
-    color: '#323232',
+    color:colors.gray[700],
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 10,
@@ -168,7 +160,6 @@ const map = StyleSheet.create({
     marginBottom: 10,
   },
   GemContainer: {
-    // backgroundColor: '#10b981',
     height: gemSize,
     width: gemSize,
   },

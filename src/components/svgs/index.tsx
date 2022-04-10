@@ -3,6 +3,7 @@ import sunnus from './sunnus-svg'
 import soar from './soar-svg'
 import tss from './tss-svg'
 import wss from './wss-svg'
+import gem from './gem-svg'
 
 const GeneralSvg = (
   props: { src: (color: Color) => string } & Pick<XmlProps, 'fill' | 'opacity'>
@@ -15,19 +16,19 @@ const GeneralSvg = (
   />
 )
 
-const Svgs = {
-  Sunnus: (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
-    <GeneralSvg src={sunnus} {...props} />
-  ),
-  SOAR: (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
-    <GeneralSvg src={soar} {...props} />
-  ),
-  TSS: (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
-    <GeneralSvg src={tss} {...props} />
-  ),
-  WSS: (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
-    <GeneralSvg src={wss} {...props} />
-  ),
-}
+const SunnusSvg = (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
+  <GeneralSvg src={sunnus} {...props} />
+)
+const SOARSvg = (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
+  <GeneralSvg src={soar} {...props} />
+)
+const TSSSvg = (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
+  <GeneralSvg src={tss} {...props} />
+)
+const WSSSvg = (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
+  <GeneralSvg src={wss} {...props} />
+)
 
-export default Svgs
+const GemSvg = gem
+
+export { SunnusSvg, SOARSvg, TSSSvg, WSSSvg, GemSvg }

@@ -1,4 +1,7 @@
-export default {
+import { AddedColors, AllColors, BaseColors } from '@/types/colors'
+
+const colors: BaseColors = {
+  transparent: 'transparent',
   black: '#000',
   white: '#fff',
   slate: {
@@ -266,3 +269,12 @@ export default {
     900: '#881337',
   },
 }
+
+const added: AddedColors = {
+  shadow: colors.gray[700],
+  bg: colors.white,
+}
+
+const all: AllColors = {...colors, ...added}
+
+export default all

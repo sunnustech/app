@@ -35,6 +35,7 @@ import { getItems, replaceUnderscoresWithSpaces } from '@/lib/utils'
 import CustomPicker from '@/components/TSS/CustomPicker'
 import { LastContext } from '@/contexts/LastContext'
 import { OnPress } from '@/types/index'
+import colors from '@/styles/colors'
 
 const FinalButton = ({
   onPress,
@@ -179,7 +180,7 @@ const TSSScreen = () => {
             ref={scoreRefA}
             onChangeText={(text) => setScoreA(parseInt(text))}
             placeholder="_"
-            placeholderTextColor="#d4d4d8"
+            placeholderTextColor={colors.gray[300]}
             style={styles.numberInput}
             keyboardType="number-pad"
             returnKeyType="done"
@@ -196,7 +197,7 @@ const TSSScreen = () => {
             ref={scoreRefB}
             onChangeText={(text) => setScoreB(parseInt(text))}
             placeholder="_"
-            placeholderTextColor="#d4d4d8"
+            placeholderTextColor={colors.gray[300]}
             style={styles.numberInput}
             keyboardType="number-pad"
             returnKeyType="done"

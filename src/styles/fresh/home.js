@@ -1,29 +1,22 @@
 import { StyleSheet } from 'react-native'
 import opts from './opts'
+import colors from '@/styles/colors'
 
-const colors = {
-  // taken from https://tailwindcss.com/docs/customizing-colors
+function makeAccent(color) {
+  return {
+    bg: colors[color][300],
+    fg: colors[color][600],
+    border: colors[color][500],
+  }
+}
+
+const accents = {
   // bg: 300, fg: 500, border: 600
-  SOAR: {
-    bg: '#fcd34d',
-    border: '#f59e0b',
-    fg: '#d97706',
-  },
-  WSS: {
-    bg: '#7dd3fc',
-    border: '#0ea5e9',
-    fg: '#0284c7',
-  },
-  TSS: {
-    bg: '#86efac',
-    border: '#22c55e',
-    fg: '#22c55e',
-  },
-  DEV: {
-    bg: '#d8b4fe',
-    border: '#a855f7',
-    fg: '#a855f7',
-  },
+  SOAR: makeAccent('amber'),
+  WSS: makeAccent('sky'),
+  TSS: makeAccent('green'),
+  DEV: makeAccent('purple'),
+  GenerateQR: makeAccent('pink'),
 }
 
 export default StyleSheet.create({
@@ -32,37 +25,12 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  loginContainer: {
-    flex: 1,
-    backgroundColor: '#f9fafb',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: colors.bg
   },
   buttonContainer: {
     width: opts.allWidths,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputContainer: {
-    width: opts.allWidths,
-    marginBottom: opts.marginBottom,
-  },
-
-  image: {
-    marginBottom: opts.marginBottom,
-    width: 244,
-    height: 180,
-  },
-  input: {
-    backgroundColor: 'white',
-    borderWidth: opts.border,
-    borderColor: '#e5e7eb',
-    paddingVertical: 10,
-    fontWeight: '600',
-    borderRadius: opts.radius,
-    paddingHorizontal: 10,
-    marginVertical: 5,
   },
 
   /* button base */
@@ -74,21 +42,26 @@ export default StyleSheet.create({
     marginVertical: 8,
     alignItems: 'center',
   },
+
   SOARbutton: {
-    backgroundColor: colors.SOAR.bg,
-    borderColor: colors.SOAR.border,
+    backgroundColor: accents.SOAR.bg,
+    borderColor: accents.SOAR.border,
   },
   TSSbutton: {
-    backgroundColor: colors.TSS.bg,
-    borderColor: colors.TSS.border,
+    backgroundColor: accents.TSS.bg,
+    borderColor: accents.TSS.border,
   },
   WSSbutton: {
-    backgroundColor: colors.WSS.bg,
-    borderColor: colors.WSS.border,
+    backgroundColor: accents.WSS.bg,
+    borderColor: accents.WSS.border,
   },
   DEVbutton: {
-    backgroundColor: colors.DEV.bg,
-    borderColor: colors.DEV.border,
+    backgroundColor: accents.DEV.bg,
+    borderColor: accents.DEV.border,
+  },
+  GenerateQRbutton: {
+    backgroundColor: accents.GenerateQR.bg,
+    borderColor: accents.GenerateQR.border,
   },
 
   /* button text */
@@ -97,15 +70,18 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   SOARbuttonText: {
-    color: colors.SOAR.fg,
+    color: accents.SOAR.fg,
   },
   WSSbuttonText: {
-    color: colors.WSS.fg,
+    color: accents.WSS.fg,
   },
   TSSbuttonText: {
-    color: colors.TSS.fg,
+    color: accents.TSS.fg,
   },
   DEVbuttonText: {
-    color: colors.DEV.fg,
+    color: accents.DEV.fg,
+  },
+  GenerateQRbuttonText: {
+    color: accents.GenerateQR.fg,
   },
 })

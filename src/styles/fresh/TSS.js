@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import colors from '@/styles/colors'
 
 export default StyleSheet.create({
   /* containers */
@@ -12,7 +13,7 @@ export default StyleSheet.create({
     marginBottom: 14,
     fontSize: 24,
     fontWeight: '700',
-    color: '#4b5563',
+    color: colors.gray[600],
   },
 
   /* buttons below */
@@ -28,7 +29,7 @@ export default StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 8,
     borderRadius: 6,
-    shadowColor: '#000000',
+    shadowColor: colors.shadow,
     shadowRadius: 2,
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 5 },
@@ -37,23 +38,23 @@ export default StyleSheet.create({
     justifyContent: 'center',
     display: 'flex',
     borderWidth: 4,
-    borderColor: 'rgba(0,0,0,0)',
+    borderColor:colors.transparent,
   },
   confirmButton: {
-    backgroundColor: '#10b981',
+    backgroundColor:colors.emerald[500],
   },
   confirmText: {
     color: 'white',
   },
   backButton: {
-    backgroundColor: '#f87171',
+    backgroundColor:colors.red[400],
   },
   backText: {
-    borderColor: '#6b7280',
+    borderColor:colors.gray[500],
     color: 'white',
   },
   pushButton: {
-    backgroundColor: '#10b981',
+    backgroundColor:colors.emerald[500],
   },
   pushText: {
     color: 'white',
@@ -83,7 +84,7 @@ export default StyleSheet.create({
   numberInputTeamContainer: {
     flex: 1,
     flexDirection: 'column',
-    borderColor: '#d4d4d8',
+    borderColor: colors.gray[300],
     paddingHorizontal: 8,
     paddingVertical: 10,
     borderWidth: 3,
@@ -103,17 +104,17 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     fontWeight: '600',
-    color: '#4b5563',
+    color: colors.gray[600],
   },
   numberInput: {
     textAlign: 'center',
     fontSize: 36,
     fontWeight: '600',
-    color: '#4b5563',
+    color: colors.gray[600],
     borderRadius: 6,
     backgroundColor: 'white',
     height: 100,
-    shadowColor: '#000000',
+    shadowColor: colors.shadow,
     shadowRadius: 2,
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 5 },

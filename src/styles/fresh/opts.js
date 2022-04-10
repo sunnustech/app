@@ -1,5 +1,5 @@
 const opts = {
-  radius: 10,
+  radius: 8,
   border: 3,
   allWidths: '60%',
   marginBottom: 20,

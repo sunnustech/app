@@ -1,14 +1,15 @@
 import { StyleSheet } from 'react-native'
+import colors from '@/styles/colors'
 
 export default StyleSheet.create({
   pickerContainer: {
     width: '80%',
     height: 64,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.bg,
     paddingHorizontal: 18,
     paddingVertical: 8,
     borderRadius: 6,
-    shadowColor: '#000000',
+    shadowColor: colors.shadow,
     shadowRadius: 2,
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 5 },
@@ -26,7 +27,7 @@ export default StyleSheet.create({
   pickerText: {
     width: '100%',
     fontSize: 18,
-    color: '#4b5563',
+    color: colors.fg,
     fontWeight: '700',
     textAlign: 'center',
   },

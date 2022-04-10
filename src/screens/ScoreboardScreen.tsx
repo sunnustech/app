@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { Tab, TabView } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
+import colors from '@/styles/colors'
 
 /* sunnus components */
 import { scoreboard as styles } from '@/styles/main'
@@ -18,9 +19,9 @@ type DataTest = {
   score: number
 }
 
-const GOLD = '#ffd700'
-const SILVER = '#c0c0c0'
-const BRONZE = '#cd7f32'
+const GOLD = colors.yellow[400]
+const SILVER = colors.slate[300]
+const BRONZE = colors.yellow[700]
 
 const DATA: DataTest[] = [
   {
@@ -84,10 +85,10 @@ const ScoreboardScreen = () => {
         <Animated.View
           style={{
             flexDirection: 'row',
-            backgroundColor: '#e8d5b5',
+            backgroundColor: colors.yellow[50],
             borderRadius: 12,
             margin: 5,
-            shadowColor: '#000',
+            shadowColor: colors.black,
             shadowOffset: {
               width: 5,
               height: 8,
@@ -97,7 +98,7 @@ const ScoreboardScreen = () => {
             transform: [{ scale }],
             opacity,
             borderWidth: 2,
-            borderColor: '#ff784f',
+            borderColor: colors.orange[500],
           }}
         >
           {typeof pos === 'undefined' ? normalRender : topThreeRender}
@@ -108,10 +109,10 @@ const ScoreboardScreen = () => {
         <Animated.View
           style={{
             flexDirection: 'row',
-            backgroundColor: '#ddd',
+            backgroundColor: colors.gray[300],
             borderRadius: 12,
             margin: 5,
-            shadowColor: '#000',
+            shadowColor: colors.black,
             shadowOffset: {
               width: 5,
               height: 8,
@@ -178,7 +179,7 @@ const ScoreboardScreen = () => {
           value={index}
           onChange={(e: SetStateAction<number>) => setIndex(e)}
           indicatorStyle={{
-            backgroundColor: '#f95b78',
+            backgroundColor: colors.pink[400],
             height: 2.5,
           }}
         >

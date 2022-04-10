@@ -2,7 +2,6 @@ import {
   KeyboardAvoidingView,
   Text,
   View,
-  Image,
   TouchableOpacity,
 } from 'react-native'
 
@@ -19,7 +18,8 @@ import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
 import { UserContext } from '@/contexts/UserContext'
 import { useContext } from 'react'
-import Svgs from '@/components/svgs'
+import { SunnusSvg } from '@/components/svgs'
+import colors from '@/styles/colors'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -52,7 +52,7 @@ const HomeScreen = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Svgs.Sunnus fill="#1f2937" />
+      <SunnusSvg fill={colors.gray[800]}/>
       <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
@@ -78,8 +78,8 @@ const HomeScreen = () => {
         </Button>
         <Button
           onPress={() => navigation.navigate('GeneratorScreen')}
-          textStyle={styles.WSSbuttonText}
-          containerStyle={styles.WSSbutton}
+          textStyle={styles.GenerateQRbuttonText}
+          containerStyle={styles.GenerateQRbutton}
         >
           Generate QR
         </Button>

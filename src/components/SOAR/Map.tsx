@@ -31,23 +31,8 @@ const Map = ({
             pointType={e.stationType}
             content={e.content}
             status={e.status}
-          >
-            <Text>{`${e.stationType}: ${e.title}`}</Text>
-          </MapPoint>
+          />
         ))}
-        {/* uncomment to add circle, but imo it looks p ugly */}
-        {/* {gameLocations.map((e: any, i: number) => ( */}
-        {/*   <Circle */}
-        {/*     key={i} */}
-        {/*     strokeWidth={3} */}
-        {/*     strokeColor="#fca5a5" */}
-        {/*     fillColor="rgba(254, 202, 202, 0.4)" */}
-        {/*     radius={56} */}
-        {/*     center={e.coordinate} */}
-        {/*   > */}
-        {/*     <Text>{`${e.stationType}: ${e.title}`}</Text> */}
-        {/*   </Circle> */}
-        {/* ))} */}
       </>
     ) : null
   }

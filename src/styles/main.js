@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native'
+import colors from '@/styles/colors'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -7,12 +8,12 @@ const styles = StyleSheet.create({
   /* containers */
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
   },
   scrollContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
   },
   buttonContainer: {
     width: '60%',
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 20,
     padding: 10,
-    backgroundColor: '#eee',
+    backgroundColor:colors.gray[200],
   },
   inputContainer: {
     width: '80%',
@@ -35,14 +36,14 @@ const styles = StyleSheet.create({
   /* login */
   loginContainer: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor:colors.gray[200],
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   /* buttons */
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor:colors.blue[500],
     width: '100%',
     padding: 15,
     borderRadius: 10,
@@ -50,14 +51,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   redBg: {
-    backgroundColor: '#f43f5e',
+    backgroundColor: colors.red[500],
   },
   greenBg: {
-    backgroundColor: '#10b981',
+    backgroundColor: colors.green[500],
   },
   buttonOutline: {
     backgroundColor: 'white',
-    borderColor: '#0782F9',
+    borderColor:colors.blue[500],
     borderWidth: 2,
   },
 
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: '#0782F9',
+    color:colors.blue[500],
     fontWeight: '700',
     fontSize: 16,
   },
@@ -90,7 +91,7 @@ const map = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -112,7 +113,7 @@ const map = StyleSheet.create({
     position: 'absolute',
     width: 45,
     height: 45,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     top: HEIGHT - 200,
     left: WIDTH - 70,
     borderRadius: 50,
@@ -124,7 +125,7 @@ const map = StyleSheet.create({
     zIndex: 9,
     width: 45,
     height: 45,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 50,
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -140,7 +141,7 @@ const scoreboard = StyleSheet.create({
   scoreboardTitle: {
     fontSize: 32,
     fontWeight: '900',
-    color: '#f95b78',
+    color: colors.pink[500],
     textShadowColor: 'black',
     textShadowOffset: { width: 0.5, height: 1 },
     textShadowRadius: 2,
@@ -162,7 +163,7 @@ const scoreboard = StyleSheet.create({
     padding: 10,
     marginVertical: 8,
     textAlign: 'center',
-    color: '#f95b78',
+    color: colors.pink[500],
     fontWeight: '500',
   },
   itemTrophy: {
@@ -187,14 +188,14 @@ const scoreboard = StyleSheet.create({
 
   /* pickers */
   textPicker: {
-    backgroundColor: '#0782F9',
+    backgroundColor:colors.blue[500],
   },
 })
 
 const notifications = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -205,7 +206,7 @@ const notifications = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor:colors.blue[500],
     width: '100%',
     padding: 15,
     borderRadius: 10,
@@ -214,7 +215,7 @@ const notifications = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor:colors.blue[500],
     borderWidth: 2,
   },
   buttonText: {
@@ -223,7 +224,7 @@ const notifications = StyleSheet.create({
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: '#0782F9',
+    color:colors.blue[500],
     fontWeight: '700',
     fontSize: 16,
   },
