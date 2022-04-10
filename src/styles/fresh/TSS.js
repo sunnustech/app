@@ -4,11 +4,12 @@ export default StyleSheet.create({
   /* containers */
   container: {
     flex: 1,
+    paddingTop: 28,
     alignItems: 'center',
     justifyContent: 'center',
   },
   titleText: {
-    marginBottom: 24,
+    marginBottom: 20,
     fontSize: 24,
     fontWeight: '700',
     color: '#4b5563',
