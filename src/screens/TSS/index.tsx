@@ -109,7 +109,7 @@ const TSSScreen = () => {
     states.winner[1](roundData[round][matchNumber].A)
     display.winner[1](roundData[round][matchNumber].A)
 
-    _items.winner[1](
+    items.winner[1](
       getItems([
         roundData[round][matchNumber].A,
         roundData[round][matchNumber].B,
@@ -127,6 +127,12 @@ const TSSScreen = () => {
   /* when the data changes, only change team names */
   useEffect(() => {
     // console.log('!round -> match number')
+    items.winner[1](
+      getItems([
+        roundData[round][matchNumber].A,
+        roundData[round][matchNumber].B,
+      ])
+    )
     states.winner[1](roundData[round][matchNumber][winnerCode])
     display.winner[1](roundData[round][matchNumber][winnerCode])
   }, [roundData])
@@ -143,13 +149,18 @@ const TSSScreen = () => {
     show(states)
     console.log('\ndisplay states')
     show(display)
+    console.log('\nwinner code:', winnerCode)
   }
 
   const handleConfirm = () => {
     tempFunction()
   }
 
-  const _items = {
+  const showCurrentData = () => {
+    console.log('current data:', roundData[round])
+  }
+
+  const items = {
     sport: useState<Item[]>([]),
     round: useState<Item[]>([]),
     matchNumber: useState<Item[]>([]),
@@ -157,11 +168,11 @@ const TSSScreen = () => {
   }
 
   useEffect(() => {
-    _items.sport[1](getItems(sportList))
-    _items.round[1](getItems(roundList))
-    _items.matchNumber[1](getItems(matchNumbers[round]))
-    _items.winner[1](getItems(['hi', 'bye']))
-    // _items.winner[1](
+    items.sport[1](getItems(sportList))
+    items.round[1](getItems(roundList))
+    items.matchNumber[1](getItems(matchNumbers[round]))
+    items.winner[1](getItems(['hi', 'bye']))
+    // items.winner[1](
     //   getItems([
     //     roundData[round][matchNumber].A,
     //     roundData[round][matchNumber].B,
@@ -178,7 +189,7 @@ const TSSScreen = () => {
             _ref={refs[field]}
             setState={states[field][1]}
             display={display[field]}
-            items={_items[field][0]}
+            items={items[field][0]}
             key={idx}
           />
         )
@@ -195,6 +206,11 @@ const TSSScreen = () => {
       <TouchableOpacity onPress={handleConfirm} style={styles.confirmContainer}>
         <View style={styles.confirmTextContainer}>
           <Text style={styles.confirmText}>Confirm</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={showCurrentData} style={styles.confirmContainer}>
+        <View style={styles.confirmTextContainer}>
+          <Text style={styles.confirmText}>Current Data</Text>
         </View>
       </TouchableOpacity>
     </KeyboardAvoidingView>
