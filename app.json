@@ -2,7 +2,7 @@
   "expo": {
     "name": "SunNUS",
     "slug": "SunNUS",
-    "version": "3.0.4",
+    "version": "3.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,17 +18,23 @@
       "config": {
         "googleMapsApiKey": "AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk"
       },
-      "buildNumber": "8",
+      "buildNumber": "1",
       "supportsTablet": true,
       "bundleIdentifier": "com.nus.sunnus"
     },
     "android": {
+      "config": {
+
+        "googleMaps": {
+          "apiKey": "AIzaSyAMokc0eF4l5_HGuMBGGgVOIKsw8BQCccU"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.nus.sunnus",
-      "versionCode": 12
+      "versionCode": 13
     },
     "web": {
       "favicon": "./assets/favicon.png"
