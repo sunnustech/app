@@ -41,11 +41,14 @@ export function objFromArray(
 export function getItems(
   arr: Array<string | number | Sport | Round>
 ): Array<Item> {
-  return arr.map((e, i) => ({
-    label: replaceUnderscoresWithSpaces(e.toString()),
-    value: e.toString(),
-    key: i,
-  }))
+  return arr.map((e, i) => {
+    const s = e.toString ? e.toString() : '---'
+    return {
+      label: replaceUnderscoresWithSpaces(s),
+      value: s,
+      key: i,
+    }
+  })
 }
 
 export const showNone = {
