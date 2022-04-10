@@ -201,28 +201,6 @@ const TSSScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
       <Text style={styles.titleText}>TSS Match Update Tool</Text>
-      {fields.map((field, idx) => {
-        return (
-          <PickerProvider
-            _ref={refs[field]}
-            setState={states[field][1]}
-            display={display[field]}
-            items={items[field][0]}
-            key={idx}
-          />
-        )
-      })}
-      {fields.map((field, idx) => {
-        if (field !== 'winner') {
-          return (
-            <CustomPicker
-              pickerRef={refs[field]}
-              display={display[field][0]}
-              key={idx}
-            />
-          )
-        }
-      })}
 
       <View style={styles.numberInputContainer}>
         <View style={styles.numberInputTeamContainer}>
@@ -259,6 +237,28 @@ const TSSScreen = () => {
           />
         </View>
       </View>
+      {fields.map((field, idx) => {
+        return (
+          <PickerProvider
+            _ref={refs[field]}
+            setState={states[field][1]}
+            display={display[field]}
+            items={items[field][0]}
+            key={idx}
+          />
+        )
+      })}
+      {fields.map((field, idx) => {
+        if (field !== 'winner') {
+          return (
+            <CustomPicker
+              pickerRef={refs[field]}
+              display={display[field][0]}
+              key={idx}
+            />
+          )
+        }
+      })}
 
       <TouchableOpacity onPress={handleConfirm} style={styles.confirmContainer}>
         <View style={styles.confirmTextContainer}>

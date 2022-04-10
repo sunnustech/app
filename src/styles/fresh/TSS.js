@@ -9,7 +9,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   titleText: {
-    marginBottom: 20,
+    marginBottom: 14,
     fontSize: 24,
     fontWeight: '700',
     color: '#4b5563',
@@ -51,13 +51,13 @@ export default StyleSheet.create({
     width: '80%',
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: 16,
   },
 
   numberInputTeamContainer: {
     flex: 1,
     flexDirection: 'column',
     borderColor: '#d4d4d8',
-    marginTop: 10,
     paddingHorizontal: 8,
     paddingVertical: 10,
     borderWidth: 3,
