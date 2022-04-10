@@ -1,5 +1,4 @@
 import {
-  KeyboardAvoidingView,
   Text,
   View,
   TextInput,
@@ -9,15 +8,15 @@ import {
 import { httpsCallable } from 'firebase/functions'
 
 /* navigation */
-import { TSSPage } from '@/types/navigation'
-import { useNavigation } from '@react-navigation/native'
+// import { TSSPage } from '@/types/navigation'
+// import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
 import { TSS as styles } from '@/styles/fresh'
 
 // DELETE AFTER USE
 import PickerProvider from '@/components/TSS/PickerProvider'
-import { Match, Round, Sport, Winner } from '@/types/TSS'
+import { Round, Sport, Winner } from '@/types/TSS'
 import {
   MutableRefObject,
   useContext,
@@ -33,35 +32,18 @@ import CustomPicker from '@/components/TSS/CustomPicker'
 import { UseState } from '@/types/SOAR'
 import { LastContext } from '@/contexts/LastContext'
 
-type Field = 'sport' | 'round' | 'matchNumber' | 'winner'
+type Field = 'sport' | 'round' | 'matchNumber'
 
 const TSSScreen = () => {
-  const navigation = useNavigation<TSSPage<'TSSScreen'>>()
-  const fields: Array<Field> = ['sport', 'round', 'matchNumber', 'winner']
+  // const navigation = useNavigation<TSSPage<'TSSScreen'>>()
+  const fields: Array<Field> = ['sport', 'round', 'matchNumber']
   const { roundData, sport, setSport } = useContext(LastContext)
-
-  function getSlotFromTeamName(teamName: string): 'A' | 'B' {
-    const match: Match = roundData[round][matchNumber]
-    for (const [key, value] of Object.entries(match)) {
-      if (value === teamName) {
-        if (key === 'A') {
-          return 'A'
-        } else if (key === 'B') {
-          return 'B'
-        }
-      }
-    }
-    return 'A'
-  }
 
   type DisplayStates = {
     sport: UseState<Sport>
     round: UseState<Round>
     matchNumber: UseState<number>
-    winner: UseState<string>
   }
-
-  const [winnerCode, setWinnerCode] = useState<'A' | 'B'>('A')
 
   const roundState = useState<Round>('round_of_32')
   const matchNumberState = useState(0)
@@ -73,15 +55,11 @@ const TSSScreen = () => {
     sport: [sport, setSport],
     matchNumber: matchNumberState,
     round: roundState,
-    winner: useState<string>('---'),
   }
-
-  const winner = states.winner[0]
 
   const display: DisplayStates = {
     sport: useState<Sport>(sport),
     matchNumber: useState(0),
-    winner: useState<string>(winner),
     round: useState<Round>('round_of_32'),
   }
 
@@ -89,24 +67,11 @@ const TSSScreen = () => {
     sport: useRef<Picker>(null),
     round: useRef<Picker>(null),
     matchNumber: useRef<Picker>(null),
-    winner: useRef<Picker>(null),
   }
-
-  /* when the winner team name changes, update the winner code */
-  useEffect(() => {
-    setWinnerCode(getSlotFromTeamName(winner))
-  }, [winner])
 
   /* when the match number changes, refresh the team names */
   useEffect(() => {
-    // use match number to update winner
-    const A = roundData[round][matchNumber].A
-    const B = roundData[round][matchNumber].B
-    states.winner[1](A ? A : '---')
-    display.winner[1](A ? A : '---')
-
-    // update winner items
-    items.winner[1](getItems([A !== '' ? A : '---', B !== '' ? B : '---']))
+    // clear scores
     scoreRefA.current?.clear()
     scoreRefB.current?.clear()
   }, [matchNumber])
@@ -118,41 +83,20 @@ const TSSScreen = () => {
     states.matchNumber[1](0)
     display.matchNumber[1](0)
 
-    const A = roundData[round][0].A
-    states.winner[1](A ? A : '---')
-    display.winner[1](A ? A : '---')
+    // clear scores
     scoreRefA.current?.clear()
     scoreRefB.current?.clear()
   }, [round])
 
-  /* when the data changes, only change team names */
-  useEffect(() => {
-    // update winner items
-    const A = roundData[round][matchNumber].A
-    const B = roundData[round][matchNumber].B
-    items.winner[1](getItems([A !== '' ? A : '---', B !== '' ? B : '---']))
-    // reattach display state properly using current winner code
-    states.winner[1](roundData[round][matchNumber][winnerCode])
-    display.winner[1](roundData[round][matchNumber][winnerCode])
-  }, [roundData])
-
   const handleConfirm = () => {
-    const sport = states.sport[0]
-    const round = states.round[0]
-    const matchNumber = states.matchNumber[0]
-    const email = auth.currentUser
-      ? auth.currentUser.email
-      : 'no-email@nomail.com'
-    var outcome: Winner
-    if (scoreA === scoreB) {
-      outcome = 'U'
-    }
-    outcome = scoreA > scoreB ? 'A' : 'B'
+    const email = auth.currentUser ? auth.currentUser.email : 'noreply-mail.com'
+    const outcome: Winner =
+      scoreA === scoreB ? 'U' : scoreA > scoreB ? 'A' : 'B'
     const request = {
       series: 'TSS',
-      sport,
-      round,
-      matchNumber,
+      sport: states.sport[0],
+      round: states.round[0],
+      matchNumber: states.matchNumber[0],
       A: roundData[round][matchNumber].A,
       B: roundData[round][matchNumber].B,
       winner: outcome,
@@ -162,19 +106,19 @@ const TSSScreen = () => {
     }
     /* if the scores are untouched, send a toast */
     if (scoreA === -1 || scoreB === -1) {
-      console.log('please key in both scores', winnerCode)
+      console.log('please key in both scores')
       return
     }
+    // TODO add confirmation modal
     const firebaseHandleMatch = httpsCallable(functions, 'handleMatch')
     firebaseHandleMatch(request)
-    console.log('request sent:', request)
+    // TODO: add successful response notice
   }
 
   const items = {
     sport: useState<Item[]>([]),
     round: useState<Item[]>([]),
     matchNumber: useState<Item[]>([]),
-    winner: useState<Item[]>([]),
   }
 
   // initialize default items (don't let this depend on roundData)
@@ -182,7 +126,6 @@ const TSSScreen = () => {
     items.sport[1](getItems(sportList))
     items.round[1](getItems(roundList))
     items.matchNumber[1](getItems(matchNumbers[round]))
-    items.winner[1](getItems(['---', '---']))
   }, [])
 
   const [scoreA, setScoreA] = useState(-1)
@@ -252,17 +195,13 @@ const TSSScreen = () => {
           />
         )
       })}
-      {fields.map((field, idx) => {
-        if (field !== 'winner') {
-          return (
-            <CustomPicker
-              pickerRef={refs[field]}
-              display={display[field][0]}
-              key={idx}
-            />
-          )
-        }
-      })}
+      {fields.map((field, idx) => (
+        <CustomPicker
+          pickerRef={refs[field]}
+          display={display[field][0]}
+          key={idx}
+        />
+      ))}
 
       <TouchableOpacity onPress={handleConfirm} style={styles.confirmContainer}>
         <View style={styles.confirmTextContainer}>
