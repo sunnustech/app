@@ -2,6 +2,8 @@ import {
   KeyboardAvoidingView,
   Text,
   View,
+  TextInput,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native'
 import { httpsCallable } from 'firebase/functions'
@@ -173,8 +175,11 @@ const TSSScreen = () => {
     items.winner[1](getItems(['---', '---']))
   }, [])
 
+  const [scoreA, setScoreA] = useState(0)
+  const [scoreB, setScoreB] = useState(0)
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
       <Text style={styles.titleText}>TSS Match Update Tool</Text>
       {fields.map((field, idx) => {
         return (
@@ -196,12 +201,27 @@ const TSSScreen = () => {
           />
         )
       })}
+
+      <View style={styles.numberInputContainer}>
+        <TextInput
+          style={styles.numberInput}
+          keyboardType="number-pad"
+          returnKeyType="done"
+        />
+        <View style={styles.numberInputSpacer} />
+        <TextInput
+          style={styles.numberInput}
+          keyboardType="number-pad"
+          returnKeyType="done"
+        />
+      </View>
+
       <TouchableOpacity onPress={handleConfirm} style={styles.confirmContainer}>
         <View style={styles.confirmTextContainer}>
           <Text style={styles.confirmText}>Confirm</Text>
         </View>
       </TouchableOpacity>
-    </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 

@@ -10,8 +10,8 @@ export default StyleSheet.create({
   titleText: {
     marginBottom: 24,
     fontSize: 24,
-    fontWeight: "700",
-    color: '#4b5563'
+    fontWeight: '700',
+    color: '#4b5563',
   },
 
   /* picker stuff */
@@ -44,5 +44,31 @@ export default StyleSheet.create({
     color: 'white',
     fontWeight: '700',
     textAlign: 'center',
+  },
+
+  numberInputContainer: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    // backgroundColor: '#fef08a'
+  },
+  numberInputSpacer: {
+    width: 10,
+  },
+
+  numberInput: {
+    textAlign: 'center',
+    fontSize: 36,
+    fontWeight: '600',
+    color: '#4b5563',
+    borderRadius: 6,
+    flex: 1,
+    backgroundColor: 'white',
+    height: 100,
+    width: 50,
+    shadowColor: '#000000',
+    shadowRadius: 2,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 5 },
   },
 })
