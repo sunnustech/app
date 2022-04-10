@@ -1,5 +1,8 @@
 import { Color, SvgXml, XmlProps } from 'react-native-svg'
-import sunnus from './sunnus'
+import sunnus from './sunnus-svg'
+import soar from './soar-svg'
+import tss from './tss-svg'
+import wss from './wss-svg'
 
 const GeneralSvg = (
   props: { src: (color: Color) => string } & Pick<XmlProps, 'fill' | 'opacity'>
@@ -12,9 +15,19 @@ const GeneralSvg = (
   />
 )
 
-const Sunnus = (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
-  <GeneralSvg src={sunnus} {...props} />
-)
+const Svgs = {
+  Sunnus: (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
+    <GeneralSvg src={sunnus} {...props} />
+  ),
+  SOAR: (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
+    <GeneralSvg src={soar} {...props} />
+  ),
+  TSS: (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
+    <GeneralSvg src={tss} {...props} />
+  ),
+  WSS: (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
+    <GeneralSvg src={wss} {...props} />
+  ),
+}
 
-export {Sunnus}
-export default Sunnus
+export default Svgs

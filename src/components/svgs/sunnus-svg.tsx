@@ -1,6 +1,6 @@
-import { Color, SvgXml, XmlProps } from 'react-native-svg'
+import { Color } from "react-native-svg" 
 
-const sunnus = (color: Color): string => {
+export default function Svg(color: Color): string {
   return `
   <svg
     width="100%"
@@ -52,20 +52,3 @@ const sunnus = (color: Color): string => {
   </svg>
   `
 }
-
-const GeneralSvg = (
-  props: { src: (color: Color) => string } & Pick<XmlProps, 'fill' | 'opacity'>
-) => (
-  <SvgXml
-    xml={props.src(props.fill || 'black')}
-    height="100%`"
-    width="100%"
-    opacity={props.opacity}
-  />
-)
-
-const Sunnus = (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
-  <GeneralSvg src={sunnus} {...props} />
-)
-
-export default Sunnus

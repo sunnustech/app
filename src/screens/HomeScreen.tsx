@@ -19,7 +19,7 @@ import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
 import { UserContext } from '@/contexts/UserContext'
 import { useContext } from 'react'
-import Sunnus from '@/components/svgs'
+import Svgs from '@/components/svgs'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -52,7 +52,7 @@ const HomeScreen = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Sunnus fill='#33b5e5'/>
+      <Svgs.Sunnus fill="#1f2937" />
       <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
