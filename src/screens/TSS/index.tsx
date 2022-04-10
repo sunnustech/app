@@ -25,7 +25,7 @@ import {
 } from 'react'
 import { functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
-import Picker from 'react-native-picker-select'
+import Picker, { Item } from 'react-native-picker-select'
 import { getItems } from '@/lib/utils'
 import CustomPicker from '@/components/TSS/CustomPicker'
 import { UseState } from '@/types/SOAR'
@@ -109,6 +109,13 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
     // console.log('!match number -> winner')
     states.winner[1](roundData[round][matchNumber].A)
     display.winner[1](roundData[round][matchNumber].A)
+
+    _items.winner[1](
+      getItems([
+        roundData[round][matchNumber].A,
+        roundData[round][matchNumber].B,
+      ])
+    )
   }, [matchNumber])
 
   /* when the round changes, reset the match number to zero */
@@ -153,6 +160,25 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
     ]),
   }
 
+  const _items = {
+    sport: useState<Item[]>([]),
+    round: useState<Item[]>([]),
+    matchNumber: useState<Item[]>([]),
+    winner: useState<Item[]>([]),
+  }
+
+  useEffect(() => {
+    _items.sport[1](getItems(sportList))
+    _items.round[1](getItems(roundList))
+    _items.matchNumber[1](getItems(matchNumbers[round]))
+    _items.winner[1](
+      getItems([
+        roundData[round][matchNumber].A,
+        roundData[round][matchNumber].B,
+      ])
+    )
+  }, [])
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.titleText}>TSS Match Update Tool</Text>
@@ -162,7 +188,7 @@ const TSSScreen = ({ sportState }: { sportState: UseState<Sport> }) => {
             _ref={refs[field]}
             setState={states[field][1]}
             display={display[field]}
-            items={items[field]}
+            items={_items[field][0]}
             key={idx}
           />
         )
