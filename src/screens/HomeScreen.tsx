@@ -19,7 +19,7 @@ import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
 import { UserContext } from '@/contexts/UserContext'
 import { useContext } from 'react'
-import SunnusLogo from '../../assets/sunnus-anniversary.png'
+import Svgs from '@/components/svgs'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -48,11 +48,11 @@ const HomeScreen = () => {
    * >>> <firebase username>
    */
 
-  const { userId, teamName, schedule, teamData } = useContext(UserContext)
+  const { userId, teamName } = useContext(UserContext)
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Image source={SunnusLogo} style={styles.image} />
+      <Svgs.Sunnus fill="#1f2937" />
       <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
       <View style={styles.buttonContainer}>
         <Button
