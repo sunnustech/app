@@ -37,34 +37,6 @@ const TSSScreen = ({
   const navigation = useNavigation<TSSPage<'TSSScreen'>>()
   const fields: Array<Field> = ['sport', 'round', 'matchNumber', 'winner']
 
-  function getTeamName(e: Winner): string {
-    if (e === 'U') {
-      return ''
-    }
-    return data[round][matchNumber][e]
-  }
-
-  function getSlotFromTeamName(teamName: string): Winner {
-    const match: Match = data[round][matchNumber]
-    for (const [key, value] of Object.entries(match)) {
-      if (value === teamName) {
-        if (key === 'A') {
-          return 'A'
-        } else if (key === 'B') {
-          return 'B'
-        }
-      }
-    }
-    return 'U'
-  }
-
-  type FieldStates = {
-    sport: UseState<Sport>
-    round: UseState<Round>
-    matchNumber: UseState<number>
-    winner: UseState<Winner>
-  }
-
   type DisplayStates = {
     sport: UseState<Sport>
     round: UseState<Round>
