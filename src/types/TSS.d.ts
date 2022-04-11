@@ -20,6 +20,8 @@ export type Match = {
   A: string
   B: string
   winner: Winner
+  scoreA: number
+  scoreB: number
 }
 
 type Matches = Record<number, Match>
@@ -50,3 +52,9 @@ export type TSSDatabase = Sports & {
     schedule: TSSSchedule
   }
 }
+
+/*
+ * knockout table Front-end
+ */
+
+export type CurrentPageState = Record<Round, number>

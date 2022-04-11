@@ -6,13 +6,14 @@ import { useCallback, useEffect, useState } from 'react'
 import { onSnapshot, doc } from 'firebase/firestore'
 import { Rounds, Sport } from '@/types/TSS'
 import { db } from '@/sunnus/firebase'
+import { emptyRounds } from '@/data/schema/TSS'
 
 const TSSTabs = createBottomTabNavigator()
 
 const TSSNavigator = () => {
   const sportState = useState<Sport>('volleyball')
   const [sport, setSport] = sportState
-  const [data, setData] = useState<Rounds>()
+  const [data, setData] = useState<Rounds>(emptyRounds)
   const [TSSNavActive, setTSSNavActive] = useState<boolean>(false)
 
   const KnockoutTableWrapper = () => {
@@ -25,7 +26,15 @@ const TSSNavigator = () => {
         const liveData = doc.data()
         if (liveData) {
           console.log(`received firebase updates for ${sport} at`, new Date())
-          // console.log(liveData)
+          const updatedData: Rounds = {
+            champions: liveData.champions,
+            finals: liveData.finals,
+            semifinals: liveData.semifinals,
+            quarterfinals: liveData.quarterfinals,
+            round_of_16: liveData.round_of_16,
+            round_of_32: liveData.round_of_32,
+          }
+          setData(updatedData)
         }
       })
       return () => {
@@ -50,7 +59,11 @@ const TSSNavigator = () => {
   return (
     <TSSTabs.Navigator>
       <TSSTabs.Screen name="TSSScreen" component={TSSScreen} />
-      <TSSTabs.Screen name="KnockoutTable" component={KnockoutTableWrapper} />
+      <TSSTabs.Screen
+        name="KnockoutTable"
+        component={KnockoutTableWrapper}
+        options={{ headerShown: false }}
+      />
     </TSSTabs.Navigator>
   )
 }

@@ -1,10 +1,15 @@
 import { StyleSheet } from 'react-native'
 
+const pageIndicatorSize = 5
+const pageIndicatorSpacing = 2
+
 export default StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: 'green',
   },
   innerContainer: {
     flex: 1,
@@ -47,12 +52,34 @@ export default StyleSheet.create({
     width: '80%',
     backgroundColor: '#ffffff',
     paddingHorizontal: 18,
-    paddingVertical: 16,
+    paddingTop: 14,
+    paddingBottom: 6,
     borderRadius: 6,
     shadowColor: '#000000',
     shadowRadius: 2,
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 5 },
+  },
+
+  pageIndicatorContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+
+  inactivePage: {
+    backgroundColor: '#d1d5db',
+    marginHorizontal: pageIndicatorSpacing,
+    height: pageIndicatorSize,
+    width: pageIndicatorSize,
+    borderRadius: 100,
+  },
+  activePage: {
+    backgroundColor: '#60a5fa',
+    marginHorizontal: pageIndicatorSpacing,
+    height: pageIndicatorSize,
+    width: pageIndicatorSize,
+    borderRadius: 100,
   },
 
   matchNodeRow: {
@@ -85,6 +112,29 @@ export default StyleSheet.create({
     // backgroundColor: '#86efac',
   },
 
+  // empty match node
+  emptyMatchNodeScore: {
+    width: 36,
+    borderColor: 'rgba(0,0,0,0)',
+    borderWidth: 2,
+    borderRadius: 4,
+    color: 'rgba(0,0,0,0)',
+    textAlign: 'center',
+    // backgroundColor: '#86efac',
+  },
+  emptyMatchNodeTeamText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#9ca3af',
+    textAlign: 'center',
+  },
+  emptyMatchNodeScoreText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: 'rgba(0,0,0,0)',
+    textAlign: 'center',
+  },
+
   // text only
   matchNodeTeamText: {
     fontSize: 16,
@@ -96,5 +146,51 @@ export default StyleSheet.create({
     fontWeight: '700',
     color: '#4b5563',
     textAlign: 'center',
+  },
+
+  displayNone: {
+    display: 'none',
+  },
+
+  pickerContainer: {
+    width: '80%',
+    height: 48,
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 18,
+    paddingVertical: 8,
+    borderRadius: 6,
+    shadowColor: '#000000',
+    shadowRadius: 2,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 5 },
+    marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    display: 'flex',
+  },
+  pickerChevronContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: 20,
+  },
+  pickerTextContainer: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  pickerText: {
+    width: '100%',
+    fontSize: 18,
+    color: '#4b5563',
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  pickerChevron: {
+    color: '#4b5563',
+  },
+  rowCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 })

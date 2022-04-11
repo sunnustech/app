@@ -1,10 +1,17 @@
-import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
-import { auth } from '@/sunnus/firebase'
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react'
+import { auth, db } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
 import { TeamProps } from '@/types/participants'
 import { SOARTeamProps } from '@/types/SOAR'
 import { notificationInit } from '@/lib/notifications'
-import push from '@/data/push'
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
+import { newSunNUSTeam } from '@/data/schema/participants'
 
 type UserContextProps = {
   userId: string
@@ -17,22 +24,12 @@ type UserContextProps = {
   setTeamData: Dispatch<SetStateAction<TeamProps>>
 }
 
-const SOARinit: SOARTeamProps = {
-  timerRunning: false,
-  started: false,
-  stopped: false,
-  startTime: 0,
-  stopTime: 0,
-  allEvents: [],
+const teamDataInit = newSunNUSTeam({
+  members: [],
+  registeredEvents: {},
   direction: 'A',
-  points: 0,
-}
-
-const teamDataInit = {
-  members: [{ email: '', phone: '', loginId: '' }],
-  SOAR: SOARinit,
   teamName: '',
-}
+})
 
 const UserContext = createContext<UserContextProps>({
   userId: '',
@@ -76,22 +73,11 @@ const rehydrateUserData = async ({
 }
 
 async function handlePushTokens(token: string) {
-  const data = (await pullDoc({ collection: 'test', doc: 'expo' })).data
-  const existingPushTokens = data.pushTokens
-  if (!existingPushTokens.includes(token)) {
-    existingPushTokens.push(token)
-    const clean = existingPushTokens.filter(
-      (t: string) => t.replace(/ /g, '') !== ''
-    )
-    push({
-      collection: 'notifications',
-      docs: {
-        expo: {
-          pushTokens: clean,
-        },
-      },
-    })
-  }
+  updateDoc(doc(db, 'notifications', 'expo'), {
+    pushTokens: arrayUnion(token),
+  }).then(() => {
+    console.log('successfully pushed Expo token to firebase')
+  })
 }
 
 const UserProvider = (props: React.PropsWithChildren<{}>) => {
@@ -101,7 +87,12 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [teamData, setTeamData] = useState<TeamProps>(teamDataInit)
 
   const token = notificationInit().expoPushToken
-  handlePushTokens(token)
+
+  useEffect(() => {
+    if (token !== '') {
+      handlePushTokens(token)
+    }
+  }, [token])
 
   /*
    * This is needed because expo only remembers firebase credentials,

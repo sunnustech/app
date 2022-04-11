@@ -21,7 +21,7 @@ const SOARInit: SOARTeamProps = {
   points: 0,
 }
 
-function newSunNUSTeam(props: {
+export function newSunNUSTeam(props: {
   members: Array<Member>
   registeredEvents: RegisteredEvents
   direction: 'A' | 'B'

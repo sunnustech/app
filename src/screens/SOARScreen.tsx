@@ -10,7 +10,7 @@ import { Text, View } from 'react-native'
 import { Modal } from 'react-native-paper'
 
 /* navigation */
-import { AuthPage } from '@/types/navigation'
+import { SOARPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
@@ -72,7 +72,7 @@ const SOARScreen = () => {
 
   const mapRef = useRef<MapView | null>(null)
 
-  const navigation = useNavigation<AuthPage<'SOARScreen'>>()
+  const navigation = useNavigation<SOARPage<'SOARScreen'>>()
 
   // first time grab user location
   useEffect(() => {
@@ -89,19 +89,26 @@ const SOARScreen = () => {
   }, [])
 
   const flyToCurrentLocation = () => {
+    /* gonna make this fly to the middle of NUS instead */
     if (mapRef.current) {
-      mapRef.current.animateCamera(currentPosition, { duration: 500 })
+      mapRef.current.animateCamera(NUSCoordinates, { duration: 500 })
     }
-    getCurrentPositionAsync().then((e) => {
-      const r: Camera = {
-        center: { latitude: e.coords.latitude, longitude: e.coords.longitude },
-        pitch: 0,
-        zoom: 15,
-        heading: 0,
-        altitude: 0,
-      }
-      setCurrentPosition(r)
-    })
+    /*
+     * queries for user location and goes to it
+     */
+    // if (mapRef.current) {
+    //   mapRef.current.animateCamera(currentPosition, { duration: 500 })
+    // }
+    // getCurrentPositionAsync().then((e) => {
+    //   const r: Camera = {
+    //     center: { latitude: e.coords.latitude, longitude: e.coords.longitude },
+    //     pitch: 0,
+    //     zoom: 15,
+    //     heading: 0,
+    //     altitude: 0,
+    //   }
+    //   setCurrentPosition(r)
+    // })
   }
 
   useEffect(() => {

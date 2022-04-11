@@ -1,5 +1,5 @@
 /* sunnus components */
-import { TouchableOpacity, Text } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import { DEV as styles } from '@/styles/fresh'
 import { DebugButtonProps } from '@/types/index'
 
