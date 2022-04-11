@@ -85,6 +85,8 @@ export type SOARCommand =
 export type QRDictionaryGeneratorProps = {
   command: SOARCommand
   station: string
+  facilitator?: string
+  points?: number
 }
 
 export type QRCommandProps = {

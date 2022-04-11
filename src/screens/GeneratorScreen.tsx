@@ -1,4 +1,11 @@
-import { KeyboardAvoidingView, Modal, Pressable, Text, View, StyleSheet } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Modal,
+  Pressable,
+  Text,
+  View,
+  StyleSheet,
+} from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import QRCode from 'react-native-qrcode-svg'
 import { useState } from 'react'
@@ -9,7 +16,9 @@ const GeneratorScreen = () => {
   const [score, setScore] = useState(0)
   const [modal, setModal] = useState(false)
 
-  const generateScoreQR = () => {}
+  const generateScoreQR = () => {
+    setModal(true)
+  }
 
   return (
     <KeyboardAvoidingView style={styles.centeredView} behavior="padding">
@@ -23,8 +32,8 @@ const GeneratorScreen = () => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <QRCode value="https://www.youtube.com/watch?v=w0E9-Bir664" />
-            <Pressable style={[styles.button]} onPress={() => setModal(!modal)}>
+            <QRCode value={score.toString()} />
+            <Pressable style={[styles.button]} onPress={() => setModal(false)}>
               <Text style={styles.textStyle}>Hide QR</Text>
             </Pressable>
           </View>
@@ -41,7 +50,7 @@ const GeneratorScreen = () => {
           { label: '300', value: 300, key: 3 },
         ]}
       />
-      <Button onPress={() => setModal(true)}>Test</Button>
+      <Button onPress={generateScoreQR}>Test</Button>
     </KeyboardAvoidingView>
   )
 }
@@ -81,7 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     textAlign: 'center',
   },
