@@ -2,6 +2,8 @@ import { StyleSheet } from 'react-native'
 import opts from './opts'
 import colors from '@/styles/colors'
 
+const allWidths = '70%'
+
 function makeAccent(color) {
   return {
     bg: colors[color][300],
@@ -23,12 +25,39 @@ export default StyleSheet.create({
   /* containers */
   container: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.bg
+    backgroundColor: colors.bg,
   },
-  buttonContainer: {
-    width: opts.allWidths,
+
+  headingContainer: {
+    height: 50,
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headingSides: {
+    width: 60,
+    height: '100%',
+    // backgroundColor: colors.green[100],
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  logoContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: '50%%',
+  },
+  bodyContainer: {
+    flex: 1,
+    width: allWidths,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -38,6 +67,15 @@ export default StyleSheet.create({
     width: '100%',
     borderWidth: opts.border,
     padding: 18,
+    height: 72,
+    borderRadius: opts.radius,
+    marginVertical: 8,
+    alignItems: 'center',
+  },
+  devButton: {
+    width: '100%',
+    borderWidth: opts.border,
+    padding: 10,
     borderRadius: opts.radius,
     marginVertical: 8,
     alignItems: 'center',

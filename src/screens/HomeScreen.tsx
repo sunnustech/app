@@ -3,6 +3,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native'
 
 /* firebase */
@@ -20,12 +21,43 @@ import { UserContext } from '@/contexts/UserContext'
 import { useContext } from 'react'
 import { SunnusSvg } from '@/components/svgs'
 import colors from '@/styles/colors'
+import { Ionicons } from '@expo/vector-icons'
+import Sunnus from '@/components/svgs/TransformSunnus'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.button, containerStyle]}>
       <Text style={[styles.buttonText, textStyle]}>{children}</Text>
     </TouchableOpacity>
+  )
+}
+
+const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.devButton, containerStyle]}
+    >
+      <Text style={[styles.buttonText, textStyle]}>{children}</Text>
+    </TouchableOpacity>
+  )
+}
+
+const Header = () => {
+  return (
+    <View style={styles.headingContainer}>
+      <View style={styles.headingSides} />
+      <View style={styles.logoContainer}>
+        <View style={styles.logo}>
+          <Sunnus fill={colors.gray[800]} />
+        </View>
+      </View>
+      <View style={styles.headingSides}>
+        <TouchableOpacity>
+          <Ionicons name="settings-outline" size={26} color="black" />
+        </TouchableOpacity>
+      </View>
+    </View>
   )
 }
 
@@ -48,13 +80,10 @@ const HomeScreen = () => {
    * >>> <firebase username>
    */
 
-  const { userId, teamName } = useContext(UserContext)
-
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <SunnusSvg fill={colors.gray[800]}/>
-      <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
-      <View style={styles.buttonContainer}>
+    <SafeAreaView style={styles.container} behavior="padding">
+      <Header />
+      <View style={styles.bodyContainer}>
         <Button
           onPress={() => navigation.navigate('SOARNavigator')}
           textStyle={styles.SOARbuttonText}
@@ -76,23 +105,23 @@ const HomeScreen = () => {
         >
           WSS
         </Button>
-        <Button
+        <DevButton
           onPress={() => navigation.navigate('GeneratorScreen')}
           textStyle={styles.GenerateQRbuttonText}
           containerStyle={styles.GenerateQRbutton}
         >
           Generate QR
-        </Button>
-        <Button
+        </DevButton>
+        <DevButton
           onPress={() => navigation.navigate('DEVScreen')}
           textStyle={styles.DEVbuttonText}
           containerStyle={styles.DEVbutton}
         >
           Development
-        </Button>
+        </DevButton>
         <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
       </View>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
