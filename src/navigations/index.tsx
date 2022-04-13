@@ -14,6 +14,7 @@ import { LoginScreen } from '@/screens/index'
 import { UserState } from '@/types/index'
 import AuthStack from '@/navigations/AuthStack'
 import { UnauthenticatedPages } from '@/types/navigation'
+import SplashScreen from '../screens/SplashScreen'
 
 const Stack = createNativeStackNavigator<UnauthenticatedPages>()
 
@@ -28,6 +29,7 @@ const SunNUS = () => {
     isLoggedIn: false,
     isRegistered: false,
   })
+  const [checkedAuth, setCheckedAuth] = useState(false)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -41,6 +43,7 @@ const SunNUS = () => {
       } else {
         setUserState({ isLoggedIn: false, isRegistered: false })
       }
+      setCheckedAuth(true)
     })
   }, [])
 
@@ -49,7 +52,6 @@ const SunNUS = () => {
       headerBackVisible: false,
       headerShown: false,
     }
-
     if (userState.isLoggedIn) {
       if (userState.isRegistered) {
         /* user has logged in with firebase */
@@ -74,17 +76,28 @@ const SunNUS = () => {
       }
     } else {
       /* user has yet to log in at all */
+      // return checkedAuth ? (
+      //   <Stack.Screen
+      //     name="Unauthenticated"
+      //     component={LoginScreen}
+      //     options={minOpts}
+      //   />
+      // ) : (
       return (
         <Stack.Screen
-          name="Unauthenticated"
-          component={LoginScreen}
+          name="Splash"
+          component={SplashScreen}
           options={minOpts}
         />
       )
     }
   }
 
-  return <Stack.Navigator>{handleLoginState(userState)}</Stack.Navigator>
+  return (
+    <Stack.Navigator initialRouteName="Splash">
+      {handleLoginState(userState)}
+    </Stack.Navigator>
+  )
 }
 
 export default SunNUS

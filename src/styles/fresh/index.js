@@ -10,6 +10,7 @@ import QR from './QR'
 import buttons from './buttons'
 import utils from './utils'
 import picker from './picker'
+import splash from './splash'
 
 export {
   login,
@@ -24,4 +25,5 @@ export {
   buttons,
   utils,
   picker,
+  splash
 }
