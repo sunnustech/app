@@ -67,6 +67,8 @@ const HomeScreen = () => {
           >
             Development
           </DevButton>
+          <View style={{height: 24}}/>
+        <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
         </View>
       </Modal>
     )
@@ -141,7 +143,6 @@ const HomeScreen = () => {
         >
           WSS
         </Button>
-        <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
       </View>
       <DeveloperModal />
     </SafeAreaView>
