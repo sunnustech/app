@@ -38,7 +38,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header setShowSettings={setShowSettings} />
+      <Header />
       <View style={styles.bodyContainer}>
       <View style={styles.seriesButtonContainer}>
         <SOARButton onPress={() => navigation.navigate('SOARNavigator')} />
@@ -51,7 +51,7 @@ const HomeScreen = () => {
         navigation={navigation}
         logoutHandler={logoutHandler}
       />
-      <Footer/>
+      <Footer setShowSettings={setShowSettings}/>
     </SafeAreaView>
   )
 }

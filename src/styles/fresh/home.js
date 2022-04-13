@@ -191,5 +191,6 @@ export default StyleSheet.create({
     marginLeft: 4,
     fontSize: 16,
     fontWeight: '600',
+    color: colors.homeFg,
   },
 })

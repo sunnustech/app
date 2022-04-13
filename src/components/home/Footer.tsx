@@ -1,10 +1,14 @@
-import { View, TouchableOpacity, TouchableWithoutFeedback, Text } from 'react-native'
+import { View, TouchableOpacity, Text } from 'react-native'
 import colors from '@/styles/colors'
 import { home as styles } from '@/styles/fresh'
 import { Ionicons } from '@expo/vector-icons'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
-const SettingsButton = () => {
+const SettingsButton = ({
+  setShowSettings,
+}: {
+  setShowSettings: Dispatch<SetStateAction<boolean>>
+}) => {
   const [focus, setFocus] = useState(false)
   const style = focus
     ? [styles.footerSettingsButton, styles.focusedButton]
@@ -15,17 +19,22 @@ const SettingsButton = () => {
       style={style}
       onPressIn={() => setFocus(true)}
       onPressOut={() => setFocus(false)}
+      onPress={() => setShowSettings(true)}
     >
-      <Ionicons name="settings-outline" size={20} color={colors.gray[800]} />
+      <Ionicons name="settings-outline" size={20} color={colors.homeFg} />
       <Text style={styles.footerSettingsText}>Settings</Text>
     </TouchableOpacity>
   )
 }
 
-const Footer = () => {
+const Footer = ({
+  setShowSettings,
+}: {
+  setShowSettings: Dispatch<SetStateAction<boolean>>
+}) => {
   return (
     <View style={styles.footerContainer}>
-      <SettingsButton />
+      <SettingsButton setShowSettings={setShowSettings} />
     </View>
   )
 }
