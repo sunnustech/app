@@ -5,7 +5,6 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleProp,
-  TouchableOpacityProperties,
   ViewStyle,
   TextStyle,
 } from 'react-native'

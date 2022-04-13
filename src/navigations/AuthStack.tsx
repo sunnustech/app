@@ -39,7 +39,11 @@ const Navigator = () => (
       options={{ headerShown: false }}
     />
     <MainStack.Screen name="TSSNavigator" component={TSSNavigator} />
-    <MainStack.Screen name="WSSScreen" component={WSSScreen} />
+    <MainStack.Screen
+      name="WSSScreen"
+      component={WSSScreen}
+      options={{ headerShown: false }}
+    />
     <MainStack.Screen name="GeneratorScreen" component={GeneratorScreen} />
     <MainStack.Screen name="DEVScreen" component={DEVScreen} />
   </MainStack.Navigator>
