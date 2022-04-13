@@ -1,16 +1,18 @@
 import TSSScreen from '@/screens/TSS'
 import TSSKnockoutTable from '@/screens/TSS/KnockoutTable'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { onSnapshot, doc } from 'firebase/firestore'
 import { Rounds } from '@/types/TSS'
 import { db } from '@/sunnus/firebase'
 import { LastContext } from '@/contexts/LastContext'
+import { AuthPage } from '../types/navigation'
 
 const TSSTabs = createBottomTabNavigator()
 
 const TSSNavigator = () => {
+  const navigation = useNavigation<AuthPage<'TSSNavigator'>>()
   // TSS page active state
   // (de-activates when navigating out)
   const [TSSNavActive, setTSSNavActive] = useState<boolean>(false)
@@ -45,7 +47,6 @@ const TSSNavigator = () => {
     }
   }, [TSSNavActive, sport])
 
-
   useFocusEffect(
     useCallback(() => {
       console.log('focused on TSS navigator')
@@ -57,16 +58,19 @@ const TSSNavigator = () => {
     }, [])
   )
 
+  const TSSScreenWrapper = () => <TSSScreen navigation={navigation} />
+  const TSSKnockoutTableWrapper = () => <TSSKnockoutTable navigation={navigation} />
+
   return (
     <TSSTabs.Navigator>
       <TSSTabs.Screen
         name="TSSScreen"
-        component={TSSScreen}
+        component={TSSScreenWrapper}
         options={{ headerShown: false }}
       />
       <TSSTabs.Screen
         name="KnockoutTable"
-        component={TSSKnockoutTable}
+        component={TSSKnockoutTableWrapper}
         options={{ headerShown: false }}
       />
     </TSSTabs.Navigator>

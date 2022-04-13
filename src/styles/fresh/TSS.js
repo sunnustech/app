@@ -2,6 +2,11 @@ import { StyleSheet } from 'react-native'
 import colors from '@/styles/colors'
 
 export default StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   /* containers */
   container: {
     flex: 1,

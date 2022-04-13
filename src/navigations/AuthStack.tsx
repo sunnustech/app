@@ -20,39 +20,55 @@ import TSSNavigator from '@/navigations/TSSNavigator'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { LastProvider } from '@/contexts/LastContext'
 
-const Drawer = createDrawerNavigator<AuthenticatedPages>()
-const Stack = createNativeStackNavigator()
+const MainStack = createNativeStackNavigator<AuthenticatedPages>()
+const SOARStack = createNativeStackNavigator()
 
 const Navigator = () => (
-  <Drawer.Navigator
+  <MainStack.Navigator
     initialRouteName="HomeScreen"
-    screenOptions={{ headerShown: false }}
+    // screenOptions={{ headerShown: false }}
   >
-    <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-    <Drawer.Screen name="SOARNavigator" component={SOARNavigator} />
-    <Drawer.Screen name="TSSNavigator" component={TSSNavigator} />
-    <Drawer.Screen name="WSSScreen" component={WSSScreen} />
-    <Drawer.Screen name="GeneratorScreen" component={GeneratorScreen} />
-    <Drawer.Screen name="DEVScreen" component={DEVScreen} />
-  </Drawer.Navigator>
+    <MainStack.Screen
+      name="HomeScreen"
+      component={HomeScreen}
+      options={{ headerShown: false }}
+    />
+    <MainStack.Screen
+      name="SOARNavigator"
+      component={SOARNavigator}
+      options={{ headerShown: false }}
+    />
+    <MainStack.Screen
+      name="TSSNavigator"
+      component={TSSNavigator}
+      options={{ headerShown: false }}
+    />
+    <MainStack.Screen
+      name="WSSScreen"
+      component={WSSScreen}
+      options={{ headerShown: false }}
+    />
+    <MainStack.Screen name="GeneratorScreen" component={GeneratorScreen} />
+    <MainStack.Screen name="DEVScreen" component={DEVScreen} />
+  </MainStack.Navigator>
 )
 
 const SOARNavigator = () => (
-  <Stack.Navigator
+  <SOARStack.Navigator
     initialRouteName="SOARScreen"
     screenOptions={{ headerShown: false }}
   >
-    <Stack.Screen
+    <SOARStack.Screen
       name="SOARScreen"
       component={SOARScreen}
       options={{ animation: 'none' }}
     />
-    <Stack.Screen
+    <SOARStack.Screen
       name="QRScreen"
       component={QRScreen}
       options={{ animation: 'none' }}
     />
-  </Stack.Navigator>
+  </SOARStack.Navigator>
 )
 
 const AuthStack = () => (

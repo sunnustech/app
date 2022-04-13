@@ -66,6 +66,12 @@ export default StyleSheet.create({
     borderRadius: 100,
     // backgroundColor: colors.blue[100],
   },
+  heartFlex: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   logoContainer: {
     paddingLeft: 24,
@@ -193,4 +199,16 @@ export default StyleSheet.create({
     fontWeight: '600',
     color: colors.homeFg,
   },
+
+  circle: {
+    height: 5,
+    width: 5,
+    borderRadius: 100,
+    borderColor: colors.transparent,
+    borderWidth: 1.4,
+    backgroundColor: colors.red[400]
+  },
+  transparent: {
+    backgroundColor: colors.transparent
+  }
 })
