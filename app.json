@@ -18,13 +18,12 @@
       "config": {
         "googleMapsApiKey": "AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk"
       },
-      "buildNumber": "2",
+      "buildNumber": "3",
       "supportsTablet": true,
       "bundleIdentifier": "com.nus.sunnus"
     },
     "android": {
       "config": {
-
         "googleMaps": {
           "apiKey": "AIzaSyAMokc0eF4l5_HGuMBGGgVOIKsw8BQCccU"
         }
