@@ -1,6 +1,6 @@
 import { View, TouchableOpacity } from 'react-native'
 import colors from '@/styles/colors'
-import { MaterialCommunityIcons as MCI } from '@expo/vector-icons'
+import { MaterialCommunityIcons as MCI, AntDesign } from '@expo/vector-icons'
 import Sunnus from '@/components/svgs/Sunnus'
 import { Overlap } from '@/components/Views'
 import { home as styles } from '@/styles/fresh'
@@ -17,7 +17,7 @@ const Heart = ({ alert }: { alert: boolean }) => {
   return (
     <TouchableOpacity style={styles.headerButton}>
       {alert ? <HiddenCircle /> : null}
-      <MCI name={'heart-outline'} size={24} color={colors.homeFg} />
+      <AntDesign name={'hearto'} size={20} color={colors.homeFg} />
       {alert ? <Circle /> : null}
     </TouchableOpacity>
   )
