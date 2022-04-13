@@ -17,12 +17,10 @@ import { useNavigation } from '@react-navigation/native'
 import { auth } from '@/sunnus/firebase'
 import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
-import { UserContext } from '@/contexts/UserContext'
-import { useContext } from 'react'
-import { SunnusSvg } from '@/components/svgs'
 import colors from '@/styles/colors'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, Feather } from '@expo/vector-icons'
 import Sunnus from '@/components/svgs/TransformSunnus'
+import { Overlap } from '../components/Views'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -46,17 +44,24 @@ const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
 const Header = () => {
   return (
     <View style={styles.headingContainer}>
-      <View style={styles.headingSides} />
-      <View style={styles.logoContainer}>
-        <View style={styles.logo}>
-          <Sunnus fill={colors.gray[800]} />
+      <Overlap>
+        <View style={styles.logoContainer}>
+          <View style={styles.logo}>
+            <Sunnus fill={colors.gray[800]} />
+          </View>
         </View>
-      </View>
-      <View style={styles.headingSides}>
-        <TouchableOpacity>
-          <Ionicons name="settings-outline" size={26} color="black" />
-        </TouchableOpacity>
-      </View>
+      </Overlap>
+      <Overlap>
+        <View style={styles.iconsContainer}>
+          <View style={{ flex: 1 }} />
+          <TouchableOpacity style={styles.headerButton}>
+            <Ionicons name="heart-outline" size={26} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.headerButton}>
+            <Ionicons name="settings-outline" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+      </Overlap>
     </View>
   )
 }

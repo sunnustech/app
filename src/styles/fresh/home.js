@@ -36,24 +36,27 @@ export default StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    position: 'relative',
+    // backgroundColor: colors.blue[100],
   },
-  headingSides: {
-    width: 60,
+  iconsContainer: {
     height: '100%',
+    flexDirection: 'row',
     // backgroundColor: colors.green[100],
     justifyContent: 'center',
     alignItems: 'center',
   },
+  headerButton: {
+    marginRight: 24,
+  },
 
   logoContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingLeft: 24,
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   logo: {
-    width: '50%%',
+    width: '40%%',
   },
   bodyContainer: {
     flex: 1,
