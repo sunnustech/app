@@ -2,6 +2,9 @@ import { StyleSheet } from 'react-native'
 import opts from './opts'
 import colors from '@/styles/colors'
 
+const borderWidth = 4
+const borderRadius = 18
+
 function makeAccent(color) {
   return {
     bg: colors[color][300],
@@ -23,21 +26,13 @@ export default StyleSheet.create({
   /* button base */
   seriesButton: {
     width: '100%',
-    borderWidth: opts.border,
-    padding: 18,
+    borderWidth,
     height: 108,
-    borderRadius: opts.radius,
-    marginVertical: 8,
+    borderBottomRightRadius: borderRadius,
+    borderTopLeftRadius: borderRadius,
+    marginVertical: 10,
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  devButton: {
-    width: '100%',
-    borderWidth: opts.border,
-    padding: 10,
-    borderRadius: opts.radius,
-    marginVertical: 8,
-    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   SOARbutton: {
@@ -80,5 +75,10 @@ export default StyleSheet.create({
   },
   GenerateQRbuttonText: {
     color: accents.GenerateQR.fg,
+  },
+
+  logoContainer: {
+    height: 28,
+    width: '100%',
   },
 })
