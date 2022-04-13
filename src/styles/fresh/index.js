@@ -11,6 +11,7 @@ import buttons from './buttons'
 import utils from './utils'
 import picker from './picker'
 import splash from './splash'
+import seriesButton from './seriesButton'
 
 export {
   login,
@@ -25,5 +26,6 @@ export {
   buttons,
   utils,
   picker,
-  splash
+  splash,
+  seriesButton
 }

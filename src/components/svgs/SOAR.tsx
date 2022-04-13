@@ -1,7 +1,6 @@
-import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 
-function SvgComponent(props) {
+export default function SOAR(props) {
   return (
     <Svg
       viewBox="0 0 617 120"
@@ -35,5 +34,3 @@ function SvgComponent(props) {
     </Svg>
   )
 }
-
-export default SvgComponent

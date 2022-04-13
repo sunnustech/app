@@ -1,7 +1,6 @@
-import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 
-function SvgComponent(props) {
+export default function TSS(props) {
   return (
     <Svg
       viewBox="0 0 421 120"
@@ -30,5 +29,3 @@ function SvgComponent(props) {
     </Svg>
   )
 }
-
-export default SvgComponent

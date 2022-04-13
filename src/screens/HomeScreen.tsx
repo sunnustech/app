@@ -15,16 +15,9 @@ import { ButtonRed } from '@/components/Buttons'
 import colors from '@/styles/colors'
 import { Ionicons } from '@expo/vector-icons'
 import Sunnus from '@/components/svgs/Sunnus'
-import { Overlap } from '../components/Views'
+import { Overlap } from '@/components/Views'
 import { useState } from 'react'
-
-const SeriesButton = ({ onPress, children, containerStyle, textStyle }: any) => {
-  return (
-    <TouchableOpacity onPress={onPress} style={[styles.seriesButton, containerStyle]}>
-      <Text style={[styles.buttonText, textStyle]}>{children}</Text>
-    </TouchableOpacity>
-  )
-}
+import SeriesButton, { SOARButton, TSSButton, WSSButton } from '@/components/SeriesButton'
 
 const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -122,27 +115,9 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <Header />
       <View style={styles.bodyContainer}>
-        <SeriesButton
-          onPress={() => navigation.navigate('SOARNavigator')}
-          textStyle={styles.SOARbuttonText}
-          containerStyle={styles.SOARbutton}
-        >
-          SOAR
-        </SeriesButton>
-        <SeriesButton
-          onPress={() => navigation.navigate('TSSNavigator')}
-          textStyle={styles.TSSbuttonText}
-          containerStyle={styles.TSSbutton}
-        >
-          TSS
-        </SeriesButton>
-        <SeriesButton
-          onPress={() => navigation.navigate('WSSScreen')}
-          textStyle={styles.WSSbuttonText}
-          containerStyle={styles.WSSbutton}
-        >
-          WSS
-        </SeriesButton>
+        <SOARButton onPress={() => navigation.navigate('SOARNavigator')}/>
+        <TSSButton onPress={() => navigation.navigate('TSSNavigator')}/>
+        <WSSButton onPress={() => navigation.navigate('WSSScreen')}/>
       </View>
       <DeveloperModal />
     </SafeAreaView>

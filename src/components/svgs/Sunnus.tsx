@@ -1,7 +1,6 @@
-import * as React from 'react'
 import Svg, { Path } from 'react-native-svg'
 
-function Sunnus(props) {
+export default function Sunnus(props) {
   return (
     <Svg
       viewBox="0 0 891 120"
@@ -45,5 +44,3 @@ function Sunnus(props) {
     </Svg>
   )
 }
-
-export default Sunnus
