@@ -17,12 +17,23 @@ import { UnauthenticatedPages } from '@/types/navigation'
 import SplashScreen from '../screens/SplashScreen'
 
 const Stack = createNativeStackNavigator<UnauthenticatedPages>()
+const debugSplash = false
 
 /*
  * uses a react state to keep track of whether the user is logged in or not.
  * this prevent the accidental navigation to a screen that a particular user
  * team is not supposed to see.
  */
+
+function sleep(time: number) {
+  return new Promise((resolve) => setTimeout(resolve, time))
+}
+
+const minOpts = {
+  headerBackVisible: false,
+  headerShown: false,
+}
+
 const SunNUS = () => {
   /* initialize user's state */
   const [userState, setUserState] = useState<UserState>({
@@ -38,20 +49,19 @@ const SunNUS = () => {
        * so it suffices to check the truthiness of user to determine a
        * successful login.
        */
-      if (user) {
-        setUserState({ isLoggedIn: true, isRegistered: true })
-      } else {
-        setUserState({ isLoggedIn: false, isRegistered: false })
-      }
-      setCheckedAuth(true)
+      sleep(800).then(() => {
+        // remove this if ever we need a speed boost
+        if (user) {
+          setUserState({ isLoggedIn: true, isRegistered: true })
+        } else {
+          setUserState({ isLoggedIn: false, isRegistered: false })
+        }
+        setCheckedAuth(true)
+      })
     })
   }, [])
 
   const handleLoginState = (userState: UserState) => {
-    const minOpts = {
-      headerBackVisible: false,
-      headerShown: false,
-    }
     if (userState.isLoggedIn) {
       if (userState.isRegistered) {
         /* user has logged in with firebase */
@@ -76,14 +86,13 @@ const SunNUS = () => {
       }
     } else {
       /* user has yet to log in at all */
-      // return checkedAuth ? (
-      //   <Stack.Screen
-      //     name="Unauthenticated"
-      //     component={LoginScreen}
-      //     options={minOpts}
-      //   />
-      // ) : (
-      return (
+      return checkedAuth ? (
+        <Stack.Screen
+          name="Unauthenticated"
+          component={LoginScreen}
+          options={minOpts}
+        />
+      ) : (
         <Stack.Screen
           name="Splash"
           component={SplashScreen}
@@ -93,7 +102,11 @@ const SunNUS = () => {
     }
   }
 
-  return (
+  return debugSplash ? (
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen name="Splash" component={SplashScreen} options={minOpts} />
+    </Stack.Navigator>
+  ) : (
     <Stack.Navigator initialRouteName="Splash">
       {handleLoginState(userState)}
     </Stack.Navigator>
