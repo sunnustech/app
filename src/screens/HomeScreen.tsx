@@ -1,16 +1,11 @@
-import {
-  KeyboardAvoidingView,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native'
+import { Text, View, TouchableOpacity, SafeAreaView } from 'react-native'
+import { Modal } from 'react-native-paper'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
 
 /* navigation */
-import { AuthPage } from '@/types/navigation'
+import { AuthenticatedPages, AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
@@ -18,9 +13,10 @@ import { auth } from '@/sunnus/firebase'
 import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
 import colors from '@/styles/colors'
-import { Ionicons, Feather } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import Sunnus from '@/components/svgs/TransformSunnus'
 import { Overlap } from '../components/Views'
+import { useState } from 'react'
 
 const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -41,33 +37,68 @@ const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
   )
 }
 
-const Header = () => {
-  return (
-    <View style={styles.headingContainer}>
-      <Overlap>
-        <View style={styles.logoContainer}>
-          <View style={styles.logo}>
-            <Sunnus fill={colors.gray[800]} />
-          </View>
-        </View>
-      </Overlap>
-      <Overlap>
-        <View style={styles.iconsContainer}>
-          <View style={{ flex: 1 }} />
-          <TouchableOpacity style={styles.headerButton}>
-            <Ionicons name="heart-outline" size={26} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.headerButton}>
-            <Ionicons name="settings-outline" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-      </Overlap>
-    </View>
-  )
-}
-
 const HomeScreen = () => {
   const navigation = useNavigation<AuthPage<'HomeScreen'>>()
+  const [showDevModal, setShowDevModal] = useState(false)
+
+  const DeveloperModal = () => {
+    function go(target: keyof AuthenticatedPages) {
+      navigation.navigate(target)
+      setShowDevModal(false)
+    }
+    return (
+      <Modal
+        visible={showDevModal}
+        dismissable={true}
+        onDismiss={() => setShowDevModal(false)}
+      >
+        <View style={styles.modalContainer}>
+          <DevButton
+            onPress={() => go('GeneratorScreen')}
+            textStyle={styles.GenerateQRbuttonText}
+            containerStyle={styles.GenerateQRbutton}
+          >
+            Generate QR
+          </DevButton>
+          <DevButton
+            onPress={() => go('DEVScreen')}
+            textStyle={styles.DEVbuttonText}
+            containerStyle={styles.DEVbutton}
+          >
+            Development
+          </DevButton>
+        </View>
+      </Modal>
+    )
+  }
+
+  const Header = () => {
+    return (
+      <View style={styles.headingContainer}>
+        <Overlap>
+          <View style={styles.logoContainer}>
+            <View style={styles.logo}>
+              <Sunnus fill={colors.gray[800]} />
+            </View>
+          </View>
+        </Overlap>
+        <Overlap>
+          <View style={styles.iconsContainer}>
+            <View style={{ flex: 1 }} />
+            <TouchableOpacity style={styles.headerButton}>
+              <Ionicons name="heart-outline" size={26} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.headerButton}
+              onPress={() => setShowDevModal(true)}
+            >
+              <Ionicons name="settings-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </Overlap>
+      </View>
+    )
+  }
 
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
@@ -86,7 +117,7 @@ const HomeScreen = () => {
    */
 
   return (
-    <SafeAreaView style={styles.container} behavior="padding">
+    <SafeAreaView style={styles.container}>
       <Header />
       <View style={styles.bodyContainer}>
         <Button
@@ -110,22 +141,9 @@ const HomeScreen = () => {
         >
           WSS
         </Button>
-        <DevButton
-          onPress={() => navigation.navigate('GeneratorScreen')}
-          textStyle={styles.GenerateQRbuttonText}
-          containerStyle={styles.GenerateQRbutton}
-        >
-          Generate QR
-        </DevButton>
-        <DevButton
-          onPress={() => navigation.navigate('DEVScreen')}
-          textStyle={styles.DEVbuttonText}
-          containerStyle={styles.DEVbutton}
-        >
-          Development
-        </DevButton>
         <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
       </View>
+      <DeveloperModal />
     </SafeAreaView>
   )
 }

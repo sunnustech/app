@@ -3,6 +3,7 @@ import opts from './opts'
 import colors from '@/styles/colors'
 
 const allWidths = '70%'
+const buttonSize = 50
 
 function makeAccent(color) {
   return {
@@ -45,9 +46,15 @@ export default StyleSheet.create({
     // backgroundColor: colors.green[100],
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: buttonSize * 0.2,
   },
   headerButton: {
-    marginRight: 24,
+    height: buttonSize,
+    width: buttonSize,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    // backgroundColor: colors.blue[100],
   },
 
   logoContainer: {
@@ -124,5 +131,30 @@ export default StyleSheet.create({
   },
   GenerateQRbuttonText: {
     color: accents.GenerateQR.fg,
+  },
+
+  /* modal stuff */
+  modalContainer: {
+    width: '70%',
+    backgroundColor: 'white',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 18,
+    borderRadius: 10,
+  },
+  modalTitle: {
+    fontSize: 28,
+    textAlign: 'center',
+    color: colors.gray[700],
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 10,
+  },
+  centered: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    textAlign: 'center',
   },
 })
