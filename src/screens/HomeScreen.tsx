@@ -14,7 +14,7 @@ import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
 import colors from '@/styles/colors'
 import { Ionicons } from '@expo/vector-icons'
-import Sunnus from '@/components/svgs/TransformSunnus'
+import Sunnus from '@/components/svgs/Sunnus'
 import { Overlap } from '../components/Views'
 import { useState } from 'react'
 
