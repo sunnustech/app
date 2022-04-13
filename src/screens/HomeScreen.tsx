@@ -12,12 +12,9 @@ import { useNavigation } from '@react-navigation/native'
 import { auth } from '@/sunnus/firebase'
 import { home as styles } from '@/styles/fresh'
 import { ButtonRed } from '@/components/Buttons'
-import colors from '@/styles/colors'
-import { Ionicons } from '@expo/vector-icons'
-import Sunnus from '@/components/svgs/Sunnus'
-import { Overlap } from '@/components/Views'
 import { useState } from 'react'
-import SeriesButton, { SOARButton, TSSButton, WSSButton } from '@/components/SeriesButton'
+import { SOARButton, TSSButton, WSSButton } from '@/components/SeriesButton'
+import Header from '@/components/home/Header'
 
 const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -32,18 +29,18 @@ const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
 
 const HomeScreen = () => {
   const navigation = useNavigation<AuthPage<'HomeScreen'>>()
-  const [showDevModal, setShowDevModal] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
 
   const DeveloperModal = () => {
     function go(target: keyof AuthenticatedPages) {
       navigation.navigate(target)
-      setShowDevModal(false)
+      setShowSettings(false)
     }
     return (
       <Modal
-        visible={showDevModal}
+        visible={showSettings}
         dismissable={true}
-        onDismiss={() => setShowDevModal(false)}
+        onDismiss={() => setShowSettings(false)}
       >
         <View style={styles.modalContainer}>
           <DevButton
@@ -67,34 +64,6 @@ const HomeScreen = () => {
     )
   }
 
-  const Header = () => {
-    return (
-      <View style={styles.headingContainer}>
-        <Overlap>
-          <View style={styles.logoContainer}>
-            <View style={styles.logo}>
-              <Sunnus fill={colors.gray[800]} />
-            </View>
-          </View>
-        </Overlap>
-        <Overlap>
-          <View style={styles.iconsContainer}>
-            <View style={{ flex: 1 }} />
-            <TouchableOpacity style={styles.headerButton}>
-              <Ionicons name="heart-outline" size={26} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.headerButton}
-              onPress={() => setShowDevModal(true)}
-            >
-              <Ionicons name="settings-outline" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-        </Overlap>
-      </View>
-    )
-  }
-
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
       .then(() => {
@@ -113,7 +82,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
+      <Header setShowSettings={setShowSettings} />
       <View style={styles.bodyContainer}>
         <SOARButton onPress={() => navigation.navigate('SOARNavigator')}/>
         <TSSButton onPress={() => navigation.navigate('TSSNavigator')}/>
