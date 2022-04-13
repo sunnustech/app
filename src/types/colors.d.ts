@@ -36,6 +36,7 @@ export type AddedColors = {
   shadow: string
   bg: string
   fg: string
+  homeFg: string
 }
 
 export type AllColors = BaseColors & AddedColors

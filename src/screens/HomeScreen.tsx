@@ -1,9 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native'
+import { View, SafeAreaView } from 'react-native'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
@@ -13,24 +8,17 @@ import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
-import { auth } from '@/sunnus/firebase'
 import { home as styles } from '@/styles/fresh'
-import { ButtonRed } from '@/components/Buttons'
-import { UserContext } from '@/contexts/UserContext'
-import { useContext } from 'react'
-import { SunnusSvg } from '@/components/svgs'
-import colors from '@/styles/colors'
-
-const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
-  return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, containerStyle]}>
-      <Text style={[styles.buttonText, textStyle]}>{children}</Text>
-    </TouchableOpacity>
-  )
-}
+import { useState } from 'react'
+import { SOARButton, TSSButton, WSSButton } from '@/components/SeriesButton'
+import Header from '@/components/home/Header'
+import Settings from '@/components/home/Settings'
+import Footer from '@/components/home/Footer'
 
 const HomeScreen = () => {
   const navigation = useNavigation<AuthPage<'HomeScreen'>>()
+  const showSettingsState = useState(false)
+  const setShowSettings = showSettingsState[1]
 
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
@@ -48,51 +36,23 @@ const HomeScreen = () => {
    * >>> <firebase username>
    */
 
-  const { userId, teamName } = useContext(UserContext)
-
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <SunnusSvg fill={colors.gray[800]}/>
-      <Text>{`Welcome, ${userId}, of team ${teamName}`}</Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          onPress={() => navigation.navigate('SOARNavigator')}
-          textStyle={styles.SOARbuttonText}
-          containerStyle={styles.SOARbutton}
-        >
-          SOAR
-        </Button>
-        <Button
-          onPress={() => navigation.navigate('TSSNavigator')}
-          textStyle={styles.TSSbuttonText}
-          containerStyle={styles.TSSbutton}
-        >
-          TSS
-        </Button>
-        <Button
-          onPress={() => navigation.navigate('WSSScreen')}
-          textStyle={styles.WSSbuttonText}
-          containerStyle={styles.WSSbutton}
-        >
-          WSS
-        </Button>
-        <Button
-          onPress={() => navigation.navigate('GeneratorScreen')}
-          textStyle={styles.GenerateQRbuttonText}
-          containerStyle={styles.GenerateQRbutton}
-        >
-          Generate QR
-        </Button>
-        <Button
-          onPress={() => navigation.navigate('DEVScreen')}
-          textStyle={styles.DEVbuttonText}
-          containerStyle={styles.DEVbutton}
-        >
-          Development
-        </Button>
-        <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <View style={styles.bodyContainer}>
+      <View style={styles.seriesButtonContainer}>
+        <SOARButton onPress={() => navigation.navigate('SOARNavigator')} />
+        <TSSButton onPress={() => navigation.navigate('TSSNavigator')} />
+        <WSSButton onPress={() => navigation.navigate('WSSScreen')} />
       </View>
-    </KeyboardAvoidingView>
+      </View>
+      <Settings
+        showSettingsState={showSettingsState}
+        navigation={navigation}
+        logoutHandler={logoutHandler}
+      />
+      <Footer setShowSettings={setShowSettings}/>
+    </SafeAreaView>
   )
 }
 

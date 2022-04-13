@@ -16,6 +16,7 @@ export type AuthenticatedPages = {
 export type UnauthenticatedPages = {
   Unauthenticated: undefined
   Authenticated: undefined
+  Splash: undefined
 }
 
 export type TSSPages = {

@@ -273,6 +273,8 @@ const colors: BaseColors = {
 const added: AddedColors = {
   shadow: colors.gray[700],
   bg: colors.white,
+  fg: colors.gray[600],
+  homeFg: colors.gray[800],
 }
 
 const all: AllColors = {...colors, ...added}
