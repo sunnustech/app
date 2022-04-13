@@ -201,8 +201,9 @@ export default StyleSheet.create({
   },
 
   circle: {
-    height: 5,
-    width: 5,
+    marginVertical: 2,
+    height: 4,
+    width: 4,
     borderRadius: 100,
     borderColor: colors.transparent,
     borderWidth: 1.4,

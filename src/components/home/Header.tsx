@@ -1,9 +1,11 @@
 import { View, TouchableOpacity } from 'react-native'
 import colors from '@/styles/colors'
-import { MaterialCommunityIcons as MCI } from '@expo/vector-icons'
+import { MaterialCommunityIcons as MCI, AntDesign } from '@expo/vector-icons'
 import Sunnus from '@/components/svgs/Sunnus'
 import { Overlap } from '@/components/Views'
 import { home as styles } from '@/styles/fresh'
+import { AuthPageNavigator } from '@/types/navigation'
+import { OnPress } from '@/types/index'
 
 const Circle = () => {
   return <View style={styles.circle} />
@@ -13,17 +15,17 @@ const HiddenCircle = () => {
   return <View style={[styles.circle, styles.transparent]} />
 }
 
-const Heart = ({ alert }: { alert: boolean }) => {
+const Heart = ({ alert, onPress }: { alert: boolean; onPress: OnPress }) => {
   return (
-    <TouchableOpacity style={styles.headerButton}>
+    <TouchableOpacity style={styles.headerButton} onPress={onPress}>
       {alert ? <HiddenCircle /> : null}
-      <MCI name={'heart-outline'} size={24} color={colors.homeFg} />
+      <AntDesign name={'hearto'} size={20} color={colors.homeFg} />
       {alert ? <Circle /> : null}
     </TouchableOpacity>
   )
 }
 
-const Header = () => {
+const Header = ({ navigation }: { navigation: AuthPageNavigator }) => {
   return (
     <View style={styles.headerContainer}>
       <Overlap>
@@ -36,7 +38,10 @@ const Header = () => {
       <Overlap>
         <View style={styles.iconsContainer}>
           <View style={{ flex: 1 }} />
-          <Heart alert={true} />
+          <Heart
+            alert={true}
+            onPress={() => navigation.navigate('NotificationScreen')}
+          />
         </View>
       </Overlap>
     </View>

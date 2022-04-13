@@ -3,6 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 export type AuthenticatedPages = {
   HomeScreen: undefined
+  NotificationScreen: undefined
   SOARNavigator: undefined
   TSSNavigator: undefined
   WSSScreen: undefined
