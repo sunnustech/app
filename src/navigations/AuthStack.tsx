@@ -38,7 +38,11 @@ const Navigator = () => (
       component={SOARNavigator}
       options={{ headerShown: false }}
     />
-    <MainStack.Screen name="TSSNavigator" component={TSSNavigator} />
+    <MainStack.Screen
+      name="TSSNavigator"
+      component={TSSNavigator}
+      options={{ headerShown: false }}
+    />
     <MainStack.Screen
       name="WSSScreen"
       component={WSSScreen}

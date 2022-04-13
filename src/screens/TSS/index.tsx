@@ -7,6 +7,7 @@ import {
   StyleProp,
   ViewStyle,
   TextStyle,
+  SafeAreaView,
 } from 'react-native'
 import { httpsCallable } from 'firebase/functions'
 
@@ -35,6 +36,8 @@ import CustomPicker from '@/components/TSS/CustomPicker'
 import { LastContext } from '@/contexts/LastContext'
 import { OnPress } from '@/types/index'
 import colors from '@/styles/colors'
+import { AuthPage } from '../../types/navigation'
+import BackButton from '../../components/BackButton'
 
 const FinalButton = ({
   onPress,
@@ -59,7 +62,11 @@ const FinalButton = ({
   )
 }
 
-const TSSScreen = () => {
+const TSSScreen = ({
+  navigation,
+}: {
+  navigation: AuthPage<'TSSNavigator'>
+}) => {
   // const navigation = useNavigation<TSSPage<'TSSScreen'>>()
   const fields: Field[] = ['sport', 'round', 'matchNumber']
   const { roundData, sport, setSport } = useContext(LastContext)
@@ -165,90 +172,91 @@ const TSSScreen = () => {
   const [gonnaSend, setGonnaSend] = useState(false)
 
   return (
-    <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
-      <Text style={styles.titleText}>TSS Match Update Tool</Text>
-
-      <View style={styles.numberInputContainer}>
-        <View style={styles.numberInputTeamContainer}>
-          <View style={styles.numberInputTeamNameContainer}>
-            <Text numberOfLines={2} style={styles.numberInputTeamName}>
-              {teamNameA}
-            </Text>
+    <SafeAreaView style={styles.outerContainer}>
+      <BackButton navigation={navigation} text="TSS Match Update Tool" />
+      <View style={styles.container}>
+        <View style={styles.numberInputContainer}>
+          <View style={styles.numberInputTeamContainer}>
+            <View style={styles.numberInputTeamNameContainer}>
+              <Text numberOfLines={2} style={styles.numberInputTeamName}>
+                {teamNameA}
+              </Text>
+            </View>
+            <TextInput
+              ref={scoreRefA}
+              onChangeText={(text) => setScoreA(parseInt(text))}
+              placeholder="_"
+              placeholderTextColor={colors.gray[300]}
+              style={styles.numberInput}
+              keyboardType="number-pad"
+              returnKeyType="done"
+            />
           </View>
-          <TextInput
-            ref={scoreRefA}
-            onChangeText={(text) => setScoreA(parseInt(text))}
-            placeholder="_"
-            placeholderTextColor={colors.gray[300]}
-            style={styles.numberInput}
-            keyboardType="number-pad"
-            returnKeyType="done"
-          />
-        </View>
-        <View style={styles.numberInputSpacer} />
-        <View style={styles.numberInputTeamContainer}>
-          <View style={styles.numberInputTeamNameContainer}>
-            <Text numberOfLines={2} style={styles.numberInputTeamName}>
-              {teamNameB}
-            </Text>
+          <View style={styles.numberInputSpacer} />
+          <View style={styles.numberInputTeamContainer}>
+            <View style={styles.numberInputTeamNameContainer}>
+              <Text numberOfLines={2} style={styles.numberInputTeamName}>
+                {teamNameB}
+              </Text>
+            </View>
+            <TextInput
+              ref={scoreRefB}
+              onChangeText={(text) => setScoreB(parseInt(text))}
+              placeholder="_"
+              placeholderTextColor={colors.gray[300]}
+              style={styles.numberInput}
+              keyboardType="number-pad"
+              returnKeyType="done"
+            />
           </View>
-          <TextInput
-            ref={scoreRefB}
-            onChangeText={(text) => setScoreB(parseInt(text))}
-            placeholder="_"
-            placeholderTextColor={colors.gray[300]}
-            style={styles.numberInput}
-            keyboardType="number-pad"
-            returnKeyType="done"
-          />
         </View>
-      </View>
-      {fields.map((field, idx) => {
-        return (
-          <PickerProvider
-            _ref={refs[field]}
-            setState={states[field][1]}
-            display={display[field]}
-            items={items[field][0]}
+        {fields.map((field, idx) => {
+          return (
+            <PickerProvider
+              _ref={refs[field]}
+              setState={states[field][1]}
+              display={display[field]}
+              items={items[field][0]}
+              key={idx}
+            />
+          )
+        })}
+        {fields.map((field, idx) => (
+          <CustomPicker
+            pickerRef={refs[field]}
+            display={display[field][0]}
             key={idx}
           />
-        )
-      })}
-      {fields.map((field, idx) => (
-        <CustomPicker
-          pickerRef={refs[field]}
-          display={display[field][0]}
-          key={idx}
-        />
-      ))}
+        ))}
 
-      <View style={styles.bottomAreaButtonContainer}>
-        {gonnaSend ? (
-          <>
-          <FinalButton
-            onPress={() => setGonnaSend(false)}
-            containerStyle={styles.backButton}
-            textStyle={styles.backText}
-            text="Back"
-          />
-            <View style={{width: 10}}/>
-          <FinalButton
-            onPress={handleConfirm}
-            containerStyle={styles.confirmButton}
-            textStyle={styles.confirmText}
-            text="Confirm"
-          />
+        <View style={styles.bottomAreaButtonContainer}>
+          {gonnaSend ? (
+            <>
+              <FinalButton
+                onPress={() => setGonnaSend(false)}
+                containerStyle={styles.backButton}
+                textStyle={styles.backText}
+                text="Back"
+              />
+              <View style={{ width: 10 }} />
+              <FinalButton
+                onPress={handleConfirm}
+                containerStyle={styles.confirmButton}
+                textStyle={styles.confirmText}
+                text="Confirm"
+              />
             </>
-        ) : (
-          <FinalButton
-            onPress={() => setGonnaSend(true)}
-            containerStyle={styles.pushButton}
-            textStyle={styles.pushText}
-            text="Push"
-          />
-        )}
+          ) : (
+            <FinalButton
+              onPress={() => setGonnaSend(true)}
+              containerStyle={styles.pushButton}
+              textStyle={styles.pushText}
+              text="Push"
+            />
+          )}
+        </View>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   )
 }
 

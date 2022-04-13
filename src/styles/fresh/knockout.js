@@ -5,6 +5,9 @@ const pageIndicatorSize = 5
 const pageIndicatorSpacing = 2
 
 export default StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     paddingTop: 10,
