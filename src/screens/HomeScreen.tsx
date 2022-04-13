@@ -1,68 +1,24 @@
-import { Text, View, TouchableOpacity, SafeAreaView } from 'react-native'
-import { Modal } from 'react-native-paper'
+import { View, SafeAreaView } from 'react-native'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
 
 /* navigation */
-import { AuthenticatedPages, AuthPage } from '@/types/navigation'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
-import { auth } from '@/sunnus/firebase'
 import { home as styles } from '@/styles/fresh'
-import { ButtonRed } from '@/components/Buttons'
 import { useState } from 'react'
 import { SOARButton, TSSButton, WSSButton } from '@/components/SeriesButton'
 import Header from '@/components/home/Header'
-
-const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.devButton, containerStyle]}
-    >
-      <Text style={[styles.buttonText, textStyle]}>{children}</Text>
-    </TouchableOpacity>
-  )
-}
+import Settings from '@/components/home/Settings'
+import Footer from '@/components/home/Footer'
 
 const HomeScreen = () => {
   const navigation = useNavigation<AuthPage<'HomeScreen'>>()
-  const [showSettings, setShowSettings] = useState(false)
-
-  const DeveloperModal = () => {
-    function go(target: keyof AuthenticatedPages) {
-      navigation.navigate(target)
-      setShowSettings(false)
-    }
-    return (
-      <Modal
-        visible={showSettings}
-        dismissable={true}
-        onDismiss={() => setShowSettings(false)}
-      >
-        <View style={styles.modalContainer}>
-          <DevButton
-            onPress={() => go('GeneratorScreen')}
-            textStyle={styles.GenerateQRbuttonText}
-            containerStyle={styles.GenerateQRbutton}
-          >
-            Generate QR
-          </DevButton>
-          <DevButton
-            onPress={() => go('DEVScreen')}
-            textStyle={styles.DEVbuttonText}
-            containerStyle={styles.DEVbutton}
-          >
-            Development
-          </DevButton>
-          <View style={{height: 24}}/>
-        <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
-        </View>
-      </Modal>
-    )
-  }
+  const showSettingsState = useState(false)
+  const setShowSettings = showSettingsState[1]
 
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
@@ -84,11 +40,18 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <Header setShowSettings={setShowSettings} />
       <View style={styles.bodyContainer}>
-        <SOARButton onPress={() => navigation.navigate('SOARNavigator')}/>
-        <TSSButton onPress={() => navigation.navigate('TSSNavigator')}/>
-        <WSSButton onPress={() => navigation.navigate('WSSScreen')}/>
+      <View style={styles.seriesButtonContainer}>
+        <SOARButton onPress={() => navigation.navigate('SOARNavigator')} />
+        <TSSButton onPress={() => navigation.navigate('TSSNavigator')} />
+        <WSSButton onPress={() => navigation.navigate('WSSScreen')} />
       </View>
-      <DeveloperModal />
+      </View>
+      <Settings
+        showSettingsState={showSettingsState}
+        navigation={navigation}
+        logoutHandler={logoutHandler}
+      />
+      <Footer/>
     </SafeAreaView>
   )
 }

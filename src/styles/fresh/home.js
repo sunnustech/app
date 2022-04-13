@@ -4,6 +4,8 @@ import colors from '@/styles/colors'
 
 const allWidths = '70%'
 const buttonSize = 50
+const endsHeight = 80
+const headerHeight = 50
 
 function makeAccent(color) {
   return {
@@ -33,11 +35,19 @@ export default StyleSheet.create({
     backgroundColor: colors.bg,
   },
 
-  headingContainer: {
-    height: 50,
+  headerContainer: {
+    height: headerHeight,
     flexDirection: 'row',
     width: '100%',
     position: 'relative',
+    marginBottom: endsHeight - headerHeight,
+    // backgroundColor: colors.blue[100],
+  },
+  footerContainer: {
+    height: endsHeight,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     // backgroundColor: colors.blue[100],
   },
   iconsContainer: {
@@ -67,10 +77,16 @@ export default StyleSheet.create({
   },
   bodyContainer: {
     flex: 1,
-    width: allWidths,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: colors.green[100],
+  },
+  seriesButtonContainer: {
+    width: allWidths,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: colors.orange[100],
   },
 
   /* button base */
@@ -82,7 +98,7 @@ export default StyleSheet.create({
     borderRadius: opts.radius,
     marginVertical: 8,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   devButton: {
     width: '100%',
@@ -158,5 +174,22 @@ export default StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     textAlign: 'center',
+  },
+
+  footerSettingsButton: {
+    borderRadius: 100,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  focusedButton: {
+    backgroundColor: colors.gray[200],
+  },
+  footerSettingsText: {
+    marginLeft: 4,
+    fontSize: 16,
+    fontWeight: '600',
   },
 })

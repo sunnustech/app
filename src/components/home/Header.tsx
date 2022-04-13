@@ -12,7 +12,7 @@ const Header = ({
   setShowSettings: Dispatch<SetStateAction<boolean>>
 }) => {
   return (
-    <View style={styles.headingContainer}>
+    <View style={styles.headerContainer}>
       <Overlap>
         <View style={styles.logoContainer}>
           <View style={styles.logo}>

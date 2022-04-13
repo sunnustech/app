@@ -27,5 +27,5 @@ export {
   utils,
   picker,
   splash,
-  seriesButton
+  seriesButton,
 }
