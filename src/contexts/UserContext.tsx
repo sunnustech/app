@@ -48,24 +48,29 @@ const rehydrateUserData = async ({
   setSchedule,
   setTeamData,
 }: any) => {
-  const emailDictionary = await pullDoc({
-    collection: 'participants',
-    doc: 'allEmails',
-  })
-  if (auth.currentUser && auth.currentUser.email) {
+  if (auth.currentUser) {
     /*
      * theoretically, this if-block will always be reached because
      * rehydrateUserData will only be called if auth is not null
      */
-    const user = emailDictionary.data[auth.currentUser?.email]
-    setUserId(user.loginId)
-    setTeamName(user.teamName)
-    const res2: any = await pullDoc({
-      collection: 'participants',
-      doc: user.teamName,
-    })
-    const teamData = res2.data
+    const userData = (
+      await pullDoc({
+        collection: 'users',
+        doc: auth.currentUser.uid,
+      })
+    ).data
+    setUserId(userData.loginId)
+    setTeamName(userData.teamName)
+
+    const teamData: any = (
+      await pullDoc({
+        collection: 'teams',
+        doc: userData.teamName,
+      })
+    ).data
+
     setTeamData(teamData)
+
     if (teamData.registeredEvents.TSS) {
       setSchedule(teamData.schedule)
     }
