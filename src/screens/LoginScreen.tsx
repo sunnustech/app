@@ -45,9 +45,9 @@ const LoginScreen = () => {
   const [loginError, setLoginError] = useState(false)
 
   const loginHandler = async () => {
-    const email = await queryEmailFromFirebase()
+    const email = `${loginId}@sunnus.com`
     if (email) {
-      signInWithEmailAndPassword(auth, await email, PASSWORD)
+      signInWithEmailAndPassword(auth, email, PASSWORD)
         .then((credential) => {
           console.log('successful login as:', credential.user.email) // perma
         })
@@ -56,47 +56,10 @@ const LoginScreen = () => {
           console.log(err) // perma
         })
     }
-  }
-
-  const debugLoginHandler = async () => {
-    const email = 'e0725213@u.nus.edu'
-    if (email) {
-      signInWithEmailAndPassword(auth, await email, PASSWORD)
-        .then((credential) => {
-          console.log('successful login as:', credential.user.email) // perma
-        })
-        .catch((err) => {
-          setLoginError(true)
-          console.log(err) // perma
-        })
-    }
-  }
-
-  const queryEmailFromFirebase = async () => {
-    setLoginError(false)
-    setLoading(true)
-    /*
-     * pulls a dictionary that maps loginId to teamName
-     */
-    const loginIdDictionary = (
-      await pullDoc({
-        collection: 'participants',
-        doc: 'allLoginIds',
-      })
-    ).data
-    const registeredUsers = Object.keys(loginIdDictionary)
-    if (!registeredUsers.includes(loginId)) {
-      setLoginError(true)
-      setLoading(false)
-      return ''
-    }
-    // continue only if user is registered
-    setLoginError(false)
-    setLoading(false)
-    return loginIdDictionary[loginId].email
   }
 
   const forgotHandler = () => {
+    console.log('call forgot password handler')
     // https://firebase.google.com/products/extensions/firebase-firestore-send-email
   }
 
@@ -133,13 +96,6 @@ const LoginScreen = () => {
           onPress={forgotHandler}
         >
           <Text style={styles.buttonText}>Forgot ID?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={loading ? styles.disabledButton : styles.button}
-          disabled={loading}
-          onPress={debugLoginHandler}
-        >
-          <Text style={styles.buttonText}>Dev Login</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
