@@ -18,9 +18,9 @@ import Sunnus from '@/components/svgs/TransformSunnus'
 import { Overlap } from '../components/Views'
 import { useState } from 'react'
 
-const Button = ({ onPress, children, containerStyle, textStyle }: any) => {
+const SeriesButton = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, containerStyle]}>
+    <TouchableOpacity onPress={onPress} style={[styles.seriesButton, containerStyle]}>
       <Text style={[styles.buttonText, textStyle]}>{children}</Text>
     </TouchableOpacity>
   )
@@ -122,27 +122,27 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <Header />
       <View style={styles.bodyContainer}>
-        <Button
+        <SeriesButton
           onPress={() => navigation.navigate('SOARNavigator')}
           textStyle={styles.SOARbuttonText}
           containerStyle={styles.SOARbutton}
         >
           SOAR
-        </Button>
-        <Button
+        </SeriesButton>
+        <SeriesButton
           onPress={() => navigation.navigate('TSSNavigator')}
           textStyle={styles.TSSbuttonText}
           containerStyle={styles.TSSbutton}
         >
           TSS
-        </Button>
-        <Button
+        </SeriesButton>
+        <SeriesButton
           onPress={() => navigation.navigate('WSSScreen')}
           textStyle={styles.WSSbuttonText}
           containerStyle={styles.WSSbutton}
         >
           WSS
-        </Button>
+        </SeriesButton>
       </View>
       <DeveloperModal />
     </SafeAreaView>

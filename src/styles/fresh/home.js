@@ -70,17 +70,19 @@ export default StyleSheet.create({
     width: allWidths,
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: colors.green[100],
   },
 
   /* button base */
-  button: {
+  seriesButton: {
     width: '100%',
     borderWidth: opts.border,
     padding: 18,
-    height: 72,
+    height: 108,
     borderRadius: opts.radius,
     marginVertical: 8,
     alignItems: 'center',
+    justifyContent: 'center'
   },
   devButton: {
     width: '100%',
