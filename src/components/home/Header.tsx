@@ -5,6 +5,14 @@ import Sunnus from '@/components/svgs/Sunnus'
 import { Overlap } from '@/components/Views'
 import { home as styles } from '@/styles/fresh'
 
+const Heart = ({ alert }: { alert: boolean }) => {
+  return (
+    <TouchableOpacity style={styles.headerButton}>
+      <AntDesign name="hearto" size={20} color={colors.homeFg} />
+    </TouchableOpacity>
+  )
+}
+
 const Header = () => {
   return (
     <View style={styles.headerContainer}>
@@ -18,9 +26,7 @@ const Header = () => {
       <Overlap>
         <View style={styles.iconsContainer}>
           <View style={{ flex: 1 }} />
-          <TouchableOpacity style={styles.headerButton}>
-            <AntDesign name="hearto" size={20} color={colors.homeFg}/>
-          </TouchableOpacity>
+          <Heart alert={false} />
         </View>
       </Overlap>
     </View>
