@@ -1,12 +1,15 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 import { Rounds, Sport } from '@/types/TSS'
 import { emptyRounds } from '@/data/schema/TSS'
+import { Event } from '@/types/schedule'
 
 type LastContextProps = {
   roundData: Rounds
   setRoundData: Dispatch<SetStateAction<Rounds>>
   sport: Sport
   setSport: Dispatch<SetStateAction<Sport>>
+  schedule: Event[]
+  setSchedule: Dispatch<SetStateAction<Event[]>>
 }
 
 const LastContext = createContext<LastContextProps>({
@@ -14,11 +17,14 @@ const LastContext = createContext<LastContextProps>({
   setRoundData: () => {},
   sport: 'volleyball',
   setSport: () => '',
+  schedule: [],
+  setSchedule: () => [],
 })
 
 const LastProvider = (props: React.PropsWithChildren<{}>) => {
   const [roundData, setRoundData] = useState(emptyRounds)
   const [sport, setSport] = useState<Sport>('volleyball')
+  const [schedule, setSchedule] = useState<Event[]>([])
 
   return (
     <LastContext.Provider
@@ -27,6 +33,8 @@ const LastProvider = (props: React.PropsWithChildren<{}>) => {
         setRoundData,
         sport,
         setSport,
+        schedule,
+        setSchedule,
       }}
       {...props}
     />

@@ -8,7 +8,6 @@ import React, {
 import { auth, db } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
 import { TeamProps } from '@/types/participants'
-import { SOARTeamProps } from '@/types/SOAR'
 import { notificationInit } from '@/lib/notifications'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
 import { newSunNUSTeam } from '@/data/schema/participants'
@@ -70,10 +69,6 @@ const rehydrateUserData = async ({
     ).data
 
     setTeamData(teamData)
-
-    if (teamData.registeredEvents.TSS) {
-      setSchedule(teamData.schedule)
-    }
   }
 }
 
