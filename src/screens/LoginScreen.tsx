@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native'
-import SunnusLogo from '../../assets/sunnus-anniversary.png'
 
 /* firebase */
 import { signInWithEmailAndPassword } from 'firebase/auth'
