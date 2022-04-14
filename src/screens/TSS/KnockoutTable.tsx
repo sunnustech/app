@@ -19,7 +19,7 @@ import {
 import { Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import { reversedRoundList } from '@/data/constants'
-import PagerRound from '@/components/TSS/Round'
+import PagerRound from '@/components/knockout/Round'
 import { TouchableOpacity } from 'react-native'
 import { showNone } from '@/lib/utils'
 import { LastContext } from '@/contexts/LastContext'

@@ -20,6 +20,8 @@ export type Event = {
   winner: 'A' | 'B' | 'U'
 }
 
+export type EventProps = Event
+
 type SportConfig = {
   sport: Sport
   matchLength: number

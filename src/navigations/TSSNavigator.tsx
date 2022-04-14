@@ -109,8 +109,10 @@ const TSSNavigator = () => {
     <TSSKnockoutTable navigation={navigation} />
   )
 
+  // change the initial route name for deployment
+  // use whichever is most convenient when debugging
   return (
-    <TSSTabs.Navigator>
+    <TSSTabs.Navigator initialRouteName="TSSScheduleScreen">
       <TSSTabs.Screen
         name="TSSScreen"
         component={TSSScreenWrapper}
