@@ -9,7 +9,7 @@ const SplashScreen = () => {
   return (
     <View style={styles.background}>
         <View style={styles.logoContainer}>
-          <SunnusSvg fill={colors.gray[100]} />
+          <SunnusSvg fill={colors.orange[500]} />
         </View>
     </View>
   )
