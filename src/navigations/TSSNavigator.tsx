@@ -1,5 +1,6 @@
 import TSSScreen from '@/screens/TSS'
 import TSSKnockoutTable from '@/screens/TSS/KnockoutTable'
+import TSSSchedule from '@/screens/TSS/ScheduleScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -14,10 +15,10 @@ import {
 import { Rounds } from '@/types/TSS'
 import { db } from '@/sunnus/firebase'
 import { LastContext } from '@/contexts/LastContext'
-import { AuthPage } from '@/types/navigation'
+import { AuthPage, TSSPages } from '@/types/navigation'
 import { Event } from '@/types/schedule'
 
-const TSSTabs = createBottomTabNavigator()
+const TSSTabs = createBottomTabNavigator<TSSPages>()
 
 const getRounds = (data: DocumentData): Rounds => {
   return {
@@ -116,8 +117,13 @@ const TSSNavigator = () => {
         options={{ headerShown: false }}
       />
       <TSSTabs.Screen
-        name="KnockoutTable"
+        name="TSSKnockoutTable"
         component={TSSKnockoutTableWrapper}
+        options={{ headerShown: false }}
+      />
+      <TSSTabs.Screen
+        name="TSSScheduleScreen"
+        component={TSSSchedule}
         options={{ headerShown: false }}
       />
     </TSSTabs.Navigator>
