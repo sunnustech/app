@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import colors from '@/styles/colors'
 
 const QR = StyleSheet.create({
   /* ==========
@@ -9,7 +10,7 @@ const QR = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: 'relative',
-    backgroundColor: 'rgba(255,255,255,0)',
+    backgroundColor: colors.transparent,
   },
   buttonContainer: {
     display: 'flex',
@@ -22,7 +23,8 @@ const QR = StyleSheet.create({
     textAlign: 'center',
   },
   pillButton: {
-    backgroundColor: 'rgba(255,255,255,0.7)',
+    backgroundColor: colors.gray[50],
+    opacity: 0.7,
     borderRadius: 1000,
     width: '50%',
     display: 'flex',
@@ -32,7 +34,7 @@ const QR = StyleSheet.create({
   },
   pillButtonText: {
     fontWeight: '600',
-    color: '#323232',
+    color: colors.gray[300],
     textAlign: 'center',
   },
   modalContainer: {
@@ -47,7 +49,7 @@ const QR = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 28,
-    color: '#323232',
+    color: colors.gray[300],
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 10,

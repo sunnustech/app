@@ -31,3 +31,11 @@ export const reversedRoundList: Array<Round> = [
   'round_of_16',
   'round_of_32',
 ]
+
+export const matchNumbers: Record<Round, Array<number>> = {
+  finals: [0],
+  semifinals: [0, 1],
+  quarterfinals: [0, 1, 2, 3],
+  round_of_16: [0, 1, 2, 3, 4, 5, 6, 7],
+  round_of_32: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+}

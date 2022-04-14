@@ -1,13 +1,45 @@
 /* reference:
  * https://mapstyle.withgoogle.com
- * once done styling, click FINISH and copy the resulting JSON here
+ * once done styling, click "finish" and copy the resulting json here
  */
+
+import colors from '@/styles/colors'
+import { Color } from '@/types/colors'
+
+const accent: Color = 'zinc'
+
+const theme = {
+  AA: colors[accent][50],
+  BB: colors[accent][100],
+  CC: colors[accent][200],
+  DD: colors[accent][300],
+  EE: colors[accent][400],
+  FF: colors[accent][500],
+  GG: colors[accent][500],
+  HH: colors[accent][500],
+  II: colors[accent][500],
+  JJ: colors[accent][500],
+}
+
+// const original = {
+//   AA: '#ffffff',
+//   BB: '#f5f5f5',
+//   CC: '#eeeeee',
+//   DD: '#e5e5e5',
+//   EE: '#dadada',
+//   FF: '#c9c9c9',
+//   GG: '#bdbdbd',
+//   HH: '#9e9e9e',
+//   II: '#757575',
+//   JJ: '#616161',
+// }
+
 export const customMapStyle = [
   {
     elementType: 'geometry',
     stylers: [
       {
-        color: '#f5f5f5',
+        color: theme.BB,
       },
     ],
   },
@@ -23,7 +55,7 @@ export const customMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#616161',
+        color: theme.JJ,
       },
     ],
   },
@@ -31,7 +63,7 @@ export const customMapStyle = [
     elementType: 'labels.text.stroke',
     stylers: [
       {
-        color: '#f5f5f5',
+        color: theme.BB,
       },
     ],
   },
@@ -49,7 +81,7 @@ export const customMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#bdbdbd',
+        color: theme.GG,
       },
     ],
   },
@@ -58,7 +90,7 @@ export const customMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#eeeeee',
+        color: theme.CC,
       },
     ],
   },
@@ -76,7 +108,7 @@ export const customMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#757575',
+        color: theme.II,
       },
     ],
   },
@@ -85,7 +117,7 @@ export const customMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#e5e5e5',
+        color: theme.DD,
       },
     ],
   },
@@ -94,7 +126,7 @@ export const customMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#9e9e9e',
+        color: theme.HH,
       },
     ],
   },
@@ -103,7 +135,7 @@ export const customMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#ffffff',
+        color: theme.AA,
       },
     ],
   },
@@ -112,7 +144,7 @@ export const customMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#757575',
+        color: theme.II,
       },
     ],
   },
@@ -121,7 +153,7 @@ export const customMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#dadada',
+        color: theme.EE,
       },
     ],
   },
@@ -130,7 +162,7 @@ export const customMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#616161',
+        color: theme.JJ,
       },
     ],
   },
@@ -148,7 +180,7 @@ export const customMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#9e9e9e',
+        color: theme.HH,
       },
     ],
   },
@@ -157,7 +189,7 @@ export const customMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#e5e5e5',
+        color: theme.DD,
       },
     ],
   },
@@ -166,7 +198,7 @@ export const customMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#eeeeee',
+        color: theme.CC,
       },
     ],
   },
@@ -175,7 +207,7 @@ export const customMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#c9c9c9',
+        color: theme.FF,
       },
     ],
   },
@@ -184,7 +216,7 @@ export const customMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#9e9e9e',
+        color: theme.HH,
       },
     ],
   },

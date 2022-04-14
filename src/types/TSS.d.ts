@@ -1,3 +1,5 @@
+import { UseState } from '@/types/SOAR'
+
 export type Sport = 'dodgeball' | 'frisbee' | 'volleyball' | 'tchoukball'
 
 export type Winner = 'A' | 'B' | 'U'
@@ -58,3 +60,17 @@ export type TSSDatabase = Sports & {
  */
 
 export type CurrentPageState = Record<Round, number>
+
+export type Field = 'sport' | 'round' | 'matchNumber'
+export type FieldStates = {
+  sport: UseState<Sport>
+  round: UseState<Round>
+  matchNumber: UseState<number>
+}
+
+export type PageStatus =
+  | 'no-one'
+  | 'one-in'
+  | 'both-in'
+  | 'completed'
+  | 'in-progress'

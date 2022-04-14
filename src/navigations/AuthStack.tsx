@@ -1,7 +1,3 @@
-/* navigation */
-import { createDrawerNavigator } from '@react-navigation/drawer'
-
-/* screens */
 import {
   HomeScreen,
   SOARScreen,
@@ -10,55 +6,96 @@ import {
   QRScreen,
   GeneratorScreen,
 } from '@/screens/index'
-
-/* providers */
 import { SOARProvider } from '@/contexts/SOARContext'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { UserProvider } from '@/contexts/UserContext'
-import { AuthenticatedPages } from '@/types/navigation'
+import { AuthenticatedPages, SOARPages } from '@/types/navigation'
 import TSSNavigator from '@/navigations/TSSNavigator'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createStackNavigator } from '@react-navigation/stack'
+import { LastProvider } from '@/contexts/LastContext'
+import NotificationScreen from '../screens/NotificationScreen'
+import { TransitionSpec } from '@react-navigation/stack/lib/typescript/src/types'
 
-const Drawer = createDrawerNavigator<AuthenticatedPages>()
-const Stack = createNativeStackNavigator()
+const MainStack = createStackNavigator<AuthenticatedPages>()
+const SOARStack = createStackNavigator<SOARPages>()
+
+const config: TransitionSpec = {
+  animation: 'spring',
+  config: {
+    stiffness: 1200,
+    damping: 100,
+    mass: 2,
+    overshootClamping: true,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+}
 
 const Navigator = () => (
-  <Drawer.Navigator
+  <MainStack.Navigator
     initialRouteName="HomeScreen"
-    screenOptions={{ headerShown: false }}
+    defaultScreenOptions={{
+      transitionSpec: {
+        open: config,
+        close: config,
+      },
+    }}
   >
-    <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-    <Drawer.Screen name="SOARNavigator" component={SOARNavigator} />
-    <Drawer.Screen name="TSSNavigator" component={TSSNavigator} />
-    <Drawer.Screen name="WSSScreen" component={WSSScreen} />
-    <Drawer.Screen name="GeneratorScreen" component={GeneratorScreen} />
-    <Drawer.Screen name="DEVScreen" component={DEVScreen} />
-  </Drawer.Navigator>
+    <MainStack.Screen
+      name="HomeScreen"
+      component={HomeScreen}
+      options={{ headerShown: false }}
+    />
+    <MainStack.Screen
+      name="NotificationScreen"
+      component={NotificationScreen}
+      options={{ headerShown: true }}
+    />
+    <MainStack.Screen
+      name="SOARNavigator"
+      component={SOARNavigator}
+      options={{ headerShown: false }}
+    />
+    <MainStack.Screen
+      name="TSSNavigator"
+      component={TSSNavigator}
+      options={{ headerShown: false }}
+    />
+    <MainStack.Screen
+      name="WSSScreen"
+      component={WSSScreen}
+      options={{ headerShown: false }}
+    />
+    <MainStack.Screen name="GeneratorScreen" component={GeneratorScreen} />
+    <MainStack.Screen name="DEVScreen" component={DEVScreen} />
+  </MainStack.Navigator>
 )
 
 const SOARNavigator = () => (
-  <Stack.Navigator
+  <SOARStack.Navigator
     initialRouteName="SOARScreen"
     screenOptions={{ headerShown: false }}
   >
-    <Stack.Screen
+    <SOARStack.Screen
       name="SOARScreen"
       component={SOARScreen}
       options={{ animation: 'none' }}
     />
-    <Stack.Screen
+    <SOARStack.Screen
       name="QRScreen"
       component={QRScreen}
       options={{ animation: 'none' }}
     />
-  </Stack.Navigator>
+  </SOARStack.Navigator>
 )
 
 const AuthStack = () => (
   <UserProvider>
     <SOARProvider>
       <TimerProvider>
-        <Navigator />
+        <LastProvider>
+          <Navigator />
+        </LastProvider>
       </TimerProvider>
     </SOARProvider>
   </UserProvider>

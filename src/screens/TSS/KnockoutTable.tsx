@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Text, View } from 'react-native'
+import { SafeAreaView, Text, View } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import Picker from 'react-native-picker-select'
 import { Ionicons } from '@expo/vector-icons'
@@ -9,13 +9,22 @@ import { Ionicons } from '@expo/vector-icons'
 
 /* sunnus components */
 import { knockout as styles } from '@/styles/fresh'
-import { MutableRefObject, useRef, useState } from 'react'
-import { Rounds, Sport } from '@/types/TSS'
+import {
+  MutableRefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import { Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
 import { reversedRoundList } from '@/data/constants'
 import PagerRound from '@/components/TSS/Round'
 import { TouchableOpacity } from 'react-native'
-import { UseState } from '@/types/SOAR'
+import { showNone } from '@/lib/utils'
+import { LastContext } from '@/contexts/LastContext'
+import { AuthPage } from '@/types/navigation'
+import BackButton from '@/components/BackButton'
 
 const SportPicker = ({
   pickerRef,
@@ -42,14 +51,12 @@ const SportPicker = ({
 }
 
 const KnockoutTable = ({
-  sportState,
-  data,
+  navigation,
 }: {
-  sportState: UseState<Sport>
-  data: Rounds
+  navigation: AuthPage<'TSSNavigator'>
 }) => {
   // const navigation = useNavigation<TSSPage<'TSSKnockoutTable'>>()
-  const [sport, setSport] = sportState
+  const { sport, setSport, roundData } = useContext(LastContext)
   const [tempSport, setTempSport] = useState<Sport>(sport)
 
   const pickerRef = useRef<Picker>(null)
@@ -62,40 +69,40 @@ const KnockoutTable = ({
    * may not need to fix if method of choosing sport changes later
    */
 
-  const showNone = {
-    placeholder: styles.displayNone,
-    inputAndroid: styles.displayNone,
-    inputAndroidContainer: styles.displayNone,
-    inputIOS: styles.displayNone,
-    inputIOSContainer: styles.displayNone,
-    inputWeb: styles.displayNone,
-  }
-
   const AllRounds = () => (
     <>
       {reversedRoundList.map((round, idx) => {
-        return <PagerRound matches={data[round]} key={idx} />
+        return <PagerRound matches={roundData[round]} key={idx} />
       })}
     </>
   )
 
+  /* to sync up value of sport/tempSport with match handler page */
+  useEffect(() => {
+    setTempSport(sport)
+  }, [sport])
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <RNPickerSelect
-        placeholder={{}}
-        ref={pickerRef}
-        onValueChange={(value) => setTempSport(value)}
-        onDonePress={() => setSport(tempSport)}
-        items={sportList.map((sport, i) => ({
-          label: sport,
-          value: sport,
-          key: i,
-        }))}
-        style={showNone}
-      />
-      <SportPicker pickerRef={pickerRef} tempSport={tempSport} />
-      <AllRounds />
-    </KeyboardAvoidingView>
+    <SafeAreaView style={styles.outerContainer}>
+      <BackButton navigation={navigation} text="TSS Knockout Table" />
+      <View style={styles.container}>
+        <RNPickerSelect
+          ref={pickerRef}
+          placeholder={{}}
+          value={tempSport}
+          onValueChange={(value) => setTempSport(value)}
+          onDonePress={() => setSport(tempSport)}
+          items={sportList.map((sport, i) => ({
+            label: sport,
+            value: sport,
+            key: i,
+          }))}
+          style={showNone}
+        />
+        <SportPicker pickerRef={pickerRef} tempSport={tempSport} />
+        <AllRounds />
+      </View>
+    </SafeAreaView>
   )
 }
 

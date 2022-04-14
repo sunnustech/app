@@ -44,6 +44,8 @@ export type ButtonProps = Pick<
   'onPress' | 'children' | 'style'
 >
 
+export type OnPress = (event: GestureResponderEvent) => void
+
 export type DebugButtonProps = ButtonProps & {
   color?: string
 }

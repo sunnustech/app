@@ -1,11 +1,14 @@
 import { StyleSheet } from 'react-native'
 import opts from './opts'
+import colors from '@/styles/colors'
+
+const accent = 'orange'
 
 export default StyleSheet.create({
   /* containers */
   loginContainer: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.gray[50],
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -27,7 +30,7 @@ export default StyleSheet.create({
   input: {
     backgroundColor: 'white',
     borderWidth: opts.border,
-    borderColor: '#e5e7eb',
+    borderColor: colors.gray[200],
     paddingVertical: 10,
     fontWeight: '600',
     borderRadius: opts.radius,
@@ -35,9 +38,9 @@ export default StyleSheet.create({
     marginVertical: 5,
   },
   button: {
-    backgroundColor: '#fdba74',
+    backgroundColor: colors[accent][300],
     borderWidth: opts.border,
-    borderColor: '#f59e0b',
+    borderColor: colors[accent][400],
     width: '60%',
     padding: 12,
     borderRadius: opts.radius,
@@ -45,9 +48,9 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: '#ebebe4',
+    backgroundColor: colors.gray[50],
     borderWidth: opts.border,
-    borderColor: '#f59e0b',
+    borderColor: colors[accent][400],
     width: '60%',
     padding: 12,
     borderRadius: opts.radius,
@@ -56,7 +59,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     // TODO: add custom fonts
-    color: '#9a3412',
+    color: colors[accent][800],
     fontWeight: '600',
     fontSize: 18,
   },

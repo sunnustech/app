@@ -1,24 +1,26 @@
 import TSSScreen from '@/screens/TSS'
 import TSSKnockoutTable from '@/screens/TSS/KnockoutTable'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useFocusEffect } from '@react-navigation/native'
-import { useCallback, useEffect, useState } from 'react'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { onSnapshot, doc } from 'firebase/firestore'
-import { Rounds, Sport } from '@/types/TSS'
+import { Rounds } from '@/types/TSS'
 import { db } from '@/sunnus/firebase'
-import { emptyRounds } from '@/data/schema/TSS'
+import { LastContext } from '@/contexts/LastContext'
+import { AuthPage } from '../types/navigation'
 
 const TSSTabs = createBottomTabNavigator()
 
 const TSSNavigator = () => {
-  const sportState = useState<Sport>('volleyball')
-  const [sport, setSport] = sportState
-  const [data, setData] = useState<Rounds>(emptyRounds)
+  const navigation = useNavigation<AuthPage<'TSSNavigator'>>()
+  // TSS page active state
+  // (de-activates when navigating out)
   const [TSSNavActive, setTSSNavActive] = useState<boolean>(false)
 
-  const KnockoutTableWrapper = () => {
-    return <TSSKnockoutTable sportState={sportState} data={data} />
-  }
+  /*
+   * listener for knockout table display
+   */
+  const { setRoundData, sport } = useContext(LastContext)
 
   useEffect(() => {
     if (TSSNavActive) {
@@ -34,7 +36,7 @@ const TSSNavigator = () => {
             round_of_16: liveData.round_of_16,
             round_of_32: liveData.round_of_32,
           }
-          setData(updatedData)
+          setRoundData(updatedData)
         }
       })
       return () => {
@@ -56,12 +58,19 @@ const TSSNavigator = () => {
     }, [])
   )
 
+  const TSSScreenWrapper = () => <TSSScreen navigation={navigation} />
+  const TSSKnockoutTableWrapper = () => <TSSKnockoutTable navigation={navigation} />
+
   return (
     <TSSTabs.Navigator>
-      <TSSTabs.Screen name="TSSScreen" component={TSSScreen} />
+      <TSSTabs.Screen
+        name="TSSScreen"
+        component={TSSScreenWrapper}
+        options={{ headerShown: false }}
+      />
       <TSSTabs.Screen
         name="KnockoutTable"
-        component={KnockoutTableWrapper}
+        component={TSSKnockoutTableWrapper}
         options={{ headerShown: false }}
       />
     </TSSTabs.Navigator>

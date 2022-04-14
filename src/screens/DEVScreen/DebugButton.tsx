@@ -2,10 +2,11 @@
 import { Text, TouchableOpacity } from 'react-native'
 import { DEV as styles } from '@/styles/fresh'
 import { DebugButtonProps } from '@/types/index'
+import colors from '@/styles/colors'
 
 const DebugButton = ({
   onPress,
-  color = '#9ca3af',
+  color = colors.gray[400],
   children,
 }: DebugButtonProps) => {
   return (

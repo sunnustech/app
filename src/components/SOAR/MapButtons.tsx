@@ -6,13 +6,18 @@ import {
   MaterialIcons as MI,
   Fontisto as FO,
 } from '@expo/vector-icons'
+import colors from '@/styles/colors'
 
 const MapButton = ({ icon, onPress, style }: MapButtonProps) => {
   // icon: provider + name
   const [IconProvider, name, color] = icon
   return (
     <TouchableOpacity style={style} onPress={onPress}>
-      <IconProvider name={name} color={color ? color : '#323232'} size={24} />
+      <IconProvider
+        name={name}
+        color={color ? color : colors.gray[700]}
+        size={24}
+      />
     </TouchableOpacity>
   )
 }
@@ -23,7 +28,7 @@ const MapAdminToggle = ({ onPress, activated }: any) => {
 }
 
 const MapSOSButton = ({ onPress }: any) => {
-  const icon = [FO, 'asterisk', '#ef4444']
+  const icon = [FO, 'asterisk', colors.red[500]]
   return <MapBottomButton icon={icon} onPress={onPress} />
 }
 

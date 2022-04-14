@@ -29,6 +29,7 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth'
 import { auth } from '@/sunnus/firebase'
+import colors from '@/styles/colors'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -49,22 +50,22 @@ const DebugList = () => (
   <>
     <Text>Database</Text>
 
-    <DebugButton onPress={writeSchema} color="#22c55e">
+    <DebugButton onPress={writeSchema} color={colors.green[500]}>
       Write Schema
     </DebugButton>
 
     <Text>Knockout Table</Text>
 
-    <DebugButton onPress={resetTSS} color="#ec4899">
+    <DebugButton onPress={resetTSS} color={colors.pink[500]}>
       Reset TSS Data
     </DebugButton>
-    <DebugButton onPress={getKnockoutTable} color="#ec4899">
+    <DebugButton onPress={getKnockoutTable} color={colors.pink[500]}>
       Get Knockout Table
     </DebugButton>
 
     <Text>QR Command List</Text>
 
-    <DebugButton onPress={generateStationQR} color="#ec4899">
+    <DebugButton onPress={generateStationQR} color={colors.pink[500]}>
       Generate QR (to send to SOAR)
     </DebugButton>
   </>
@@ -136,17 +137,17 @@ const DEVScreen = () => {
 
           <Text>User Context Testing</Text>
 
-          <DebugButton onPress={getContext} color="#ec4899">
+          <DebugButton onPress={getContext} color={colors.pink[500]}>
             Get User + Team Context
           </DebugButton>
 
           <Text>User Creation Testing</Text>
 
-          <DebugButton onPress={createUser} color="#ec4899">
+          <DebugButton onPress={createUser} color={colors.pink[500]}>
             Create a new user
           </DebugButton>
 
-          <DebugButton onPress={resetPassword} color="#ec4899">
+          <DebugButton onPress={resetPassword} color={colors.pink[500]}>
             Reset Password
           </DebugButton>
         </View>

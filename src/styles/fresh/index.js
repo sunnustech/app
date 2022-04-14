@@ -1,6 +1,5 @@
 import login from './login'
 import home from './home'
-import SOAR from './SOAR'
 import TSS from './TSS'
 import WSS from './WSS'
 import DEV from './DEV'
@@ -9,5 +8,26 @@ import knockout from './knockout'
 import timer from './timer'
 import QR from './QR'
 import buttons from './buttons'
+import utils from './utils'
+import picker from './picker'
+import splash from './splash'
+import seriesButton from './seriesButton'
+import back from './back'
 
-export { login, home, map, SOAR, TSS, WSS, DEV, knockout, timer, QR, buttons }
+export {
+  login,
+  home,
+  map,
+  TSS,
+  WSS,
+  DEV,
+  knockout,
+  timer,
+  QR,
+  buttons,
+  utils,
+  picker,
+  splash,
+  seriesButton,
+  back,
+}
