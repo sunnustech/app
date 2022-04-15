@@ -1,12 +1,6 @@
 import { useState } from 'react'
-import {
-  ActivityIndicator,
-  View,
-  Image,
-  TouchableOpacity,
-  Text,
-} from 'react-native'
-import SunnusLogo from '../../assets/sunnus-anniversary.png'
+import { View } from 'react-native'
+import colors from '@/styles/colors'
 
 /* firebase */
 import { signInWithEmailAndPassword } from 'firebase/auth'
@@ -14,45 +8,35 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
 import { login as styles } from '@/styles/fresh'
-import { ScrollView, TextInput } from 'react-native-gesture-handler'
-import { pullDoc } from '@/data/pull'
+import { ScrollView } from 'react-native-gesture-handler'
+import Sunnus from '@/components/svgs/Sunnus'
+import {
+  Loader,
+  LoginInput,
+  LoginButton,
+  ForgotIdButton,
+} from '@/components/login'
 
 const PASSWORD = 'sunnus'
-
-const Input = ({
-  value,
-  onChangeText,
-  placeholder,
-  secureTextEntry = false,
-}: {
-  [key: string]: any
-}) => {
-  // secureTextEntry
-  return (
-    <TextInput
-      secureTextEntry={secureTextEntry}
-      placeholder={placeholder}
-      value={value}
-      onChangeText={onChangeText}
-      style={styles.input}
-    />
-  )
-}
 
 const LoginScreen = () => {
   const [loginId, setLoginId] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
 
-  const loginHandler = async () => {
+  const loginHandler = () => {
+    setLoading(true)
+    setLoginError(false)
     const email = `${loginId}@sunnus.com`
     if (email) {
       signInWithEmailAndPassword(auth, email, PASSWORD)
         .then((credential) => {
           console.log('successful login as:', credential.user.email) // perma
+          setLoading(false)
         })
         .catch((err) => {
           setLoginError(true)
+          setLoading(false)
           console.log(err) // perma
         })
     }
@@ -68,35 +52,25 @@ const LoginScreen = () => {
       contentContainerStyle={styles.loginContainer}
       scrollEnabled={false}
     >
-      <Image source={SunnusLogo} style={styles.image} />
+      <Sunnus fill={colors.gray[600]} height={32} width="100%" />
+      <View style={styles.spacer} />
       <View style={styles.inputContainer}>
-        <Input
-          placeholder="Team ID + key"
+        <LoginInput
+          secureTextEntry={false}
+          placeholder="User ID"
           value={loginId}
           onChangeText={(text: string) => setLoginId(text)}
+          onSubmitEditing={loginHandler}
         />
       </View>
-      <ActivityIndicator animating={loading} />
-      <View>
-        <Text style={styles.errorMessage}>
-          {loginError ? 'Sorry, but this username does not exist!' : ''}
-        </Text>
-      </View>
+      <Loader loading={loading} error={loginError} />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={loading ? styles.disabledButton : styles.button}
-          disabled={loading}
-          onPress={loginHandler}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={loading ? styles.disabledButton : styles.button}
-          disabled={loading}
+        <LoginButton onPress={loginHandler} loading={loading} />
+        <ForgotIdButton
           onPress={forgotHandler}
-        >
-          <Text style={styles.buttonText}>Forgot ID?</Text>
-        </TouchableOpacity>
+          loading={loading}
+          enabled={false}
+        />
       </View>
     </ScrollView>
   )

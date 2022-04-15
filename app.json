@@ -18,13 +18,12 @@
       "config": {
         "googleMapsApiKey": "AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk"
       },
-      "buildNumber": "2",
+      "buildNumber": "5",
       "supportsTablet": true,
       "bundleIdentifier": "com.nus.sunnus"
     },
     "android": {
       "config": {
-
         "googleMaps": {
           "apiKey": "AIzaSyAMokc0eF4l5_HGuMBGGgVOIKsw8BQCccU"
         }
@@ -34,7 +33,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.nus.sunnus",
-      "versionCode": 14
+      "versionCode": 15
     },
     "web": {
       "favicon": "./assets/favicon.png"

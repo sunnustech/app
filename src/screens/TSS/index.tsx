@@ -19,7 +19,7 @@ import { httpsCallable } from 'firebase/functions'
 import { TSS as styles } from '@/styles/fresh'
 
 // DELETE AFTER USE
-import PickerProvider from '@/components/TSS/PickerProvider'
+import PickerProvider from '@/components/knockout/PickerProvider'
 import { Field, FieldStates, Round, Sport, Winner } from '@/types/TSS'
 import {
   MutableRefObject,
@@ -32,7 +32,7 @@ import { auth, functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker, { Item } from 'react-native-picker-select'
 import { getItems, replaceUnderscoresWithSpaces } from '@/lib/utils'
-import CustomPicker from '@/components/TSS/CustomPicker'
+import CustomPicker from '@/components/knockout/CustomPicker'
 import { LastContext } from '@/contexts/LastContext'
 import { OnPress } from '@/types/index'
 import colors from '@/styles/colors'
