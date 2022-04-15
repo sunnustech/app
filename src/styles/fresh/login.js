@@ -45,6 +45,9 @@ export default StyleSheet.create({
     fontSize: 16,
     borderRadius: opts.radius,
   },
+  inputFocused: {
+    borderColor: colors.gray[400],
+  },
   button: {
     backgroundColor: colors[accent][300],
     borderWidth: opts.border,

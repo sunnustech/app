@@ -4,6 +4,7 @@ import {
   TextInput
 } from 'react-native'
 import { login as styles } from '@/styles/fresh'
+import { useState } from 'react'
 
 const LoginInput = ({
   value,
@@ -20,9 +21,12 @@ const LoginInput = ({
     e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
   ) => void
 }) => {
-  // secureTextEntry
+  const [focused, setFocused] = useState(false)
+  const style = [styles.input, focused ?  styles.inputFocused : null]
   return (
     <TextInput
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       contextMenuHidden={true}
       returnKeyType="go"
       onSubmitEditing={onSubmitEditing}
@@ -31,7 +35,7 @@ const LoginInput = ({
       placeholder={placeholder}
       value={value}
       onChangeText={onChangeText}
-      style={styles.input}
+      style={style}
     />
   )
 }
