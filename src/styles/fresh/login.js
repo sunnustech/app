@@ -4,6 +4,18 @@ import colors from '@/styles/colors'
 
 const accent = 'orange'
 
+const m = StyleSheet.create({
+  button: {
+    backgroundColor: colors[accent][300],
+    borderWidth: opts.border,
+    borderColor: colors[accent][400],
+    width: '60%',
+    padding: 12,
+    borderRadius: opts.radius,
+    alignItems: 'center',
+  },
+})
+
 export default StyleSheet.create({
   /* containers */
   loginContainer: {
@@ -19,23 +31,22 @@ export default StyleSheet.create({
   },
   inputContainer: {
     width: opts.allWidths,
-    marginBottom: 10,
-  },
-
-  image: {
-    marginBottom: opts.marginBottom,
-    width: 244,
-    height: 180,
+    flexDirection: 'row',
+    // backgroundColor: colors.green[200],
   },
   input: {
+    flex: 1,
     backgroundColor: 'white',
     borderWidth: opts.border,
     borderColor: colors.gray[200],
-    paddingVertical: 10,
+    paddingVertical: 18,
+    paddingHorizontal: 16,
     fontWeight: '600',
+    fontSize: 16,
     borderRadius: opts.radius,
-    paddingHorizontal: 10,
-    marginVertical: 5,
+  },
+  inputFocused: {
+    borderColor: colors.gray[400],
   },
   button: {
     backgroundColor: colors[accent][300],
@@ -44,18 +55,11 @@ export default StyleSheet.create({
     width: '60%',
     padding: 12,
     borderRadius: opts.radius,
-    marginVertical: 8,
     alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: colors.gray[50],
-    borderWidth: opts.border,
-    borderColor: colors[accent][400],
-    width: '60%',
-    padding: 12,
-    borderRadius: opts.radius,
-    marginVertical: 8,
-    alignItems: 'center',
+    backgroundColor: colors[accent][100],
+    borderColor: colors[accent][200],
   },
   buttonText: {
     // TODO: add custom fonts
@@ -64,7 +68,13 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   errorMessage: {
-    color: 'red',
-    marginBottom: 10,
+    fontWeight: '500',
+    color: colors.red[500],
   },
+  spacer: {
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  loadingIndicator: {},
 })

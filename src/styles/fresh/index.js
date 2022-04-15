@@ -1,33 +1,35 @@
-import login from './login'
-import home from './home'
+import DEV from './DEV'
+import QR from './QR'
 import TSS from './TSS'
 import WSS from './WSS'
-import DEV from './DEV'
-import map from './map'
-import knockout from './knockout'
-import timer from './timer'
-import QR from './QR'
-import buttons from './buttons'
-import utils from './utils'
-import picker from './picker'
-import splash from './splash'
-import seriesButton from './seriesButton'
 import back from './back'
+import buttons from './buttons'
+import home from './home'
+import knockout from './knockout'
+import login from './login'
+import map from './map'
+import picker from './picker'
+import schedule from './schedule'
+import seriesButton from './seriesButton'
+import splash from './splash'
+import timer from './timer'
+import utils from './utils'
 
 export {
-  login,
-  home,
-  map,
+  DEV,
+  QR,
   TSS,
   WSS,
-  DEV,
-  knockout,
-  timer,
-  QR,
-  buttons,
-  utils,
-  picker,
-  splash,
-  seriesButton,
   back,
+  buttons,
+  home,
+  knockout,
+  login,
+  map,
+  picker,
+  schedule,
+  seriesButton,
+  splash,
+  timer,
+  utils,
 }

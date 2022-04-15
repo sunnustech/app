@@ -79,12 +79,12 @@ const SOARNavigator = () => (
     <SOARStack.Screen
       name="SOARScreen"
       component={SOARScreen}
-      options={{ animation: 'none' }}
+      options={{ animationEnabled: false }}
     />
     <SOARStack.Screen
       name="QRScreen"
       component={QRScreen}
-      options={{ animation: 'none' }}
+      options={{ animationEnabled: false }}
     />
   </SOARStack.Navigator>
 )

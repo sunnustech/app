@@ -22,6 +22,7 @@ export type UnauthenticatedPages = {
 export type TSSPages = {
   TSSScreen: undefined
   TSSKnockoutTable: undefined
+  TSSScheduleScreen: undefined
 }
 
 export type SOARPages = {
