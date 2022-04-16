@@ -43,27 +43,28 @@ export type SOARDatabase = {
   }
 }
 
-type HaventDecided =
-  | 'fn01'
-  | 'fn02'
-  | 'fn03'
-  | 'fn04'
-  | 'fn05'
-  | 'fn06'
-  | 'fn07'
-  | 'fn08'
-  | 'fn09'
-  | 'fn10'
-  | 'fn11'
-  | 'fn12'
-  | 'fn13'
-  | 'fn14'
-  | 'fn15'
-  | 'fn16'
-  | 'fn17'
-  | 'fn18'
-  | 'fn19'
-  | 'fn20'
+type SOARScores =
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | '10'
+  | '11'
+  | '12'
+  | '13'
+  | '14'
+  | '15'
+  | '16'
+  | '17'
+  | '18'
+  | '19'
+  | '20'
 
 export type SOARCommand =
   | 'start'
@@ -82,11 +83,13 @@ export type SOARCommand =
   | 'AlreadyCompletedStation'
   | 'WarnStopFinal'
   | ''
-  | HaventDecided
+  | SOARScores
 
 export type QRDictionaryGeneratorProps = {
   command: SOARCommand
   station: string
+  facilitator?: string
+  points?: number
 }
 
 export type QRCommandProps = {
