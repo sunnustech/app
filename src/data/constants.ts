@@ -2,6 +2,8 @@ import { Rounds } from '@/types/TSS'
 import { createEmptyMatches } from '@/data/utils'
 import { Camera } from 'react-native-maps'
 import { Sport, Round } from '@/types/TSS'
+import { Member, RegisteredEvents } from '@/types/participants'
+import { SOARTeamProps } from '@/types/SOAR'
 
 export const NUSCoordinates: Camera = {
   center: { latitude: 1.296674, longitude: 103.77639 },
@@ -49,4 +51,54 @@ export const emptyRounds: Rounds = {
   semifinals: createEmptyMatches(2),
   finals: createEmptyMatches(1),
   champions: '',
+}
+
+export const stationOrder = {
+  A: [
+    'Slide',
+    'Sotong Houze',
+    'Nerf Battle',
+    'Snake and Ladders',
+    'GOLF',
+    'Relay2Maze',
+  ],
+  B: [
+    'GOLF',
+    'Snake and Ladders',
+    'Nerf Battle',
+    'Sotong Houze',
+    'Slide',
+    'Relay2Maze',
+  ],
+}
+
+const SOARInit: SOARTeamProps = {
+  timerRunning: false,
+  started: false,
+  stopped: false,
+  startTime: 0,
+  stopTime: 0,
+  allEvents: [],
+  direction: 'A',
+  points: 0,
+}
+
+export function newSunNUSTeam(props: {
+  members: Array<Member>
+  registeredEvents: RegisteredEvents
+  direction: 'A' | 'B'
+  teamName: string
+}) {
+  return {
+    SOAR: SOARInit,
+    SOARStart: 0,
+    SOARTimerEvents: [0],
+    SOARPausedAt: 0,
+    SOARStationsCompleted: [],
+
+    teamName: props.teamName,
+    SOARStationsRemaining: stationOrder[props.direction],
+    members: props.members,
+    registeredEvents: props.registeredEvents,
+  }
 }

@@ -10,7 +10,7 @@ import { pullDoc } from '@/data/pull'
 import { TeamProps } from '@/types/participants'
 import { notificationInit } from '@/lib/notifications'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
-import { newSunNUSTeam } from '@/data/schema/participants'
+import { newSunNUSTeam } from '@/data/constants'
 
 type UserContextProps = {
   userId: string
