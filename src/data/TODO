@@ -1,2 +1,0 @@
-disable immediate re-scanning of QR codes
-properly handle QR code states (sometimes the QR confirmation popup reopens immediately after closing)

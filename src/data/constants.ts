@@ -1,3 +1,5 @@
+import { Rounds } from '@/types/TSS'
+import { createEmptyMatches } from '@/data/utils'
 import { Camera } from 'react-native-maps'
 import { Sport, Round } from '@/types/TSS'
 
@@ -38,4 +40,13 @@ export const matchNumbers: Record<Round, Array<number>> = {
   quarterfinals: [0, 1, 2, 3],
   round_of_16: [0, 1, 2, 3, 4, 5, 6, 7],
   round_of_32: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+}
+
+export const emptyRounds: Rounds = {
+  round_of_32: createEmptyMatches(16),
+  round_of_16: createEmptyMatches(8),
+  quarterfinals: createEmptyMatches(4),
+  semifinals: createEmptyMatches(2),
+  finals: createEmptyMatches(1),
+  champions: '',
 }

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
 import { WSS as styles } from '@/styles/fresh'
-import BackButton from '../components/BackButton'
+import BackButton from '@/components/BackButton'
 
 const WSSScreen = () => {
   const navigation = useNavigation<AuthPage<'WSSScreen'>>()

@@ -1,6 +1,6 @@
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg'
 import colors from '@/styles/colors'
-import { Color } from '../../types/colors'
+import { Color } from '@/types/colors'
 
 // const accent: Color[] = ['orange', 'rose']
 // const accent: Color[] = ['orange', 'rose', 'red']

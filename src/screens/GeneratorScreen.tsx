@@ -10,7 +10,7 @@ import RNPickerSelect from 'react-native-picker-select'
 import QRCode from 'react-native-qrcode-svg'
 import { useState } from 'react'
 //import styles from '../styles/main'
-import { Button } from '../components/Buttons'
+import { Button } from '@/components/Buttons'
 import colors from '@/styles/colors'
 import { cipher, decipher } from '../util/crypto'
 

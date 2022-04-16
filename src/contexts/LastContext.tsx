@@ -1,6 +1,6 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 import { Rounds, Sport } from '@/types/TSS'
-import { emptyRounds } from '@/data/schema/TSS'
+import { emptyRounds } from '@/data/constants'
 import { Event } from '@/types/schedule'
 
 type LastContextProps = {

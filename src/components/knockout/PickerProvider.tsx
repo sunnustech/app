@@ -1,7 +1,7 @@
 import { Dispatch } from 'react'
 import RNPickerSelect, { Item } from 'react-native-picker-select'
 import { UseState } from '@/types/SOAR'
-import { showNone } from '@/lib/utils'
+import { showNone } from '@/lib/picker'
 
 const PickerProvider = ({
   _ref,

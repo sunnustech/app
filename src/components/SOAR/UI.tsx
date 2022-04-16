@@ -11,7 +11,6 @@ import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
 
 import SOAR from '@/lib/SOAR'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
-import writeSchema from '../../data/writeSchema'
 
 const UI = ({
   navigation,
@@ -54,7 +53,6 @@ const UI = ({
   const Debug = () => {
     return (
       <>
-        <MapSOSButton onPress={writeSchema} />
         <MapSOSButton onPress={() => SOAR.start("Dev_loper", q.start)} />
         <MapSOSButton onPress={() => SOAR.pause('Dev_loper', q.pause)} />
         <MapSOSButton onPress={() => SOAR.resume('Dev_loper', q.resume)} />

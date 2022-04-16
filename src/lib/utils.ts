@@ -1,7 +1,4 @@
 import { default as RNToast } from 'react-native-root-toast'
-import { utils as styles } from '@/styles/fresh'
-import { Item } from 'react-native-picker-select'
-import { Round, Sport } from '../types/TSS'
 
 // shows a 2-second small notif at the bottom of the screen
 export function Toast(string: string) {
@@ -45,26 +42,4 @@ export function objFromArray(
     obj[e[identifierKey]] = e
   })
   return obj
-}
-
-export function getItems(
-  arr: Array<string | number | Sport | Round>
-): Array<Item> {
-  return arr.map((e, i) => {
-    const string = e.toString()
-    return {
-      label: replaceUnderscoresWithSpaces(string),
-      value: string,
-      key: i,
-    }
-  })
-}
-
-export const showNone = {
-  placeholder: styles.displayNone,
-  inputAndroid: styles.displayNone,
-  inputAndroidContainer: styles.displayNone,
-  inputIOS: styles.displayNone,
-  inputIOSContainer: styles.displayNone,
-  inputWeb: styles.displayNone,
 }
