@@ -15,7 +15,6 @@ import DebugButton from './DebugButton'
  */
 
 /* debug functions */
-import writeSchema from '@/data/writeSchema'
 import { resetTSS, handleMatch, getKnockoutTable } from '@/lib/knockout'
 import SOAR from '@/lib/SOAR'
 // import { MatchRequest } from '@/types/knockout'
@@ -49,10 +48,6 @@ function resetPassword() {
 const DebugList = () => (
   <>
     <Text>Database</Text>
-
-    <DebugButton onPress={writeSchema} color={colors.green[500]}>
-      Write Schema
-    </DebugButton>
 
     <Text>Knockout Table</Text>
 
