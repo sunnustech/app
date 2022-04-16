@@ -31,13 +31,14 @@ import {
 import { auth, functions } from '@/sunnus/firebase'
 import { matchNumbers, sportList, roundList } from '@/data/constants'
 import Picker, { Item } from 'react-native-picker-select'
-import { getItems, replaceUnderscoresWithSpaces } from '@/lib/utils'
+import { replaceUnderscoresWithSpaces } from '@/lib/utils'
+import { getPickerItems } from '@/lib/picker'
 import CustomPicker from '@/components/knockout/CustomPicker'
 import { LastContext } from '@/contexts/LastContext'
 import { OnPress } from '@/types/index'
 import colors from '@/styles/colors'
-import { AuthPage } from '../../types/navigation'
-import BackButton from '../../components/BackButton'
+import { AuthPage } from '@/types/navigation'
+import BackButton from '@/components/BackButton'
 
 const FinalButton = ({
   onPress,
@@ -101,7 +102,7 @@ const TSSScreen = ({
 
   /* when the round changes, reset the match number to zero */
   useEffect(() => {
-    items.matchNumber[1](getItems(matchNumbers[round]))
+    items.matchNumber[1](getPickerItems(matchNumbers[round]))
     states.matchNumber[1](0)
     display.matchNumber[1](0)
 
@@ -146,9 +147,9 @@ const TSSScreen = ({
 
   // initialize default items (don't let this depend on roundData)
   useEffect(() => {
-    items.sport[1](getItems(sportList))
-    items.round[1](getItems(roundList))
-    items.matchNumber[1](getItems(matchNumbers[round]))
+    items.sport[1](getPickerItems(sportList))
+    items.round[1](getPickerItems(roundList))
+    items.matchNumber[1](getPickerItems(matchNumbers[round]))
   }, [])
 
   const [scoreA, setScoreA] = useState(-1)

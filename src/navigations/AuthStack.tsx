@@ -13,7 +13,7 @@ import { AuthenticatedPages, SOARPages } from '@/types/navigation'
 import TSSNavigator from '@/navigations/TSSNavigator'
 import { createStackNavigator } from '@react-navigation/stack'
 import { LastProvider } from '@/contexts/LastContext'
-import NotificationScreen from '../screens/NotificationScreen'
+import NotificationScreen from '@/screens/NotificationScreen'
 import { TransitionSpec } from '@react-navigation/stack/lib/typescript/src/types'
 
 const MainStack = createStackNavigator<AuthenticatedPages>()
