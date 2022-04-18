@@ -169,7 +169,6 @@ export type MapPointProps = {
   content: string
   pointType: PointType
   status: StationStatus
-  children: any
 }
 
 export type MapPointPopupProps = {

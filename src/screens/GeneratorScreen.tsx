@@ -10,7 +10,7 @@ import RNPickerSelect from 'react-native-picker-select'
 import QRCode from 'react-native-qrcode-svg'
 import { useState } from 'react'
 //import styles from '../styles/main'
-import { Button } from '../components/Buttons'
+import { Button } from '@/components/Buttons'
 import colors from '@/styles/colors'
 import { cipher, decipher } from '../util/crypto'
 import CryptoJS from 'crypto-js'
@@ -45,6 +45,27 @@ const GeneratorScreen = () => {
       return cipherText
     }
   }
+  const ciphertext = CryptoJS.AES.encrypt(
+    'hello world', SALT
+  ).toString()
+  console.log('cipher: ', ciphertext)
+
+  const decipher = CryptoJS.AES.decrypt(
+    ciphertext, SALT
+  ).toString(CryptoJS.enc.Utf8)
+  console.log('decrypted: ', decipher)
+
+  // // Encrypt
+  // var ciphertext = CryptoJS.AES.encrypt(
+  //   'my message',
+  //   'secret key 123'
+  // ).toString()
+  //
+  // // Decrypt
+  // var bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123')
+  // var originalText = bytes.toString(CryptoJS.enc.Utf8)
+  //
+  // console.log(originalText) // 'my message'
 
   return (
     <KeyboardAvoidingView style={styles.centeredView} behavior="padding">

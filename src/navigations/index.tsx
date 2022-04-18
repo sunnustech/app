@@ -14,7 +14,7 @@ import { LoginScreen } from '@/screens/index'
 import { UserState } from '@/types/index'
 import AuthStack from '@/navigations/AuthStack'
 import { UnauthenticatedPages } from '@/types/navigation'
-import SplashScreen from '../screens/SplashScreen'
+import SplashScreen from '@/screens/SplashScreen'
 
 const Stack = createNativeStackNavigator<UnauthenticatedPages>()
 const debugSplash = false
