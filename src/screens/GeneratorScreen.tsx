@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { Button } from '../components/Buttons'
 import colors from '@/styles/colors'
 import { cipher, decipher } from '../util/crypto'
+import CryptoJS from 'crypto-js'
 
 const GeneratorScreen = () => {
   const SALT = 'MoonNUS'
@@ -39,7 +40,9 @@ const GeneratorScreen = () => {
         score.toString() +
         SEPERATOR +
         facilitator
-      return secret(str).substring(1)
+      let cipherText =  CryptoJS.AES.encrypt(str, SALT).toString()
+      console.log(cipherText)
+      return cipherText
     }
   }
 

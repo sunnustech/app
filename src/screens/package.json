@@ -1,7 +1,3 @@
 {
-  "name": "@/screens",
-  "main": "index.ts",
-  "devDependencies": {
-    "@types/crypto-js": "^4.1.1"
-  }
+  "name": "@/screens"
 }
