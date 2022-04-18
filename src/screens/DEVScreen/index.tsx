@@ -16,8 +16,18 @@ import DebugButton from './DebugButton'
 // import { MatchRequest } from '@/types/knockout'
 import { generateStationQR } from '@/lib/SOAR/QRDictionary'
 import colors from '@/styles/colors'
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { auth } from '@/sunnus/firebase'
 
 /* use this space to hard-code test inputs to functions */
+
+function sendEmail() {
+  const school = 'e0725213@u.nus.edu'
+  const personal = 'brew4k@gmail.com'
+  sendPasswordResetEmail(auth, personal).then(() =>
+    console.log('email sent!')
+  )
+}
 
 /* add button that links to debug function */
 const DebugList = () => (
@@ -28,6 +38,12 @@ const DebugList = () => (
 
     <DebugButton onPress={generateStationQR} color={colors.pink[500]}>
       Generate QR (to send to SOAR)
+    </DebugButton>
+
+    <Text>Password Reset Email</Text>
+
+    <DebugButton onPress={sendEmail} color={colors.pink[500]}>
+      Send Email
     </DebugButton>
   </>
 )
