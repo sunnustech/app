@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   KeyboardAvoidingView,
   Modal,
@@ -6,14 +7,15 @@ import {
   View,
   StyleSheet,
 } from 'react-native'
-import RNPickerSelect from 'react-native-picker-select'
+import CryptoJS from 'crypto-js'
 import QRCode from 'react-native-qrcode-svg'
-import { useState } from 'react'
+import RNPickerSelect from 'react-native-picker-select'
+
+/* sunnus components */
 //import styles from '../styles/main'
 import { Button } from '@/components/Buttons'
 import colors from '@/styles/colors'
-import { cipher, decipher } from '../util/crypto'
-import CryptoJS from 'crypto-js'
+import { SOARActions, SOARFacilitators, SOARStations } from '@/data/constants'
 
 const GeneratorScreen = () => {
   const SALT = 'MoonNUS'
@@ -31,8 +33,7 @@ const GeneratorScreen = () => {
 
   const generateQRString = () => {
     if (modal) {
-      const secret = cipher(SALT)
-      let str =
+      const str =
         event +
         SEPERATOR +
         action +
@@ -40,7 +41,8 @@ const GeneratorScreen = () => {
         score.toString() +
         SEPERATOR +
         facilitator
-      return secret(str).substring(1)
+      const cipherText = CryptoJS.AES.encrypt(str, SALT).toString()
+      return cipherText
     }
   }
   const ciphertext = CryptoJS.AES.encrypt(

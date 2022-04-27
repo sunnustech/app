@@ -72,6 +72,25 @@ export const stationOrder = {
   ],
 }
 
+export const SOARStations = [
+  'Slide',
+  'Sotong Houze',
+  'Nerf Battle',
+  'Snake and Ladders',
+  'GOLF',
+  'Relay2Maze',
+]
+
+export const SOARActions = [
+  'start',
+  'pause',
+  'resume',
+  'stopFinal',
+  'completeStage',
+]
+
+export const SOARFacilitators = []
+
 const SOARInit: SOARTeamProps = {
   timerRunning: false,
   started: false,
