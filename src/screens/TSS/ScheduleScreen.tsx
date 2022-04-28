@@ -16,6 +16,7 @@ const ScheduleScreen = ({
   navigation: AuthPage<'TSSNavigator'>
 }) => {
   const { schedule } = useContext(LastContext)
+  console.log(schedule)
   return (
     <SafeAreaView style={styles.outerContainer}>
       <BackButton navigation={navigation} text="Schedule" />

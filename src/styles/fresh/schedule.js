@@ -2,6 +2,12 @@ import { StyleSheet } from 'react-native'
 import colors from '@/styles/colors'
 import opts from './opts'
 
+// shadowColor: colors.shadow,
+// shadowRadius: 2,
+// shadowOpacity: 0.2,
+// shadowOffset: { width: 0, height: 5 },
+// backgroundColor: colors.white,
+
 const gray3 = colors.gray[300]
 const gray4 = colors.gray[400]
 const gray5 = colors.gray[500]
@@ -27,16 +33,21 @@ export default StyleSheet.create({
   eventBg: {
     width: '90%',
     borderRadius: opts.radius,
-    // shadowColor: colors.shadow,
-    // shadowRadius: 2,
-    // shadowOpacity: 0.2,
-    // shadowOffset: { width: 0, height: 5 },
-    // backgroundColor: colors.white,
     borderBottomColor: colors.gray[200],
     borderBottomWidth: 1,
     paddingHorizontal: 10,
     paddingVertical: 10,
   },
+  eventBgCompleted: {
+    width: '90%',
+    borderRadius: opts.radius,
+    borderBottomColor: colors.gray[200],
+    borderBottomWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: colors.red[300],
+  },
+
   text: {
     fontWeight: '600',
     fontSize: 18,
@@ -69,5 +80,8 @@ export default StyleSheet.create({
     fontSize: 20,
     marginBottom: 4,
     fontWeight: '700',
+  },
+  completedTime: {
+    color: colors.gray[100],
   },
 })

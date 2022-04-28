@@ -9,18 +9,6 @@ import { ReactNode } from 'react'
 
 const prettify = (s: string) => CFL(RU(s))
 
-// type Event = {
-//   start: string
-//   end: string
-//   sport: Sport
-//   venue: string
-//   court: string
-//   round: Round
-//   A: string
-//   B: string
-//   winner: 'A' | 'B' | 'U'
-// }
-
 const Text = ({
   children,
   style,
@@ -31,7 +19,7 @@ const Text = ({
   return <RNText style={[styles.text, style]}>{children}</RNText>
 }
 
-const Event = (props: EventProps) => {
+const NotCompleted = (props: EventProps) => {
   const round = prettify(props.round)
   const sport = CFL(props.sport)
   const A = prettify(props.A)
@@ -41,7 +29,8 @@ const Event = (props: EventProps) => {
       <Text style={styles.time}>{props.start}</Text>
       <Text style={styles.sport}>{sport}</Text>
       <RNText style={{ marginBottom: 4 }}>
-        <Text style={styles.venue}>{props.venue}</Text>{'  '}
+        <Text style={styles.venue}>{props.venue}</Text>
+        {'  '}
         <Text style={styles.court}>{props.court}</Text>
       </RNText>
       <Text style={styles.round}>{round}</Text>
@@ -52,6 +41,36 @@ const Event = (props: EventProps) => {
       </RNText>
     </View>
   )
+}
+
+const Completed = (props: EventProps) => {
+  const round = prettify(props.round)
+  const sport = CFL(props.sport)
+  const A = prettify(props.A)
+  const B = prettify(props.B)
+  return (
+    <View style={styles.eventBg}>
+      <Text style={styles.completedTime}>{props.start}</Text>
+      <Text style={styles.sport}>{sport}</Text>
+      <RNText style={{ marginBottom: 4 }}>
+        <Text style={styles.venue}>{props.venue}</Text>
+        {'  '}
+        <Text style={styles.court}>{props.court}</Text>
+      </RNText>
+      <Text style={styles.round}>{round}</Text>
+      <RNText style={{ marginBottom: 2 }}>
+        <Text style={styles.participants}>{A}</Text>
+        <Text style={styles.vs}>{'  v  '}</Text>
+        <Text style={styles.participants}>{B}</Text>
+      </RNText>
+    </View>
+  )
+}
+
+const Event = (props: EventProps) => {
+  const completed = props.completed
+  console.log(completed)
+  return completed ? <Completed {...props} /> : <NotCompleted {...props} />
 }
 
 export default Event
