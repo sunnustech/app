@@ -130,7 +130,7 @@ const TSSScreen = ({
     }
     /* if the scores are untouched, send a toast */
     if (scoreA === -1 || scoreB === -1) {
-      console.log('please key in both scores')
+      console.debug('please key in both scores')
       return
     }
     // TODO add confirmation modal

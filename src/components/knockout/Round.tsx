@@ -80,8 +80,6 @@ const PagerRound = ({ matches }: { matches: Matches }) => {
   const arr = Object.keys(matches)
   const statuses: PageStatus[] = arr.map((_, i) => getStatus(matches[i]))
 
-  console.log(arr.length, statuses)
-
   return (
     <PagerView style={styles.pagerView} initialPage={0}>
       {arr.map((_, i) => {

@@ -5,7 +5,7 @@ import { ButtonRed } from '@/components/Buttons'
 
 const SOS = ({ visible, setState }: any) => {
   function handleDistressSignal() {
-    console.log('calling safety officer...') // perma
+    console.debug('calling safety officer...') // perma
     const safetyOfficerPhoneNumber = '93227015'
     Linking.openURL(`tel:${safetyOfficerPhoneNumber}`)
   }
