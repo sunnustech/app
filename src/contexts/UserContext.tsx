@@ -73,8 +73,11 @@ const rehydrateUserData = async ({
 }
 
 async function handlePushTokens(token: string) {
-  updateDoc(doc(db, 'notifications', 'expo'), {
-    pushTokens: arrayUnion(token),
+  if (auth.currentUser === null) {
+    return
+  }
+  updateDoc(doc(db, 'users', auth.currentUser.uid), {
+    expoPushToken: token,
   }).then(() => {
     console.log('successfully pushed Expo token to firebase')
   })
