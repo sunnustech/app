@@ -1,4 +1,4 @@
-import { Text, View, SafeAreaView, ScrollView } from 'react-native'
+import { SafeAreaView, ScrollView } from 'react-native'
 
 /* sunnus components */
 import { schedule as styles } from '@/styles/fresh'
@@ -15,7 +15,11 @@ const ScheduleScreen = ({
 }: {
   navigation: AuthPage<'TSSNavigator'>
 }) => {
+  // {schedule.map((event, index) => (
+  //   <Event {...event} key={index} />
+  // ))}
   const { schedule } = useContext(LastContext)
+  console.log(schedule)
   return (
     <SafeAreaView style={styles.outerContainer}>
       <BackButton navigation={navigation} text="Schedule" />
@@ -23,7 +27,7 @@ const ScheduleScreen = ({
         contentContainerStyle={styles.container}
         style={styles.scrollContainer}
       >
-        {schedule.map((event, index) => (
+        {schedule.slice(0, 2).map((event, index) => (
           <Event {...event} key={index} />
         ))}
       </ScrollView>

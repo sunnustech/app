@@ -42,7 +42,12 @@ const getEvent = (data: DocumentData): Event => {
     round: data.round,
     A: data.A,
     B: data.B,
-    winner: data.winner,
+    group: data.group,
+    scoreA: data.scoreA,
+    scoreB: data.scoreB,
+    idA: data.idA,
+    idB: data.idB,
+    completed: data.completed,
   }
 }
 
