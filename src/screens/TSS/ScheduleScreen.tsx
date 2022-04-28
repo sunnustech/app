@@ -1,4 +1,4 @@
-import { Text, View, SafeAreaView, ScrollView } from 'react-native'
+import { SafeAreaView, ScrollView } from 'react-native'
 
 /* sunnus components */
 import { schedule as styles } from '@/styles/fresh'
@@ -27,7 +27,7 @@ const ScheduleScreen = ({
         contentContainerStyle={styles.container}
         style={styles.scrollContainer}
       >
-        {schedule.slice(0,1).map((event, index) => (
+        {schedule.slice(0, 2).map((event, index) => (
           <Event {...event} key={index} />
         ))}
       </ScrollView>
