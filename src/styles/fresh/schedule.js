@@ -69,6 +69,16 @@ export default StyleSheet.create({
   },
   round: {},
   participants: {},
+  bothParticipantsContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: colors.red[100],
+  },
+  participantContainer: {
+    flex: 1,
+    backgroundColor: colors.red[100],
+  },
   vs: {
     fontSize: 15,
     fontWeight: '700',
@@ -82,6 +92,6 @@ export default StyleSheet.create({
     fontWeight: '700',
   },
   completedTime: {
-    color: colors.gray[100],
+    color: colors.gray[400],
   },
 })

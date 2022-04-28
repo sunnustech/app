@@ -15,6 +15,9 @@ const ScheduleScreen = ({
 }: {
   navigation: AuthPage<'TSSNavigator'>
 }) => {
+  // {schedule.map((event, index) => (
+  //   <Event {...event} key={index} />
+  // ))}
   const { schedule } = useContext(LastContext)
   console.log(schedule)
   return (
@@ -24,7 +27,7 @@ const ScheduleScreen = ({
         contentContainerStyle={styles.container}
         style={styles.scrollContainer}
       >
-        {schedule.map((event, index) => (
+        {schedule.slice(0,1).map((event, index) => (
           <Event {...event} key={index} />
         ))}
       </ScrollView>
