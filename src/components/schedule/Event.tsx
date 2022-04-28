@@ -1,4 +1,10 @@
-import { View, Text as RNText, StyleProp, TextStyle, ViewStyle } from 'react-native'
+import {
+  View,
+  Text as RNText,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native'
 import { schedule as styles } from '@/styles/fresh'
 import { EventProps } from '@/types/schedule'
 import { Feather } from '@expo/vector-icons'
@@ -70,21 +76,21 @@ const Event = (props: EventProps) => {
     )
   }
 
-  const Score = (props: {
+  const Score = (score: {
     style: StyleProp<ViewStyle>
     score: number
     win: boolean
   }) => {
     const style: StyleProp<TextStyle>[] = [styles.score]
-    if (props.win) {
+    if (score.win) {
       style.push(styles.win)
     }
     style.push
-    return (
-      <View style={[styles.scoreContainer, props.style]}>
-        <Text style={style}>{props.score}</Text>
+    return props.completed ? (
+      <View style={[styles.scoreContainer, score.style]}>
+        <Text style={style}>{score.score}</Text>
       </View>
-    )
+    ) : null
   }
 
   const Participants = () => (
@@ -103,16 +109,19 @@ const Event = (props: EventProps) => {
       <VenueCourt />
       <Round />
       <Participants />
-      <Score
-        score={props.scoreA}
-        style={styles.left}
-        win={props.scoreA > props.scoreB}
-      />
-      <Score
-        score={props.scoreB}
-        style={styles.right}
-        win={props.scoreA < props.scoreB}
-      />
+      <View style={styles.scoreWrapper}>
+        <Score
+          score={props.scoreA}
+          style={styles.left}
+          win={props.scoreA > props.scoreB}
+        />
+        <View style={{flex: 1}}/>
+        <Score
+          score={props.scoreB}
+          style={styles.right}
+          win={props.scoreA < props.scoreB}
+        />
+      </View>
     </View>
   )
 }
