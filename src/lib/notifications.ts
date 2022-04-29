@@ -115,7 +115,7 @@ function notificationInit(): {
      */
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response) // perma
+        console.debug(response) // perma
       })
 
     return () => {

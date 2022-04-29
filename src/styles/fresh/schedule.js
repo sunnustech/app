@@ -2,6 +2,11 @@ import { StyleSheet } from 'react-native'
 import colors from '@/styles/colors'
 import opts from './opts'
 
+const scorePadding = {
+  left: 10,
+  top: 10
+}
+
 // shadowColor: colors.shadow,
 // shadowRadius: 2,
 // shadowOpacity: 0.2,
@@ -35,8 +40,8 @@ export default StyleSheet.create({
     borderRadius: opts.radius,
     borderBottomColor: colors.gray[200],
     borderBottomWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingHorizontal: scorePadding.left,
+    paddingVertical: scorePadding.top,
   },
   eventBgCompleted: {
     width: '90%',
@@ -68,18 +73,28 @@ export default StyleSheet.create({
     color: gray5,
   },
   round: {},
-  score: {
-    fontWeight: '700',
-    fontSize: 100,
-    color: colors.gray[700],
-    opacity: 0.07,
-  },
-  win: {
-    color: colors.emerald[500],
-    opacity: 0.12,
+  scoreWrapper: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    left: scorePadding.left,
+    top: scorePadding.top,
+    height: '100%',
+    width: '100%',
+    // backgroundColor: colors.red[200],
   },
   scoreContainer: {
-    position: 'absolute',
+    // backgroundColor: colors.purple[200],
+  },
+  score: {
+    fontWeight: '700',
+    fontSize: 42,
+    color: colors.gray[400],
+    opacity: 0.7
+  },
+  win: {
+    color: colors.emerald[400],
+    opacity: 0.6,
   },
   participants: {},
   bothParticipantsContainer: {

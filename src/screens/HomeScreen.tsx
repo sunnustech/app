@@ -23,16 +23,16 @@ const HomeScreen = () => {
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
       .then(() => {
-        console.log('successful signout') // perma
+        console.debug('successful signout') // perma
       })
-      .catch((err) => console.log(err)) // perma
+      .catch((err) => console.debug(err)) // perma
   }
 
   /*
    * note that the auth variable is populated after login
    * and you can access its data by calling a field or a method on auth.
    *
-   * $ console.log(auth.currentUser) // perma
+   * $ console.debug(auth.currentUser) // perma
    * >>> <firebase username>
    */
 

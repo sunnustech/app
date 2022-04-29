@@ -157,7 +157,7 @@ const SOARScreen = () => {
         (doc) => {
           const liveData = doc.data()
           if (liveData) {
-            console.log('received firebase updates at', new Date())
+            console.debug('received firebase updates at', new Date())
             const updatedTeamData: TeamProps = {
               SOARTimerEvents: liveData.SOARTimerEvents,
               SOARStart: liveData.SOARStart,
@@ -183,7 +183,7 @@ const SOARScreen = () => {
       )
       return () => {
         /* detach firebase listener on unmount */
-        console.log('detach firebase listener on SOAR screen')
+        console.debug('detach firebase listener on SOAR screen')
         unsubscribeFirebase()
       }
     }
@@ -245,7 +245,7 @@ const SOARScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('focused on SOAR screen')
+      console.debug('focused on SOAR screen')
       setEverythingLoaded(false)
       if (
         teamName &&
@@ -255,7 +255,7 @@ const SOARScreen = () => {
         setEverythingLoaded(true)
       }
       return () => {
-        console.log('unfocused SOAR screen')
+        console.debug('unfocused SOAR screen')
         setEverythingLoaded(false)
       }
     }, [teamName, stationOrder, teamData])

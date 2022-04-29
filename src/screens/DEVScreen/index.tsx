@@ -25,7 +25,7 @@ function sendEmail() {
   const school = 'e0725213@u.nus.edu'
   const personal = 'brew4k@gmail.com'
   sendPasswordResetEmail(auth, personal).then(() =>
-    console.log('email sent!')
+    console.debug('email sent!')
   )
 }
 
@@ -61,7 +61,7 @@ const DEVScreen = () => {
   // const firebaseListener = onSnapshot(
   //   doc(db, 'participants', 'Dev_loper'),
   //   (doc) => {
-  //     console.log('current data: ', doc.data())
+  //     console.debug('current data: ', doc.data())
   //   }
   // )
 

@@ -41,7 +41,7 @@ const QRScreen = () => {
     setIsScanning(false)
     const string: string = code.data
     if (!Object.keys(QRIndex).includes(string)) {
-      console.log('invalid QR scanned') // perma
+      console.debug('invalid QR scanned') // perma
       setQR(invalidQR)
       navigation.navigate('SOARScreen')
       return
@@ -62,12 +62,12 @@ const QRScreen = () => {
     const nextStn = rem.length > 0 ? rem[0] : ''
     const prevStn = com.length > 0 ? com[com.length - 1] : ''
 
-    console.log('QR scanned:', QR)
-    console.log('completed', com)
-    console.log('remaining', rem)
-    console.log('next', nextStn)
-    console.log('prev', prevStn)
-    console.log('this', stn)
+    console.debug('QR scanned:', QR)
+    console.debug('completed', com)
+    console.debug('remaining', rem)
+    console.debug('next', nextStn)
+    console.debug('prev', prevStn)
+    console.debug('this', stn)
     setQR(QR)
 
     function send(QRCommand: QRCommandProps) {
