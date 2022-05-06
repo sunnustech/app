@@ -58,7 +58,7 @@ const propsAndEvents = async (
  * ╰─────────╯
  */
 const start = async (teamName: string, QR: QRCommandProps) => {
-  console.log(`-- START @ ${teamName} --`)
+  console.debug(`-- START @ ${teamName} --`)
   const [teamData, allEvents, ts] = await propsAndEvents(teamName, QR)
 
   const SOAR = teamData.SOAR
@@ -82,7 +82,7 @@ const stopFinal = async (teamName: string, QR: QRCommandProps) => {
   const [teamData, allEvents, ts] = await propsAndEvents(teamName, QR)
 
   if (teamData.SOAR.stopped) {
-    console.log('SOAR is already completed.')
+    console.debug('SOAR is already completed.')
     return
   }
 
@@ -108,12 +108,12 @@ const stopFinal = async (teamName: string, QR: QRCommandProps) => {
  * ╰─────────╯
  */
 const pause = async (teamName: string, QR: QRCommandProps) => {
-  console.log(`-- PAUSE @ ${teamName} --`)
+  console.debug(`-- PAUSE @ ${teamName} --`)
   const [teamData, allEvents, ts] = await propsAndEvents(teamName, QR)
 
   const ev = teamData.SOARTimerEvents
   if (ev[ev.length - 1] < 0) {
-    console.log('timer already paused')
+    console.debug('timer already paused')
     return
   }
 
@@ -136,12 +136,12 @@ const pause = async (teamName: string, QR: QRCommandProps) => {
  * ╰──────────╯
  */
 const resume = async (teamName: string, QR: QRCommandProps) => {
-  console.log(`-- RESUME @ ${teamName} --`)
+  console.debug(`-- RESUME @ ${teamName} --`)
   const [teamData, allEvents, ts] = await propsAndEvents(teamName, QR)
 
   const ev = teamData.SOARTimerEvents
   if (ev[ev.length - 1] > 0) {
-    console.log('timer already running')
+    console.debug('timer already running')
     return
   }
 

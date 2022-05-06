@@ -31,19 +31,19 @@ const LoginScreen = () => {
     if (email) {
       signInWithEmailAndPassword(auth, email, PASSWORD)
         .then((credential) => {
-          console.log('successful login as:', credential.user.email) // perma
+          console.debug('successful login as:', credential.user.email) // perma
           setLoading(false)
         })
         .catch((err) => {
           setLoginError(true)
           setLoading(false)
-          console.log(err) // perma
+          console.debug(err) // perma
         })
     }
   }
 
   const forgotHandler = () => {
-    console.log('call forgot password handler')
+    console.debug('call forgot password handler')
     // https://firebase.google.com/products/extensions/firebase-firestore-send-email
   }
 

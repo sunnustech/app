@@ -42,7 +42,12 @@ const getEvent = (data: DocumentData): Event => {
     round: data.round,
     A: data.A,
     B: data.B,
-    winner: data.winner,
+    group: data.group,
+    scoreA: data.scoreA,
+    scoreB: data.scoreB,
+    idA: data.idA,
+    idB: data.idB,
+    completed: data.completed,
   }
 }
 
@@ -64,7 +69,7 @@ const TSSNavigator = () => {
         (doc) => {
           const liveData = doc.data()
           if (liveData) {
-            console.log(`received firebase updates for ${sport} at`, new Date())
+            console.debug(`received firebase updates for ${sport} at`, new Date())
             const updatedData = getRounds(liveData)
             setRoundData(updatedData)
           }
@@ -76,7 +81,7 @@ const TSSNavigator = () => {
         where('sport', '==', 'volleyball')
       )
       const unsubscribeSchedule = onSnapshot(myScheduleQuery, (snapshot) => {
-        console.log(`received firebase updates for schedule at`, new Date())
+        console.debug(`received firebase updates for schedule at`, new Date())
         const schedule: Event[] = []
         snapshot.forEach((doc) => {
           const event = getEvent(doc.data())
@@ -86,7 +91,7 @@ const TSSNavigator = () => {
       })
       return () => {
         /* detach firebase listener on unmount */
-        console.log('detach firebase listeners on TSS navigator')
+        console.debug('detach firebase listeners on TSS navigator')
         unsubscribeKnockoutTable()
         unsubscribeSchedule()
       }
@@ -95,10 +100,10 @@ const TSSNavigator = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('focused on TSS navigator')
+      console.debug('focused on TSS navigator')
       setTSSNavActive(true)
       return () => {
-        console.log('unfocused TSS navigator')
+        console.debug('unfocused TSS navigator')
         setTSSNavActive(false)
       }
     }, [])

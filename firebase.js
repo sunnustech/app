@@ -12,9 +12,9 @@ const firebaseConfig = secrets.firebase
 let app
 if (getApps.length === 0) {
   app = initializeApp(firebaseConfig)
-  console.log('firebase: initialized') // perma
+  console.debug('firebase: initialized') // perma
 } else {
-  console.log('firebase: continued') // perma
+  console.debug('firebase: continued') // perma
   app = getApp()
 }
 
