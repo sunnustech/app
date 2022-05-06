@@ -25,5 +25,8 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn install
 
+      - name: Cancel previous EAS builds
+        uses: darcien/cancel-expo-eas-builds-action@v1
+
       - name: 🚀 Build app
         run: eas build --platform ios --non-interactive
