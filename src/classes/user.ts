@@ -1,4 +1,3 @@
-import { db } from '@/sunnus/firebase'
 import { sanitizePhoneNumber } from '@/utils/index'
 import {
   setDoc,
@@ -7,7 +6,7 @@ import {
   collection,
   getDoc,
   doc,
-  updateDoc,
+  addDoc,
 } from 'firebase/firestore'
 import { Init } from '@/types/classes'
 
@@ -61,17 +60,15 @@ export class User {
     }
     return User.empty
   }
-  static async set(user: User, options: SetOptions) {
+  /**
+   * add/updates the database with the user
+   * @param {User} user
+   */
+  static async set(user: User) {
     const docRef = doc(this.collectionRef, user.uid).withConverter(
       this.converter
     )
-    await setDoc(docRef, user, options)
-  }
-  static async update(user: User) {
-    const docRef = doc(this.collectionRef, user.uid).withConverter(
-      this.converter
-    )
-    await updateDoc(docRef, user)
+    await setDoc(docRef, user, { merge: true })
   }
   // constructor values can be read directly from csv
   public constructor(props: Init.User) {
