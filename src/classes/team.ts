@@ -2,10 +2,41 @@ import { db } from '@/sunnus/firebase'
 import { notEmpty } from '@/utils/index'
 import { Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
-import { collection, doc,getDoc, setDoc, FirestoreDataConverter } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  FirestoreDataConverter,
+  DocumentData,
+  QueryDocumentSnapshot,
+} from 'firebase/firestore'
 import { Init } from '@/types/classes'
 
 type SportFlexible = Sport | 'none' | 'more than 1'
+
+const toFirestore = (team: Team) => ({
+  members: team.members,
+  teamName: team.teamName,
+  direction: team.direction,
+  sport: team.sport,
+})
+
+const fromFirestore = (snapshot: QueryDocumentSnapshot<DocumentData>) => {
+  const data = snapshot.data()
+  const team = new Team({
+    teamName: data.teamName,
+    direction: data.direction,
+    captainsBall: '',
+    dodgeball: '',
+    frisbee: '',
+    tchoukball: '',
+    touchRugby: '',
+    volleyball: '',
+  })
+  team.setSport(data.sport)
+  return team
+}
 
 export class Team {
   members: string[]
@@ -42,29 +73,8 @@ export class Team {
   }
   /** converts a Team to a database-friendly object */
   static converter: FirestoreDataConverter<Team> = {
-    toFirestore: (team: Team) => {
-      return {
-        members: team.members,
-        teamName: team.teamName,
-        direction: team.direction,
-        sport: team.sport,
-      }
-    },
-    fromFirestore: (snapshot) => {
-      const data = snapshot.data()
-      const team = new Team({
-        teamName: data.teamName,
-        direction: data.direction,
-        captainsBall: '',
-        dodgeball: '',
-        frisbee: '',
-        tchoukball: '',
-        touchRugby: '',
-        volleyball: '',
-      })
-      team.setSport(data.sport)
-      return team
-    },
+    toFirestore: (team: Team) => toFirestore(team),
+    fromFirestore: (snapshot) => fromFirestore(snapshot),
   }
   /**
    * gets a user object from the database
@@ -72,7 +82,9 @@ export class Team {
    * @returns {Promise<Team>}
    */
   static async get(teamName: string): Promise<Team> {
-    const docRef = doc(this.collectionRef, teamName).withConverter(this.converter)
+    const docRef = doc(this.collectionRef, teamName).withConverter(
+      this.converter
+    )
     const snapshot = await getDoc(docRef)
     const data = snapshot.data()
     if (data) {
