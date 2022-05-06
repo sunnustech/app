@@ -1,12 +1,11 @@
+import { db } from '@/sunnus/firebase'
 import { sanitizePhoneNumber } from '@/utils/index'
 import {
   setDoc,
   FirestoreDataConverter,
-  SetOptions,
   collection,
   getDoc,
   doc,
-  addDoc,
 } from 'firebase/firestore'
 import { Init } from '@/types/classes'
 
@@ -51,6 +50,11 @@ export class User {
       return user
     },
   }
+  /**
+   * gets a user object from the database
+   * @param {string} uid
+   * @returns {Promise<User>}
+   */
   static async get(uid: string): Promise<User> {
     const docRef = doc(this.collectionRef, uid).withConverter(this.converter)
     const snapshot = await getDoc(docRef)
