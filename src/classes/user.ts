@@ -25,6 +25,7 @@ export class User {
     email: '',
     teamName: '',
   })
+  /** converts a User to a database-friendly object */
   static converter: FirestoreDataConverter<User> = {
     toFirestore: (user: User) => {
       return {

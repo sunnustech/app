@@ -1,7 +1,8 @@
+import { db } from '@/sunnus/firebase'
 import { notEmpty } from '@/utils/index'
 import { Sport } from '@/types/TSS'
 import { sportList } from '@/data/constants'
-import { FirestoreDataConverter } from 'firebase/firestore'
+import { collection, doc,getDoc, setDoc, FirestoreDataConverter } from 'firebase/firestore'
 import { Init } from '@/types/classes'
 
 type SportFlexible = Sport | 'none' | 'more than 1'
@@ -11,6 +12,17 @@ export class Team {
   teamName: string
   direction: string
   sport: SportFlexible
+  static collectionRef = collection(db, 'users')
+  static empty = new Team({
+    teamName: '',
+    direction: 'A',
+    captainsBall: '',
+    dodgeball: '',
+    frisbee: '',
+    tchoukball: '',
+    touchRugby: '',
+    volleyball: '',
+  })
   private static getSport(props: Init.Team) {
     let result: SportFlexible = 'none'
     const sportsSignedUp = sportList
@@ -28,6 +40,7 @@ export class Team {
     }
     return result
   }
+  /** converts a Team to a database-friendly object */
   static converter: FirestoreDataConverter<Team> = {
     toFirestore: (team: Team) => {
       return {
@@ -52,6 +65,30 @@ export class Team {
       team.setSport(data.sport)
       return team
     },
+  }
+  /**
+   * gets a user object from the database
+   * @param {string} teamName
+   * @returns {Promise<Team>}
+   */
+  static async get(teamName: string): Promise<Team> {
+    const docRef = doc(this.collectionRef, teamName).withConverter(this.converter)
+    const snapshot = await getDoc(docRef)
+    const data = snapshot.data()
+    if (data) {
+      return data
+    }
+    return Team.empty
+  }
+  /**
+   * add/updates the database with the user
+   * @param {Team} user
+   */
+  static async set(user: Team) {
+    const docRef = doc(this.collectionRef, user.teamName).withConverter(
+      this.converter
+    )
+    await setDoc(docRef, user, { merge: true })
   }
   constructor(props: Init.Team) {
     this.teamName = props.teamName
