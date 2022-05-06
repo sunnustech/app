@@ -7,6 +7,7 @@ import {
   collection,
   getDoc,
   doc,
+  updateDoc,
 } from 'firebase/firestore'
 import { Init } from '@/types/classes'
 
@@ -65,6 +66,12 @@ export class User {
       this.converter
     )
     await setDoc(docRef, user, options)
+  }
+  static async update(user: User) {
+    const docRef = doc(this.collectionRef, user.uid).withConverter(
+      this.converter
+    )
+    await updateDoc(docRef, user)
   }
   // constructor values can be read directly from csv
   public constructor(props: Init.User) {
