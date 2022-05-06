@@ -43,7 +43,7 @@ export class Team {
   teamName: string
   direction: string
   sport: SportFlexible
-  static collectionRef = collection(db, 'users')
+  static collectionRef = collection(db, 'teams')
   static empty = new Team({
     teamName: '',
     direction: 'A',
@@ -93,14 +93,14 @@ export class Team {
     return Team.empty
   }
   /**
-   * add/updates the database with the user
-   * @param {Team} user
+   * add/updates the database with the team
+   * @param {Team} team
    */
-  static async set(user: Team) {
-    const docRef = doc(this.collectionRef, user.teamName).withConverter(
+  static async set(team: Team) {
+    const docRef = doc(this.collectionRef, team.teamName).withConverter(
       this.converter
     )
-    await setDoc(docRef, user, { merge: true })
+    await setDoc(docRef, team, { merge: true })
   }
   constructor(props: Init.Team) {
     this.teamName = props.teamName
