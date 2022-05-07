@@ -20,6 +20,7 @@ export class QR {
     facilitator: '',
     station: '',
     teamName: '',
+    checkStation: () => true
   }
   constructor(props: QRProps) {
     if (!props.facilitator || props.facilitator === '') {

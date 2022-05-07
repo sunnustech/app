@@ -13,8 +13,8 @@ import { Overlap } from '@/components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SOARContext } from '@/contexts/SOARContext'
 import { invalidQR } from '@/lib/SOAR/QRCommands'
-import { QRCommandProps, SOARCommand } from '@/types/SOAR'
-import { QR } from '../classes/QR'
+import { SOARCommand } from '@/types/SOAR'
+import { QR } from '@/classes/QR'
 
 const QRScreen = () => {
   const SALT = 'MoonNUS'

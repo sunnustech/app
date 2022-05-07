@@ -218,6 +218,7 @@ const SOARScreen = () => {
 
   function confirmQRAction() {
     console.log('confirming QR Action ...')
+    console.log(qr)
     // final checks for QR validity
     // add the teamname?
     // send a request to firebase

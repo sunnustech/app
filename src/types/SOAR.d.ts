@@ -3,7 +3,7 @@ import { TimeApiProps } from '@/types/index'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import MapView from 'react-native-maps'
 import { MutableRefObject, RefObject } from 'react'
-import { QR } from '../classes/QR'
+import { QR } from '@/classes/QR'
 
 export type SOARTimetable = Array<{
   time: string
@@ -126,7 +126,7 @@ export type SOARContextProps = {
 
 export type SOARTimestamp = {
   timestamp: number
-  QR: QRCommandProps
+  QR: QR
 }
 
 export type SOARTeamProps = {
