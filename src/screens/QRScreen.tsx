@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { Text, View } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 import CryptoJS from 'crypto-js'
