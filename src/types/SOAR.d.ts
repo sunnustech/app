@@ -183,22 +183,20 @@ export type MapPointIconProps = {
   pointType: PointType
 }
 
-export type SOARStations = [
-  'Slide',
-  'Sotong Houze',
-  'Nerf Battle',
-  'Snake and Ladders',
-  'GOLF',
-  'Relay2Maze',
-]
+export type SOARStations =
+  | 'Slide'
+  | 'Sotong Houze'
+  | 'Nerf Battle'
+  | 'Snake and Ladders'
+  | 'GOLF'
+  | 'Relay2Maze'
 
-export type SOARActions = [
-  'start',
-  'pause',
-  'resume',
-  'stopFinal',
-  'completeStage',
-]
+export type SOARActions =
+  | 'start'
+  | 'pause'
+  | 'resume'
+  | 'stopFinal'
+  | 'completeStage'
 
 // Placeholder
 export type SOARFacilitators = ['khang', 'benjy']
