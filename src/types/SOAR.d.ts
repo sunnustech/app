@@ -43,7 +43,7 @@ export type SOARDatabase = {
   }
 }
 
-type SOARScores =
+export type SOARScores =
   | '0'
   | '1'
   | '2'
@@ -199,7 +199,7 @@ export type SOARActions =
   | 'completeStage'
 
 // Placeholder
-export type SOARFacilitators = ['khang', 'benjy']
+export type SOARFacilitators = 'khang' | 'benjy'
 
 // For SOAR QR to use custom picker
 export type QRField = 'event' | 'action' | 'facilitator' | 'score'
