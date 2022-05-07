@@ -56,6 +56,7 @@ const GeneratorScreen = () => {
         SEPERATOR +
         facilitator
       const cipherText = CryptoJS.AES.encrypt(str, SALT).toString()
+      console.log("string: ", str)
       return cipherText
     }
   }

@@ -16,7 +16,10 @@ import { QRCommands, invalidQR } from '@/lib/SOAR/QRCommands'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
 import { TeamProps } from '@/types/participants'
-import { QRCommandProps } from '@/types/SOAR'
+import {
+  QRCommandProps,
+  SOARCommand,
+} from '@/types/SOAR'
 
 const getTeamData = async (teamName: string): Promise<TeamProps> => {
   // TODO: handle errors on bad pulls
@@ -26,6 +29,9 @@ const getTeamData = async (teamName: string): Promise<TeamProps> => {
 }
 
 const QRScreen = () => {
+  const SALT = 'MoonNUS'
+  const SEPERATOR = '_'
+
   const { QRState, scanningState } = useContext(SOARContext)
   const { teamName } = useContext(UserContext)
   const [isScanning, setIsScanning] = scanningState
@@ -38,37 +44,48 @@ const QRScreen = () => {
    * doesn't process anything else
    */
   const handleQRCode = async (code: BarCodeEvent) => {
+    // Note! QRDictionary may be depreciated
     setIsScanning(false)
-    const string: string = code.data
-    if (!Object.keys(QRIndex).includes(string)) {
+
+    // Decrypt
+    const bytes = CryptoJS.AES.decrypt(code.data, SALT)
+    const qrData = bytes.toString(CryptoJS.enc.Utf8)
+    const data = qrData.split(SEPERATOR)
+
+    /* Guard clauses, if QR is not of correct type
+     * QR are of types as defined in GeneratorScreen.tsx
+     */
+    if (data.length !== 4) {
       console.debug('invalid QR scanned') // perma
       setQR(invalidQR)
       navigation.navigate('SOARScreen')
       return
     }
+
     // TODO: implement a QR code cooldown timer
-    // only continue for valid QR codes
-    const data = QRIndex[string]
-    const QR = QRCommands[data.command]
-    QR.station = data.station
 
     // error handling
     const teamData = await getTeamData(teamName)
     const SOAR = teamData.SOAR
-    const stn = data.station
-    const cmd = data.command
+    const stn = data[0]
+    const cmd = data[1]
+    const points = data[2]
+    const facilitator = data[3]
     const rem = teamData.SOARStationsRemaining
     const com = teamData.SOARStationsCompleted
     const nextStn = rem.length > 0 ? rem[0] : ''
     const prevStn = com.length > 0 ? com[com.length - 1] : ''
 
-    console.debug('QR scanned:', QR)
+    console.debug('QR scanned:', qrData)
     console.debug('completed', com)
     console.debug('remaining', rem)
     console.debug('next', nextStn)
     console.debug('prev', prevStn)
     console.debug('this', stn)
-    setQR(QR)
+    console.debug('command', cmd)
+    console.debug('points', points)
+    console.debug('facil', facilitator)
+    setQR(qrData)
 
     function send(QRCommand: QRCommandProps) {
       setQR(QRCommand)
@@ -148,7 +165,16 @@ const QRScreen = () => {
       return
     }
 
-    send(QR)
+    const qrObj: QRCommandProps = {
+      title: '',
+      summary: '',
+      action: cmd,
+      points: parseInt(points),
+      command: cmd as SOARCommand,
+      station: stn,
+    }
+
+    send(qrObj)
     return
   }
 
