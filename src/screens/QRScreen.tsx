@@ -14,6 +14,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SOARContext } from '@/contexts/SOARContext'
 import { invalidQR } from '@/lib/SOAR/QRCommands'
 import { QRCommandProps, SOARCommand } from '@/types/SOAR'
+import { QR } from '../classes/QR'
 
 const QRScreen = () => {
   const SALT = 'MoonNUS'
@@ -34,8 +35,7 @@ const QRScreen = () => {
     setIsScanning(false)
 
     // Decrypt
-    let bytes
-    let qrData
+    let bytes, qrData
     try {
       bytes = CryptoJS.AES.decrypt(code.data, SALT)
       qrData = bytes.toString(CryptoJS.enc.Utf8)
@@ -68,10 +68,13 @@ const QRScreen = () => {
 
     setQR(qrData)
 
-    function send(QRCommand: QRCommandProps) {
-      setQR(QRCommand)
-      navigation.navigate('SOARScreen')
-    }
+    const qr = new QR({
+      points: parseInt(points),
+      command: cmd as SOARCommand,
+      station: stn,
+      facilitator,
+      teamName: 'developer_team' // TODO un-hardcode this
+    })
 
     const qrObj: QRCommandProps = {
       title: '',
@@ -82,7 +85,8 @@ const QRScreen = () => {
       station: stn,
     }
 
-    send(qrObj)
+    setQR(qrObj)
+    navigation.navigate('SOARScreen')
     return
   }
 

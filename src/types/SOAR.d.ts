@@ -3,6 +3,7 @@ import { TimeApiProps } from '@/types/index'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import MapView from 'react-native-maps'
 import { MutableRefObject, RefObject } from 'react'
+import { QR } from '../classes/QR'
 
 export type SOARTimetable = Array<{
   time: string
@@ -120,7 +121,7 @@ export type SOARContextProps = {
   locationState: UseState<Array<SOARLocation>>
   stationOrderState: UseState<StationOrderProps>
   filteredState: UseState<SOARFilterProps>
-  QRState: UseState<QRCommandProps>
+  QRState: UseState<QR>
 }
 
 export type SOARTimestamp = {
