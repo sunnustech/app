@@ -45,27 +45,13 @@ const GeneratorScreen = () => {
       return cipherText
     }
   }
-  const ciphertext = CryptoJS.AES.encrypt(
-    'hello world', SALT
-  ).toString()
-  console.log('cipher: ', ciphertext)
 
+  /*
   const decipher = CryptoJS.AES.decrypt(
-    ciphertext, SALT
+    str, SALT
   ).toString(CryptoJS.enc.Utf8)
   console.log('decrypted: ', decipher)
-
-  // // Encrypt
-  // var ciphertext = CryptoJS.AES.encrypt(
-  //   'my message',
-  //   'secret key 123'
-  // ).toString()
-  //
-  // // Decrypt
-  // var bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123')
-  // var originalText = bytes.toString(CryptoJS.enc.Utf8)
-  //
-  // console.log(originalText) // 'my message'
+  */
 
   return (
     <KeyboardAvoidingView style={styles.centeredView} behavior="padding">
