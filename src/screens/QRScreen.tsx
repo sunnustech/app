@@ -12,25 +12,14 @@ import { QR as styles } from '@/styles/fresh'
 import { Overlap } from '@/components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SOARContext } from '@/contexts/SOARContext'
-import { QRCommands, invalidQR } from '@/lib/SOAR/QRCommands'
-import { pullDoc } from '@/data/pull'
-import { UserContext } from '@/contexts/UserContext'
-import { TeamProps } from '@/types/participants'
+import { invalidQR } from '@/lib/SOAR/QRCommands'
 import { QRCommandProps, SOARCommand } from '@/types/SOAR'
-
-const getTeamData = async (teamName: string): Promise<TeamProps> => {
-  // TODO: handle errors on bad pulls
-  const data = (await pullDoc({ collection: 'participants', doc: teamName }))
-    ?.data
-  return data
-}
 
 const QRScreen = () => {
   const SALT = 'MoonNUS'
   const SEPERATOR = '_'
 
   const { QRState, scanningState } = useContext(SOARContext)
-  const { teamName } = useContext(UserContext)
   const [isScanning, setIsScanning] = scanningState
   const setQR = QRState[1]
   const navigation = useNavigation<SOARPage<'QRScreen'>>()
