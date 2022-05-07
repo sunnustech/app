@@ -58,11 +58,6 @@ const QRScreen = () => {
     }
 
     const [stn, cmd, points, facilitator] = data
-    console.debug('QR scanned:', qrData)
-    console.debug('this', stn)
-    console.debug('command', cmd)
-    console.debug('points', points)
-    console.debug('facil', facilitator)
 
     // TODO: implement a QR code cooldown timer
 
@@ -76,16 +71,7 @@ const QRScreen = () => {
       teamName: 'developer_team' // TODO un-hardcode this
     })
 
-    const qrObj: QRCommandProps = {
-      title: '',
-      summary: '',
-      action: cmd,
-      points: parseInt(points),
-      command: cmd as SOARCommand,
-      station: stn,
-    }
-
-    setQR(qrObj)
+    setQR(qr)
     navigation.navigate('SOARScreen')
     return
   }
