@@ -15,7 +15,13 @@ import RNPickerSelect from 'react-native-picker-select'
 //import styles from '../styles/main'
 import { Button } from '@/components/Buttons'
 import colors from '@/styles/colors'
-import { SOARActions, SOARFacilitators, SOARStations } from '@/data/constants'
+import {
+  QRField,
+  SOARActions,
+  SOARFacilitators,
+  SOARScores,
+  SOARStations,
+} from '../types/SOAR'
 
 const GeneratorScreen = () => {
   const SALT = 'MoonNUS'
@@ -26,6 +32,14 @@ const GeneratorScreen = () => {
   const [facilitator, setFacilitator] = useState('')
   const [score, setScore] = useState(-1)
   const [modal, setModal] = useState(false)
+
+  /* For custom picker
+  const fields: QRField[] = ['event', 'action', 'facilitator', 'score']
+  const eventState = useState<SOARStations>('Slide')
+  const actionState = useState<SOARActions>('start')
+  const facilitatorState = useState<SOARFacilitators>()
+  const score = useState<SOARScores>(0)
+  */
 
   const generateScoreQR = () => {
     setModal(true)
@@ -45,27 +59,6 @@ const GeneratorScreen = () => {
       return cipherText
     }
   }
-  const ciphertext = CryptoJS.AES.encrypt(
-    'hello world', SALT
-  ).toString()
-  console.log('cipher: ', ciphertext)
-
-  const decipher = CryptoJS.AES.decrypt(
-    ciphertext, SALT
-  ).toString(CryptoJS.enc.Utf8)
-  console.log('decrypted: ', decipher)
-
-  // // Encrypt
-  // var ciphertext = CryptoJS.AES.encrypt(
-  //   'my message',
-  //   'secret key 123'
-  // ).toString()
-  //
-  // // Decrypt
-  // var bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123')
-  // var originalText = bytes.toString(CryptoJS.enc.Utf8)
-  //
-  // console.log(originalText) // 'my message'
 
   return (
     <KeyboardAvoidingView style={styles.centeredView} behavior="padding">
