@@ -182,3 +182,32 @@ export type MapPointIconProps = {
   status: StationStatus
   pointType: PointType
 }
+
+export type SOARStations = [
+  'Slide',
+  'Sotong Houze',
+  'Nerf Battle',
+  'Snake and Ladders',
+  'GOLF',
+  'Relay2Maze',
+]
+
+export type SOARActions = [
+  'start',
+  'pause',
+  'resume',
+  'stopFinal',
+  'completeStage',
+]
+
+// Placeholder
+export type SOARFacilitators = ['khang', 'benjy']
+
+// For SOAR QR to use custom picker
+export type QRField = 'event' | 'action' | 'facilitator' | 'score'
+export type QRFieldStates = {
+  event: UseState<SOARStations>
+  action: UseState<SOARActions>
+  facilitator: UseState<SOARFacilitators>
+  score: UseState<SOARScores>
+}

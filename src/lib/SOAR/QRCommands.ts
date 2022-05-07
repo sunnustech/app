@@ -11,7 +11,7 @@ export const emptyQR: QRCommandProps = {
 
 export const invalidQR: QRCommandProps = {
   title: 'invalid QR',
-  summary: 'The QR code scanned is not in our index',
+  summary: 'Sorry! This QR code is invalid.',
   action: 'Continue',
   command: '',
   station: '',
