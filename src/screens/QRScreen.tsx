@@ -1,6 +1,7 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Text, View } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
+import CryptoJS from 'crypto-js'
 
 /* navigation */
 import { SOARPage } from '@/types/navigation'
@@ -11,15 +12,11 @@ import { QR as styles } from '@/styles/fresh'
 import { Overlap } from '@/components/Views'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SOARContext } from '@/contexts/SOARContext'
-import { QRIndex } from '@/lib/SOAR/QRDictionary'
 import { QRCommands, invalidQR } from '@/lib/SOAR/QRCommands'
 import { pullDoc } from '@/data/pull'
 import { UserContext } from '@/contexts/UserContext'
 import { TeamProps } from '@/types/participants'
-import {
-  QRCommandProps,
-  SOARCommand,
-} from '@/types/SOAR'
+import { QRCommandProps, SOARCommand } from '@/types/SOAR'
 
 const getTeamData = async (teamName: string): Promise<TeamProps> => {
   // TODO: handle errors on bad pulls
@@ -48,8 +45,17 @@ const QRScreen = () => {
     setIsScanning(false)
 
     // Decrypt
-    const bytes = CryptoJS.AES.decrypt(code.data, SALT)
-    const qrData = bytes.toString(CryptoJS.enc.Utf8)
+    let bytes
+    let qrData
+    try {
+      bytes = CryptoJS.AES.decrypt(code.data, SALT)
+      qrData = bytes.toString(CryptoJS.enc.Utf8)
+    } catch (err) {
+      console.debug('Invalid QR!') // perma
+      setQR(invalidQR)
+      navigation.navigate('SOARScreen')
+      return
+    }
     const data = qrData.split(SEPERATOR)
 
     /* Guard clauses, if QR is not of correct type
@@ -73,14 +79,14 @@ const QRScreen = () => {
     const facilitator = data[3]
     const rem = teamData.SOARStationsRemaining
     const com = teamData.SOARStationsCompleted
-    const nextStn = rem.length > 0 ? rem[0] : ''
-    const prevStn = com.length > 0 ? com[com.length - 1] : ''
+    // const nextStn = rem.length > 0 ? rem[0] : ''
+    // const prevStn = com.length > 0 ? com[com.length - 1] : ''
 
     console.debug('QR scanned:', qrData)
     console.debug('completed', com)
     console.debug('remaining', rem)
-    console.debug('next', nextStn)
-    console.debug('prev', prevStn)
+    // console.debug('next', nextStn)
+    // console.debug('prev', prevStn)
     console.debug('this', stn)
     console.debug('command', cmd)
     console.debug('points', points)
@@ -103,10 +109,10 @@ const QRScreen = () => {
     /* only continue if the team is at the
      * current or previous station.
      */
-    if (stn !== nextStn && stn !== prevStn) {
-      send(QRCommands.WrongStation)
-      return
-    }
+    // if (stn !== nextStn && stn !== prevStn) {
+    //   send(QRCommands.WrongStation)
+    //   return
+    // }
 
     /* don't let teams start SOAR twice */
     if (cmd === 'start' && SOAR.started) {
@@ -209,7 +215,15 @@ const QRScreen = () => {
         </View>
       </Overlap>
     </View>
-  ) : null
+  ) : (
+    <View style={styles.buttonContainer}>
+      <View
+        style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}
+      />
+      <Text>{'Done 🎉 Click below to return to the map!'}</Text>
+      <BackToMap />
+    </View>
+  )
 }
 
 export default QRScreen

@@ -21,6 +21,7 @@ export function getLocations(
   const com = teamData.SOARStationsCompleted
   const rem = teamData.SOARStationsRemaining
 
+  /*
   gameStations.forEach((stn) => {
     // reset status for each call
     stn.status = ''
@@ -30,6 +31,7 @@ export function getLocations(
       stn.status = 'next'
     }
   })
+  */
 
   /* apply water/medic station filter */
   return [...noGames, ...gameStations].filter(
