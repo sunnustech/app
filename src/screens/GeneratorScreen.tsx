@@ -15,7 +15,13 @@ import RNPickerSelect from 'react-native-picker-select'
 //import styles from '../styles/main'
 import { Button } from '@/components/Buttons'
 import colors from '@/styles/colors'
-import { SOARActions, SOARFacilitators, SOARStations } from '@/data/constants'
+import {
+  QRField,
+  SOARActions,
+  SOARFacilitators,
+  SOARScores,
+  SOARStations,
+} from '../types/SOAR'
 
 const GeneratorScreen = () => {
   const SALT = 'MoonNUS'
@@ -26,6 +32,14 @@ const GeneratorScreen = () => {
   const [facilitator, setFacilitator] = useState('')
   const [score, setScore] = useState(-1)
   const [modal, setModal] = useState(false)
+
+  /* For custom picker
+  const fields: QRField[] = ['event', 'action', 'facilitator', 'score']
+  const eventState = useState<SOARStations>('Slide')
+  const actionState = useState<SOARActions>('start')
+  const facilitatorState = useState<SOARFacilitators>()
+  const score = useState<SOARScores>(0)
+  */
 
   const generateScoreQR = () => {
     setModal(true)
@@ -45,13 +59,6 @@ const GeneratorScreen = () => {
       return cipherText
     }
   }
-
-  /*
-  const decipher = CryptoJS.AES.decrypt(
-    str, SALT
-  ).toString(CryptoJS.enc.Utf8)
-  console.log('decrypted: ', decipher)
-  */
 
   return (
     <KeyboardAvoidingView style={styles.centeredView} behavior="padding">
