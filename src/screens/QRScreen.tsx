@@ -68,24 +68,15 @@ const QRScreen = () => {
       return
     }
 
-    // TODO: implement a QR code cooldown timer
-
-    // error handling
-    const teamData = await getTeamData(teamName)
-    const stn = data[0]
-    const cmd = data[1]
-    const points = data[2]
-    const facilitator = data[3]
-    const rem = teamData.SOARStationsRemaining
-    const com = teamData.SOARStationsCompleted
-
+    const [stn, cmd, points, facilitator] = data
     console.debug('QR scanned:', qrData)
-    console.debug('completed', com)
-    console.debug('remaining', rem)
     console.debug('this', stn)
     console.debug('command', cmd)
     console.debug('points', points)
     console.debug('facil', facilitator)
+
+    // TODO: implement a QR code cooldown timer
+
     setQR(qrData)
 
     function send(QRCommand: QRCommandProps) {
