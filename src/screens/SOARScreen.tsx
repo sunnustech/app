@@ -139,18 +139,12 @@ const SOARScreen = () => {
   }
 
   function confirmQRAction() {
-    console.log('confirming QR Action ...')
-    console.log(qr)
-    // final checks for QR validity
-    // add the teamname?
-    // send a request to firebase
-    // set the QR to empty
     const QRApi = httpsCallable(functions, 'QRApi')
     QRApi({
       station: qr.station,
       command: qr.command,
       facilitator: qr.facilitator,
-      teamName: 'developer_team',
+      teamName: 'developer_team', // TODO: un-hardcode this
       points: qr.points,
     }).then((result) => {
       const data = result.data
