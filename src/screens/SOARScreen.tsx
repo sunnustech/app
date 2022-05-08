@@ -1,16 +1,12 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import MapView from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import { requestForegroundPermissionsAsync } from 'expo-location'
 import { Text, View } from 'react-native'
 import { Modal } from 'react-native-paper'
-
-/* navigation */
 import { SOARPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-
-/* sunnus components */
 import { SOARContext } from '@/contexts/SOARContext'
 import { map as styles } from '@/styles/fresh'
 import { NoTouchDiv } from '@/components/Views'
@@ -18,15 +14,12 @@ import { Map } from '@/components/SOAR'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
-
 import { httpsCallable } from 'firebase/functions'
-
 import { NUSCoordinates } from '@/data/constants'
 import { getLocations } from '@/lib/SOAR'
 import { UserContext } from '@/contexts/UserContext'
 import { functions } from '@/sunnus/firebase'
 import TimerComponent from '@/components/Timer'
-import { useFocusEffect } from '@react-navigation/native'
 import { QR } from '../classes/QR'
 
 const SOARScreen = () => {
