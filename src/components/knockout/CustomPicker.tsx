@@ -14,7 +14,10 @@ const CustomPicker = ({
   function openPicker() {
     pickerRef.current?.togglePicker()
   }
-  const prettyText = (display: string): string => {
+  const prettyText = (display: string | number): string | number => {
+    if (typeof display === 'number') {
+      return display
+    }
     const spaced = replaceUnderscoresWithSpaces(display)
     const dashed = spaced !== '' ? spaced : '---'
     return dashed

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, MutableRefObject } from 'react'
 import {
   KeyboardAvoidingView,
   Modal,
@@ -9,19 +9,15 @@ import {
 } from 'react-native'
 import CryptoJS from 'crypto-js'
 import QRCode from 'react-native-qrcode-svg'
-import RNPickerSelect from 'react-native-picker-select'
+import RNPickerSelect, { Item } from 'react-native-picker-select'
+import CustomPicker from '../components/knockout/CustomPicker'
+import PickerProvider from '../components/knockout/PickerProvider'
 
 /* sunnus components */
 //import styles from '../styles/main'
 import { Button } from '@/components/Buttons'
 import colors from '@/styles/colors'
-import {
-  QRField,
-  SOARActions,
-  SOARFacilitators,
-  SOARScores,
-  SOARStations,
-} from '../types/SOAR'
+import { UseState } from '../types/SOAR'
 
 const GeneratorScreen = () => {
   const SALT = 'MoonNUS'
@@ -60,6 +56,83 @@ const GeneratorScreen = () => {
     }
   }
 
+  type Field = 'station' | 'action' | 'facil' | 'score'
+  type FieldStates = {
+    station: UseState<string>
+    action: UseState<string>
+    facil: UseState<string>
+    score: UseState<string>
+  }
+
+  const states: FieldStates = {
+    station: useState('Slide'),
+    action: useState('startTimer'),
+    facil: useState('Jessica'),
+    score: useState('0'),
+  }
+
+  const display: FieldStates = {
+    station: useState('Slide'),
+    action: useState('startTimer'),
+    facil: useState('Jessica'),
+    score: useState('0'),
+  }
+
+  const refs: Record<Field, MutableRefObject<RNPickerSelect | null>> = {
+    station: useRef<RNPickerSelect>(null),
+    action: useRef<RNPickerSelect>(null),
+    facil: useRef<RNPickerSelect>(null),
+    score: useRef<RNPickerSelect>(null),
+  }
+
+  const items: Record<Field, Item[]> = {
+    station: [
+      { label: 'Slide', value: 'Slide', key: 0 },
+      { label: 'Relay2Maze', value: 'Relay2Maze', key: 1 },
+      { label: 'Sotong Houze', value: 'SotongHouze', key: 2 },
+      { label: 'Snake and Ladders', value: 'SnakeandLadders', key: 3 },
+      { label: 'Golf', value: 'Golf', key: 4 },
+      { label: 'Nerf Battle', value: 'NerfBattle', key: 5 },
+    ],
+    action: [
+      { label: 'startTimer', value: 'startTimer', key: 0 },
+      { label: 'pauseTimer', value: 'pauseTimer', key: 1 },
+      { label: 'resumeTimer', value: 'resumeTimer', key: 2 },
+      { label: 'stopTimer', value: 'stopTimer', key: 3 },
+      { label: 'completeStage', value: 'completeStage', key: 4 },
+    ],
+    facil: [
+      { label: 'Joseph', value: 'Joseph', key: 0 },
+      { label: 'Tommy', value: 'Tommy', key: 1 },
+      { label: 'Stacy', value: 'Stacy', key: 2 },
+      { label: 'Leon', value: 'Leon', key: 3 },
+      { label: 'Jessica', value: 'Jessica', key: 4 },
+    ],
+    score: [
+      { label: '0', value: 0, key: 0 },
+      { label: '1', value: 1, key: 1 },
+      { label: '2', value: 2, key: 2 },
+      { label: '3', value: 3, key: 3 },
+      { label: '4', value: 4, key: 4 },
+      { label: '5', value: 5, key: 5 },
+      { label: '6', value: 6, key: 6 },
+      { label: '7', value: 7, key: 7 },
+      { label: '8', value: 8, key: 8 },
+      { label: '9', value: 9, key: 9 },
+      { label: '10', value: 10, key: 10 },
+      { label: '11', value: 11, key: 11 },
+      { label: '12', value: 12, key: 12 },
+      { label: '13', value: 13, key: 13 },
+      { label: '14', value: 14, key: 14 },
+      { label: '15', value: 15, key: 15 },
+      { label: '16', value: 16, key: 16 },
+      { label: '17', value: 17, key: 17 },
+      { label: '18', value: 18, key: 18 },
+      { label: '19', value: 19, key: 19 },
+      { label: '20', value: 20, key: 20 },
+    ],
+  }
+
   return (
     <KeyboardAvoidingView style={styles.centeredView} behavior="padding">
       <Modal
@@ -81,67 +154,37 @@ const GeneratorScreen = () => {
       </Modal>
       <Text>Welcome to the QR Code Generator page!</Text>
       <Text>Choose station</Text>
-      <RNPickerSelect
-        onValueChange={(value) => setEvent(value)}
-        items={[
-          { label: 'Slide', value: 'Slide', key: 0 },
-          { label: 'Relay2Maze', value: 'Relay2Maze', key: 1 },
-          { label: 'Sotong Houze', value: 'SotongHouze', key: 2 },
-          { label: 'Snake and Ladders', value: 'SnakeandLadders', key: 3 },
-          { label: 'Golf', value: 'Golf', key: 4 },
-          { label: 'Nerf Battle', value: 'NerfBattle', key: 5 },
-        ]}
+      <PickerProvider
+        _ref={refs.station}
+        setState={states.station[1]}
+        display={display.station}
+        items={items.station}
       />
+      <CustomPicker pickerRef={refs.station} display={display.station[0]} />
       <Text>Choose action</Text>
-      <RNPickerSelect
-        onValueChange={(value) => setAction(value)}
-        items={[
-          { label: 'start', value: 'start', key: 0 },
-          { label: 'pause', value: 'pause', key: 1 },
-          { label: 'resume', value: 'resume', key: 2 },
-          { label: 'stopFinal', value: 'stopFinal', key: 3 },
-          { label: 'completeStage', value: 'completeStage', key: 4 },
-        ]}
+      <PickerProvider
+        _ref={refs.action}
+        setState={states.action[1]}
+        display={display.action}
+        items={items.action}
       />
+      <CustomPicker pickerRef={refs.action} display={display.action[0]} />
       <Text>Choose facil</Text>
-      <RNPickerSelect
-        onValueChange={(value) => setFacilitator(value)}
-        items={[
-          { label: 'Joseph', value: 'Joseph', key: 0 },
-          { label: 'Tommy', value: 'Tommy', key: 1 },
-          { label: 'Stacy', value: 'Stacy', key: 2 },
-          { label: 'Leon', value: 'Leon', key: 3 },
-          { label: 'Jessica', value: 'Jessica', key: 4 },
-        ]}
+      <PickerProvider
+        _ref={refs.facil}
+        setState={states.facil[1]}
+        display={display.facil}
+        items={items.facil}
       />
+      <CustomPicker pickerRef={refs.facil} display={display.facil[0]} />
       <Text>Choose score</Text>
-      <RNPickerSelect
-        onValueChange={(value) => setScore(value)}
-        items={[
-          { label: '0', value: 0, key: 0 },
-          { label: '1', value: 1, key: 1 },
-          { label: '2', value: 2, key: 2 },
-          { label: '3', value: 3, key: 3 },
-          { label: '4', value: 4, key: 4 },
-          { label: '5', value: 5, key: 5 },
-          { label: '6', value: 6, key: 6 },
-          { label: '7', value: 7, key: 7 },
-          { label: '8', value: 8, key: 8 },
-          { label: '9', value: 9, key: 9 },
-          { label: '10', value: 10, key: 10 },
-          { label: '11', value: 11, key: 11 },
-          { label: '12', value: 12, key: 12 },
-          { label: '13', value: 13, key: 13 },
-          { label: '14', value: 14, key: 14 },
-          { label: '15', value: 15, key: 15 },
-          { label: '16', value: 16, key: 16 },
-          { label: '17', value: 17, key: 17 },
-          { label: '18', value: 18, key: 18 },
-          { label: '19', value: 19, key: 19 },
-          { label: '20', value: 20, key: 20 },
-        ]}
+      <PickerProvider
+        _ref={refs.score}
+        setState={states.score[1]}
+        display={display.score}
+        items={items.score}
       />
-
+      <CustomPicker pickerRef={refs.score} display={display.score[0]} />
       <Button onPress={generateScoreQR}>Test</Button>
     </KeyboardAvoidingView>
   )
@@ -185,6 +228,9 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  pickerHitBox: {
+    height: 100,
   },
 })
 
