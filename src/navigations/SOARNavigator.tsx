@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { SOARPages } from '@/types/navigation'
 import { SOARScreen, QRScreen } from '@/screens/index'
 import { onSnapshot, doc } from 'firebase/firestore'
-import { useCallback, useContext, useEffect } from 'react'
+import { useCallback, useContext } from 'react'
 import { SOARContext } from '@/contexts/SOARContext'
 import { converter } from '@/classes/firebase'
 import { useFocusEffect } from '@react-navigation/native'
@@ -19,33 +19,30 @@ const SOARNavigator = () => {
   const setTeam = teamState[1]
   const setQr = QRState[1]
 
-  useEffect(() => {
-    const unsubscribeFirebase: Unsubscribe = onSnapshot(
-      doc(db, 'teams', 'developer_team').withConverter(converter.team),
-      (doc) => {
-        const team = doc.data()
-        if (team !== undefined) {
-          console.debug('received firebase updates at', new Date())
-          setTeam(team)
-          console.debug(`\n<${team.teamName}>`)
-          console.debug(`${team._points} points,`)
-          console.debug(`${team._stationsRemaining.length} stations remaining\n`)
-        }
-      }
-    )
-    return () => {
-      /* detach firebase listener on unmount */
-      console.debug('detach firebase listener on SOAR navigator')
-      unsubscribeFirebase()
-    }
-  }, [])
-
   useFocusEffect(
     useCallback(() => {
       console.debug('focused on SOAR navigator')
+      const unsubscribeFirebase: Unsubscribe = onSnapshot(
+        doc(db, 'teams', 'developer_team').withConverter(converter.team),
+        (doc) => {
+          const team = doc.data()
+          if (team !== undefined) {
+            console.debug('received firebase updates at', new Date())
+            setTeam(team)
+            console.debug(`\n<${team.teamName}>`)
+            console.debug(`${team._points} points,`)
+            console.debug(
+              `${team._stationsRemaining.length} stations remaining\n`
+            )
+          }
+        }
+      )
       return () => {
         setQr(QR.empty)
         console.debug('unfocused SOAR navigator')
+        /* detach firebase listener on unmount */
+        unsubscribeFirebase()
+        console.debug('detach firebase listener on SOAR navigator')
       }
     }, [])
   )
