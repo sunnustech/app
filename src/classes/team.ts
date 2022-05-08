@@ -1,7 +1,7 @@
 import { db } from '@/sunnus/firebase'
 import { notEmpty } from '@/utils/index'
 import { Sport } from '@/types/TSS'
-import { sportList } from '@/data/constants'
+import { sportList, stationOrder } from '@/data/constants'
 import {
   collection,
   doc,
@@ -10,6 +10,7 @@ import {
   FirestoreDataConverter,
   DocumentData,
   QueryDocumentSnapshot,
+  Timestamp
 } from 'firebase/firestore'
 import { Init } from '@/types/classes'
 
@@ -40,9 +41,22 @@ const fromFirestore = (snapshot: QueryDocumentSnapshot<DocumentData>) => {
 
 export class Team {
   members: string[]
+  timestamp: number
   teamName: string
-  direction: string
+  direction: 'A' | 'B'
   sport: SportFlexible
+  _started: boolean
+  _stopped: boolean
+  _startTime: number
+  _stopTime: number
+  _timerRunning: boolean
+  _allEvents: Timestamp[]
+  _points: number
+  _timerEvents: number[]
+  _start: number
+  _pausedAt: number
+  _stationsCompleted: string[]
+  _stationsRemaining: string[]
   static collectionRef = collection(db, 'teams')
   static empty = new Team({
     teamName: '',
@@ -103,10 +117,23 @@ export class Team {
     await setDoc(docRef, team, { merge: true })
   }
   constructor(props: Init.Team) {
+    this.timestamp = 0
     this.teamName = props.teamName
     this.members = []
     this.sport = Team.getSport(props)
     this.direction = props.direction
+    this._started = false
+    this._stopped = false
+    this._startTime = 0
+    this._stopTime = 0
+    this._timerRunning = false
+    this._allEvents = []
+    this._points = 0
+    this._timerEvents = []
+    this._start = 0
+    this._pausedAt = 0
+    this._stationsCompleted = []
+    this._stationsRemaining = stationOrder[props.direction]
   }
   setSport(value: SportFlexible) {
     this.sport = value

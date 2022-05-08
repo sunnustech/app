@@ -9,6 +9,7 @@ import { db } from '@/sunnus/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import { SOARContextProps, StationOrderProps } from '@/types/SOAR'
 import { emptyQR } from '@/lib/SOAR/QRCommands'
+import { QR } from '@/classes/QR'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
 
@@ -58,7 +59,7 @@ const SOARContext = createContext<SOARContextProps>({
     () => {},
   ],
   scanningState: [false, () => true],
-  QRState: [emptyQR, () => {}],
+  QRState: [QR.empty, () => QR.empty],
 })
 
 // Getters and setters to be used when using context

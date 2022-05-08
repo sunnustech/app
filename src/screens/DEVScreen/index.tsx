@@ -18,6 +18,7 @@ import { generateStationQR } from '@/lib/SOAR/QRDictionary'
 import colors from '@/styles/colors'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '@/sunnus/firebase'
+import { QR } from '../../classes/QR'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -27,6 +28,18 @@ function sendEmail() {
   sendPasswordResetEmail(auth, personal).then(() =>
     console.debug('email sent!')
   )
+}
+
+function firebaseQR() {
+  console.log('firebasing the QR code...')
+  const qr = new QR({
+    command: "start",
+    points: 0,
+    facilitator: 'Khang',
+    station: 'Slide',
+    teamName: 'developer_team'
+  })
+  console.log('test QR:', qr)
 }
 
 /* add button that links to debug function */
@@ -40,10 +53,10 @@ const DebugList = () => (
       Generate QR (to send to SOAR)
     </DebugButton>
 
-    <Text>Password Reset Email</Text>
+    <Text>Send QR to firebase endpoint</Text>
 
-    <DebugButton onPress={sendEmail} color={colors.pink[500]}>
-      Send Email
+    <DebugButton onPress={firebaseQR} color={colors.pink[500]}>
+      Send QR
     </DebugButton>
   </>
 )

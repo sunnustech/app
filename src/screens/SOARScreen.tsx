@@ -23,7 +23,7 @@ import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
 import { emptyQR } from '@/lib/SOAR/QRCommands'
 import { NUSCoordinates } from '@/data/constants'
-import SOAR, { getLocations } from '@/lib/SOAR'
+import { getLocations } from '@/lib/SOAR'
 import { UserContext } from '@/contexts/UserContext'
 import { SOARLocation } from '@/types/SOAR'
 import { onSnapshot, doc } from 'firebase/firestore'
@@ -32,6 +32,7 @@ import { TeamProps } from '@/types/participants'
 import TimerComponent from '@/components/Timer'
 import { useFocusEffect } from '@react-navigation/native'
 import { Unsubscribe } from 'firebase/auth'
+import { QR } from '../classes/QR'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
@@ -51,7 +52,7 @@ const SOARScreen = () => {
 
   // unpack states
   const [filtered, setFiltered] = filteredState
-  const [QR, setQR] = QRState
+  const [qr, setQr] = QRState
   const [displayLocations, setDisplayLocations] = displayLocationState
 
   // local states
@@ -216,23 +217,24 @@ const SOARScreen = () => {
   }
 
   function confirmQRAction() {
-    // skip execution for invalid QRs
-    if (QR.title === 'invalid QR') {
-      return
-    }
-    SOAR[QR.command](teamName, QR)
-    setQR(emptyQR)
+    console.log('confirming QR Action ...')
+    console.log(qr)
+    // final checks for QR validity
+    // add the teamname?
+    // send a request to firebase
+    // set the QR to empty
+    setQr(QR.empty)
   }
 
-  const QRHandler = () => {
-    return QR === emptyQR ? null : (
-      <Modal visible={true} dismissable={true} onDismiss={() => setQR(emptyQR)}>
+  const QRModal = () => {
+    return qr === QR.empty ? null : (
+      <Modal visible={true} dismissable={true} onDismiss={() => setQr(QR.empty)}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>{QR.title}</Text>
+          <Text style={styles.modalTitle}>{qr.command}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <Text style={styles.centered}>{QR.summary}</Text>
+          <Text style={styles.centered}>{qr.command}</Text>
           <View style={{ marginBottom: 10 }}></View>
-          <ButtonGreen onPress={confirmQRAction}>{QR.action}</ButtonGreen>
+          <ButtonGreen onPress={confirmQRAction}>{qr.command}</ButtonGreen>
         </View>
       </Modal>
     )
@@ -334,7 +336,7 @@ const SOARScreen = () => {
             Timer={Timer}
           />
           <HandleCameraPermission />
-          <QRHandler />
+          <QRModal />
         </NoTouchDiv>
       </RootSiblingParent>
     )
