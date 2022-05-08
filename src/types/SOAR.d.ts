@@ -4,6 +4,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import MapView from 'react-native-maps'
 import { MutableRefObject, RefObject } from 'react'
 import { QR } from '@/classes/QR'
+import { Team } from '@/classes/Team'
 
 export type SOARTimetable = Array<{
   time: string
@@ -121,6 +122,7 @@ export type SOARContextProps = {
   locationState: UseState<Array<SOARLocation>>
   stationOrderState: UseState<StationOrderProps>
   displayLocationState: UseState<SOARLocation[]>
+  teamState: UseState<Team>
   filteredState: UseState<SOARFilterProps>
   QRState: UseState<QR>
 }

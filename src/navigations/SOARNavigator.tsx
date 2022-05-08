@@ -1,5 +1,4 @@
 import { db } from '@/sunnus/firebase'
-import { TeamProps } from '@/types/participants'
 import { Unsubscribe } from 'firebase/auth'
 import { createStackNavigator } from '@react-navigation/stack'
 import { SOARPages } from '@/types/navigation'
@@ -7,30 +6,24 @@ import { SOARScreen, QRScreen } from '@/screens/index'
 import { onSnapshot, doc } from 'firebase/firestore'
 import { useContext, useEffect } from 'react'
 import { SOARContext } from '@/contexts/SOARContext'
-import { getLocations } from '@/lib/SOAR'
 import { converter } from '@/classes/firebase'
-import { Team } from '@/classes/team'
 
 const SOARStack = createStackNavigator<SOARPages>()
 
 const SOARNavigator = () => {
-  const { locationState, filteredState, displayLocationState } =
-    useContext(SOARContext)
+  const { teamState } = useContext(SOARContext)
 
   // context stuff
-  const setDisplayLocations = displayLocationState[1]
-  const locations = locationState[0]
-  const filtered = filteredState[0]
+  const setTeam = teamState[1]
 
   useEffect(() => {
     const unsubscribeFirebase: Unsubscribe = onSnapshot(
       doc(db, 'teams', 'developer_team').withConverter(converter.team),
       (doc) => {
-        const data = doc.data()
-        if (data !== undefined) {
+        const team = doc.data()
+        if (team !== undefined) {
           console.debug('received firebase updates at', new Date())
-          const team: Team = data
-          console.log(team)
+          setTeam(team)
         }
       }
     )
