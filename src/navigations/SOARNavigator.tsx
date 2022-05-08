@@ -8,14 +8,16 @@ import { useCallback, useContext, useEffect } from 'react'
 import { SOARContext } from '@/contexts/SOARContext'
 import { converter } from '@/classes/firebase'
 import { useFocusEffect } from '@react-navigation/native'
+import { QR } from '@/classes/QR'
 
 const SOARStack = createStackNavigator<SOARPages>()
 
 const SOARNavigator = () => {
-  const { teamState } = useContext(SOARContext)
+  const { teamState, QRState } = useContext(SOARContext)
 
   // context stuff
   const setTeam = teamState[1]
+  const setQr = QRState[1]
 
   useEffect(() => {
     const unsubscribeFirebase: Unsubscribe = onSnapshot(
@@ -25,6 +27,9 @@ const SOARNavigator = () => {
         if (team !== undefined) {
           console.debug('received firebase updates at', new Date())
           setTeam(team)
+          console.debug(`\n<${team.teamName}>`)
+          console.debug(`${team._points} points,`)
+          console.debug(`${team._stationsRemaining.length} stations remaining\n`)
         }
       }
     )
@@ -39,6 +44,7 @@ const SOARNavigator = () => {
     useCallback(() => {
       console.debug('focused on SOAR navigator')
       return () => {
+        setQr(QR.empty)
         console.debug('unfocused SOAR navigator')
       }
     }, [])
