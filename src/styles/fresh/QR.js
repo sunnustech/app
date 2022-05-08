@@ -23,8 +23,7 @@ const QR = StyleSheet.create({
     textAlign: 'center',
   },
   pillButton: {
-    backgroundColor: colors.gray[50],
-    opacity: 0.7,
+    backgroundColor: 'rgba(255,255,255,0.7)',
     borderRadius: 1000,
     width: '50%',
     display: 'flex',
@@ -34,7 +33,7 @@ const QR = StyleSheet.create({
   },
   pillButtonText: {
     fontWeight: '600',
-    color: colors.gray[300],
+    color: colors.gray[800],
     textAlign: 'center',
   },
   modalContainer: {

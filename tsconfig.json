@@ -15,6 +15,7 @@
       "@/screens/*": ["./src/screens/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/utils/*": ["./src/utils/*"],
+      "@/classes/*": ["./src/classes/*"],
       "@/types/*": ["./src/types/*"]
     }
   },
