@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { db } from '@/sunnus/firebase'
 import { doc, getDoc } from 'firebase/firestore'
-import { SOARContextProps, StationOrderProps } from '@/types/SOAR'
+import { SOARContextProps, SOARLocation, StationOrderProps } from '@/types/SOAR'
 import { QR } from '@/classes/QR'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
@@ -49,6 +49,7 @@ const SOARContext = createContext<SOARContextProps>({
   loadingState: [false, () => true],
   locationState: [[], () => true],
   stationOrderState: [{ A: [], B: [] }, () => {}],
+  displayLocationState: [[], () => []],
   filteredState: [
     {
       game: true,
@@ -68,6 +69,7 @@ function SOARProvider(props: React.PropsWithChildren<{}>) {
   const QRState = useState(QR.empty)
   const locationState = useState<any>([])
   const stationOrderState = useState<StationOrderProps>({ A: [], B: [] })
+  const displayLocationState = useState<Array<SOARLocation>>([])
   const filteredState = useState<any>({
     game: true,
     water: false,
@@ -86,6 +88,7 @@ function SOARProvider(props: React.PropsWithChildren<{}>) {
   return (
     <SOARContext.Provider
       value={{
+        displayLocationState,
         stationOrderState,
         loadingState,
         filteredState,

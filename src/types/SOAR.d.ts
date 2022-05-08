@@ -120,6 +120,7 @@ export type SOARContextProps = {
   scanningState: UseState<boolean>
   locationState: UseState<Array<SOARLocation>>
   stationOrderState: UseState<StationOrderProps>
+  displayLocationState: UseState<SOARLocation[]>
   filteredState: UseState<SOARFilterProps>
   QRState: UseState<QR>
 }

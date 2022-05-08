@@ -43,9 +43,9 @@ const SOARScreen = () => {
     QRState,
     scanningState,
     stationOrderState,
+    displayLocationState
   } = useContext(SOARContext)
   const { teamName, teamData } = useContext(UserContext)
-  const displayLocationState = useState<Array<SOARLocation>>([])
 
   const locations = locationState[0]
   const stationOrder = stationOrderState[0]
@@ -113,51 +113,10 @@ const SOARScreen = () => {
     setDisplayLocations(getLocations(locations, obj, teamData))
   }
 
-  /* =====================================================
-   * HANDLES ACROSS-THE-TEAM UPDATING OF NEXT GAME STATION
-   * =====================================================
+  /* =====
+   * TIMER
+   * =====
    */
-
-  // run only once, after teamName and stationOrder has loaded,
-  // to attach a listener to firebase
-  useEffect(() => {
-    if (everythingLoaded === true) {
-      const unsubscribeFirebase: Unsubscribe = onSnapshot(
-        doc(db, 'participants', teamName),
-        (doc) => {
-          const liveData = doc.data()
-          if (liveData) {
-            console.debug('received firebase updates at', new Date())
-            const updatedTeamData: TeamProps = {
-              SOARTimerEvents: liveData.SOARTimerEvents,
-              SOARStart: liveData.SOARStart,
-              teamName: liveData.teamName,
-              SOAR: liveData.SOAR,
-              members: liveData.members,
-              registeredEvents: liveData.registeredEvents,
-              SOARPausedAt: liveData.SOARPausedAt,
-              SOARStationsCompleted: liveData.SOARStationsCompleted,
-              SOARStationsRemaining: liveData.SOARStationsRemaining,
-            }
-            setDisplayLocations(
-              getLocations(locations, filtered, updatedTeamData)
-            )
-            setStartStatus(updatedTeamData.SOAR.started)
-
-            // Timer props
-            setIsRunning(updatedTeamData.SOAR.timerRunning)
-            setPausedAt(updatedTeamData.SOARPausedAt)
-            setTimerEvents(updatedTeamData.SOARTimerEvents)
-          }
-        }
-      )
-      return () => {
-        /* detach firebase listener on unmount */
-        console.debug('detach firebase listener on SOAR screen')
-        unsubscribeFirebase()
-      }
-    }
-  }, [everythingLoaded])
 
   const Timer = () => {
     if (!everythingLoaded) {
