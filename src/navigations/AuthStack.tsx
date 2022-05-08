@@ -1,23 +1,21 @@
 import {
   HomeScreen,
-  SOARScreen,
   WSSScreen,
   DEVScreen,
-  QRScreen,
   GeneratorScreen,
 } from '@/screens/index'
 import { SOARProvider } from '@/contexts/SOARContext'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { UserProvider } from '@/contexts/UserContext'
-import { AuthenticatedPages, SOARPages } from '@/types/navigation'
+import { AuthenticatedPages } from '@/types/navigation'
 import TSSNavigator from '@/navigations/TSSNavigator'
+import SOARNavigator from '@/navigations/SOARNavigator'
 import { createStackNavigator } from '@react-navigation/stack'
 import { LastProvider } from '@/contexts/LastContext'
 import NotificationScreen from '@/screens/NotificationScreen'
 import { TransitionSpec } from '@react-navigation/stack/lib/typescript/src/types'
 
 const MainStack = createStackNavigator<AuthenticatedPages>()
-const SOARStack = createStackNavigator<SOARPages>()
 
 const config: TransitionSpec = {
   animation: 'spring',
@@ -69,24 +67,6 @@ const Navigator = () => (
     <MainStack.Screen name="GeneratorScreen" component={GeneratorScreen} />
     <MainStack.Screen name="DEVScreen" component={DEVScreen} />
   </MainStack.Navigator>
-)
-
-const SOARNavigator = () => (
-  <SOARStack.Navigator
-    initialRouteName="SOARScreen"
-    screenOptions={{ headerShown: false }}
-  >
-    <SOARStack.Screen
-      name="SOARScreen"
-      component={SOARScreen}
-      options={{ animationEnabled: false }}
-    />
-    <SOARStack.Screen
-      name="QRScreen"
-      component={QRScreen}
-      options={{ animationEnabled: false }}
-    />
-  </SOARStack.Navigator>
 )
 
 const AuthStack = () => (

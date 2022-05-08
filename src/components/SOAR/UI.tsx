@@ -18,7 +18,7 @@ const UI = ({
   toggleAdminStations,
   handleSOS,
   openQRScanner,
-  flyToCurrentLocation,
+  flyToNUS,
   Timer,
 }: any) => {
   const TopUI = () => {
@@ -53,13 +53,17 @@ const UI = ({
   const Debug = () => {
     return (
       <>
-        <MapSOSButton onPress={() => SOAR.start("Dev_loper", q.start)} />
+        <MapSOSButton onPress={() => SOAR.start('Dev_loper', q.start)} />
         <MapSOSButton onPress={() => SOAR.pause('Dev_loper', q.pause)} />
         <MapSOSButton onPress={() => SOAR.resume('Dev_loper', q.resume)} />
-        <MapSOSButton onPress={() => SOAR.stopFinal('Dev_loper', q.stopFinal)} />
+        <MapSOSButton
+          onPress={() => SOAR.stopFinal('Dev_loper', q.stopFinal)}
+        />
       </>
     )
   }
+
+  const debug = false
 
   const BottomUI = () => {
     return (
@@ -69,8 +73,8 @@ const UI = ({
           <MapSOSButton onPress={handleSOS} />
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
-          {/* <Debug /> */}
-          <MapGoToSchoolButton onPress={flyToCurrentLocation} />
+          {debug ? <Debug /> : null}
+          <MapGoToSchoolButton onPress={flyToNUS} />
           <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
         </NoTouchDiv>
       </NoTouchDiv>

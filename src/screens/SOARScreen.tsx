@@ -1,9 +1,8 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import MapView, { Camera } from 'react-native-maps'
+import MapView  from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import {
-  getCurrentPositionAsync,
   requestForegroundPermissionsAsync,
 } from 'expo-location'
 import { Text, View } from 'react-native'
@@ -60,7 +59,6 @@ const SOARScreen = () => {
   // local states
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState(true)
-  const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
   const [everythingLoaded, setEverythingLoaded] = useState(false)
   const [startStatus, setStartStatus] = useState(false)
 
@@ -77,41 +75,10 @@ const SOARScreen = () => {
 
   const navigation = useNavigation<SOARPage<'SOARScreen'>>()
 
-  // first time grab user location
-  useEffect(() => {
-    getCurrentPositionAsync().then((e) => {
-      const r: Camera = {
-        center: { latitude: e.coords.latitude, longitude: e.coords.longitude },
-        pitch: 0,
-        zoom: 15,
-        heading: 0,
-        altitude: 0,
-      }
-      setCurrentPosition(r)
-    })
-  }, [])
-
-  const flyToCurrentLocation = () => {
-    /* gonna make this fly to the middle of NUS instead */
+  const flyToNUS = () => {
     if (mapRef.current) {
       mapRef.current.animateCamera(NUSCoordinates, { duration: 500 })
     }
-    /*
-     * queries for user location and goes to it
-     */
-    // if (mapRef.current) {
-    //   mapRef.current.animateCamera(currentPosition, { duration: 500 })
-    // }
-    // getCurrentPositionAsync().then((e) => {
-    //   const r: Camera = {
-    //     center: { latitude: e.coords.latitude, longitude: e.coords.longitude },
-    //     pitch: 0,
-    //     zoom: 15,
-    //     heading: 0,
-    //     altitude: 0,
-    //   }
-    //   setCurrentPosition(r)
-    // })
   }
 
   useEffect(() => {
@@ -346,7 +313,7 @@ const SOARScreen = () => {
           <UI
             navigation={navigation}
             filtered={filtered}
-            flyToCurrentLocation={flyToCurrentLocation}
+            flyToNUS={flyToNUS}
             handleSOS={() => setSOSVisible(!SOSVisible)}
             openQRScanner={openQRScanner}
             toggleAdminStations={toggleAdminStations}
