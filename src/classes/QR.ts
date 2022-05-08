@@ -1,5 +1,5 @@
-import { flatten } from "./firebase"
-import { Team } from "./team"
+import { flatten } from './firebase'
+import { Team } from './team'
 
 export type QRProps = {
   command: string
@@ -23,13 +23,9 @@ export class QR {
     teamName: '',
   }
   static empty: QR = {
-    command: '',
-    points: 0,
-    facilitator: '',
-    station: '',
-    teamName: '',
+    ...this.emptyFlat,
     checkStation: () => true,
-    flatten: () => this.emptyFlat
+    flatten: () => this.emptyFlat,
   }
   constructor(props: QRProps) {
     if (!props.facilitator || props.facilitator === '') {
