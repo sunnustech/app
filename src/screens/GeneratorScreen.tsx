@@ -145,10 +145,8 @@ const GeneratorScreen = () => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <QRCode value={generateQRString()} />
-            <Pressable style={[styles.button]} onPress={() => setModal(false)}>
-              <Text style={styles.textStyle}>Hide QR</Text>
-            </Pressable>
+            <QRCode value={generateQRString()} size={240} />
+            <Button onPress={() => setModal(false)}>Hide QR</Button>
           </View>
         </View>
       </Modal>
@@ -217,12 +215,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: colors.fuchsia[400],
-  },
-  buttonClose: {
-    backgroundColor: colors.sky[400],
   },
   textStyle: {
     color: 'black',
