@@ -26,6 +26,7 @@ export class QR {
     ...this.emptyFlat,
     checkStation: () => true,
     flatten: () => this.emptyFlat,
+    setTeam: () => '',
   }
   constructor(props: QRProps) {
     if (!props.facilitator || props.facilitator === '') {
@@ -50,5 +51,8 @@ export class QR {
   }
   flatten(): QRProps {
     return flatten.qr(this)
+  }
+  setTeam(teamName: string) {
+    this.teamName = teamName
   }
 }

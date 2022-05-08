@@ -123,13 +123,7 @@ const SOARScreen = () => {
 
   function confirmQRAction() {
     const QRApi = httpsCallable(functions, 'QRApi')
-    QRApi({
-      station: qr.station,
-      command: qr.command,
-      facilitator: qr.facilitator,
-      teamName: 'developer_team', // TODO: un-hardcode this
-      points: qr.points,
-    }).then((result) => {
+    QRApi(qr.flatten()).then((result) => {
       const data = result.data
       console.log('data', data)
     })
