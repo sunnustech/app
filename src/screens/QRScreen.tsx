@@ -39,6 +39,7 @@ const QRScreen = () => {
     try {
       bytes = CryptoJS.AES.decrypt(code.data, SALT)
       qrData = bytes.toString(CryptoJS.enc.Utf8)
+      console.log('raw data', qrData)
     } catch (err) {
       console.debug('Invalid QR!') // perma
       setQR(invalidQR)
@@ -70,6 +71,8 @@ const QRScreen = () => {
       facilitator,
       teamName: 'developer_team' // TODO un-hardcode this
     })
+
+    console.log("Sending this QR back to SOAR Screen:", qr)
 
     setQR(qr)
     navigation.navigate('SOARScreen')

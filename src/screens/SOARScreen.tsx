@@ -22,12 +22,15 @@ import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
 import { emptyQR } from '@/lib/SOAR/QRCommands'
+
+import { httpsCallable } from 'firebase/functions'
+
 import { NUSCoordinates } from '@/data/constants'
 import { getLocations } from '@/lib/SOAR'
 import { UserContext } from '@/contexts/UserContext'
 import { SOARLocation } from '@/types/SOAR'
 import { onSnapshot, doc } from 'firebase/firestore'
-import { db } from '@/sunnus/firebase'
+import { db, functions } from '@/sunnus/firebase'
 import { TeamProps } from '@/types/participants'
 import TimerComponent from '@/components/Timer'
 import { useFocusEffect } from '@react-navigation/native'
@@ -223,12 +226,27 @@ const SOARScreen = () => {
     // add the teamname?
     // send a request to firebase
     // set the QR to empty
+    const QRApi = httpsCallable(functions, 'QRApi')
+    QRApi({
+      station: qr.station,
+      command: qr.command,
+      facilitator: qr.facilitator,
+      teamName: 'developer_team',
+      points: qr.points,
+    }).then((result) => {
+      const data = result.data
+      console.log('data', data)
+    })
     setQr(QR.empty)
   }
 
   const QRModal = () => {
     return qr === QR.empty ? null : (
-      <Modal visible={true} dismissable={true} onDismiss={() => setQr(QR.empty)}>
+      <Modal
+        visible={true}
+        dismissable={true}
+        onDismiss={() => setQr(QR.empty)}
+      >
         <View style={styles.modalContainer}>
           <Text style={styles.modalTitle}>{qr.command}</Text>
           <View style={{ marginBottom: 10 }}></View>
