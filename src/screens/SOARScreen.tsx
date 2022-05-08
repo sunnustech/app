@@ -1,10 +1,8 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import MapView  from 'react-native-maps'
+import MapView from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { BarCodeScanner } from 'expo-barcode-scanner'
-import {
-  requestForegroundPermissionsAsync,
-} from 'expo-location'
+import { requestForegroundPermissionsAsync } from 'expo-location'
 import { Text, View } from 'react-native'
 import { Modal } from 'react-native-paper'
 
@@ -26,13 +24,9 @@ import { httpsCallable } from 'firebase/functions'
 import { NUSCoordinates } from '@/data/constants'
 import { getLocations } from '@/lib/SOAR'
 import { UserContext } from '@/contexts/UserContext'
-import { SOARLocation } from '@/types/SOAR'
-import { onSnapshot, doc } from 'firebase/firestore'
-import { db, functions } from '@/sunnus/firebase'
-import { TeamProps } from '@/types/participants'
+import { functions } from '@/sunnus/firebase'
 import TimerComponent from '@/components/Timer'
 import { useFocusEffect } from '@react-navigation/native'
-import { Unsubscribe } from 'firebase/auth'
 import { QR } from '../classes/QR'
 
 const SOARScreen = () => {
@@ -43,7 +37,7 @@ const SOARScreen = () => {
     QRState,
     scanningState,
     stationOrderState,
-    displayLocationState
+    displayLocationState,
   } = useContext(SOARContext)
   const { teamName, teamData } = useContext(UserContext)
 
