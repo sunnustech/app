@@ -35,7 +35,6 @@ const SOARScreen = () => {
   const { teamName, teamData } = useContext(UserContext)
 
   const locations = locationState[0]
-  const stationOrder = stationOrderState[0]
   const setIsScanning = scanningState[1]
 
   // unpack states
@@ -69,6 +68,7 @@ const SOARScreen = () => {
   }
 
   useEffect(() => {
+    enableCameraPermission()
     ;(async () => {
       let { status } = await requestForegroundPermissionsAsync()
       if (status !== 'granted') {
@@ -83,15 +83,6 @@ const SOARScreen = () => {
    *          HANDLES TOGGLING OF ADMIN STATIONS
    * =====================================================
    */
-
-  /* update display locations if admin station toggle has been pressed
-   * (this calls setFiltered and changes filtered)
-   */
-  useEffect(() => {
-    if (everythingLoaded === true) {
-      setDisplayLocations(getLocations(locations, filtered, teamData))
-    }
-  }, [everythingLoaded, filtered])
 
   function toggleAdminStations() {
     const obj = filtered
@@ -176,11 +167,6 @@ const SOARScreen = () => {
       setCameraPermission('granted')
     }
   }
-
-  // run once to check for existing camera permissions
-  useEffect(() => {
-    enableCameraPermission()
-  }, [])
 
   const HandleCameraPermission = () => {
     if (cameraPermission !== 'granted' && checkingCameraPermission) {
