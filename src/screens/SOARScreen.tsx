@@ -172,29 +172,6 @@ const SOARScreen = () => {
   }
 
   /* =====================================================
-   *                  LOAD STATE CHECKER
-   * =====================================================
-   */
-
-  useFocusEffect(
-    useCallback(() => {
-      console.debug('focused on SOAR screen')
-      setEverythingLoaded(false)
-      if (
-        teamName &&
-        stationOrder.A.length > 0 &&
-        teamData.teamName.length > 0
-      ) {
-        setEverythingLoaded(true)
-      }
-      return () => {
-        console.debug('unfocused SOAR screen')
-        setEverythingLoaded(false)
-      }
-    }, [teamName, stationOrder, teamData])
-  )
-
-  /* =====================================================
    *                  CAMERA PERMISSIONS
    * =====================================================
    */

@@ -4,9 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { SOARPages } from '@/types/navigation'
 import { SOARScreen, QRScreen } from '@/screens/index'
 import { onSnapshot, doc } from 'firebase/firestore'
-import { useContext, useEffect } from 'react'
+import { useCallback, useContext, useEffect } from 'react'
 import { SOARContext } from '@/contexts/SOARContext'
 import { converter } from '@/classes/firebase'
+import { useFocusEffect } from '@react-navigation/native'
 
 const SOARStack = createStackNavigator<SOARPages>()
 
@@ -29,10 +30,19 @@ const SOARNavigator = () => {
     )
     return () => {
       /* detach firebase listener on unmount */
-      console.debug('detach firebase listener on SOAR screen')
+      console.debug('detach firebase listener on SOAR navigator')
       unsubscribeFirebase()
     }
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      console.debug('focused on SOAR navigator')
+      return () => {
+        console.debug('unfocused SOAR navigator')
+      }
+    }, [])
+  )
 
   return (
     <SOARStack.Navigator
