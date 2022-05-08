@@ -1,11 +1,3 @@
-// {{{
-import { Text, View, ScrollView } from 'react-native'
-/* navigation */
-/* sunnus components */
-import { DEV as styles } from '@/styles/fresh'
-import DebugButton from './DebugButton'
-// }}}
-
 /*
  * Hey devs, to add your own debug function, simply create a new instance of
  * DebugButton below and put your intended function to call inside the onPress
@@ -17,8 +9,12 @@ import DebugButton from './DebugButton'
 import { generateStationQR } from '@/lib/SOAR/QRDictionary'
 import colors from '@/styles/colors'
 import { sendPasswordResetEmail } from 'firebase/auth'
-import { auth } from '@/sunnus/firebase'
+import { httpsCallable } from 'firebase/functions'
+import { auth, functions } from '@/sunnus/firebase'
 import { QR } from '../../classes/QR'
+import { Text, View, ScrollView } from 'react-native'
+import { DEV as styles } from '@/styles/fresh'
+import DebugButton from './DebugButton'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -30,14 +26,20 @@ function sendEmail() {
   )
 }
 
-function firebaseQR() {
+function firebaseQR(command: string, station?: string) {
   console.log('firebasing the QR code...')
-  const qr = new QR({
-    command: "start",
+  const props = {
+    command,
     points: 0,
     facilitator: 'Khang',
-    station: 'Slide',
-    teamName: 'developer_team'
+    station: station || 'Slide',
+    teamName: 'developer_team',
+  }
+  const qr = new QR(props)
+  const QRApi = httpsCallable(functions, 'QRApi')
+  QRApi(props).then((result) => {
+    const data = result.data
+    console.log('data', data)
   })
   console.log('test QR:', qr)
 }
@@ -55,8 +57,82 @@ const DebugList = () => (
 
     <Text>Send QR to firebase endpoint</Text>
 
-    <DebugButton onPress={firebaseQR} color={colors.pink[500]}>
-      Send QR
+    <DebugButton
+      onPress={() => firebaseQR('startTimer')}
+      color={colors.pink[500]}
+    >
+      QR: start
+    </DebugButton>
+
+    <DebugButton
+      onPress={() => firebaseQR('resumeTimer')}
+      color={colors.pink[500]}
+    >
+      QR: resume
+    </DebugButton>
+
+    <DebugButton
+      onPress={() => firebaseQR('pauseTimer')}
+      color={colors.pink[500]}
+    >
+      QR: pause
+    </DebugButton>
+
+    <DebugButton
+      onPress={() => firebaseQR('stopTimer')}
+      color={colors.pink[500]}
+    >
+      QR: stop
+    </DebugButton>
+
+    <DebugButton
+      onPress={() => firebaseQR('resetTeam')}
+      color={colors.pink[500]}
+    >
+      QR: reset
+    </DebugButton>
+
+    <DebugButton
+      onPress={() => firebaseQR('completeStage', 'Slide')}
+      color={colors.emerald[500]}
+    >
+      {' '}
+      CS: Slide{' '}
+    </DebugButton>
+    <DebugButton
+      onPress={() => firebaseQR('completeStage', 'Sotong Houze')}
+      color={colors.emerald[500]}
+    >
+      {' '}
+      CS: Sotong Houze{' '}
+    </DebugButton>
+    <DebugButton
+      onPress={() => firebaseQR('completeStage', 'Nerf Battle')}
+      color={colors.emerald[500]}
+    >
+      {' '}
+      CS: Nerf Battle{' '}
+    </DebugButton>
+    <DebugButton
+      onPress={() => firebaseQR('completeStage', 'Snake and Ladders')}
+      color={colors.emerald[500]}
+    >
+      {' '}
+      CS: Snake and Ladders{' '}
+    </DebugButton>
+    <DebugButton
+      onPress={() => firebaseQR('completeStage', 'GOLF')}
+      color={colors.emerald[500]}
+    >
+      {' '}
+      CS: GOLF{' '}
+    </DebugButton>
+    <DebugButton
+      onPress={() => firebaseQR('completeStage', 'Relay2Maze')}
+      color={colors.emerald[500]}
+    >
+      {' '}
+      CS: Relay2Maze{' '}
     </DebugButton>
   </>
 )
