@@ -44,13 +44,13 @@ const GeneratorScreen = () => {
   const generateQRString = () => {
     if (modal) {
       const str =
-        event +
+        states.station[0] +
         SEPERATOR +
-        action +
+        states.action[0] +
         SEPERATOR +
-        score.toString() +
+        states.score[0].toString() +
         SEPERATOR +
-        facilitator
+        states.facil[0]
       const cipherText = CryptoJS.AES.encrypt(str, SALT).toString()
       return cipherText
     }
