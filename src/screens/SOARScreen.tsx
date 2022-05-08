@@ -20,7 +20,7 @@ import { getLocations } from '@/lib/SOAR'
 import { UserContext } from '@/contexts/UserContext'
 import { functions } from '@/sunnus/firebase'
 import TimerComponent from '@/components/Timer'
-import { QR } from '../classes/QR'
+import { QR } from '@/classes/QR'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
@@ -29,7 +29,6 @@ const SOARScreen = () => {
     filteredState,
     QRState,
     scanningState,
-    stationOrderState,
     displayLocationState,
   } = useContext(SOARContext)
   const { teamName, teamData } = useContext(UserContext)
