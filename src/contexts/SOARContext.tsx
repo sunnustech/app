@@ -8,7 +8,6 @@ import React, {
 import { db } from '@/sunnus/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import { SOARContextProps, StationOrderProps } from '@/types/SOAR'
-import { emptyQR } from '@/lib/SOAR/QRCommands'
 import { QR } from '@/classes/QR'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
@@ -66,7 +65,7 @@ const SOARContext = createContext<SOARContextProps>({
 function SOARProvider(props: React.PropsWithChildren<{}>) {
   const loadingState = useState(false)
   const scanningState = useState(false)
-  const QRState = useState(emptyQR)
+  const QRState = useState(QR.empty)
   const locationState = useState<any>([])
   const stationOrderState = useState<StationOrderProps>({ A: [], B: [] })
   const filteredState = useState<any>({

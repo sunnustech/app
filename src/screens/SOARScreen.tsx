@@ -21,7 +21,6 @@ import { Map } from '@/components/SOAR'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
-import { emptyQR } from '@/lib/SOAR/QRCommands'
 
 import { httpsCallable } from 'firebase/functions'
 
