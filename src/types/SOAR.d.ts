@@ -43,7 +43,7 @@ export type SOARDatabase = {
   }
 }
 
-type SOARScores =
+export type SOARScores =
   | '0'
   | '1'
   | '2'
@@ -183,25 +183,23 @@ export type MapPointIconProps = {
   pointType: PointType
 }
 
-export type SOARStations = [
-  'Slide',
-  'Sotong Houze',
-  'Nerf Battle',
-  'Snake and Ladders',
-  'GOLF',
-  'Relay2Maze',
-]
+export type SOARStations =
+  | 'Slide'
+  | 'Sotong Houze'
+  | 'Nerf Battle'
+  | 'Snake and Ladders'
+  | 'GOLF'
+  | 'Relay2Maze'
 
-export type SOARActions = [
-  'start',
-  'pause',
-  'resume',
-  'stopFinal',
-  'completeStage',
-]
+export type SOARActions =
+  | 'start'
+  | 'pause'
+  | 'resume'
+  | 'stopFinal'
+  | 'completeStage'
 
 // Placeholder
-export type SOARFacilitators = ['khang', 'benjy']
+export type SOARFacilitators = 'khang' | 'benjy'
 
 // For SOAR QR to use custom picker
 export type QRField = 'event' | 'action' | 'facilitator' | 'score'
