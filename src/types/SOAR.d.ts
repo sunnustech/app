@@ -161,23 +161,16 @@ type NavTarget = keyof AuthenticatedPages
 
 export type MapProps = {
   mapRef: MutableRefObject<MapView | null>
-  navigation: SOARNavigator
-  displayLocations: Array<SOARLocation>
-  startStatus: boolean
 }
 
 export type MapPointProps = {
-  navigation: SOARNavigator
   coordinate: Coordinate
-  navTarget: NavTarget
   content: string
   pointType: PointType
   status: StationStatus
 }
 
 export type MapPointPopupProps = {
-  navigation: SOARNavigator
-  navTarget: NavTarget
   content: string
   status: StationStatus
 }

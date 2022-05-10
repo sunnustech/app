@@ -3,16 +3,16 @@ import MapPoint from '@/components/SOAR/MapPoint'
 
 import { map as styles } from '@/styles/fresh'
 import { MapProps } from '@/types/SOAR'
-import { Text } from 'react-native'
 import { customMapStyle } from './MapStyle'
 import { NUSCoordinates } from '@/data/constants'
+import { SOARContext } from '@/contexts/SOARContext'
+import { useContext } from 'react'
 
-const Map = ({
-  navigation,
-  displayLocations,
-  mapRef,
-  startStatus,
-}: MapProps) => {
+const Map = ({ mapRef }: MapProps) => {
+  const { displayLocationState, teamState } = useContext(SOARContext)
+  const team = teamState[0]
+  const displayLocations = displayLocationState[0]
+
   const gameLocations = displayLocations.filter(
     (stn) => stn.stationType === 'game'
   )
@@ -21,12 +21,11 @@ const Map = ({
   )
 
   const GameLocations = () => {
-    return startStatus ? (
+    return team._started ? (
       <>
         {gameLocations.map((e: any, i: number) => (
           <MapPoint
             key={i}
-            navigation={navigation}
             coordinate={e.coordinate}
             pointType={e.stationType}
             content={e.content}
@@ -43,13 +42,11 @@ const Map = ({
         {nonGameLocations.map((e: any, i: number) => (
           <MapPoint
             key={i}
-            navigation={navigation}
             coordinate={e.coordinate}
             pointType={e.stationType}
+            status={e.status}
             content={e.content}
-          >
-            <Text>{`${e.stationType}: ${e.title}`}</Text>
-          </MapPoint>
+          />
         ))}
       </>
     )

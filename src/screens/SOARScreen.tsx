@@ -2,9 +2,12 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import MapView from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { BarCodeScanner } from 'expo-barcode-scanner'
+import {
+  HandleCameraPermission,
+  enableCameraPermission,
+} from '@/components/camera/Permissions'
 import { requestForegroundPermissionsAsync } from 'expo-location'
 import { Text, View } from 'react-native'
-import { Modal } from 'react-native-paper'
 import { SOARPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { SOARContext } from '@/contexts/SOARContext'
@@ -14,38 +17,24 @@ import { Map } from '@/components/SOAR'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
 import { ButtonGreen } from '@/components/Buttons'
-import { httpsCallable } from 'firebase/functions'
 import { NUSCoordinates } from '@/data/constants'
-import { getLocations } from '@/lib/SOAR'
-import { UserContext } from '@/contexts/UserContext'
-import { functions } from '@/sunnus/firebase'
 import TimerComponent from '@/components/Timer'
 import { QR } from '@/classes/QR'
+import QRModal from '../components/SOAR/QRModal'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
-  const {
-    locationState,
-    filteredState,
-    QRState,
-    scanningState,
-    displayLocationState,
-  } = useContext(SOARContext)
-  const { teamName, teamData } = useContext(UserContext)
+  const { QRState, scanningState } = useContext(SOARContext)
 
-  const locations = locationState[0]
   const setIsScanning = scanningState[1]
 
   // unpack states
-  const [filtered, setFiltered] = filteredState
   const [qr, setQr] = QRState
-  const [displayLocations, setDisplayLocations] = displayLocationState
 
   // local states
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState(true)
   const [everythingLoaded, setEverythingLoaded] = useState(false)
-  const [startStatus, setStartStatus] = useState(false)
 
   // Timer stuff
   const [isRunning, setIsRunning] = useState(false)
@@ -57,7 +46,6 @@ const SOARScreen = () => {
     useState(false)
 
   const mapRef = useRef<MapView | null>(null)
-
   const navigation = useNavigation<SOARPage<'SOARScreen'>>()
 
   const flyToNUS = () => {
@@ -67,7 +55,7 @@ const SOARScreen = () => {
   }
 
   useEffect(() => {
-    enableCameraPermission()
+    enableCameraPermission(setCheckingCameraPermission, setCameraPermission)
     ;(async () => {
       let { status } = await requestForegroundPermissionsAsync()
       if (status !== 'granted') {
@@ -77,23 +65,6 @@ const SOARScreen = () => {
       setLoading(false)
     })()
   }, [])
-
-  /* =====================================================
-   *          HANDLES TOGGLING OF ADMIN STATIONS
-   * =====================================================
-   */
-
-  function toggleAdminStations() {
-    const obj = filtered
-    obj.water = !obj.water
-    setFiltered(obj)
-    setDisplayLocations(getLocations(locations, obj, teamData))
-  }
-
-  /* =====
-   * TIMER
-   * =====
-   */
 
   const Timer = () => {
     if (!everythingLoaded) {
@@ -121,73 +92,6 @@ const SOARScreen = () => {
     }
   }
 
-  function confirmQRAction() {
-    const QRApi = httpsCallable(functions, 'QRApi')
-    QRApi(qr.flatten()).then((result) => {
-      const data = result.data
-      console.log('data', data)
-    })
-    setQr(QR.empty)
-  }
-
-  const QRModal = () => {
-    return qr === QR.empty ? null : (
-      <Modal
-        visible={true}
-        dismissable={true}
-        onDismiss={() => setQr(QR.empty)}
-      >
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>{qr.command}</Text>
-          <View style={{ marginBottom: 10 }}></View>
-          <Text style={styles.centered}>{qr.command}</Text>
-          <View style={{ marginBottom: 10 }}></View>
-          <ButtonGreen onPress={confirmQRAction}>{qr.command}</ButtonGreen>
-        </View>
-      </Modal>
-    )
-  }
-
-  /* =====================================================
-   *                  CAMERA PERMISSIONS
-   * =====================================================
-   */
-
-  const enableCameraPermission = async () => {
-    setCheckingCameraPermission(false)
-    let { status } = await BarCodeScanner.requestPermissionsAsync()
-    if (status === 'granted') {
-      setCameraPermission('granted')
-    }
-  }
-
-  const HandleCameraPermission = () => {
-    if (cameraPermission !== 'granted' && checkingCameraPermission) {
-      return (
-        <View style={styles.container}>
-          <Modal
-            visible={true}
-            dismissable={true}
-            onDismiss={() => setCheckingCameraPermission(false)}
-          >
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>Permissions needed</Text>
-              <View style={{ marginBottom: 10 }}></View>
-              <Text style={styles.centered}>
-                This app needs camera access for QR code scanning.
-              </Text>
-              <View style={{ marginBottom: 10 }}></View>
-              <ButtonGreen onPress={enableCameraPermission}>
-                Enable Camera
-              </ButtonGreen>
-            </View>
-          </Modal>
-        </View>
-      )
-    }
-    return null
-  }
-
   /* =====================================================
    *            MAIN RENDER COMPONENT FOR SOAR
    * =====================================================
@@ -199,24 +103,22 @@ const SOARScreen = () => {
     return (
       <RootSiblingParent>
         <NoTouchDiv style={styles.container}>
-          <Map
-            mapRef={mapRef}
-            navigation={navigation}
-            displayLocations={displayLocations}
-            startStatus={startStatus}
-          />
+          <Map mapRef={mapRef} />
           <SOS visible={SOSVisible} setState={setSOSVisible} />
           <UI
             navigation={navigation}
-            filtered={filtered}
             flyToNUS={flyToNUS}
             handleSOS={() => setSOSVisible(!SOSVisible)}
             openQRScanner={openQRScanner}
-            toggleAdminStations={toggleAdminStations}
             Timer={Timer}
           />
-          <HandleCameraPermission />
-          <QRModal />
+          {HandleCameraPermission(
+            cameraPermission,
+            checkingCameraPermission,
+            setCheckingCameraPermission,
+            setCameraPermission
+          )}
+          <QRModal qr={qr} setQr={setQr} />
         </NoTouchDiv>
       </RootSiblingParent>
     )

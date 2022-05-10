@@ -5,34 +5,19 @@ import {
   MapBottomButton,
   MapNavigationButton,
   MapSOSButton,
-  MapAdminToggle,
 } from '@/components/SOAR'
 import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
 
 import SOAR from '@/lib/SOAR'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
 
-const UI = ({
-  navigation,
-  filtered,
-  toggleAdminStations,
-  handleSOS,
-  openQRScanner,
-  flyToNUS,
-  Timer,
-}: any) => {
+const UI = ({ navigation, handleSOS, openQRScanner, flyToNUS, Timer }: any) => {
   const TopUI = () => {
     function backToHomeScreen() {
       navigation.navigate('HomeScreen')
     }
     return (
       <NoTouchDiv style={styles.mapTopContainer}>
-        <Overlap style={styles.mapRightContainer}>
-          <MapAdminToggle
-            onPress={toggleAdminStations}
-            activated={filtered.water}
-          />
-        </Overlap>
         <Overlap>
           <NoTouchDiv style={styles.timerContainer}>
             <Timer />

@@ -12,9 +12,7 @@ import {
 import colors from '@/styles/colors'
 
 const MapPoint = ({
-  navigation,
   coordinate,
-  navTarget,
   content,
   pointType,
   status,
@@ -23,9 +21,7 @@ const MapPoint = ({
     <Marker coordinate={coordinate} opacity={status === '' ? 0 : 1}>
       <HandleIcon pointType={pointType} status={status} />
       <HandlePopup
-        navigation={navigation}
         status={status}
-        navTarget={navTarget}
         content={content}
       />
     </Marker>
@@ -33,8 +29,6 @@ const MapPoint = ({
 }
 
 const HandlePopup = ({
-  navigation,
-  navTarget,
   content,
   status,
 }: MapPointPopupProps) => {
@@ -42,7 +36,7 @@ const HandlePopup = ({
     return (
       <Callout
         style={styles.callout}
-        onPress={() => navigation.navigate(navTarget)}
+        onPress={() => console.log('pressed callout')}
       >
         <Popup content={content} />
       </Callout>
