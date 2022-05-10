@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, PermissionStatus } from 'react-native'
 import { Modal } from 'react-native-paper'
 import { map as styles } from '@/styles/fresh'
 import { BarCodeScanner } from 'expo-barcode-scanner'
@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction } from 'react'
 
 export const enableCameraPermission = async (
   setCheckingCameraPermission: Dispatch<SetStateAction<boolean>>,
-  setCameraPermission: Dispatch<SetStateAction<string>>
+  setCameraPermission: Dispatch<SetStateAction<PermissionStatus>>
 ) => {
   setCheckingCameraPermission(false)
   let { status } = await BarCodeScanner.requestPermissionsAsync()
@@ -20,7 +20,7 @@ export const HandleCameraPermission = (
   cameraPermission: string,
   checkingCameraPermission: boolean,
   setCheckingCameraPermission: Dispatch<SetStateAction<boolean>>,
-  setCameraPermission: Dispatch<SetStateAction<string>>
+  setCameraPermission: Dispatch<SetStateAction<PermissionStatus>>
 ) => {
   if (cameraPermission !== 'granted' && checkingCameraPermission) {
     return (

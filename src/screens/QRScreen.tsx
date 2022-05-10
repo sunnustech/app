@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 import CryptoJS from 'crypto-js'
@@ -20,8 +20,7 @@ const QRScreen = () => {
   const SALT = 'MoonNUS'
   const SEPERATOR = '_'
 
-  const { QRState, scanningState } = useContext(SOARContext)
-  const [isScanning, setIsScanning] = scanningState
+  const { QRState } = useContext(SOARContext)
   const setQR = QRState[1]
   const navigation = useNavigation<SOARPage<'QRScreen'>>()
 
@@ -32,7 +31,6 @@ const QRScreen = () => {
    */
   const handleQRCode = async (code: BarCodeEvent) => {
     // Note! QRDictionary may be depreciated
-    setIsScanning(false)
 
     // Decrypt
     let bytes, qrData
@@ -69,10 +67,10 @@ const QRScreen = () => {
       command: cmd as SOARCommand,
       station: stn,
       facilitator,
-      teamName: 'developer_team' // TODO un-hardcode this
+      teamName: 'developer_team', // TODO un-hardcode this
     })
 
-    console.log("Sending this QR back to SOAR Screen:", qr)
+    console.log('Sending this QR back to SOAR Screen:', qr)
 
     setQR(qr)
     navigation.navigate('SOARScreen')
@@ -81,7 +79,6 @@ const QRScreen = () => {
 
   const BackToMap = () => {
     function closeQRScanner() {
-      setIsScanning(false)
       navigation.navigate('SOARScreen')
     }
     return (
@@ -94,7 +91,7 @@ const QRScreen = () => {
     )
   }
 
-  return isScanning ? (
+  return (
     <View style={styles.container}>
       <Overlap>
         <BarCodeScanner
@@ -109,14 +106,6 @@ const QRScreen = () => {
           <BackToMap />
         </View>
       </Overlap>
-    </View>
-  ) : (
-    <View style={styles.buttonContainer}>
-      <View
-        style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}
-      />
-      <Text>{'Done 🎉 Click below to return to the map!'}</Text>
-      <BackToMap />
     </View>
   )
 }

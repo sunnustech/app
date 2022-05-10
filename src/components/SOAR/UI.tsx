@@ -1,8 +1,3 @@
-import {
-  HandleCameraPermission,
-  enableCameraPermission,
-} from '@/components/camera/Permissions'
-import { requestForegroundPermissionsAsync } from 'expo-location'
 import { map as styles } from '@/styles/fresh'
 import SOS from '@/components/SOAR/SOS'
 import { NoTouchDiv, Overlap } from '@/components/Views'
@@ -16,46 +11,43 @@ import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
 import SOAR from '@/lib/SOAR'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
 import { AuthPage } from '@/types/navigation'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
   Timer: React.FC
-  setIsScanning: Dispatch<SetStateAction<boolean>>
   flyToNUS: () => void
 }
 
 const UI = (props: Props) => {
-  const {
-    navigation,
-    flyToNUS,
-    Timer,
-    setIsScanning,
-  } = props
+  const { navigation, flyToNUS, Timer } = props
 
+
+  const [cameraPermission, setCameraPermission] = useState<PermissionStatus>()
+  const [SOSVisible, setSOSVisible] = useState<boolean>(false)
+
+  // check once for camera permissions
   useEffect(() => {
-    enableCameraPermission(setCheckingCameraPermission, setCameraPermission)
-    ;(async () => {
-      let { status } = await requestForegroundPermissionsAsync()
-      if (status !== 'granted') {
+    BarCodeScanner.getPermissionsAsync().then((res) => {
+      setCameraPermission(res.status)
+      console.debug('current camera permissions:', res.status)
+    })
+  }, [])
+
+  function openQRScanner() {
+    if (cameraPermission === 'granted') {
+      navigation.navigate('QRScreen')
+      return
+    }
+    BarCodeScanner.requestPermissionsAsync().then((res) => {
+      setCameraPermission(res.status)
+      if (res.status !== 'granted') {
         alert('Permission Denied!')
         return
       }
-    })()
-  }, [])
-
-
-  const [cameraPermission, setCameraPermission] = useState('')
-  const [checkingCameraPermission, setCheckingCameraPermission] =
-    useState(false)
-  const [SOSVisible, setSOSVisible] = useState<boolean>(false)
-
-  function openQRScanner() {
-    setIsScanning(true)
-    setCheckingCameraPermission(true)
-    if (cameraPermission === 'granted') {
       navigation.navigate('QRScreen')
-    }
+    })
   }
 
   const TopUI = () => {
@@ -115,12 +107,6 @@ const UI = (props: Props) => {
   return (
     <Overlap>
       <SOS visible={SOSVisible} setState={setSOSVisible} />
-          {HandleCameraPermission(
-            cameraPermission,
-            checkingCameraPermission,
-            setCheckingCameraPermission,
-            setCameraPermission
-          )}
       <NoTouchDiv style={styles.mapUIContainer}>
         <TopUI />
         <BottomUI />

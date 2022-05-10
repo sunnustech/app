@@ -118,7 +118,6 @@ export type UseState<Type> = [Type, Dispatch<SetStateAction<Type>>]
 
 export type SOARContextProps = {
   loadingState: UseState<boolean>
-  scanningState: UseState<boolean>
   locationState: UseState<Array<SOARLocation>>
   stationOrderState: UseState<StationOrderProps>
   displayLocationState: UseState<SOARLocation[]>

@@ -15,9 +15,8 @@ import QRModal from '@/components/SOAR/QRModal'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
-  const { QRState, scanningState } = useContext(SOARContext)
+  const { QRState, } = useContext(SOARContext)
 
-  const setIsScanning = scanningState[1]
 
   // unpack states
   const [qr, setQr] = QRState
@@ -57,7 +56,6 @@ const SOARScreen = () => {
       navigation,
       flyToNUS,
       Timer,
-      setIsScanning,
     },
   }
 
