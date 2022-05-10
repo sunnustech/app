@@ -1,5 +1,3 @@
-import { LocationStatus } from '@/types/SOAR'
-
 type InitLocation = {
   details: string
   gameTitle: string
@@ -10,6 +8,8 @@ type InitLocation = {
   site: string
   type: string
 }
+
+type LocationStatus = 'hidden' | 'next' | 'done'
 
 export class Location {
   details: string
@@ -40,7 +40,7 @@ export class Location {
     this.latitude = props.latitude
     this.longitude = props.longitude
     this.site = props.site
-    this.status = ''
+    this.status = 'hidden'
     this.type = props.type
   }
   isEmpty(): boolean {
