@@ -14,7 +14,6 @@ import { map as styles } from '@/styles/fresh'
 import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
 import UI from '@/components/SOAR/UI'
-import SOS from '@/components/SOAR/SOS'
 import { NUSCoordinates } from '@/data/constants'
 import TimerComponent from '@/components/Timer'
 import QRModal from '@/components/SOAR/QRModal'
@@ -29,7 +28,6 @@ const SOARScreen = () => {
   const [qr, setQr] = QRState
 
   // local states
-  const [SOSVisible, setSOSVisible] = useState<boolean>(false)
   const [loading, setLoading] = useState(true)
   const [everythingLoaded, setEverythingLoaded] = useState(false)
 
@@ -80,7 +78,6 @@ const SOARScreen = () => {
     UI: {
       navigation,
       flyToNUS,
-      handleSOS: () => setSOSVisible(!SOSVisible),
       Timer,
       setIsScanning,
       setCheckingCameraPermission,
@@ -95,7 +92,6 @@ const SOARScreen = () => {
       <RootSiblingParent>
         <NoTouchDiv style={styles.container}>
           <Map mapRef={mapRef} />
-          <SOS visible={SOSVisible} setState={setSOSVisible} />
           <UI {...props.UI} />
           {HandleCameraPermission(
             cameraPermission,

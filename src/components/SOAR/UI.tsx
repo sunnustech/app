@@ -1,4 +1,5 @@
 import { map as styles } from '@/styles/fresh'
+import SOS from '@/components/SOAR/SOS'
 import { NoTouchDiv, Overlap } from '@/components/Views'
 import { Ionicons as IC, MaterialIcons as MI } from '@expo/vector-icons'
 import {
@@ -10,11 +11,10 @@ import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
 import SOAR from '@/lib/SOAR'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
 import { AuthPage } from '@/types/navigation'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
-  handleSOS: () => void
   Timer: React.FC
   setIsScanning: Dispatch<SetStateAction<boolean>>
   setCheckingCameraPermission: Dispatch<SetStateAction<boolean>>
@@ -25,13 +25,14 @@ type Props = {
 const UI = (props: Props) => {
   const {
     navigation,
-    handleSOS,
     flyToNUS,
     Timer,
     setIsScanning,
     setCheckingCameraPermission,
     cameraPermission,
   } = props
+
+  const [SOSVisible, setSOSVisible] = useState<boolean>(false)
 
   function openQRScanner() {
     setIsScanning(true)
@@ -84,7 +85,7 @@ const UI = (props: Props) => {
       <NoTouchDiv style={styles.mapBottomContainer}>
         <NoTouchDiv style={styles.mapLeftContainer}>
           <NoTouchDiv style={styles.flex1} />
-          <MapSOSButton onPress={handleSOS} />
+          <MapSOSButton onPress={() => setSOSVisible(!SOSVisible)} />
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
           {debug ? <Debug /> : null}
@@ -97,6 +98,7 @@ const UI = (props: Props) => {
 
   return (
     <Overlap>
+      <SOS visible={SOSVisible} setState={setSOSVisible} />
       <NoTouchDiv style={styles.mapUIContainer}>
         <TopUI />
         <BottomUI />

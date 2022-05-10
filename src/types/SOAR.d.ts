@@ -123,7 +123,6 @@ export type SOARContextProps = {
   stationOrderState: UseState<StationOrderProps>
   displayLocationState: UseState<SOARLocation[]>
   teamState: UseState<Team>
-  filteredState: UseState<SOARFilterProps>
   QRState: UseState<QR>
 }
 
