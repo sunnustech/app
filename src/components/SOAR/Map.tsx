@@ -7,11 +7,14 @@ import { customMapStyle } from './MapStyle'
 import { NUSCoordinates } from '@/data/constants'
 import { SOARContext } from '@/contexts/SOARContext'
 import { useContext } from 'react'
+import { log } from '@/utils/cli'
 
 const Map = ({ mapRef }: MapProps) => {
   const { displayLocationState, teamState } = useContext(SOARContext)
+
   const team = teamState[0]
   const displayLocations = displayLocationState[0]
+  log.yellow('displayLocations', displayLocations)
 
   const gameLocations = displayLocations.filter(
     (stn) => stn.stationType === 'game'
