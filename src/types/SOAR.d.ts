@@ -129,6 +129,7 @@ export type SOARContextProps = {
   gameStationsState: UseState<Location[]>
   gameStations: LocationList
   teamState: UseState<Team>
+  safetyOfficerPhoneState: UseState<string>
 }
 
 export type SOARTimestamp = {

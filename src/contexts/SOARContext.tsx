@@ -19,7 +19,8 @@ const SOARContext = createContext<SOARContextProps>({
   teamState: [Team.empty, () => Team.empty],
   gameStationsState: [[], () => []],
   QRState: [QR.empty, () => QR.empty],
-  gameStations: new LocationList([])
+  gameStations: new LocationList([]),
+  safetyOfficerPhoneState: ['', () => '']
 })
 
 // Getters and setters to be used when using context
@@ -32,10 +33,12 @@ function SOARProvider(props: React.PropsWithChildren<{}>) {
   const teamState = useState<Team>(Team.empty)
   const gameStationsState = useState<Location[]>(GS)
   const gameStations = new LocationList(GS)
+  const safetyOfficerPhoneState = useState('')
 
   return (
     <SOARContext.Provider
       value={{
+        safetyOfficerPhoneState,
         teamState,
         displayLocationState,
         stationOrderState,
