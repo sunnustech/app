@@ -1,3 +1,8 @@
+import {
+  HandleCameraPermission,
+  enableCameraPermission,
+} from '@/components/camera/Permissions'
+import { requestForegroundPermissionsAsync } from 'expo-location'
 import { map as styles } from '@/styles/fresh'
 import SOS from '@/components/SOAR/SOS'
 import { NoTouchDiv, Overlap } from '@/components/Views'
@@ -11,15 +16,13 @@ import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
 import SOAR from '@/lib/SOAR'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
 import { AuthPage } from '@/types/navigation'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
   Timer: React.FC
   setIsScanning: Dispatch<SetStateAction<boolean>>
-  setCheckingCameraPermission: Dispatch<SetStateAction<boolean>>
   flyToNUS: () => void
-  cameraPermission: string
 }
 
 const UI = (props: Props) => {
@@ -28,10 +31,23 @@ const UI = (props: Props) => {
     flyToNUS,
     Timer,
     setIsScanning,
-    setCheckingCameraPermission,
-    cameraPermission,
   } = props
 
+  useEffect(() => {
+    enableCameraPermission(setCheckingCameraPermission, setCameraPermission)
+    ;(async () => {
+      let { status } = await requestForegroundPermissionsAsync()
+      if (status !== 'granted') {
+        alert('Permission Denied!')
+        return
+      }
+    })()
+  }, [])
+
+
+  const [cameraPermission, setCameraPermission] = useState('')
+  const [checkingCameraPermission, setCheckingCameraPermission] =
+    useState(false)
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
 
   function openQRScanner() {
@@ -99,6 +115,12 @@ const UI = (props: Props) => {
   return (
     <Overlap>
       <SOS visible={SOSVisible} setState={setSOSVisible} />
+          {HandleCameraPermission(
+            cameraPermission,
+            checkingCameraPermission,
+            setCheckingCameraPermission,
+            setCameraPermission
+          )}
       <NoTouchDiv style={styles.mapUIContainer}>
         <TopUI />
         <BottomUI />
