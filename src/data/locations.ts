@@ -69,7 +69,8 @@ export const NerfBattle = new Location({
 export const gameStations: Location[] = [
   Slide,
   SotongHouze,
+  NerfBattle,
   SnakeAndLadders,
   GOLF,
-  NerfBattle,
+  Relay2Maze,
 ]
