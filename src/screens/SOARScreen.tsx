@@ -1,14 +1,13 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import MapView from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
-import { BarCodeScanner } from 'expo-barcode-scanner'
 import {
   HandleCameraPermission,
   enableCameraPermission,
 } from '@/components/camera/Permissions'
 import { requestForegroundPermissionsAsync } from 'expo-location'
-import { Text, View } from 'react-native'
-import { AuthPage, SOARPage } from '@/types/navigation'
+import { Text } from 'react-native'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { SOARContext } from '@/contexts/SOARContext'
 import { map as styles } from '@/styles/fresh'
@@ -16,11 +15,9 @@ import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
 import UI from '@/components/SOAR/UI'
 import SOS from '@/components/SOAR/SOS'
-import { ButtonGreen } from '@/components/Buttons'
 import { NUSCoordinates } from '@/data/constants'
 import TimerComponent from '@/components/Timer'
-import { QR } from '@/classes/QR'
-import QRModal from '../components/SOAR/QRModal'
+import QRModal from '@/components/SOAR/QRModal'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
@@ -78,16 +75,6 @@ const SOARScreen = () => {
       />
     )
   }
-
-  /* =====================================================
-   *            HANDLES QR SCANNER INTERACTIONS
-   * =====================================================
-   */
-
-  /* =====================================================
-   *            MAIN RENDER COMPONENT FOR SOAR
-   * =====================================================
-   */
 
   const props = {
     UI: {
