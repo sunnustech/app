@@ -1,7 +1,6 @@
 import { useContext, useRef, useState } from 'react'
 import MapView from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
-import { Text } from 'react-native'
 import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { SOARContext } from '@/contexts/SOARContext'

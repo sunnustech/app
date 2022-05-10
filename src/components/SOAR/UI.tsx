@@ -23,11 +23,10 @@ type Props = {
 const UI = (props: Props) => {
   const { navigation, flyToNUS, Timer } = props
 
-
   const [cameraPermission, setCameraPermission] = useState<PermissionStatus>()
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
 
-  // check once for camera permissions
+  // pre-emptively fetches for camera permissions once
   useEffect(() => {
     BarCodeScanner.getPermissionsAsync().then((res) => {
       setCameraPermission(res.status)
@@ -35,15 +34,20 @@ const UI = (props: Props) => {
     })
   }, [])
 
+  /** opens QR scanner */
   function openQRScanner() {
+    /** if granted, send it */
     if (cameraPermission === 'granted') {
       navigation.navigate('QRScreen')
       return
     }
+    /** else, ask for permission */
     BarCodeScanner.requestPermissionsAsync().then((res) => {
       setCameraPermission(res.status)
       if (res.status !== 'granted') {
-        alert('Permission Denied!')
+        alert(
+          'Camera permissions denied.\nPlease head over to system\nsettings to re-enable.'
+        )
         return
       }
       navigation.navigate('QRScreen')
