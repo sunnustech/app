@@ -1,5 +1,5 @@
 import { Team } from '@/classes/team'
-import { gameStations } from '@/data/locations'
+import { LocationStatus, LocationType } from '@/types/SOAR'
 
 type InitLocation = {
   details: string
@@ -9,10 +9,8 @@ type InitLocation = {
   latitude: number
   longitude: number
   site: string
-  type: string
+  type: LocationType
 }
-
-type LocationStatus = 'hidden' | 'next' | 'done'
 
 export class Location {
   details: string
@@ -23,7 +21,7 @@ export class Location {
   longitude: number
   site: string
   status: LocationStatus
-  type: string
+  type: LocationType
   static empty = new Location({
     details: '',
     gameTitle: '',
@@ -53,6 +51,12 @@ export class Location {
   setStatus(status: LocationStatus) {
     this.status = status
   }
+  getCoordinates() {
+    return {
+      latitude: this.latitude,
+      longitude: this.longitude
+    }
+  }
 }
 
 export class LocationList {
@@ -62,7 +66,7 @@ export class LocationList {
   }
   update(team: Team) {
     this.list.forEach((loc) => {
-      console.log(loc.gameTitle, team.nextStation())
+      loc.status = 'hidden'
       if (loc.gameTitle === team.nextStation()) {
         loc.status = 'next'
       } else if (team._stationsCompleted.includes(loc.gameTitle)) {

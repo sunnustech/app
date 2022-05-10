@@ -12,9 +12,10 @@ export type SOARTimetable = Array<{
   teamName: string
 }>
 
-type SOARLocationStatus = '' | 'next' | 'done'
+type SOARLocationStatus = 'hidden' | 'next' | 'done'
 
 type LocationStatus = SOARLocationStatus
+type LocationType = PointType | ''
 
 type Coordinate = {
   latitude: number
@@ -169,18 +170,18 @@ export type MapProps = {
 export type MapPointProps = {
   coordinate: Coordinate
   content: string
-  pointType: PointType
-  status: StationStatus
+  pointType: LocationType
+  status: LocationStatus
 }
 
 export type MapPointPopupProps = {
   content: string
-  status: StationStatus
+  status: LocationStatus
 }
 
 export type MapPointIconProps = {
-  status: StationStatus
-  pointType: PointType
+  status: LocationStatus
+  pointType: LocationType
 }
 
 export type SOARStations = [

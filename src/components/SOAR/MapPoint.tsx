@@ -18,8 +18,8 @@ const MapPoint = ({
   status,
 }: MapPointProps) => {
   return (
-    <Marker coordinate={coordinate} opacity={status === '' ? 0 : 1}>
-      <HandleIcon pointType={pointType} status={status} />
+    <Marker coordinate={coordinate} opacity={status === 'hidden' ? 0 : 1}>
+      <Icon pointType={pointType} status={status} />
       <HandlePopup
         status={status}
         content={content}
@@ -45,7 +45,7 @@ const HandlePopup = ({
   return null
 }
 
-const HandleIcon = ({ pointType, status }: MapPointIconProps) => {
+const Icon = ({ pointType, status }: MapPointIconProps) => {
   if (pointType === 'game') {
     if (status === 'done') {
       return <MCI name="marker-check" color={colors.emerald[500]} size={24} />
@@ -57,7 +57,7 @@ const HandleIcon = ({ pointType, status }: MapPointIconProps) => {
         </View>
       )
     }
-    if (status === '') {
+    if (status === 'hidden') {
       return <MCI name="marker-check" color={colors.red[500]} size={1} />
     }
   }
