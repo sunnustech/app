@@ -17,10 +17,6 @@ export function getLocations(
   const gameStations: Array<SOARLocation> = locations.filter(
     (loc) => loc.stationType === 'game'
   )
-
-  const com = teamData.SOARStationsCompleted
-  const rem = teamData.SOARStationsRemaining
-
   /*
   gameStations.forEach((stn) => {
     // reset status for each call

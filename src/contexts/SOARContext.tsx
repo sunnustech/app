@@ -2,6 +2,8 @@ import React, { createContext, useState } from 'react'
 import { SOARContextProps, SOARLocation, StationOrderProps } from '@/types/SOAR'
 import { QR } from '@/classes/QR'
 import { Team } from '@/classes/team'
+import { Location, LocationList } from '@/classes/location'
+import { gameStations as GS } from '@/data/locations'
 
 // reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
 
@@ -15,7 +17,9 @@ const SOARContext = createContext<SOARContextProps>({
   stationOrderState: [{ A: [], B: [] }, () => {}],
   displayLocationState: [[], () => []],
   teamState: [Team.empty, () => Team.empty],
+  gameStationsState: [[], () => []],
   QRState: [QR.empty, () => QR.empty],
+  gameStations: new LocationList([])
 })
 
 // Getters and setters to be used when using context
@@ -26,6 +30,8 @@ function SOARProvider(props: React.PropsWithChildren<{}>) {
   const stationOrderState = useState<StationOrderProps>({ A: [], B: [] })
   const displayLocationState = useState<Array<SOARLocation>>([])
   const teamState = useState<Team>(Team.empty)
+  const gameStationsState = useState<Location[]>(GS)
+  const gameStations = new LocationList(GS)
 
   return (
     <SOARContext.Provider
@@ -36,6 +42,8 @@ function SOARProvider(props: React.PropsWithChildren<{}>) {
         loadingState,
         locationState,
         QRState,
+        gameStationsState,
+        gameStations
       }}
       {...props}
     />

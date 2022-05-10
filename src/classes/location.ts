@@ -1,3 +1,6 @@
+import { Team } from '@/classes/team'
+import { gameStations } from '@/data/locations'
+
 type InitLocation = {
   details: string
   gameTitle: string
@@ -28,7 +31,7 @@ export class Location {
     id: 0,
     latitude: 0,
     longitude: 0,
-    site: "",
+    site: '',
     type: '',
   })
   // constructor values can be read directly from csv
@@ -46,5 +49,25 @@ export class Location {
   isEmpty(): boolean {
     const values = Object.values(this)
     return values.every((v) => v === '')
+  }
+  setStatus(status: LocationStatus) {
+    this.status = status
+  }
+}
+
+export class LocationList {
+  list: Location[]
+  public constructor(gameStations: Location[]) {
+    this.list = gameStations
+  }
+  update(team: Team) {
+    this.list.forEach((loc) => {
+      console.log(loc.gameTitle, team.nextStation())
+      if (loc.gameTitle === team.nextStation()) {
+        loc.status = 'next'
+      } else if (team._stationsCompleted.includes(loc.gameTitle)) {
+        loc.status = 'done'
+      }
+    })
   }
 }

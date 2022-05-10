@@ -10,52 +10,52 @@ import { useContext } from 'react'
 import { log } from '@/utils/cli'
 
 const Map = ({ mapRef }: MapProps) => {
-  const { displayLocationState, teamState } = useContext(SOARContext)
+  const { teamState, gameStations } = useContext(SOARContext)
 
   const team = teamState[0]
-  const displayLocations = displayLocationState[0]
-  const nextStation = team.nextStation()
 
-  log.yellow('displayLocations', displayLocations)
+  gameStations.update(team)
 
-  const gameLocations = displayLocations.filter(
-    (stn) => stn.stationType === 'game'
-  )
-  const nonGameLocations = displayLocations.filter(
-    (e: any) => e.stationType !== 'game'
-  )
+  log.yellow('displayLocations', gameStations)
 
-  const GameLocations = () => {
-    return team._started ? (
-      <>
-        {gameLocations.map((e: any, i: number) => (
-          <MapPoint
-            key={i}
-            coordinate={e.coordinate}
-            pointType={e.stationType}
-            content={e.content}
-            status={e.status}
-          />
-        ))}
-      </>
-    ) : null
-  }
-
-  const NonGameLocations = () => {
-    return (
-      <>
-        {nonGameLocations.map((e: any, i: number) => (
-          <MapPoint
-            key={i}
-            coordinate={e.coordinate}
-            pointType={e.stationType}
-            status={e.status}
-            content={e.content}
-          />
-        ))}
-      </>
-    )
-  }
+  // const gameLocations = displayLocations.filter(
+  //   (stn) => stn.stationType === 'game'
+  // )
+  // const nonGameLocations = displayLocations.filter(
+  //   (e: any) => e.stationType !== 'game'
+  // )
+  //
+  // const GameLocations = () => {
+  //   return team._started ? (
+  //     <>
+  //       {gameLocations.map((e: any, i: number) => (
+  //         <MapPoint
+  //           key={i}
+  //           coordinate={e.coordinate}
+  //           pointType={e.stationType}
+  //           content={e.content}
+  //           status={e.status}
+  //         />
+  //       ))}
+  //     </>
+  //   ) : null
+  // }
+  //
+  // const NonGameLocations = () => {
+  //   return (
+  //     <>
+  //       {nonGameLocations.map((e: any, i: number) => (
+  //         <MapPoint
+  //           key={i}
+  //           coordinate={e.coordinate}
+  //           pointType={e.stationType}
+  //           status={e.status}
+  //           content={e.content}
+  //         />
+  //       ))}
+  //     </>
+  //   )
+  // }
 
   return mapRef ? (
     <MapView
@@ -65,10 +65,7 @@ const Map = ({ mapRef }: MapProps) => {
       initialCamera={NUSCoordinates}
       customMapStyle={customMapStyle}
       showsUserLocation={true}
-    >
-      <GameLocations />
-      <NonGameLocations />
-    </MapView>
+    ></MapView>
   ) : null
 }
 

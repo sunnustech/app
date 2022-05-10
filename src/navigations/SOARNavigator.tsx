@@ -13,11 +13,11 @@ import { QR } from '@/classes/QR'
 const SOARStack = createStackNavigator<SOARPages>()
 
 const SOARNavigator = () => {
-  const { teamState, QRState } = useContext(SOARContext)
+  const { QRState, gameStations, teamState } = useContext(SOARContext)
 
   // context stuff
-  const setTeam = teamState[1]
   const setQr = QRState[1]
+  const setTeam = teamState[1]
 
   useFocusEffect(
     useCallback(() => {
@@ -29,10 +29,17 @@ const SOARNavigator = () => {
           if (team !== undefined) {
             console.debug('received firebase updates at', new Date())
             setTeam(team)
+            gameStations.update(team)
             console.debug(`\n<${team.teamName}>`)
             console.debug(`${team._points} points,`)
             console.debug(
               `${team._stationsRemaining.length} stations remaining\n`
+            )
+            console.debug(
+              `${team._stationsRemaining}\n`
+            )
+            console.debug(
+              `next up: ${team.nextStation()}\n`
             )
           }
         }

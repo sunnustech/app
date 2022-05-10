@@ -87,8 +87,8 @@ export class Team extends Base.Team {
     this.sport = value
   }
   nextStation(): string {
-    const rem = super._stationsRemaining
-    if (rem.length === 0) {
+    const rem = this._stationsRemaining
+    if (!rem || rem.length === 0) {
       return ''
     }
     return rem[0]

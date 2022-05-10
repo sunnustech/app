@@ -65,3 +65,11 @@ export const NerfBattle = new Location({
   latitude: 1.2966335,
   longitude: 103.7728345,
 })
+
+export const gameStations: Location[] = [
+  Slide,
+  SotongHouze,
+  SnakeAndLadders,
+  GOLF,
+  NerfBattle,
+]

@@ -5,6 +5,7 @@ import MapView from 'react-native-maps'
 import { MutableRefObject, RefObject } from 'react'
 import { QR } from '@/classes/QR'
 import { Team } from '@/classes/Team'
+import { Location, LocationList } from '@/classes/location'
 
 export type SOARTimetable = Array<{
   time: string
@@ -123,8 +124,10 @@ export type SOARContextProps = {
   locationState: UseState<Array<SOARLocation>>
   stationOrderState: UseState<StationOrderProps>
   displayLocationState: UseState<SOARLocation[]>
-  teamState: UseState<Team>
   QRState: UseState<QR>
+  gameStationsState: UseState<Location[]>
+  gameStations: LocationList
+  teamState: UseState<Team>
 }
 
 export type SOARTimestamp = {
