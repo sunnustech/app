@@ -86,4 +86,11 @@ export class Team extends Base.Team {
   setSport(value: SportFlexible) {
     this.sport = value
   }
+  nextStation(): string {
+    const rem = super._stationsRemaining
+    if (rem.length === 0) {
+      return ''
+    }
+    return rem[0]
+  }
 }

@@ -13,6 +13,8 @@ export type SOARTimetable = Array<{
 
 type SOARLocationStatus = '' | 'next' | 'done'
 
+type LocationStatus = SOARLocationStatus
+
 type Coordinate = {
   latitude: number
   longitude: number

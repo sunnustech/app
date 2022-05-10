@@ -14,6 +14,8 @@ const Map = ({ mapRef }: MapProps) => {
 
   const team = teamState[0]
   const displayLocations = displayLocationState[0]
+  const nextStation = team.nextStation()
+
   log.yellow('displayLocations', displayLocations)
 
   const gameLocations = displayLocations.filter(
