@@ -8,7 +8,7 @@ import {
 } from '@/components/camera/Permissions'
 import { requestForegroundPermissionsAsync } from 'expo-location'
 import { Text, View } from 'react-native'
-import { SOARPage } from '@/types/navigation'
+import { AuthPage, SOARPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { SOARContext } from '@/contexts/SOARContext'
 import { map as styles } from '@/styles/fresh'
@@ -46,7 +46,7 @@ const SOARScreen = () => {
     useState(false)
 
   const mapRef = useRef<MapView | null>(null)
-  const navigation = useNavigation<SOARPage<'SOARScreen'>>()
+  const navigation = useNavigation<AuthPage<'SOARNavigator'>>()
 
   const flyToNUS = () => {
     if (mapRef.current) {
@@ -84,18 +84,22 @@ const SOARScreen = () => {
    * =====================================================
    */
 
-  function openQRScanner() {
-    setIsScanning(true)
-    setCheckingCameraPermission(true)
-    if (cameraPermission === 'granted') {
-      navigation.navigate('QRScreen')
-    }
-  }
-
   /* =====================================================
    *            MAIN RENDER COMPONENT FOR SOAR
    * =====================================================
    */
+
+  const props = {
+    UI: {
+      navigation,
+      flyToNUS,
+      handleSOS: () => setSOSVisible(!SOSVisible),
+      Timer,
+      setIsScanning,
+      setCheckingCameraPermission,
+      cameraPermission,
+    },
+  }
 
   if (loading) {
     return <Text>loading...</Text>
@@ -105,13 +109,7 @@ const SOARScreen = () => {
         <NoTouchDiv style={styles.container}>
           <Map mapRef={mapRef} />
           <SOS visible={SOSVisible} setState={setSOSVisible} />
-          <UI
-            navigation={navigation}
-            flyToNUS={flyToNUS}
-            handleSOS={() => setSOSVisible(!SOSVisible)}
-            openQRScanner={openQRScanner}
-            Timer={Timer}
-          />
+          <UI {...props.UI} />
           {HandleCameraPermission(
             cameraPermission,
             checkingCameraPermission,

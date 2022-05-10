@@ -7,11 +7,40 @@ import {
   MapSOSButton,
 } from '@/components/SOAR'
 import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
-
 import SOAR from '@/lib/SOAR'
 import { QRCommands as q } from '@/lib/SOAR/QRCommands'
+import { AuthPage } from '@/types/navigation'
+import { Dispatch, SetStateAction } from 'react'
 
-const UI = ({ navigation, handleSOS, openQRScanner, flyToNUS, Timer }: any) => {
+type Props = {
+  navigation: AuthPage<'SOARNavigator'>
+  handleSOS: () => void
+  Timer: React.FC
+  setIsScanning: Dispatch<SetStateAction<boolean>>
+  setCheckingCameraPermission: Dispatch<SetStateAction<boolean>>
+  flyToNUS: () => void
+  cameraPermission: string
+}
+
+const UI = (props: Props) => {
+  const {
+    navigation,
+    handleSOS,
+    flyToNUS,
+    Timer,
+    setIsScanning,
+    setCheckingCameraPermission,
+    cameraPermission,
+  } = props
+
+  function openQRScanner() {
+    setIsScanning(true)
+    setCheckingCameraPermission(true)
+    if (cameraPermission === 'granted') {
+      navigation.navigate('QRScreen')
+    }
+  }
+
   const TopUI = () => {
     function backToHomeScreen() {
       navigation.navigate('HomeScreen')
