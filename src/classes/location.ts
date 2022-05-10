@@ -1,53 +1,47 @@
 import { LocationStatus } from '@/types/SOAR'
 
-type LocationProps = {
+type InitLocation = {
+  details: string
+  gameTitle: string
   googleMapPinUrl: string
   id: number
-  location: string
-  stationType: string
-  status: LocationStatus
-  name: string
-  gameTitle: string
-  details: string
   latitude: number
   longitude: number
+  site: string
+  type: string
 }
 
 export class Location {
+  details: string
+  gameTitle: string
   googleMapPinUrl: string
   id: number
-  location: string
-  stationType: string
-  status: LocationStatus
-  name: string
-  gameTitle: string
-  details: string
   latitude: number
   longitude: number
+  site: string
+  status: LocationStatus
+  type: string
   static empty = new Location({
+    details: '',
+    gameTitle: '',
     googleMapPinUrl: '',
     id: 0,
-    location: '',
-    stationType: '',
-    status: '',
-    name: '',
-    gameTitle: '',
-    details: '',
     latitude: 0,
     longitude: 0,
+    site: "",
+    type: '',
   })
   // constructor values can be read directly from csv
-  public constructor(props: LocationProps) {
+  public constructor(props: InitLocation) {
+    this.details = props.details
+    this.gameTitle = props.gameTitle
     this.googleMapPinUrl = props.googleMapPinUrl
     this.id = props.id
-    this.location = props.location
-    this.stationType = props.stationType
-    this.status = props.status
-    this.name = props.name
-    this.gameTitle = props.gameTitle
-    this.details = props.details
     this.latitude = props.latitude
     this.longitude = props.longitude
+    this.site = props.site
+    this.status = ''
+    this.type = props.type
   }
   isEmpty(): boolean {
     const values = Object.values(this)
