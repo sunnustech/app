@@ -38,8 +38,8 @@ function firebaseQR(command: string, station?: string) {
   const qr = new QR(props)
   const QRApi = httpsCallable(functions, 'QRApi')
   QRApi(props).then((result) => {
-    const data = result.data
-    console.log('data', data)
+    const data: any = result.data
+    console.log('firebase status', data.status)
   })
   console.log('test QR:', qr)
 }

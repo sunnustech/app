@@ -6,6 +6,7 @@ import { ButtonGreen } from '@/components/Buttons'
 import { Modal } from 'react-native-paper'
 import { QR } from '../../classes/QR'
 import { Dispatch, SetStateAction } from 'react'
+import { log } from '@/utils/cli'
 
 type Props = {
   qr: QR
@@ -20,8 +21,8 @@ const QRModal = (props: Props) => {
   function confirmQRAction() {
     const QRApi = httpsCallable(functions, 'QRApi')
     QRApi(qr.flatten()).then((result) => {
-      const data = result.data
-      console.log('data', data)
+      const response: any = result.data
+      log.yellow('firebase reponse:', response.status)
     })
     setQr(QR.empty)
   }
