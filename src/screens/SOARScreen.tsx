@@ -14,8 +14,7 @@ import QRModal from '@/components/SOAR/QRModal'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
-  const { QRState, } = useContext(SOARContext)
-
+  const { QRState } = useContext(SOARContext)
 
   // unpack states
   const [qr, setQr] = QRState
@@ -50,19 +49,11 @@ const SOARScreen = () => {
     )
   }
 
-  const props = {
-    UI: {
-      navigation,
-      flyToNUS,
-      Timer,
-    },
-  }
-
   return (
     <RootSiblingParent>
       <NoTouchDiv style={styles.container}>
         <Map mapRef={mapRef} />
-        <UI {...props.UI} />
+        <UI navigation={navigation} flyToNUS={flyToNUS} Timer={Timer} />
         <QRModal qr={qr} setQr={setQr} />
       </NoTouchDiv>
     </RootSiblingParent>
