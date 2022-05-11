@@ -102,13 +102,17 @@ export class Team extends Base.Team {
     // on frontend, the total elapsed time would then be
     // Math.abs(now.getTime() - <returned value>)
   }
+  /**
+   * returns the time at which the team paused at, in seconds
+   */
   getPausedAt(): number {
     const copyTimerEvents: number[] = [...this._timerEvents]
     const last = copyTimerEvents.pop()
     if (last === undefined) {
       return 0
     }
-    const result = Math.abs(-last - this.sum(copyTimerEvents))
-    return result
+    const milli = Math.abs(-last - this.sum(copyTimerEvents))
+    const seconds = Math.round(milli / 1000)
+    return seconds
   }
 }

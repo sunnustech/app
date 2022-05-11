@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Text } from 'react-native'
-// import { timer as styles } from '@/styles/fresh'
 import { Team } from '@/classes/team'
-import { log } from '@/utils/cli'
 
 const secondsToHHMMSS = (seconds: number): string => {
   if (seconds < 3600) {
@@ -23,11 +21,13 @@ const Timer = (props: { team: Team }) => {
   const [now, setNow] = useState(new Date())
 
   function tick() {
-    const finalSum = Math.abs(now.getTime() - team.displayTimeOffset())
-    const seconds = Math.round(finalSum / 1000)
-    const displayTime = secondsToHHMMSS(seconds)
-    log.green('tick', seconds, now.toLocaleTimeString())
-    return displayTime
+    const elapsedMilliseconds = Math.abs(now.getTime() - team.displayTimeOffset())
+    const elapsedSeconds = Math.round(elapsedMilliseconds / 1000)
+    return secondsToHHMMSS(elapsedSeconds)
+  }
+
+  function paused() {
+    return secondsToHHMMSS(team.getPausedAt())
   }
 
   useEffect(() => {
@@ -39,9 +39,7 @@ const Timer = (props: { team: Team }) => {
     }
   })
 
-  const pauseDisplay = secondsToHHMMSS(Math.round(team.getPausedAt() / 1000))
-
-  return <Text>{team._timerRunning ? tick() : `-- ${pauseDisplay}`}</Text>
+  return <Text>{team._timerRunning ? tick() : paused()}</Text>
 }
 
 export default Timer
