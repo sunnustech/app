@@ -32,6 +32,7 @@ const map = StyleSheet.create({
   },
   navigationContainer: {},
   timerContainer: {
+    width: '55%',
     marginTop: 10,
     marginLeft: 'auto',
     marginRight: 'auto',

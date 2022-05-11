@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import colors from '@/styles/colors'
 
 export default StyleSheet.create({
   /* containers */
@@ -6,5 +7,29 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  text: {
+    fontSize: 36,
+  },
+  smallSecondsContainer: {
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(28, 28, 28, 0.2)',
+  },
+  number: {
+    fontVariant: ['tabular-nums'],
+  },
+  hourMinutes: {
+    color: colors.gray[700],
+    fontSize: 36,
+    marginRight: 4,
+  },
+  seconds: {
+    color: colors.gray[600],
+    paddingTop: 2,
+    fontSize: 24,
   },
 })
