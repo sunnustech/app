@@ -109,9 +109,6 @@ export class Team extends Base.Team {
       return 0
     }
     const result = Math.abs(-last - this.sum(copyTimerEvents))
-    log.yellow('last', last)
-    log.cyan('timerEvents', copyTimerEvents)
-    log.blue('result', result)
     return result
   }
 }
