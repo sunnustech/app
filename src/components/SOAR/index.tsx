@@ -1,4 +1,3 @@
-import Timer from './Timer'
 import MapButton, {
   MapNavigationButton,
   MapTopButton,
@@ -18,5 +17,4 @@ export {
   MapTopButton,
   MapCurretLocationButton,
   MapBottomButton,
-  Timer,
 }
