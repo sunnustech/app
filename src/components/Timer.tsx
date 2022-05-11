@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Text } from 'react-native'
-import { timer as styles } from '@/styles/fresh'
+// import { timer as styles } from '@/styles/fresh'
 import { Team } from '@/classes/team'
 import { log } from '@/utils/cli'
 
