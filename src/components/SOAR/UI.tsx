@@ -11,11 +11,9 @@ import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
 import { AuthPage } from '@/types/navigation'
 import { useContext, useEffect, useState } from 'react'
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner'
-import { httpsCallable } from 'firebase/functions'
-import { functions } from '@/sunnus/firebase'
-import { QR } from '@/classes/QR'
 import Timer from '@/components/Timer'
 import { SOARContext } from '@/contexts/SOARContext'
+import Debug from '@/components/SOAR/Debug'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
@@ -81,38 +79,6 @@ const UI = (props: Props) => {
     )
   }
 
-  const Debug = () => {
-    function firebaseQR(command: string, station?: string) {
-      console.log('firebasing the QR code...')
-      const props = {
-        command,
-        points: 0,
-        facilitator: 'Khang',
-        station: station || 'Slide',
-        teamName: 'developer_team',
-      }
-      const qr = new QR(props)
-      const QRApi = httpsCallable(functions, 'QRApi')
-      QRApi(props).then((result) => {
-        const data: any = result.data
-        console.log('firebase status', data.status)
-      })
-      console.log('test QR:', qr)
-    }
-
-    return (
-      <>
-        <MapSOSButton onPress={() => firebaseQR('startTimer')} />
-        <MapSOSButton onPress={() => firebaseQR('resumeTimer')} />
-        <MapSOSButton onPress={() => firebaseQR('pauseTimer')} />
-        <MapSOSButton onPress={() => firebaseQR('stopTimer')} />
-        <MapSOSButton onPress={() => firebaseQR('resetTeam')} />
-      </>
-    )
-  }
-
-  const debug = true
-
   const BottomUI = () => {
     return (
       <NoTouchDiv style={styles.mapBottomContainer}>
@@ -121,7 +87,7 @@ const UI = (props: Props) => {
           <MapSOSButton onPress={() => setSOSVisible(!SOSVisible)} />
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
-          {debug ? <Debug /> : null}
+          {false ? <Debug /> : null}
           <MapGoToSchoolButton onPress={flyToNUS} />
           <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
         </NoTouchDiv>
