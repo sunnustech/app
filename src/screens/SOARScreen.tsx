@@ -1,6 +1,7 @@
 import { useContext, useRef, useState } from 'react'
 import MapView from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
+import { Text } from 'react-native'
 import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { SOARContext } from '@/contexts/SOARContext'
@@ -9,12 +10,12 @@ import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
 import UI from '@/components/SOAR/UI'
 import { NUSCoordinates } from '@/data/constants'
-import TimerComponent from '@/components/Timer'
 import QRModal from '@/components/SOAR/QRModal'
 
 const SOARScreen = () => {
   /* read data from SOAR context */
-  const { QRState } = useContext(SOARContext)
+  const { QRState, teamState } = useContext(SOARContext)
+  const team = teamState[0]
 
   // unpack states
   const [qr, setQr] = QRState
@@ -36,24 +37,11 @@ const SOARScreen = () => {
     }
   }
 
-  const Timer = () => {
-    if (!everythingLoaded) {
-      return null
-    }
-    return (
-      <TimerComponent
-        SOARTimerEvents={timerEvents}
-        pausedAt={pausedAt}
-        isRunning={isRunning}
-      />
-    )
-  }
-
   return (
     <RootSiblingParent>
       <NoTouchDiv style={styles.container}>
         <Map mapRef={mapRef} />
-        <UI navigation={navigation} flyToNUS={flyToNUS} Timer={Timer} />
+        <UI navigation={navigation} flyToNUS={flyToNUS} team={team} />
         <QRModal qr={qr} setQr={setQr} />
       </NoTouchDiv>
     </RootSiblingParent>

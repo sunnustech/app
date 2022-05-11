@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore'
 import { Init } from '@/types/classes'
 import { Base } from '@/classes/base'
+import { log } from '../utils/cli'
 
 type SportFlexible = Sport | 'none' | 'more than 1'
 
@@ -92,5 +93,25 @@ export class Team extends Base.Team {
       return ''
     }
     return rem[0]
+  }
+  sum(arr: number[]): number {
+    return arr.reduce((a, b) => a + b, 0)
+  }
+  displayTimeOffset(): number {
+    return Math.abs(this.sum(this._timerEvents))
+    // on frontend, the total elapsed time would then be
+    // Math.abs(now.getTime() - <returned value>)
+  }
+  getPausedAt(): number {
+    const copyTimerEvents: number[] = [...this._timerEvents]
+    const last = copyTimerEvents.pop()
+    if (last === undefined) {
+      return 0
+    }
+    const result = Math.abs(-last - this.sum(copyTimerEvents))
+    log.yellow('last', last)
+    log.cyan('timerEvents', copyTimerEvents)
+    log.blue('result', result)
+    return result
   }
 }

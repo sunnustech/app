@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import { timer as styles } from '@/styles/fresh'
-
-type TimerProps = {
-  isRunning: boolean
-  pausedAt: number
-  SOARTimerEvents: Array<number>
-}
+import { Team } from '@/classes/team'
+import { log } from '@/utils/cli'
 
 const secondsToHHMMSS = (seconds: number): string => {
   if (seconds < 3600) {
@@ -21,53 +17,28 @@ const secondsToHHMMSS = (seconds: number): string => {
  * only return a <Text/> object
  * make it as no-frills, no-outer dependencies as possible
  */
-const TimerText = ({
-  isRunning,
-  pausedAt,
-  SOARTimerEvents,
-}: TimerProps) => {
+
+const Timer = (props: { team: Team }) => {
+  const { team } = props
   const [elapsed, setElapsed] = useState('')
 
   function tick() {
-    console.debug('tick')
     const now = new Date()
-    const sum = SOARTimerEvents.reduce((a, b) => a + b, 0)
-    const sign = (sum > 0) ? -1: 1
-    const finalSum = Math.abs(sum + sign * now.getTime())
-    const displayTime = secondsToHHMMSS(Math.round(finalSum / 1000))
+    const finalSum = Math.abs(now.getTime() - team.displayTimeOffset())
+    const seconds = Math.round(finalSum / 1000)
+    console.log('timer events', team._timerEvents)
+    const displayTime = secondsToHHMMSS(seconds)
+    log.green('tick', seconds)
     setElapsed(displayTime)
   }
 
-  useEffect(() => {
-    if (isRunning) {
-      const timerID = setInterval(() => tick(), 1000)
-      // runs on component unmount
-      return () => {
-        clearInterval(timerID)
-      }
-    }
-  })
+  if (team._timerRunning) {
+    setInterval(tick, 1000)
+  }
 
-  const pauseDisplay = secondsToHHMMSS(Math.round(pausedAt / 1000))
+  const pauseDisplay = secondsToHHMMSS(Math.round(team.getPausedAt() / 1000))
 
-  return <>{isRunning ? elapsed : `-- ${pauseDisplay}`}</>
+  return <Text>{team._timerRunning ? elapsed : `-- ${pauseDisplay}`}</Text>
 }
 
-const Timer = ({
-  isRunning,
-  pausedAt,
-  SOARTimerEvents,
-}: TimerProps) => {
-  return (
-    <Text>
-      <TimerText
-        SOARTimerEvents={SOARTimerEvents}
-        isRunning={isRunning}
-        pausedAt={pausedAt}
-      />
-    </Text>
-  )
-}
-
-export { TimerText }
 export default Timer

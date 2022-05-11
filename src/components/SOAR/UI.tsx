@@ -8,20 +8,23 @@ import {
   MapSOSButton,
 } from '@/components/SOAR'
 import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
-import SOAR from '@/lib/SOAR'
-import { QRCommands as q } from '@/lib/SOAR/QRCommands'
 import { AuthPage } from '@/types/navigation'
 import { useEffect, useState } from 'react'
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner'
+import { httpsCallable } from 'firebase/functions'
+import { functions } from '@/sunnus/firebase'
+import { QR } from '@/classes/QR'
+import Timer from '@/components/Timer'
+import { Team } from '@/classes/team'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
-  Timer: React.FC
   flyToNUS: () => void
+  team: Team
 }
 
 const UI = (props: Props) => {
-  const { navigation, flyToNUS, Timer } = props
+  const { navigation, flyToNUS, team } = props
 
   const [cameraPermission, setCameraPermission] = useState<PermissionStatus>()
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
@@ -62,7 +65,7 @@ const UI = (props: Props) => {
       <NoTouchDiv style={styles.mapTopContainer}>
         <Overlap>
           <NoTouchDiv style={styles.timerContainer}>
-            <Timer />
+            <Timer team={team} />
           </NoTouchDiv>
         </Overlap>
         <Overlap>
@@ -77,20 +80,38 @@ const UI = (props: Props) => {
     )
   }
 
+
   const Debug = () => {
+function firebaseQR(command: string, station?: string) {
+  console.log('firebasing the QR code...')
+  const props = {
+    command,
+    points: 0,
+    facilitator: 'Khang',
+    station: station || 'Slide',
+    teamName: 'developer_team',
+  }
+  const qr = new QR(props)
+  const QRApi = httpsCallable(functions, 'QRApi')
+  QRApi(props).then((result) => {
+    const data: any = result.data
+    console.log('firebase status', data.status)
+  })
+  console.log('test QR:', qr)
+}
+
     return (
       <>
-        <MapSOSButton onPress={() => SOAR.start('Dev_loper', q.start)} />
-        <MapSOSButton onPress={() => SOAR.pause('Dev_loper', q.pause)} />
-        <MapSOSButton onPress={() => SOAR.resume('Dev_loper', q.resume)} />
-        <MapSOSButton
-          onPress={() => SOAR.stopFinal('Dev_loper', q.stopFinal)}
-        />
+        <MapSOSButton onPress={() => firebaseQR('startTimer')} />
+        <MapSOSButton onPress={() => firebaseQR('resumeTimer')} />
+        <MapSOSButton onPress={() => firebaseQR('pauseTimer')} />
+        <MapSOSButton onPress={() => firebaseQR('stopTimer')} />
+        <MapSOSButton onPress={() => firebaseQR('resetTeam')} />
       </>
     )
   }
 
-  const debug = false
+  const debug = true
 
   const BottomUI = () => {
     return (
