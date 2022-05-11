@@ -5,16 +5,13 @@ import { Text, View } from 'react-native'
 import { ButtonGreen } from '@/components/Buttons'
 import { Modal } from 'react-native-paper'
 import { QR } from '../../classes/QR'
-import { Dispatch, SetStateAction } from 'react'
+import { useContext } from 'react'
 import { log } from '@/utils/cli'
+import { SOARContext } from '@/contexts/SOARContext'
 
-type Props = {
-  qr: QR
-  setQr: Dispatch<SetStateAction<QR>>
-}
-
-const QRModal = (props: Props) => {
-  const { qr, setQr } = props
+const QRModal = () => {
+  const { QRState } = useContext(SOARContext)
+  const [qr, setQr] = QRState
   /**
    * sends a post API request to firebase
    */

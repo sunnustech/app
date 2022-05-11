@@ -9,22 +9,23 @@ import {
 } from '@/components/SOAR'
 import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
 import { AuthPage } from '@/types/navigation'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner'
 import { httpsCallable } from 'firebase/functions'
 import { functions } from '@/sunnus/firebase'
 import { QR } from '@/classes/QR'
 import Timer from '@/components/Timer'
-import { Team } from '@/classes/team'
+import { SOARContext } from '@/contexts/SOARContext'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
   flyToNUS: () => void
-  team: Team
 }
 
 const UI = (props: Props) => {
-  const { navigation, flyToNUS, team } = props
+  const { navigation, flyToNUS } = props
+  const { teamState } = useContext(SOARContext)
+  const team = teamState[0]
 
   const [cameraPermission, setCameraPermission] = useState<PermissionStatus>()
   const [SOSVisible, setSOSVisible] = useState<boolean>(false)
