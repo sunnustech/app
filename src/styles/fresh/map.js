@@ -45,7 +45,8 @@ const map = StyleSheet.create({
   },
   pointsTextContainer: {
     backgroundColor: colors.white,
-    marginVertical: 8,
+    marginTop: 6,
+    paddingVertical: 4,
     paddingHorizontal: 10,
     justifyContent: 'center',
     borderRadius: 100,
@@ -64,15 +65,24 @@ const map = StyleSheet.create({
     color: colors.gray[700],
     fontVariant: ['tabular-nums'],
   },
-  timerContainer: {
+  timerAndPointsContainer: {
     width: '55%',
+    height: '100%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    // backgroundColor: colors.blue[100],
+  },
+  timerContainer: {
+    width: '100%',
     height: backButton.size,
     marginLeft: 'auto',
     marginRight: 'auto',
+    // backgroundColor: colors.green[100],
   },
   mapTopContainer: {
     flex: 1,
     alignItems: 'flex-end',
+    // backgroundColor: colors.purple[200],
   },
   mapBottomContainer: {
     display: 'flex',

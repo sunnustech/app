@@ -12,7 +12,7 @@ export default StyleSheet.create({
     fontSize: 36,
   },
   smallSecondsContainer: {
-    backgroundColor: 'rgba(255,255,255,0.7)',
+    backgroundColor: 'rgba(255,255,255,0.9)',
     flex: 1,
     borderRadius: 10,
     alignItems: 'center',
@@ -30,8 +30,10 @@ export default StyleSheet.create({
     color: colors.gray[700],
     fontSize: 36,
     marginRight: 4,
+    fontWeight: '500',
   },
   seconds: {
+    fontWeight: '400',
     color: colors.gray[600],
     paddingTop: 3,
     fontSize: 24,

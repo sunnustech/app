@@ -64,8 +64,11 @@ const UI = (props: Props) => {
     return (
       <NoTouchDiv style={styles.mapTopContainer}>
         <Overlap>
-          <NoTouchDiv style={styles.timerContainer}>
-            <Timer team={team} />
+          <NoTouchDiv style={styles.timerAndPointsContainer}>
+            <NoTouchDiv style={styles.timerContainer}>
+              <Timer team={team} />
+            </NoTouchDiv>
+            <Points team={team} />
           </NoTouchDiv>
         </Overlap>
         <Overlap>
@@ -75,7 +78,6 @@ const UI = (props: Props) => {
               onPress={() => navigation.navigate('HomeScreen')}
             />
             <NoTouchDiv style={{ flex: 1 }} />
-            <Points team={team} />
           </NoTouchDiv>
         </Overlap>
       </NoTouchDiv>
