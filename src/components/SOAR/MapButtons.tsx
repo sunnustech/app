@@ -75,12 +75,22 @@ const MapBottomButton = ({ icon, onPress, style = [] }: MapButtonProps) => (
   />
 )
 
-const MapNavigationButton = ({ icon, onPress }: MapButtonProps) => {
+const MapNavigationButtonDark = ({ icon, onPress }: MapButtonProps) => {
   // icon: provider + name
   const [IconProvider, name] = icon
   return (
     <TouchableOpacity style={styles.mapNavigationButton} onPress={onPress}>
       <IconProvider name={name} color="white" size={32} />
+    </TouchableOpacity>
+  )
+}
+
+const MapNavigationButton = ({ icon, onPress }: MapButtonProps) => {
+  // icon: provider + name
+  const [IconProvider, name] = icon
+  return (
+    <TouchableOpacity style={[styles.mapSideButton, styles.mapNavigationButton]} onPress={onPress}>
+      <IconProvider name={name} color={colors.gray[700]} size={32} />
     </TouchableOpacity>
   )
 }
@@ -93,5 +103,6 @@ export {
   MapSOSButton,
   MapCurretLocationButton,
   MapGoToSchoolButton,
+  MapNavigationButtonDark
 }
 export default MapButton

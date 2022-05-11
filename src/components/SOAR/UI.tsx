@@ -69,7 +69,7 @@ const UI = (props: Props) => {
         <Overlap>
           <NoTouchDiv style={styles.navigationContainer}>
             <MapNavigationButton
-              icon={[IC, 'arrow-back']}
+              icon={[IC, 'chevron-back']}
               onPress={() => navigation.navigate('HomeScreen')}
             />
           </NoTouchDiv>

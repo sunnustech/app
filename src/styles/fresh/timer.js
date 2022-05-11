@@ -13,11 +13,15 @@ export default StyleSheet.create({
   },
   smallSecondsContainer: {
     backgroundColor: 'rgba(255,255,255,0.7)',
+    flex: 1,
     borderRadius: 10,
-    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'rgba(28, 28, 28, 0.2)',
+  },
+  textContainer: {
+    flexDirection: 'row',
   },
   number: {
     fontVariant: ['tabular-nums'],
@@ -29,7 +33,7 @@ export default StyleSheet.create({
   },
   seconds: {
     color: colors.gray[600],
-    paddingTop: 2,
+    paddingTop: 3,
     fontSize: 24,
   },
 })

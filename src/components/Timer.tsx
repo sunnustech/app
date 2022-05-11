@@ -28,15 +28,16 @@ const secondsToHHMMSS = (seconds: number): string => {
 //   const HM = HMS.replace(re, '')
 // }
 
-
 const SmallSeconds = (props: { HMS: string }) => {
   const S = props.HMS.split(':').pop()
   const re = new RegExp(`:${S}$`)
   const HM = props.HMS.replace(re, '')
   return (
     <View style={styles.smallSecondsContainer}>
-      <Text style={[styles.number, styles.hourMinutes]}>{HM}</Text>
-      <Text style={[styles.number, styles.seconds]}>{S}</Text>
+      <View style={styles.textContainer}>
+        <Text style={[styles.number, styles.hourMinutes]}>{HM}</Text>
+        <Text style={[styles.number, styles.seconds]}>{S}</Text>
+      </View>
     </View>
   )
 }
@@ -68,9 +69,7 @@ const Timer = (props: { team: Team }) => {
     }
   })
 
-  return (
-    <SmallSeconds HMS={team._timerRunning ? tick() : paused()} />
-  )
+  return <SmallSeconds HMS={team._timerRunning ? tick() : paused()} />
 }
 
 export default Timer

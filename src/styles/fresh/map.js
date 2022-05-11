@@ -6,6 +6,10 @@ const sideButton = {
   color: colors.white,
 }
 
+const backButton = {
+  size: sideButton.size - 8
+}
+
 const gemSize = 36
 
 const map = StyleSheet.create({
@@ -33,7 +37,7 @@ const map = StyleSheet.create({
   navigationContainer: {},
   timerContainer: {
     width: '55%',
-    marginTop: 10,
+    height: backButton.size,
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -111,16 +115,8 @@ const map = StyleSheet.create({
     marginTop: 14,
   },
   mapNavigationButton: {
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: 'rgba(0, 0, 0, 0.15);',
-    width: sideButton.size,
-    height: sideButton.size,
-    shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
+    width: backButton.size,
+    height: backButton.size,
   },
   SOSContainer: {
     width: '70%',
@@ -144,7 +140,7 @@ const map = StyleSheet.create({
   },
   SOSTitle: {
     fontSize: 32,
-    color:colors.gray[700],
+    color: colors.gray[700],
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 10,
@@ -152,7 +148,7 @@ const map = StyleSheet.create({
   modalTitle: {
     fontSize: 28,
     textAlign: 'center',
-    color:colors.gray[700],
+    color: colors.gray[700],
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 10,
