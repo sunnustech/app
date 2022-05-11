@@ -8,12 +8,13 @@ import {
   MapSOSButton,
 } from '@/components/SOAR'
 import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
-import { AuthPage } from '@/types/navigation'
+import { AuthPage, SOARPage } from '@/types/navigation'
 import { useContext, useEffect, useState } from 'react'
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner'
 import Timer from '@/components/Timer'
 import { SOARContext } from '@/contexts/SOARContext'
 import Debug from '@/components/SOAR/Debug'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
@@ -22,6 +23,7 @@ type Props = {
 
 const UI = (props: Props) => {
   const { navigation, flyToNUS } = props
+  const SOARnavigation = useNavigation<SOARPage<'SOARScreen'>>()
   const { teamState } = useContext(SOARContext)
   const team = teamState[0]
 
@@ -40,7 +42,7 @@ const UI = (props: Props) => {
   function openQRScanner() {
     /** if granted, send it */
     if (cameraPermission === 'granted') {
-      navigation.navigate('QRScreen')
+      SOARnavigation.navigate('QRScreen')
       return
     }
     /** else, ask for permission */
@@ -52,14 +54,11 @@ const UI = (props: Props) => {
         )
         return
       }
-      navigation.navigate('QRScreen')
+      SOARnavigation.navigate('QRScreen')
     })
   }
 
   const TopUI = () => {
-    function backToHomeScreen() {
-      navigation.navigate('HomeScreen')
-    }
     return (
       <NoTouchDiv style={styles.mapTopContainer}>
         <Overlap>
@@ -71,7 +70,7 @@ const UI = (props: Props) => {
           <NoTouchDiv style={styles.navigationContainer}>
             <MapNavigationButton
               icon={[IC, 'arrow-back']}
-              onPress={backToHomeScreen}
+              onPress={() => navigation.navigate('HomeScreen')}
             />
           </NoTouchDiv>
         </Overlap>

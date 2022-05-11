@@ -9,7 +9,6 @@ export type AuthenticatedPages = {
   WSSScreen: undefined
   GeneratorScreen: undefined
   DEVScreen: undefined
-  QRScreen: undefined
 }
 
 export type UnauthenticatedPages = {
