@@ -7,7 +7,7 @@ const sideButton = {
 }
 
 const backButton = {
-  size: sideButton.size - 8
+  size: sideButton.size - 8,
 }
 
 const gemSize = 36
@@ -34,7 +34,36 @@ const map = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  navigationContainer: {},
+  navigationContainer: {
+    // backgroundColor: 'rgba(100, 100, 0, 0.6)',
+    flexDirection: 'row',
+  },
+  pointsContainer: {
+    // backgroundColor: colors.blue[200],
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  pointsTextContainer: {
+    backgroundColor: colors.white,
+    marginVertical: 8,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    borderRadius: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+  },
+  pointsText: {
+    marginLeft: 1,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.gray[700],
+    fontVariant: ['tabular-nums'],
+  },
   timerContainer: {
     width: '55%',
     height: backButton.size,
