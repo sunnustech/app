@@ -80,25 +80,24 @@ const UI = (props: Props) => {
     )
   }
 
-
   const Debug = () => {
-function firebaseQR(command: string, station?: string) {
-  console.log('firebasing the QR code...')
-  const props = {
-    command,
-    points: 0,
-    facilitator: 'Khang',
-    station: station || 'Slide',
-    teamName: 'developer_team',
-  }
-  const qr = new QR(props)
-  const QRApi = httpsCallable(functions, 'QRApi')
-  QRApi(props).then((result) => {
-    const data: any = result.data
-    console.log('firebase status', data.status)
-  })
-  console.log('test QR:', qr)
-}
+    function firebaseQR(command: string, station?: string) {
+      console.log('firebasing the QR code...')
+      const props = {
+        command,
+        points: 0,
+        facilitator: 'Khang',
+        station: station || 'Slide',
+        teamName: 'developer_team',
+      }
+      const qr = new QR(props)
+      const QRApi = httpsCallable(functions, 'QRApi')
+      QRApi(props).then((result) => {
+        const data: any = result.data
+        console.log('firebase status', data.status)
+      })
+      console.log('test QR:', qr)
+    }
 
     return (
       <>

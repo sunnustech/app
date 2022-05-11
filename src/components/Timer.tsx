@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Text } from 'react-native'
 // import { timer as styles } from '@/styles/fresh'
 import { Team } from '@/classes/team'
-import { log } from '@/utils/cli'
+// import { log } from '@/utils/cli'
 
 const secondsToHHMMSS = (seconds: number): string => {
   if (seconds < 3600) {
@@ -26,9 +26,9 @@ const Timer = (props: { team: Team }) => {
     const now = new Date()
     const finalSum = Math.abs(now.getTime() - team.displayTimeOffset())
     const seconds = Math.round(finalSum / 1000)
-    console.log('timer events', team._timerEvents)
+    // console.log('timer events', team._timerEvents)
     const displayTime = secondsToHHMMSS(seconds)
-    log.green('tick', seconds)
+    // log.green('tick', seconds)
     setElapsed(displayTime)
   }
 
