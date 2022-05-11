@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Team } from '@/classes/team'
 import { timer as styles } from '../styles/fresh'
+import colors from '@/styles/colors'
 
 const secondsToHHMMSS = (seconds: number): string => {
   if (seconds < 3600) {
@@ -28,7 +29,25 @@ const secondsToHHMMSS = (seconds: number): string => {
 //   const HM = HMS.replace(re, '')
 // }
 
-const SmallSeconds = (props: { HMS: string }) => {
+const ProgressBar = (props: { team: Team }) => {
+  const done = props.team._stationsCompleted.length
+  const notDone = props.team._stationsRemaining.length
+  const total = done + notDone
+  const percent = (100 * done) / total
+
+  const barStyle = {
+    height: 2,
+    width: `${percent}%`,
+    backgroundColor: colors.emerald[400],
+  }
+  return (
+    <View style={styles.progressContainer}>
+      <View style={barStyle} />
+    </View>
+  )
+}
+
+const SmallSeconds = (props: { HMS: string; team: Team }) => {
   const S = props.HMS.split(':').pop()
   const re = new RegExp(`:${S}$`)
   const HM = props.HMS.replace(re, '')
@@ -38,6 +57,7 @@ const SmallSeconds = (props: { HMS: string }) => {
         <Text style={[styles.number, styles.hourMinutes]}>{HM}</Text>
         <Text style={[styles.number, styles.seconds]}>{S}</Text>
       </View>
+      <ProgressBar team={props.team} />
     </View>
   )
 }
@@ -69,7 +89,9 @@ const Timer = (props: { team: Team }) => {
     }
   })
 
-  return <SmallSeconds HMS={team._timerRunning ? tick() : paused()} />
+  return (
+    <SmallSeconds HMS={team._timerRunning ? tick() : paused()} team={team} />
+  )
 }
 
 export default Timer

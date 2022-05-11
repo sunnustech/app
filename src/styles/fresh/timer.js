@@ -19,6 +19,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'rgba(28, 28, 28, 0.2)',
+    overflow: 'hidden'
   },
   textContainer: {
     flexDirection: 'row',
@@ -38,4 +39,14 @@ export default StyleSheet.create({
     paddingTop: 3,
     fontSize: 24,
   },
+  progressContainer: {
+    height: 2,
+    marginBottom: -2,
+    width: '100%',
+  },
+  progressBar: {
+    height: 2,
+    width: '20%',
+    backgroundColor: colors.emerald[300],
+  }
 })

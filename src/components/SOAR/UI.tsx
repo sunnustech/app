@@ -91,7 +91,7 @@ const UI = (props: Props) => {
           <MapSOSButton onPress={() => setSOSVisible(!SOSVisible)} />
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
-          {true ? <Debug /> : null}
+          {false ? <Debug /> : null}
           <MapGoToSchoolButton onPress={flyToNUS} />
           <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
         </NoTouchDiv>
