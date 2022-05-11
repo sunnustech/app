@@ -16,7 +16,6 @@ import { SOARContext } from '@/contexts/SOARContext'
 import Debug from '@/components/SOAR/Debug'
 import Points from '@/components/SOAR/Points'
 import { useNavigation } from '@react-navigation/native'
-import { Text, View } from 'react-native'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
