@@ -1,4 +1,4 @@
-import { View, SafeAreaView } from 'react-native'
+import { View, SafeAreaView, StatusBar, Platform } from 'react-native'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
@@ -35,9 +35,11 @@ const HomeScreen = () => {
    * $ console.debug(auth.currentUser) // perma
    * >>> <firebase username>
    */
+  
+  const androidNotchPadding = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {paddingTop: androidNotchPadding }]}>
       <Header navigation={navigation} />
       <View style={styles.bodyContainer}>
         <View style={styles.seriesButtonContainer}>
