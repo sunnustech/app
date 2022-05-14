@@ -1,4 +1,4 @@
-import { View, SafeAreaView, Text } from 'react-native'
+import { View, SafeAreaView } from 'react-native'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'

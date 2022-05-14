@@ -79,7 +79,7 @@ export default StyleSheet.create({
     // alignItems: 'center',
   },
   logo: {
-    width: '40%%',
+    width: '40%',
   },
   bodyContainer: {
     flex: 1,
