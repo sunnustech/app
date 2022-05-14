@@ -10,7 +10,6 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { QR as styles } from '@/styles/fresh'
 import { Overlap } from '@/components/Views'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SOARContext } from '@/contexts/SOARContext'
 import { invalidQR } from '@/lib/SOAR/QRCommands'
 import { SOARCommand } from '@/types/SOAR'

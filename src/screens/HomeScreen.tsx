@@ -38,27 +38,22 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Hello there</Text>
+      <Header navigation={navigation} />
+      <View style={styles.bodyContainer}>
+        <View style={styles.seriesButtonContainer}>
+          <SOARButton onPress={() => navigation.navigate('SOARNavigator')} />
+          <TSSButton onPress={() => navigation.navigate('TSSNavigator')} />
+          <WSSButton onPress={() => navigation.navigate('WSSScreen')} />
+        </View>
+      </View>
+      <Settings
+        showSettingsState={showSettingsState}
+        navigation={navigation}
+        logoutHandler={logoutHandler}
+      />
+      <Footer setShowSettings={setShowSettings} />
     </SafeAreaView>
   )
-  // return (
-  //   <SafeAreaView style={styles.container}>
-  //     <Header navigation={navigation} />
-  //     <View style={styles.bodyContainer}>
-  //       <View style={styles.seriesButtonContainer}>
-  //         <SOARButton onPress={() => navigation.navigate('SOARNavigator')} />
-  //         <TSSButton onPress={() => navigation.navigate('TSSNavigator')} />
-  //         <WSSButton onPress={() => navigation.navigate('WSSScreen')} />
-  //       </View>
-  //     </View>
-  //     <Settings
-  //       showSettingsState={showSettingsState}
-  //       navigation={navigation}
-  //       logoutHandler={logoutHandler}
-  //     />
-  //     <Footer setShowSettings={setShowSettings} />
-  //   </SafeAreaView>
-  // )
 }
 
 export default HomeScreen

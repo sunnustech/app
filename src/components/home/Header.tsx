@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Text } from 'react-native'
 import colors from '@/styles/colors'
 import { AntDesign } from '@expo/vector-icons'
 import Sunnus from '@/components/svgs/Sunnus'
