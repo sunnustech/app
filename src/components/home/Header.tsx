@@ -1,6 +1,6 @@
 import { View, TouchableOpacity } from 'react-native'
 import colors from '@/styles/colors'
-import { MaterialCommunityIcons as MCI, AntDesign } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 import Sunnus from '@/components/svgs/Sunnus'
 import { Overlap } from '@/components/Views'
 import { home as styles } from '@/styles/fresh'
