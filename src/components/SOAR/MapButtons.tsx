@@ -1,10 +1,12 @@
-import { mapButtons as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import { MapButtonProps } from '@/types/SOAR'
 import { Text, TouchableOpacity } from 'react-native'
 import colors from '@/styles/colors'
 import { StyleSheet } from 'react-native'
 import { Ionicons, Fontisto, MaterialIcons } from '@expo/vector-icons'
 import { OnPress } from '@/types/index'
+
+const styles = globalStyles.buttons.map
 
 const flatten = StyleSheet.flatten
 
