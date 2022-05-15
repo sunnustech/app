@@ -12,11 +12,21 @@ const flatten = StyleSheet.flatten
  * all buttons extends this base entity
  */
 const MapBaseButton = (props: MapButtonProps) => {
+  /**
+   * compute the styles based on props.style and props.size
+   * props.size affects the radius of the base circle of the
+   * map button
+   */
   const styleArr = [styles.base, props.style]
   if (props.size) {
     styleArr.push({ width: props.size, height: props.size })
   }
   const _style = flatten(styleArr)
+  /**
+   * buttons can only have one of two Children:
+   *  1. an icon
+   *  2. an actual react child
+   */
   const Children = () => {
     if (props.type === 'icon') {
       const [IconProvider, name, color] = props.icon ? props.icon : []
@@ -30,6 +40,9 @@ const MapBaseButton = (props: MapButtonProps) => {
     }
     return props.children
   }
+  /**
+   * return the inner child wrapped with a TouchableOpacity
+   */
   return (
     <TouchableOpacity style={_style} onPress={props.onPress}>
       <Children />
