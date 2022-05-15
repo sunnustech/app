@@ -7,32 +7,30 @@ import { Ionicons, Fontisto, MaterialIcons } from '@expo/vector-icons'
 
 const flatten = StyleSheet.flatten
 
-const MapBaseButton = ({
-  icon,
-  onPress,
-  style,
-  size,
-  children,
-}: MapButtonProps) => {
-  const styleArr = [styles.mapSideButton, style]
-  if (size) {
-    styleArr.push({ width: size, height: size })
+const MapBaseButton = (props: MapButtonProps) => {
+  const styleArr = [styles.mapSideButton, props.style]
+  if (props.size) {
+    styleArr.push({ width: props.size, height: props.size })
   }
   const _style = flatten(styleArr)
-  // icon: provider + name
-  const [IconProvider, name, color] = icon ? icon : []
-  return true ? (
-    <TouchableOpacity style={_style} onPress={onPress}>
-      {icon ? (
+  const Children = () => {
+    if (props.type === 'icon') {
+      const [IconProvider, name, color] = props.icon ? props.icon : []
+      return (
         <IconProvider
           name={name}
           color={color ? color : colors.gray[700]}
           size={24}
         />
-      ) : null}
-      {children ? children : null}
+      )
+    }
+    return props.children
+  }
+  return (
+    <TouchableOpacity style={_style} onPress={props.onPress}>
+      <Children />
     </TouchableOpacity>
-  ) : null
+  )
 }
 
 const MapBottomButton = (props: MapButtonProps) => {
@@ -43,6 +41,7 @@ const MapBottomButton = (props: MapButtonProps) => {
 export namespace Buttons {
   export const Back = ({ onPress }: any) => (
     <MapBaseButton
+      type="icon"
       icon={[Ionicons, 'chevron-back']}
       onPress={onPress}
       size={48}
@@ -50,17 +49,26 @@ export namespace Buttons {
   )
   export const SOS = ({ onPress }: any) => (
     <MapBottomButton
+      type="icon"
       icon={[Fontisto, 'asterisk', colors.red[500]]}
       onPress={onPress}
     />
   )
   export const GoToSchool = ({ onPress }: any) => (
-    <MapBottomButton style={styles.mapGoToSchoolButton} onPress={onPress}>
+    <MapBottomButton
+      type="child"
+      style={styles.mapGoToSchoolButton}
+      onPress={onPress}
+    >
       <Text style={styles.mapGoToSchoolText}>NUS</Text>
     </MapBottomButton>
   )
   export const QR = ({ onPress }: any) => (
-    <MapBottomButton icon={[MaterialIcons, 'qr-code']} onPress={onPress} />
+    <MapBottomButton
+      type="icon"
+      icon={[MaterialIcons, 'qr-code']}
+      onPress={onPress}
+    />
   )
 }
 

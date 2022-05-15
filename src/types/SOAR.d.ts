@@ -1,8 +1,8 @@
 import { AuthenticatedPages, SOARPage } from '@/types/navigation'
-import { TimeApiProps } from '@/types/index'
+import { OnPress, TimeApiProps } from '@/types/index'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import MapView from 'react-native-maps'
-import { MutableRefObject, RefObject } from 'react'
+import React, { MutableRefObject, RefObject } from 'react'
 import { QR } from '@/classes/QR'
 import { Team } from '@/classes/Team'
 import { Location, LocationList } from '@/classes/location'
@@ -150,13 +150,20 @@ export type SOARTeamProps = {
 
 /* Map and SOAR */
 
-export type MapButtonProps = {
+type MapButtonContents =
+  | {
+      type: 'child'
+      children: any
+    }
+  | {
+      type: 'icon'
+      icon: any
+    }
+
+export type MapButtonProps = MapButtonContents & {
   size?: number
   style?: any
-  icon?: any
-  onPress: any
-  activated?: any
-  children?: any
+  onPress: OnPress
 }
 
 /* some constants */
@@ -193,7 +200,7 @@ export type SOARStations = [
   'Nerf Battle',
   'Snake and Ladders',
   'GOLF',
-  'Relay2Maze',
+  'Relay2Maze'
 ]
 
 export type SOARActions = [
@@ -201,7 +208,7 @@ export type SOARActions = [
   'pause',
   'resume',
   'stopFinal',
-  'completeStage',
+  'completeStage'
 ]
 
 // Placeholder
