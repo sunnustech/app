@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native'
 import { Ionicons, Fontisto, MaterialIcons } from '@expo/vector-icons'
 import { OnPress } from '@/types/index'
 
-const styles = globalStyles.buttons.map
+const styles = globalStyles.button.map
 
 const flatten = StyleSheet.flatten
 

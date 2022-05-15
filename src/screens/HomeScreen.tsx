@@ -8,7 +8,7 @@ import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
-import { home as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import { useState } from 'react'
 import { SOARButton, TSSButton, WSSButton } from '@/components/SeriesButton'
 import Header from '@/components/home/Header'
@@ -35,14 +35,12 @@ const HomeScreen = () => {
    * $ console.debug(auth.currentUser) // perma
    * >>> <firebase username>
    */
-  
-  const androidNotchPadding = Platform.OS === 'android' ? StatusBar.currentHeight : 0
 
   return (
-    <SafeAreaView style={[styles.container, {paddingTop: androidNotchPadding }]}>
+    <SafeAreaView style={globalStyles.container.base}>
       <Header navigation={navigation} />
-      <View style={styles.bodyContainer}>
-        <View style={styles.seriesButtonContainer}>
+      <View style={globalStyles.container.body}>
+        <View style={globalStyles.container.padded}>
           <SOARButton onPress={() => navigation.navigate('SOARNavigator')} />
           <TSSButton onPress={() => navigation.navigate('TSSNavigator')} />
           <WSSButton onPress={() => navigation.navigate('WSSScreen')} />

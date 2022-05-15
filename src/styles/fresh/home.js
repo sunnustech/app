@@ -200,16 +200,4 @@ export default StyleSheet.create({
     color: colors.homeFg,
   },
 
-  circle: {
-    marginVertical: 2,
-    height: 4,
-    width: 4,
-    borderRadius: 100,
-    borderColor: colors.transparent,
-    borderWidth: 1.4,
-    backgroundColor: colors.red[400]
-  },
-  transparent: {
-    backgroundColor: colors.transparent
-  }
 })
