@@ -22,8 +22,14 @@ const opts = {
     height: 80,
   },
   button: {
-    size: 56,
-    radius: 100,
+    round: {
+      size: 56,
+      radius: 100,
+    },
+    pill: {
+      border: 3,
+      radius: 8,
+    },
   },
   map: {
     baseButton: {
@@ -49,7 +55,7 @@ const button = {
       width: opts.map.baseButton.size,
       height: opts.map.baseButton.size,
       backgroundColor: opts.map.baseButton.color,
-      borderRadius: opts.button.radius,
+      borderRadius: opts.button.round.radius,
       justifyContent: 'space-around',
       alignItems: 'center',
       shadowColor: colors.shadow,
@@ -72,22 +78,33 @@ const button = {
   outline: css({
     header: join([
       {
-        height: opts.button.size,
-        width: opts.button.size,
-        borderRadius: opts.button.radius,
+        height: opts.button.round.size,
+        width: opts.button.round.size,
+        borderRadius: opts.button.round.radius,
         // backgroundColor: colors.blue[100],
       },
       core.centered,
     ]),
     footer: join([
       {
-        borderRadius: opts.button.radius,
+        borderRadius: opts.button.round.radius,
         paddingVertical: 10,
         paddingHorizontal: 14,
         flexDirection: 'row',
+        backgroundColor: debug('amber'),
       },
       core.centered,
     ]),
+  }),
+  pill: css({
+    base: {
+      width: '100%',
+      borderWidth: opts.button.pill.border,
+      padding: 10,
+      borderRadius: opts.button.pill.radius,
+      marginVertical: 8,
+      alignItems: 'center',
+    },
   }),
 }
 
@@ -105,7 +122,7 @@ const shapes = css({
     marginVertical: 2,
     height: 4,
     width: 4,
-    borderRadius: opts.button.radius,
+    borderRadius: opts.button.round.radius,
     borderColor: colors.transparent,
     borderWidth: 1.4,
     backgroundColor: colors.red[400],
@@ -136,11 +153,14 @@ const container = css({
     flexDirection: 'row',
     marginBottom: opts.footer.height - opts.header.height,
   },
-  footer: {
-    height: opts.footer.height,
-    flexDirection: 'row',
-    backgroundColor: debug('pink'),
-  },
+  footer: join([
+    {
+      height: opts.footer.height,
+      flexDirection: 'row',
+      backgroundColor: debug('pink'),
+    },
+    core.centered,
+  ]),
   headerLogo: {
     paddingLeft: 24,
     width: '40%',
@@ -151,7 +171,7 @@ const container = css({
       height: '100%',
       flexDirection: 'row',
       backgroundColor: debug('green'),
-      marginRight: opts.button.size * 0.2,
+      marginRight: opts.button.round.size * 0.2,
     },
     core.centered,
   ]),
@@ -165,8 +185,6 @@ const container = css({
 
 const text = css({
   settings: {
-    marginLeft: 4,
-    fontSize: 16,
     fontWeight: '600',
     color: opts.foreground,
   },

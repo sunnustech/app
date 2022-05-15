@@ -6,12 +6,14 @@ import { home as styles } from '@/styles/fresh'
 import { auth } from '@/sunnus/firebase'
 import { Auth } from 'firebase/auth'
 import { ButtonRed } from '@/components/Buttons'
+import { globalStyles } from '@/styles/global'
 
 const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.devButton, containerStyle]}
+      // style={[styles.devButton, containerStyle]}
+      style={[globalStyles.button.pill.base, containerStyle]}
     >
       <Text style={[styles.buttonText, textStyle]}>{children}</Text>
     </TouchableOpacity>
