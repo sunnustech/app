@@ -1,19 +1,12 @@
 import { map as styles } from '@/styles/fresh'
 import SOS from '@/components/SOAR/SOS'
 import { NoTouchDiv, Overlap } from '@/components/Views'
-import { Ionicons as IC, MaterialIcons as MI } from '@expo/vector-icons'
-import {
-  MapBottomButton,
-  MapNavigationButton,
-  MapSOSButton,
-} from '@/components/SOAR'
-import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
+import { Buttons } from '@/components/SOAR'
 import { AuthPage, SOARPage } from '@/types/navigation'
 import { useContext, useEffect, useState } from 'react'
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner'
 import Timer from '@/components/Timer'
 import { SOARContext } from '@/contexts/SOARContext'
-import Debug from '@/components/SOAR/Debug'
 import Points from '@/components/SOAR/Points'
 import { useNavigation } from '@react-navigation/native'
 
@@ -72,10 +65,7 @@ const UI = (props: Props) => {
         </Overlap>
         <Overlap>
           <NoTouchDiv style={styles.navigationContainer}>
-            <MapNavigationButton
-              icon={[IC, 'chevron-back']}
-              onPress={() => navigation.navigate('HomeScreen')}
-            />
+            <Buttons.Back onPress={() => navigation.navigate('HomeScreen')} />
             <NoTouchDiv style={{ flex: 1 }} />
           </NoTouchDiv>
         </Overlap>
@@ -88,12 +78,11 @@ const UI = (props: Props) => {
       <NoTouchDiv style={styles.mapBottomContainer}>
         <NoTouchDiv style={styles.mapLeftContainer}>
           <NoTouchDiv style={styles.flex1} />
-          <MapSOSButton onPress={() => setSOSVisible(!SOSVisible)} />
+          <Buttons.SOS onPress={() => setSOSVisible(!SOSVisible)}/>
         </NoTouchDiv>
         <NoTouchDiv style={styles.mapRightContainer}>
-          {false ? <Debug /> : null}
-          <MapGoToSchoolButton onPress={flyToNUS} />
-          <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
+          <Buttons.GoToSchool onPress={flyToNUS}/>
+          <Buttons.QR onPress={openQRScanner}/>
         </NoTouchDiv>
       </NoTouchDiv>
     )

@@ -147,7 +147,7 @@ const map = StyleSheet.create({
   mapActivatedButton: {
     backgroundColor: colors.blue[400],
   },
-  mapCurrentLocationButton: {
+  mapGoToSchoolButton: {
     backgroundColor: colors.blue[400],
   },
   mapBottomButton: {

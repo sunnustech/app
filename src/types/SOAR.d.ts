@@ -151,10 +151,12 @@ export type SOARTeamProps = {
 /* Map and SOAR */
 
 export type MapButtonProps = {
+  size?: number
   style?: any
-  icon: any
+  icon?: any
   onPress: any
   activated?: any
+  children?: any
 }
 
 /* some constants */
