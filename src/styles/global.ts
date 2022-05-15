@@ -2,19 +2,26 @@ const debugSwitch = false
 
 import { StyleSheet, Platform, StatusBar } from 'react-native'
 import colors from '@/styles/colors'
-import { Color, Shade } from '@/types/colors'
+import { makeAccent, createDebugger } from '@/styles/utils'
+
+const debug = createDebugger(debugSwitch)
 
 const css = StyleSheet.create
 const join = StyleSheet.flatten
 
-function debug(color: Color, shade?: Shade) {
-  return debugSwitch ? colors[color][shade || 100] : colors.transparent
-}
-
 const opts = {
+  accents: {
+    // bg: 300, fg: 500, border: 600
+    SOAR: makeAccent('amber'),
+    WSS: makeAccent('sky'),
+    TSS: makeAccent('green'),
+    DEV: makeAccent('purple'),
+    GenerateQR: makeAccent('pink'),
+  },
   width: '70%',
   background: colors.white,
   foreground: colors.gray[800],
+  radius: 10,
   header: {
     height: 50,
   },
@@ -28,7 +35,6 @@ const opts = {
     },
     pill: {
       border: 3,
-      radius: 8,
     },
   },
   map: {
@@ -46,6 +52,10 @@ const core = css({
   },
   focused: {
     backgroundColor: colors.gray[200],
+  },
+  marginAuto: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
 })
 
@@ -101,7 +111,7 @@ const button = {
       width: '100%',
       borderWidth: opts.button.pill.border,
       padding: 10,
-      borderRadius: opts.button.pill.radius,
+      borderRadius: opts.radius,
       marginVertical: 8,
       alignItems: 'center',
     },
@@ -161,6 +171,17 @@ const container = css({
     },
     core.centered,
   ]),
+  modal: join([
+    {
+      width: opts.width,
+      backgroundColor: opts.background,
+      display: 'flex',
+      flexDirection: 'column',
+      padding: 18,
+      borderRadius: opts.radius,
+    },
+    core.marginAuto,
+  ]),
   headerLogo: {
     paddingLeft: 24,
     width: '40%',
@@ -185,8 +206,13 @@ const container = css({
 
 const text = css({
   settings: {
+    marginLeft: 4,
     fontWeight: '600',
     color: opts.foreground,
+  },
+  pillButton: {
+    fontWeight: '600',
+    fontSize: 18,
   },
 })
 

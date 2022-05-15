@@ -12,10 +12,9 @@ const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      // style={[styles.devButton, containerStyle]}
       style={[globalStyles.button.pill.base, containerStyle]}
     >
-      <Text style={[styles.buttonText, textStyle]}>{children}</Text>
+      <Text style={[globalStyles.text.pillButton, textStyle]}>{children}</Text>
     </TouchableOpacity>
   )
 }
@@ -40,7 +39,7 @@ const Settings = ({
       dismissable={true}
       onDismiss={() => setShowSettings(false)}
     >
-      <View style={styles.modalContainer}>
+      <View style={globalStyles.container.modal}>
         <DevButton
           onPress={() => go('GeneratorScreen')}
           textStyle={styles.GenerateQRbuttonText}
