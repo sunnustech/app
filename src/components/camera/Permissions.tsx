@@ -2,7 +2,7 @@ import { View, Text, PermissionStatus } from 'react-native'
 import { Modal } from 'react-native-paper'
 import { map as styles } from '@/styles/fresh'
 import { BarCodeScanner } from 'expo-barcode-scanner'
-import { Smashables } from '@/components/Buttons'
+import { Button } from '@/components/Buttons'
 import { Dispatch, SetStateAction } from 'react'
 
 export const enableCameraPermission = async (
@@ -37,7 +37,8 @@ export const HandleCameraPermission = (
               This app needs camera access for QR code scanning.
             </Text>
             <View style={{ marginBottom: 10 }}></View>
-            <Smashables.Green
+            <Button
+              color='green'
               onPress={() =>
                 enableCameraPermission(
                   setCheckingCameraPermission,

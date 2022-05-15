@@ -10,10 +10,10 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { globalStyles } from '@/styles/global'
 import { useState } from 'react'
-import { Smashables } from '@/components/Buttons'
 import Header from '@/components/home/Header'
 import Settings from '@/components/home/Settings'
 import Footer from '@/components/home/Footer'
+import { Series } from '@/components/Buttons'
 
 import SOAR from '@/components/svgs/SOAR'
 import TSS from '@/components/svgs/TSS'
@@ -45,17 +45,17 @@ const HomeScreen = () => {
       <Header navigation={navigation} />
       <View style={globalStyles.container.body}>
         <View style={globalStyles.container.padded}>
-          <Smashables.Series
+          <Series
             color="amber"
             svg={SOAR}
             onPress={() => navigation.navigate('SOARNavigator')}
           />
-          <Smashables.Series
+          <Series
             color="green"
             svg={TSS}
             onPress={() => navigation.navigate('TSSNavigator')}
           />
-          <Smashables.Series
+          <Series
             color="sky"
             svg={WSS}
             onPress={() => navigation.navigate('WSSScreen')}

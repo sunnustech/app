@@ -1,7 +1,7 @@
 import { map as styles } from '@/styles/fresh'
 import { Modal } from 'react-native-paper'
 import { View, Text, Linking } from 'react-native'
-import { Smashables } from '@/components/Buttons'
+import { Button } from '@/components/Buttons'
 import { SOARContext } from '@/contexts/SOARContext'
 import { useContext } from 'react'
 
@@ -13,7 +13,7 @@ const SOS = ({ visible, setState }: any) => {
   }
 
   const SOSButton = ({ onPress, children }: any) => {
-    return <Smashables.Red onPress={onPress} children={children} />
+    return <Button color="red" onPress={onPress} children={children} />
   }
 
   return (

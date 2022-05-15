@@ -2,7 +2,7 @@ import { functions } from '@/sunnus/firebase'
 import { map as styles } from '@/styles/fresh'
 import { httpsCallable } from 'firebase/functions'
 import { Text, View } from 'react-native'
-import { Smashables } from '@/components/Buttons'
+import { Button } from '@/components/Buttons'
 import { Modal } from 'react-native-paper'
 import { QR } from '../../classes/QR'
 import { useContext } from 'react'
@@ -30,7 +30,7 @@ const QRModal = () => {
         <View style={{ marginBottom: 10 }}></View>
         <Text style={styles.centered}>{qr.command}</Text>
         <View style={{ marginBottom: 10 }}></View>
-        <Smashables.Green onPress={confirmQRAction} children={qr.command} />
+        <Button color='green' onPress={confirmQRAction} children={qr.command} />
       </View>
     </Modal>
   )

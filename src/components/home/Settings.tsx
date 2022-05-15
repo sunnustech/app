@@ -5,9 +5,8 @@ import { UseState } from '@/types/SOAR'
 import { home as styles } from '@/styles/fresh'
 import { auth } from '@/sunnus/firebase'
 import { Auth } from 'firebase/auth'
-import { Smashables } from '@/components/Buttons'
+import { Button } from '@/components/Buttons'
 import { globalStyles } from '@/styles/global'
-import WSS from '@/components/svgs/WSS'
 
 const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -56,7 +55,7 @@ const Settings = ({
           Development
         </DevButton>
         <View style={{ height: 24 }} />
-        <Smashables.Red onPress={() => logoutHandler(auth)} children="Logout" />
+        <Button color='red' onPress={() => logoutHandler(auth)} children="Logout" />
       </View>
     </Modal>
   )
