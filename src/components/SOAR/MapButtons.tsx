@@ -4,6 +4,7 @@ import { Text, TouchableOpacity } from 'react-native'
 import colors from '@/styles/colors'
 import { StyleSheet } from 'react-native'
 import { Ionicons, Fontisto, MaterialIcons } from '@expo/vector-icons'
+import { OnPress } from '@/types/index'
 
 const flatten = StyleSheet.flatten
 
@@ -36,41 +37,43 @@ const MapBaseButton = (props: MapButtonProps) => {
   )
 }
 
+/**
+ * This is a secondary base button:
+ * Buttons that are meant to be at the bottom of the map screen
+ * Think: QR button, the blue button to jump back to school, ...
+ */
 const MapBottomButton = (props: MapButtonProps) => {
   const _style = flatten([styles.bottomButton, props.style])
   return <MapBaseButton {...props} style={_style} />
 }
 
+/** the real exported buttons */
 export namespace Buttons {
-  export const Back = ({ onPress }: any) => (
+  export const Back = (props: { onPress: OnPress }) => (
     <MapBaseButton
       type="icon"
       icon={[Ionicons, 'chevron-back']}
-      onPress={onPress}
+      onPress={props.onPress}
       size={48}
     />
   )
-  export const SOS = ({ onPress }: any) => (
+  export const SOS = (props: { onPress: OnPress }) => (
     <MapBottomButton
       type="icon"
       icon={[Fontisto, 'asterisk', colors.red[500]]}
-      onPress={onPress}
+      onPress={props.onPress}
     />
   )
-  export const GoToSchool = ({ onPress }: any) => (
-    <MapBottomButton
-      type="child"
-      style={styles.blue}
-      onPress={onPress}
-    >
+  export const GoToSchool = (props: { onPress: OnPress }) => (
+    <MapBottomButton type="child" style={styles.blue} onPress={props.onPress}>
       <Text style={styles.whiteText}>NUS</Text>
     </MapBottomButton>
   )
-  export const QR = ({ onPress }: any) => (
+  export const QR = (props: { onPress: OnPress }) => (
     <MapBottomButton
       type="icon"
       icon={[MaterialIcons, 'qr-code']}
-      onPress={onPress}
+      onPress={props.onPress}
     />
   )
 }
