@@ -5,16 +5,37 @@ import { makeAccent } from '@/styles/utils'
 import { Color } from '@/types/colors'
 import { ReactElement } from 'react'
 import { globalStyles } from '@/styles/global'
-import colors from '@/styles/colors'
 
 export const Button = (props: ButtonProps & { color?: Color }) => {
-  const _color = props.color || 'white'
+  const _color = props.color || 'blue'
+  const accent = makeAccent(_color)
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={[styles.button, { backgroundColor: colors[_color][500] }]}
+      style={[
+        globalStyles.button.pill.base,
+        { backgroundColor: accent.fg, borderColor: accent.fg },
+      ]}
     >
       <Text style={styles.buttonText}>{props.children}</Text>
+    </TouchableOpacity>
+  )
+}
+
+export const AccentButton = (props: ButtonProps & { color?: Color }) => {
+  const _color = props.color || 'blue'
+  const accent = makeAccent(_color)
+  return (
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={[
+        globalStyles.button.pill.base,
+        { backgroundColor: accent.bg, borderColor: accent.border },
+      ]}
+    >
+      <Text style={[styles.buttonText, { color: accent.fg }]}>
+        {props.children}
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -25,7 +46,6 @@ export const Series = (
   props: ViewProps & { color: Color; onPress: OnPress; svg: SvgProps }
 ) => {
   const accent = makeAccent(props.color)
-
   return (
     <TouchableOpacity
       onPress={props.onPress}
