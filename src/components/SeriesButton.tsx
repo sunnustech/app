@@ -1,49 +1,57 @@
 import { seriesButton as styles } from '@/styles/fresh'
-import { TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View, ViewProps, ViewStyle } from 'react-native'
 import { OnPress } from '@/types/index'
 import colors from '@/styles/colors'
 import SOAR from '@/components/svgs/SOAR'
 import TSS from '@/components/svgs/TSS'
 import WSS from '@/components/svgs/WSS'
+import { Color } from '@/types/colors'
 
-const SOARButton = ({ onPress }: { onPress: OnPress }) => {
+type SeriesProps = {
+  onPress: OnPress
+  color: Color
+}
+
+type SvgProps = (props: { fill: string }) => Element
+
+const SeriesButton = (
+  props: ViewProps & { color: Color; onPress: OnPress; Svg: SvgProps }
+) => {
+  // <View style={styles.logoContainer} children={props.children} />
   return (
     <TouchableOpacity
-      onPress={onPress}
-      style={[styles.seriesButton, styles.SOARbutton]}
+      onPress={props.onPress}
+      style={[styles.seriesButton, props.style]}
     >
-      <View style={styles.logoContainer}>
-        <SOAR fill={colors.amber[600]} />
+      <View style={styles.logoContainer} children="12">
+        <props.Svg fill={colors[props.color][600]} />
       </View>
     </TouchableOpacity>
   )
 }
 
-const TSSButton = ({ onPress }: { onPress: OnPress }) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.seriesButton, styles.TSSbutton]}
-    >
-      <View style={styles.logoContainer}>
-        <TSS fill={colors.green[600]} />
-      </View>
-    </TouchableOpacity>
-  )
-}
+// const SOARButton = (props: SeriesProps) => {
+//   return (
+//     <SeriesButton onPress={props.onPress} style={styles.SOARbutton}>
+//       <SOAR fill={colors[props.color][600]} />
+//     </SeriesButton>
+//   )
+// }
+//
+// const TSSButton = (props: SeriesProps) => {
+//   return (
+//     <SeriesButton onPress={props.onPress} style={styles.TSSbutton}>
+//       <TSS fill={colors[props.color][600]} />
+//     </SeriesButton>
+//   )
+// }
+//
+// const WSSButton = (props: SeriesProps) => {
+//   return (
+//     <SeriesButton onPress={props.onPress} style={styles.WSSbutton}>
+//       <WSS fill={colors[props.color][600]} />
+//     </SeriesButton>
+//   )
+// }
 
-const WSSButton = ({ onPress }: { onPress: OnPress }) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.seriesButton, styles.WSSbutton]}
-    >
-      <View style={styles.logoContainer}>
-        <WSS fill={colors.sky[600]} />
-      </View>
-    </TouchableOpacity>
-  )
-}
-
-export default TouchableOpacity
-export { SOARButton, TSSButton, WSSButton }
+export default SeriesButton

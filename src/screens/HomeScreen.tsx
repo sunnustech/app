@@ -10,10 +10,15 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { globalStyles } from '@/styles/global'
 import { useState } from 'react'
-import { SOARButton, TSSButton, WSSButton } from '@/components/SeriesButton'
+import SeriesButton from '@/components/SeriesButton'
+import { seriesButton as styles } from '@/styles/fresh'
 import Header from '@/components/home/Header'
 import Settings from '@/components/home/Settings'
 import Footer from '@/components/home/Footer'
+
+import SOAR from '@/components/svgs/SOAR'
+import TSS from '@/components/svgs/TSS'
+import WSS from '@/components/svgs/WSS'
 
 const HomeScreen = () => {
   const navigation = useNavigation<AuthPage<'HomeScreen'>>()
@@ -41,9 +46,19 @@ const HomeScreen = () => {
       <Header navigation={navigation} />
       <View style={globalStyles.container.body}>
         <View style={globalStyles.container.padded}>
-          <SOARButton onPress={() => navigation.navigate('SOARNavigator')} />
-          <TSSButton onPress={() => navigation.navigate('TSSNavigator')} />
-          <WSSButton onPress={() => navigation.navigate('WSSScreen')} />
+          <SeriesButton
+            color="amber"
+            Svg={SOAR}
+            onPress={() => navigation.navigate('SOARNavigator')}
+          />
+          {/* <TSSButton */}
+          {/*   color="green" */}
+          {/*   onPress={() => navigation.navigate('TSSNavigator')} */}
+          {/* /> */}
+          {/* <WSSButton */}
+          {/*   color="sky" */}
+          {/*   onPress={() => navigation.navigate('WSSScreen')} */}
+          {/* /> */}
         </View>
       </View>
       <Settings

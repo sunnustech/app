@@ -11,7 +11,6 @@ const join = StyleSheet.flatten
 
 const opts = {
   accents: {
-    // bg: 300, fg: 500, border: 600
     SOAR: makeAccent('amber'),
     WSS: makeAccent('sky'),
     TSS: makeAccent('green'),
@@ -116,6 +115,19 @@ const button = {
       alignItems: 'center',
     },
   }),
+  series: css({
+    base: join([
+      {
+        width: '100%',
+        borderWidth: opts.button.pill.border,
+        padding: 18,
+        height: 108,
+        borderRadius: opts.radius,
+        marginVertical: 8,
+      },
+      core.centered,
+    ]),
+  }),
 }
 
 const utils = css({
@@ -215,6 +227,14 @@ const text = css({
     fontSize: 18,
   },
 })
+
+const series = {
+  SOAR: {},
+  TSS: {},
+  WSS: {},
+  DEV: {},
+  GenerateQR: {},
+}
 
 export const globalStyles = {
   button,
