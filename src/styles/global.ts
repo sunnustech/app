@@ -14,6 +14,7 @@ function debug(color: Color, shade?: Shade) {
 const opts = {
   width: '70%',
   background: colors.white,
+  foreground: colors.gray[800],
   header: {
     height: 50,
   },
@@ -36,6 +37,9 @@ const core = css({
   centered: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  focused: {
+    backgroundColor: colors.gray[200],
   },
 })
 
@@ -91,6 +95,9 @@ const utils = css({
   transparent: {
     backgroundColor: colors.transparent,
   },
+  focused: {
+    backgroundColor: colors.gray[200],
+  },
 })
 
 const shapes = css({
@@ -120,16 +127,19 @@ const container = css({
     {
       flex: 1,
       width: '100%',
-      backgroundColor: debug('purple')
+      backgroundColor: debug('purple'),
     },
     core.centered,
   ]),
   header: {
     height: opts.header.height,
     flexDirection: 'row',
-    width: '100%',
-    position: 'relative',
     marginBottom: opts.footer.height - opts.header.height,
+  },
+  footer: {
+    height: opts.footer.height,
+    flexDirection: 'row',
+    backgroundColor: debug('pink'),
   },
   headerLogo: {
     paddingLeft: 24,
@@ -153,9 +163,19 @@ const container = css({
   ]),
 })
 
+const text = css({
+  settings: {
+    marginLeft: 4,
+    fontSize: 16,
+    fontWeight: '600',
+    color: opts.foreground,
+  },
+})
+
 export const globalStyles = {
   button,
   container,
   shapes,
   utils,
+  text,
 }

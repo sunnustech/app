@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, Text } from 'react-native'
 import colors from '@/styles/colors'
-import { home as styles } from '@/styles/fresh'
 import { Ionicons } from '@expo/vector-icons'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { globalStyles } from '../../styles/global'
@@ -12,7 +11,7 @@ const SettingsButton = ({
 }) => {
   const [focus, setFocus] = useState(false)
   const style = focus
-    ? [globalStyles.button.outline.footer, styles.focusedButton]
+    ? [globalStyles.button.outline.footer, globalStyles.utils.focused]
     : [globalStyles.button.outline.footer]
   return (
     <TouchableOpacity
@@ -23,7 +22,7 @@ const SettingsButton = ({
       onPress={() => setShowSettings(true)}
     >
       <Ionicons name="settings-outline" size={20} color={colors.homeFg} />
-      <Text style={styles.footerSettingsText}>Settings</Text>
+      <Text style={globalStyles.text.settings}>Settings</Text>
     </TouchableOpacity>
   )
 }
@@ -34,7 +33,7 @@ const Footer = ({
   setShowSettings: Dispatch<SetStateAction<boolean>>
 }) => {
   return (
-    <View style={styles.footerContainer}>
+    <View style={globalStyles.container.footer}>
       <SettingsButton setShowSettings={setShowSettings} />
     </View>
   )
