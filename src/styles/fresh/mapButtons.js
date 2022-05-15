@@ -1,35 +1,17 @@
 import { StyleSheet } from 'react-native'
 import colors from '@/styles/colors'
 
-const sideButton = {
+// influences all buttons on the Map
+const base = {
   size: 56,
   color: colors.white,
 }
 
-const backButton = {
-  size: sideButton.size - 8,
-}
-
 const mapButtons = StyleSheet.create({
-  mapTopContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
-    // backgroundColor: colors.purple[200],
-  },
-  mapBottomContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  mapRightContainer: {
-    alignItems: 'flex-end',
-  },
-  mapLeftContainer: {
-    flex: 1,
-  },
-  mapSideButton: {
-    width: sideButton.size,
-    height: sideButton.size,
-    backgroundColor: sideButton.color,
+  base: {
+    width: base.size,
+    height: base.size,
+    backgroundColor: base.color,
     borderRadius: 100,
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -38,26 +20,16 @@ const mapButtons = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 3,
   },
-  mapTopButton: {
-    marginBottom: 14,
-  },
-  mapActivatedButton: {
+  blue: {
     backgroundColor: colors.blue[400],
   },
-  mapGoToSchoolButton: {
-    backgroundColor: colors.blue[400],
-  },
-  mapGoToSchoolText: {
+  whiteText: {
     fontWeight: '800',
     color: 'white',
     textAlign: 'center',
   },
-  mapBottomButton: {
+  bottomButton: {
     marginTop: 14,
-  },
-  mapNavigationButton: {
-    width: backButton.size,
-    height: backButton.size,
   },
 })
 

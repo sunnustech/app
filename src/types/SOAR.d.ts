@@ -6,6 +6,7 @@ import React, { MutableRefObject, RefObject } from 'react'
 import { QR } from '@/classes/QR'
 import { Team } from '@/classes/Team'
 import { Location, LocationList } from '@/classes/location'
+import { ViewStyle } from 'react-native'
 
 export type SOARTimetable = Array<{
   time: string
@@ -162,7 +163,7 @@ type MapButtonContents =
 
 export type MapButtonProps = MapButtonContents & {
   size?: number
-  style?: any
+  style?: ViewStyle
   onPress: OnPress
 }
 

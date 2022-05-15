@@ -141,9 +141,6 @@ const map = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 3,
   },
-  mapTopButton: {
-    marginBottom: 14,
-  },
   mapActivatedButton: {
     backgroundColor: colors.blue[400],
   },

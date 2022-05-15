@@ -7,8 +7,11 @@ import { Ionicons, Fontisto, MaterialIcons } from '@expo/vector-icons'
 
 const flatten = StyleSheet.flatten
 
+/**
+ * all buttons extends this base entity
+ */
 const MapBaseButton = (props: MapButtonProps) => {
-  const styleArr = [styles.mapSideButton, props.style]
+  const styleArr = [styles.base, props.style]
   if (props.size) {
     styleArr.push({ width: props.size, height: props.size })
   }
@@ -34,7 +37,7 @@ const MapBaseButton = (props: MapButtonProps) => {
 }
 
 const MapBottomButton = (props: MapButtonProps) => {
-  const _style = flatten([styles.mapBottomButton, props.style])
+  const _style = flatten([styles.bottomButton, props.style])
   return <MapBaseButton {...props} style={_style} />
 }
 
@@ -57,10 +60,10 @@ export namespace Buttons {
   export const GoToSchool = ({ onPress }: any) => (
     <MapBottomButton
       type="child"
-      style={styles.mapGoToSchoolButton}
+      style={styles.blue}
       onPress={onPress}
     >
-      <Text style={styles.mapGoToSchoolText}>NUS</Text>
+      <Text style={styles.whiteText}>NUS</Text>
     </MapBottomButton>
   )
   export const QR = ({ onPress }: any) => (
