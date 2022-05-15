@@ -1,5 +1,12 @@
+const debugSwitch = false
+
 import { StyleSheet, Platform, StatusBar } from 'react-native'
 import colors from '@/styles/colors'
+import { Color } from '@/types/colors'
+
+function debug(color: Color) {
+  return debugSwitch ? colors[color][200] : colors.transparent
+} 
 
 const opts = {
   width: '70%',
@@ -108,11 +115,12 @@ const container = css({
   headerLogo: {
     paddingLeft: 24,
     width: '40%',
+    backgroundColor: debug('blue')
   },
   headerIcons: {
     height: '100%',
     flexDirection: 'row',
-    // backgroundColor: colors.green[100],
+    backgroundColor: debug('green'),
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: opts.button.size * 0.2,
