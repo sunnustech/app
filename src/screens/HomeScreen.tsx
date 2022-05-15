@@ -1,4 +1,4 @@
-import { View, SafeAreaView, StatusBar, Platform } from 'react-native'
+import { View, SafeAreaView  } from 'react-native'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native'
 import { globalStyles } from '@/styles/global'
 import { useState } from 'react'
 import SeriesButton from '@/components/SeriesButton'
+import { Smashables } from '@/components/Buttons'
 import Header from '@/components/home/Header'
 import Settings from '@/components/home/Settings'
 import Footer from '@/components/home/Footer'
@@ -45,17 +46,17 @@ const HomeScreen = () => {
       <Header navigation={navigation} />
       <View style={globalStyles.container.body}>
         <View style={globalStyles.container.padded}>
-          <SeriesButton
+          <Smashables.Series
             color="amber"
             svg={SOAR}
             onPress={() => navigation.navigate('SOARNavigator')}
           />
-          <SeriesButton
+          <Smashables.Series
             color="green"
             svg={TSS}
             onPress={() => navigation.navigate('TSSNavigator')}
           />
-          <SeriesButton
+          <Smashables.Series
             color="sky"
             svg={WSS}
             onPress={() => navigation.navigate('WSSScreen')}

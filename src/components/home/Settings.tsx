@@ -5,8 +5,10 @@ import { UseState } from '@/types/SOAR'
 import { home as styles } from '@/styles/fresh'
 import { auth } from '@/sunnus/firebase'
 import { Auth } from 'firebase/auth'
-import { ButtonRed } from '@/components/Buttons'
+import { ButtonRed, Smashables } from '@/components/Buttons'
 import { globalStyles } from '@/styles/global'
+import SeriesButton from '@/components/SeriesButton'
+import WSS from '@/components/svgs/WSS'
 
 const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
   return (
@@ -54,6 +56,11 @@ const Settings = ({
         >
           Development
         </DevButton>
+          <SeriesButton
+            color="sky"
+            svg={WSS}
+            onPress={() => navigation.navigate('WSSScreen')}
+          />
         <View style={{ height: 24 }} />
         <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
       </View>
