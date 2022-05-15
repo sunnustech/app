@@ -2,11 +2,14 @@ const debugSwitch = false
 
 import { StyleSheet, Platform, StatusBar } from 'react-native'
 import colors from '@/styles/colors'
-import { Color } from '@/types/colors'
+import { Color, Shade } from '@/types/colors'
 
-function debug(color: Color) {
-  return debugSwitch ? colors[color][200] : colors.transparent
-} 
+const css = StyleSheet.create
+const join = StyleSheet.flatten
+
+function debug(color: Color, shade?: Shade) {
+  return debugSwitch ? colors[color][shade || 100] : colors.transparent
+}
 
 const opts = {
   width: '70%',
@@ -29,7 +32,12 @@ const opts = {
   },
 }
 
-const css = StyleSheet.create
+const core = css({
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})
 
 const button = {
   map: css({
@@ -58,14 +66,24 @@ const button = {
     },
   }),
   outline: css({
-    base: {
-      height: opts.button.size,
-      width: opts.button.size,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: opts.button.radius,
-      // backgroundColor: colors.blue[100],
-    },
+    header: join([
+      {
+        height: opts.button.size,
+        width: opts.button.size,
+        borderRadius: opts.button.radius,
+        // backgroundColor: colors.blue[100],
+      },
+      core.centered,
+    ]),
+    footer: join([
+      {
+        borderRadius: opts.button.radius,
+        paddingVertical: 10,
+        paddingHorizontal: 14,
+        flexDirection: 'row',
+      },
+      core.centered,
+    ]),
   }),
 }
 
@@ -88,48 +106,51 @@ const shapes = css({
 })
 
 const container = css({
-  base: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: opts.background,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-  },
-  body: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.green[100],
-  },
+  base: join([
+    {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: opts.background,
+      paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
+    core.centered,
+  ]),
+  body: join([
+    {
+      flex: 1,
+      width: '100%',
+      backgroundColor: debug('purple')
+    },
+    core.centered,
+  ]),
   header: {
     height: opts.header.height,
     flexDirection: 'row',
     width: '100%',
     position: 'relative',
     marginBottom: opts.footer.height - opts.header.height,
-    // backgroundColor: colors.blue[100],
   },
   headerLogo: {
     paddingLeft: 24,
     width: '40%',
-    backgroundColor: debug('blue')
+    backgroundColor: debug('blue'),
   },
-  headerIcons: {
-    height: '100%',
-    flexDirection: 'row',
-    backgroundColor: debug('green'),
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: opts.button.size * 0.2,
-  },
-  padded: {
-    width: opts.width,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  headerIcons: join([
+    {
+      height: '100%',
+      flexDirection: 'row',
+      backgroundColor: debug('green'),
+      marginRight: opts.button.size * 0.2,
+    },
+    core.centered,
+  ]),
+  padded: join([
+    {
+      width: opts.width,
+    },
+    core.centered,
+  ]),
 })
 
 export const globalStyles = {

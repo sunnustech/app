@@ -3,6 +3,7 @@ import colors from '@/styles/colors'
 import { home as styles } from '@/styles/fresh'
 import { Ionicons } from '@expo/vector-icons'
 import { Dispatch, SetStateAction, useState } from 'react'
+import { globalStyles } from '../../styles/global'
 
 const SettingsButton = ({
   setShowSettings,
@@ -11,8 +12,8 @@ const SettingsButton = ({
 }) => {
   const [focus, setFocus] = useState(false)
   const style = focus
-    ? [styles.footerSettingsButton, styles.focusedButton]
-    : [styles.footerSettingsButton]
+    ? [globalStyles.button.outline.footer, styles.focusedButton]
+    : [globalStyles.button.outline.footer]
   return (
     <TouchableOpacity
       activeOpacity={1}

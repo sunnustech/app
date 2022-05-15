@@ -21,7 +21,7 @@ const HiddenCircle = () => {
 const Heart = ({ alert, onPress }: { alert: boolean; onPress: OnPress }) => {
   return (
     <TouchableOpacity
-      style={globalStyles.button.outline.base}
+      style={globalStyles.button.outline.header}
       onPress={onPress}
     >
       {alert ? <HiddenCircle /> : null}
