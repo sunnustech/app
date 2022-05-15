@@ -10,7 +10,6 @@ import { useNavigation } from '@react-navigation/native'
 /* sunnus components */
 import { globalStyles } from '@/styles/global'
 import { useState } from 'react'
-import SeriesButton from '@/components/SeriesButton'
 import { Smashables } from '@/components/Buttons'
 import Header from '@/components/home/Header'
 import Settings from '@/components/home/Settings'

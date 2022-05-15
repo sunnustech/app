@@ -5,11 +5,23 @@ import { makeAccent } from '@/styles/utils'
 import { Color } from '@/types/colors'
 import { ReactElement } from 'react'
 import { globalStyles } from '@/styles/global'
+import colors from '@/styles/colors'
 
 const Button = ({ onPress, children, style }: ButtonProps) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
       <Text style={styles.buttonText}>{children}</Text>
+    </TouchableOpacity>
+  )
+}
+
+const BaseButton = (props: ButtonProps) => {
+  return (
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={[styles.button, props.style]}
+    >
+      <Text style={styles.buttonText}>{props.children}</Text>
     </TouchableOpacity>
   )
 }
@@ -47,6 +59,24 @@ export namespace Smashables {
           <props.svg fill={accent.fg} />
         </View>
       </TouchableOpacity>
+    )
+  }
+  export const Green = (props: ButtonProps) => {
+    const { style, ...otherProps } = props
+    return (
+      <Button
+        {...otherProps}
+        style={[{ backgroundColor: colors.green[500] }, style]}
+      />
+    )
+  }
+  export const Red = (props: ButtonProps) => {
+    const { style, ...otherProps } = props
+    return (
+      <Button
+        {...otherProps}
+        style={[{ backgroundColor: colors.red[500] }, style]}
+      />
     )
   }
 }
