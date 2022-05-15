@@ -11,7 +11,6 @@ import { useNavigation } from '@react-navigation/native'
 import { globalStyles } from '@/styles/global'
 import { useState } from 'react'
 import SeriesButton from '@/components/SeriesButton'
-import { seriesButton as styles } from '@/styles/fresh'
 import Header from '@/components/home/Header'
 import Settings from '@/components/home/Settings'
 import Footer from '@/components/home/Footer'
@@ -48,17 +47,19 @@ const HomeScreen = () => {
         <View style={globalStyles.container.padded}>
           <SeriesButton
             color="amber"
-            Svg={SOAR}
+            svg={SOAR}
             onPress={() => navigation.navigate('SOARNavigator')}
           />
-          {/* <TSSButton */}
-          {/*   color="green" */}
-          {/*   onPress={() => navigation.navigate('TSSNavigator')} */}
-          {/* /> */}
-          {/* <WSSButton */}
-          {/*   color="sky" */}
-          {/*   onPress={() => navigation.navigate('WSSScreen')} */}
-          {/* /> */}
+          <SeriesButton
+            color="green"
+            svg={TSS}
+            onPress={() => navigation.navigate('TSSNavigator')}
+          />
+          <SeriesButton
+            color="sky"
+            svg={WSS}
+            onPress={() => navigation.navigate('WSSScreen')}
+          />
         </View>
       </View>
       <Settings

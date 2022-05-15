@@ -1,57 +1,33 @@
-import { seriesButton as styles } from '@/styles/fresh'
-import { TouchableOpacity, View, ViewProps, ViewStyle } from 'react-native'
+import { TouchableOpacity, View, ViewProps } from 'react-native'
 import { OnPress } from '@/types/index'
-import colors from '@/styles/colors'
-import SOAR from '@/components/svgs/SOAR'
-import TSS from '@/components/svgs/TSS'
-import WSS from '@/components/svgs/WSS'
 import { Color } from '@/types/colors'
+import { ReactElement } from 'react'
+import { makeAccent } from '@/styles/utils'
+import { globalStyles } from '../styles/global'
 
-type SeriesProps = {
-  onPress: OnPress
-  color: Color
-}
-
-type SvgProps = (props: { fill: string }) => Element
+type SvgProps = (props: { fill: string }) => ReactElement
 
 const SeriesButton = (
-  props: ViewProps & { color: Color; onPress: OnPress; Svg: SvgProps }
+  props: ViewProps & { color: Color; onPress: OnPress; svg: SvgProps }
 ) => {
-  // <View style={styles.logoContainer} children={props.children} />
+  const accent = makeAccent(props.color)
+
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={[styles.seriesButton, props.style]}
+      style={[
+        globalStyles.button.series.base,
+        {
+          backgroundColor: accent.bg,
+          borderColor: accent.border,
+        },
+      ]}
     >
-      <View style={styles.logoContainer} children="12">
-        <props.Svg fill={colors[props.color][600]} />
+      <View style={globalStyles.container.series}>
+        <props.svg fill={accent.fg} />
       </View>
     </TouchableOpacity>
   )
 }
-
-// const SOARButton = (props: SeriesProps) => {
-//   return (
-//     <SeriesButton onPress={props.onPress} style={styles.SOARbutton}>
-//       <SOAR fill={colors[props.color][600]} />
-//     </SeriesButton>
-//   )
-// }
-//
-// const TSSButton = (props: SeriesProps) => {
-//   return (
-//     <SeriesButton onPress={props.onPress} style={styles.TSSbutton}>
-//       <TSS fill={colors[props.color][600]} />
-//     </SeriesButton>
-//   )
-// }
-//
-// const WSSButton = (props: SeriesProps) => {
-//   return (
-//     <SeriesButton onPress={props.onPress} style={styles.WSSbutton}>
-//       <WSS fill={colors[props.color][600]} />
-//     </SeriesButton>
-//   )
-// }
 
 export default SeriesButton

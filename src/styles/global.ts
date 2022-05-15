@@ -120,10 +120,10 @@ const button = {
       {
         width: '100%',
         borderWidth: opts.button.pill.border,
-        padding: 18,
         height: 108,
-        borderRadius: opts.radius,
-        marginVertical: 8,
+        borderBottomRightRadius: opts.radius,
+        borderTopLeftRadius: opts.radius,
+        marginVertical: 10,
       },
       core.centered,
     ]),
@@ -214,6 +214,10 @@ const container = css({
     },
     core.centered,
   ]),
+  series: {
+    height: 28,
+    width: '100%',
+  }
 })
 
 const text = css({
@@ -227,14 +231,6 @@ const text = css({
     fontSize: 18,
   },
 })
-
-const series = {
-  SOAR: {},
-  TSS: {},
-  WSS: {},
-  DEV: {},
-  GenerateQR: {},
-}
 
 export const globalStyles = {
   button,
