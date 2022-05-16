@@ -234,6 +234,7 @@ const text = css({
     marginLeft: 4,
     fontWeight: '600',
     color: opts.foreground,
+    textAlign: 'center',
   },
   pillButton: {
     fontWeight: '600',

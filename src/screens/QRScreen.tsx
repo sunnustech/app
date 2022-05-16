@@ -87,7 +87,7 @@ const QRScreen = () => {
         onPress={closeQRScanner}
         style={globalStyles.button.map.qrBack}
       >
-        <Text style={styles.pillButtonText}>Back to Map</Text>
+        <Text style={globalStyles.text.settings}>Back to Map</Text>
       </TouchableOpacity>
     )
   }
