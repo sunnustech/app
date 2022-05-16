@@ -83,6 +83,15 @@ const button = {
     bottomButton: {
       marginTop: 14,
     },
+    qrBack: join([{
+      backgroundColor: 'rgba(255,255,255,0.7)',
+      borderRadius: 1000,
+      width: '50%',
+      display: 'flex',
+      justifyContent: 'center',
+      padding: 20,
+      marginBottom: 36,
+    }, core.marginAuto]),
   }),
   outline: css({
     header: join([
@@ -217,7 +226,7 @@ const container = css({
   series: {
     height: 28,
     width: '100%',
-  }
+  },
 })
 
 const text = css({

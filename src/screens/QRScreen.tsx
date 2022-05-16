@@ -14,6 +14,7 @@ import { SOARContext } from '@/contexts/SOARContext'
 import { invalidQR } from '@/lib/SOAR/QRCommands'
 import { SOARCommand } from '@/types/SOAR'
 import { QR } from '@/classes/QR'
+import { globalStyles } from '../styles/global'
 
 const QRScreen = () => {
   const SALT = 'MoonNUS'
@@ -84,7 +85,7 @@ const QRScreen = () => {
     return (
       <TouchableOpacity
         onPress={closeQRScanner}
-        style={[styles.pillButton, styles.centered]}
+        style={globalStyles.button.map.qrBack}
       >
         <Text style={styles.pillButtonText}>Back to Map</Text>
       </TouchableOpacity>
