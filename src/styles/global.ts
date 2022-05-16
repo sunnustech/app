@@ -65,6 +65,7 @@ const button = {
       height: opts.map.baseButton.size,
       backgroundColor: opts.map.baseButton.color,
       borderRadius: opts.button.round.radius,
+      elevation: 10,
       justifyContent: 'space-around',
       alignItems: 'center',
       shadowColor: colors.shadow,
