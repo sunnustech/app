@@ -31,6 +31,7 @@ const Map = ({ mapRef }: MapProps) => {
 
   return mapRef ? (
     <MapView
+      showsCompass={false}
       ref={mapRef}
       style={styles.overlap}
       provider={PROVIDER_GOOGLE}
