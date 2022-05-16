@@ -174,7 +174,7 @@ const TSSScreen = ({
   const [gonnaSend, setGonnaSend] = useState(false)
 
   return (
-    <SafeAreaView style={styles.outerContainer}>
+    <SafeAreaView style={globalStyles.container.base}>
       <BackButton navigation={navigation} text="TSS Match Update Tool" />
       <View style={styles.container}>
         <View style={styles.numberInputContainer}>

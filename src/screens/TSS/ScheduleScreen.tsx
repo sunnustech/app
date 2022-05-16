@@ -9,6 +9,7 @@ import { AuthPage } from '@/types/navigation'
 import BackButton from '@/components/BackButton'
 import { useContext } from 'react'
 import { LastContext } from '@/contexts/LastContext'
+import { globalStyles } from '@/styles/global'
 
 const ScheduleScreen = ({
   navigation,
@@ -18,7 +19,7 @@ const ScheduleScreen = ({
   const debug = false
   const { schedule } = useContext(LastContext)
   return (
-    <SafeAreaView style={styles.outerContainer}>
+    <SafeAreaView style={globalStyles.container.base}>
       <BackButton navigation={navigation} text="Schedule" />
       <ScrollView
         contentContainerStyle={styles.container}

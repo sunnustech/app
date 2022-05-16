@@ -23,6 +23,7 @@ import { showNone } from '@/lib/picker'
 import { LastContext } from '@/contexts/LastContext'
 import { AuthPage } from '@/types/navigation'
 import BackButton from '@/components/BackButton'
+import { globalStyles } from '@/styles/global'
 
 const SportPicker = ({
   pickerRef,
@@ -81,7 +82,7 @@ const KnockoutTable = ({
   }, [sport])
 
   return (
-    <SafeAreaView style={styles.outerContainer}>
+    <SafeAreaView style={globalStyles.container.base}>
       <BackButton navigation={navigation} text="TSS Knockout Table" />
       <View style={styles.container}>
         <RNPickerSelect
