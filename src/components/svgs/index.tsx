@@ -10,7 +10,7 @@ const GeneralSvg = (
 ) => (
   <SvgXml
     xml={props.src(props.fill || 'black')}
-    height="100%`"
+    height="100%"
     width="100%"
     opacity={props.opacity}
   />

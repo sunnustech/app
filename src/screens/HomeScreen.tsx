@@ -1,4 +1,4 @@
-import { View, SafeAreaView } from 'react-native'
+import { View, SafeAreaView  } from 'react-native'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
@@ -8,12 +8,16 @@ import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
-import { home as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import { useState } from 'react'
-import { SOARButton, TSSButton, WSSButton } from '@/components/SeriesButton'
 import Header from '@/components/home/Header'
 import Settings from '@/components/home/Settings'
 import Footer from '@/components/home/Footer'
+import { Series } from '@/components/Buttons'
+
+import SOAR from '@/components/svgs/SOAR'
+import TSS from '@/components/svgs/TSS'
+import WSS from '@/components/svgs/WSS'
 
 const HomeScreen = () => {
   const navigation = useNavigation<AuthPage<'HomeScreen'>>()
@@ -37,13 +41,25 @@ const HomeScreen = () => {
    */
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={globalStyles.container.base}>
       <Header navigation={navigation} />
-      <View style={styles.bodyContainer}>
-        <View style={styles.seriesButtonContainer}>
-          <SOARButton onPress={() => navigation.navigate('SOARNavigator')} />
-          <TSSButton onPress={() => navigation.navigate('TSSNavigator')} />
-          <WSSButton onPress={() => navigation.navigate('WSSScreen')} />
+      <View style={globalStyles.container.body}>
+        <View style={globalStyles.container.padded}>
+          <Series
+            color="amber"
+            svg={SOAR}
+            onPress={() => navigation.navigate('SOARNavigator')}
+          />
+          <Series
+            color="green"
+            svg={TSS}
+            onPress={() => navigation.navigate('TSSNavigator')}
+          />
+          <Series
+            color="sky"
+            svg={WSS}
+            onPress={() => navigation.navigate('WSSScreen')}
+          />
         </View>
       </View>
       <Settings

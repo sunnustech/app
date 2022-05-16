@@ -6,6 +6,10 @@ const sideButton = {
   color: colors.white,
 }
 
+const backButton = {
+  size: sideButton.size - 8,
+}
+
 const gemSize = 36
 
 const map = StyleSheet.create({
@@ -30,15 +34,55 @@ const map = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  navigationContainer: {},
-  timerContainer: {
-    marginTop: 10,
+  navigationContainer: {
+    // backgroundColor: 'rgba(100, 100, 0, 0.6)',
+    flexDirection: 'row',
+  },
+  pointsContainer: {
+    // backgroundColor: colors.blue[200],
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  pointsTextContainer: {
+    backgroundColor: colors.white,
+    marginTop: 6,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    borderRadius: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+  },
+  pointsText: {
+    marginLeft: 1,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.gray[700],
+    fontVariant: ['tabular-nums'],
+  },
+  timerAndPointsContainer: {
+    width: '55%',
+    height: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
+    // backgroundColor: colors.blue[100],
+  },
+  timerContainer: {
+    width: '100%',
+    height: backButton.size,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    // backgroundColor: colors.green[100],
   },
   mapTopContainer: {
     flex: 1,
     alignItems: 'flex-end',
+    // backgroundColor: colors.purple[200],
   },
   mapBottomContainer: {
     display: 'flex',
@@ -97,29 +141,18 @@ const map = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 3,
   },
-  mapTopButton: {
-    marginBottom: 14,
-  },
   mapActivatedButton: {
     backgroundColor: colors.blue[400],
   },
-  mapCurrentLocationButton: {
+  mapGoToSchoolButton: {
     backgroundColor: colors.blue[400],
   },
   mapBottomButton: {
     marginTop: 14,
   },
   mapNavigationButton: {
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: 'rgba(0, 0, 0, 0.15);',
-    width: sideButton.size,
-    height: sideButton.size,
-    shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
+    width: backButton.size,
+    height: backButton.size,
   },
   SOSContainer: {
     width: '70%',
@@ -143,7 +176,7 @@ const map = StyleSheet.create({
   },
   SOSTitle: {
     fontSize: 32,
-    color:colors.gray[700],
+    color: colors.gray[700],
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 10,
@@ -151,7 +184,7 @@ const map = StyleSheet.create({
   modalTitle: {
     fontSize: 28,
     textAlign: 'center',
-    color:colors.gray[700],
+    color: colors.gray[700],
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 10,

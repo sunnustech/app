@@ -1,97 +1,96 @@
-import { map as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import { MapButtonProps } from '@/types/SOAR'
 import { Text, TouchableOpacity } from 'react-native'
-import {
-  MaterialCommunityIcons as MCI,
-  MaterialIcons as MI,
-  Fontisto as FO,
-} from '@expo/vector-icons'
 import colors from '@/styles/colors'
+import { StyleSheet } from 'react-native'
+import { Ionicons, Fontisto, MaterialIcons } from '@expo/vector-icons'
+import { OnPress } from '@/types/index'
 
-const MapButton = ({ icon, onPress, style }: MapButtonProps) => {
-  // icon: provider + name
-  const [IconProvider, name, color] = icon
+const styles = globalStyles.button.map
+
+const flatten = StyleSheet.flatten
+
+/**
+ * all buttons extends this base entity
+ */
+const MapBaseButton = (props: MapButtonProps) => {
+  /**
+   * compute the styles based on props.style and props.size
+   * props.size affects the radius of the base circle of the
+   * map button
+   */
+  const styleArr = [styles.base, props.style]
+  if (props.size) {
+    styleArr.push({ width: props.size, height: props.size })
+  }
+  const _style = flatten(styleArr)
+  /**
+   * buttons can only have one of two Children:
+   *  1. an icon
+   *  2. an actual react child
+   */
+  const Children = () => {
+    if (props.type === 'icon') {
+      const [IconProvider, name, color] = props.icon ? props.icon : []
+      return (
+        <IconProvider
+          name={name}
+          color={color ? color : colors.gray[700]}
+          size={24}
+        />
+      )
+    }
+    return props.children
+  }
+  /**
+   * return the inner child wrapped with a TouchableOpacity
+   */
   return (
-    <TouchableOpacity style={style} onPress={onPress}>
-      <IconProvider
-        name={name}
-        color={color ? color : colors.gray[700]}
-        size={24}
-      />
+    <TouchableOpacity style={_style} onPress={props.onPress}>
+      <Children />
     </TouchableOpacity>
   )
 }
 
-const MapAdminToggle = ({ onPress, activated }: any) => {
-  const icon = [MCI, 'cup-water', activated ? 'white' : 'black']
-  return <MapTopButton icon={icon} onPress={onPress} activated={activated} />
+/**
+ * This is a secondary base button:
+ * Buttons that are meant to be at the bottom of the map screen
+ * Think: QR button, the blue button to jump back to school, ...
+ */
+const MapBottomButton = (props: MapButtonProps) => {
+  const _style = flatten([styles.bottomButton, props.style])
+  return <MapBaseButton {...props} style={_style} />
 }
 
-const MapSOSButton = ({ onPress }: any) => {
-  const icon = [FO, 'asterisk', colors.red[500]]
-  return <MapBottomButton icon={icon} onPress={onPress} />
-}
-
-const MapCurretLocationButton = ({ onPress }: any) => {
-  const icon = [MI, 'near-me', 'white']
-  return (
+/** the real exported buttons */
+export namespace Buttons {
+  export const Back = (props: { onPress: OnPress }) => (
+    <MapBaseButton
+      type="icon"
+      icon={[Ionicons, 'chevron-back']}
+      onPress={props.onPress}
+      size={48}
+    />
+  )
+  export const SOS = (props: { onPress: OnPress }) => (
     <MapBottomButton
-      icon={icon}
-      onPress={onPress}
-      style={[styles.mapCurrentLocationButton]}
+      type="icon"
+      icon={[Fontisto, 'asterisk', colors.red[500]]}
+      onPress={props.onPress}
+    />
+  )
+  export const GoToSchool = (props: { onPress: OnPress }) => (
+    <MapBottomButton type="child" style={styles.blue} onPress={props.onPress}>
+      <Text style={styles.whiteText}>NUS</Text>
+    </MapBottomButton>
+  )
+  export const QR = (props: { onPress: OnPress }) => (
+    <MapBottomButton
+      type="icon"
+      icon={[MaterialIcons, 'qr-code']}
+      onPress={props.onPress}
     />
   )
 }
 
-const MapGoToSchoolButton = ({ onPress }: any) => {
-  return (
-    <TouchableOpacity
-      style={[
-        styles.mapSideButton,
-        styles.mapBottomButton,
-        styles.mapCurrentLocationButton,
-      ]}
-      onPress={onPress}
-    >
-      <Text style={{ fontWeight: '800', color: 'white', textAlign: 'center' }}>
-        NUS
-      </Text>
-    </TouchableOpacity>
-  )
-}
-
-const MapTopButton = ({ icon, onPress, activated = false }: MapButtonProps) => {
-  const style = activated
-    ? [styles.mapSideButton, styles.mapTopButton, styles.mapActivatedButton]
-    : [styles.mapSideButton, styles.mapTopButton]
-  return <MapButton style={style} icon={icon} onPress={onPress} />
-}
-
-const MapBottomButton = ({ icon, onPress, style = [] }: MapButtonProps) => (
-  <MapButton
-    style={[styles.mapSideButton, styles.mapBottomButton, ...style]}
-    icon={icon}
-    onPress={onPress}
-  />
-)
-
-const MapNavigationButton = ({ icon, onPress }: MapButtonProps) => {
-  // icon: provider + name
-  const [IconProvider, name] = icon
-  return (
-    <TouchableOpacity style={styles.mapNavigationButton} onPress={onPress}>
-      <IconProvider name={name} color="white" size={32} />
-    </TouchableOpacity>
-  )
-}
-
-export {
-  MapNavigationButton,
-  MapTopButton,
-  MapBottomButton,
-  MapAdminToggle,
-  MapSOSButton,
-  MapCurretLocationButton,
-  MapGoToSchoolButton,
-}
-export default MapButton
+export default MapBaseButton

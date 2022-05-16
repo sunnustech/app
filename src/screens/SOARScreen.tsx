@@ -1,363 +1,81 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import MapView, { Camera } from 'react-native-maps'
+import { useRef } from 'react'
+import MapView from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
-import { BarCodeScanner } from 'expo-barcode-scanner'
-import {
-  getCurrentPositionAsync,
-  requestForegroundPermissionsAsync,
-} from 'expo-location'
-import { Text, View } from 'react-native'
-import { Modal } from 'react-native-paper'
-
-/* navigation */
-import { SOARPage } from '@/types/navigation'
+import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-
-/* sunnus components */
-import { SOARContext } from '@/contexts/SOARContext'
 import { map as styles } from '@/styles/fresh'
 import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
 import UI from '@/components/SOAR/UI'
-import SOS from '@/components/SOAR/SOS'
-import { ButtonGreen } from '@/components/Buttons'
-
-import { httpsCallable } from 'firebase/functions'
-
 import { NUSCoordinates } from '@/data/constants'
-import { getLocations } from '@/lib/SOAR'
-import { UserContext } from '@/contexts/UserContext'
-import { SOARLocation } from '@/types/SOAR'
-import { onSnapshot, doc } from 'firebase/firestore'
-import { db, functions } from '@/sunnus/firebase'
-import { TeamProps } from '@/types/participants'
-import TimerComponent from '@/components/Timer'
-import { useFocusEffect } from '@react-navigation/native'
+import QRModal from '@/components/SOAR/QRModal'
+import { db } from '@/sunnus/firebase'
 import { Unsubscribe } from 'firebase/auth'
-import { QR } from '../classes/QR'
+import { onSnapshot, doc } from 'firebase/firestore'
+import { useCallback, useContext } from 'react'
+import { SOARContext } from '@/contexts/SOARContext'
+import { converter } from '@/classes/firebase'
+import { useFocusEffect } from '@react-navigation/native'
+import { QR } from '@/classes/QR'
 
 const SOARScreen = () => {
-  /* read data from SOAR context */
-  const {
-    locationState,
-    filteredState,
-    QRState,
-    scanningState,
-    stationOrderState,
-  } = useContext(SOARContext)
-  const { teamName, teamData } = useContext(UserContext)
-  const displayLocationState = useState<Array<SOARLocation>>([])
-
-  const locations = locationState[0]
-  const stationOrder = stationOrderState[0]
-  const setIsScanning = scanningState[1]
-
-  // unpack states
-  const [filtered, setFiltered] = filteredState
-  const [qr, setQr] = QRState
-  const [displayLocations, setDisplayLocations] = displayLocationState
-
-  // local states
-  const [SOSVisible, setSOSVisible] = useState<boolean>(false)
-  const [loading, setLoading] = useState(true)
-  const [currentPosition, setCurrentPosition] = useState<Camera>(NUSCoordinates)
-  const [everythingLoaded, setEverythingLoaded] = useState(false)
-  const [startStatus, setStartStatus] = useState(false)
-
-  // Timer stuff
-  const [isRunning, setIsRunning] = useState(false)
-  const [pausedAt, setPausedAt] = useState(0)
-  const [timerEvents, setTimerEvents] = useState<Array<number>>([])
-
-  const [cameraPermission, setCameraPermission] = useState('')
-  const [checkingCameraPermission, setCheckingCameraPermission] =
-    useState(false)
-
   const mapRef = useRef<MapView | null>(null)
+  const navigation = useNavigation<AuthPage<'SOARNavigator'>>()
 
-  const navigation = useNavigation<SOARPage<'SOARScreen'>>()
-
-  // first time grab user location
-  useEffect(() => {
-    getCurrentPositionAsync().then((e) => {
-      const r: Camera = {
-        center: { latitude: e.coords.latitude, longitude: e.coords.longitude },
-        pitch: 0,
-        zoom: 15,
-        heading: 0,
-        altitude: 0,
-      }
-      setCurrentPosition(r)
-    })
-  }, [])
-
-  const flyToCurrentLocation = () => {
-    /* gonna make this fly to the middle of NUS instead */
+  const flyToNUS = () => {
     if (mapRef.current) {
       mapRef.current.animateCamera(NUSCoordinates, { duration: 500 })
     }
-    /*
-     * queries for user location and goes to it
-     */
-    // if (mapRef.current) {
-    //   mapRef.current.animateCamera(currentPosition, { duration: 500 })
-    // }
-    // getCurrentPositionAsync().then((e) => {
-    //   const r: Camera = {
-    //     center: { latitude: e.coords.latitude, longitude: e.coords.longitude },
-    //     pitch: 0,
-    //     zoom: 15,
-    //     heading: 0,
-    //     altitude: 0,
-    //   }
-    //   setCurrentPosition(r)
-    // })
   }
 
-  useEffect(() => {
-    ;(async () => {
-      let { status } = await requestForegroundPermissionsAsync()
-      if (status !== 'granted') {
-        alert('Permission Denied!')
-        return
-      }
-      setLoading(false)
-    })()
-  }, [])
+  const { QRState, teamState } = useContext(SOARContext)
 
-  /* =====================================================
-   *          HANDLES TOGGLING OF ADMIN STATIONS
-   * =====================================================
-   */
+  // context stuff
+  const setQr = QRState[1]
+  const setTeam = teamState[1]
 
-  /* update display locations if admin station toggle has been pressed
-   * (this calls setFiltered and changes filtered)
-   */
-  useEffect(() => {
-    if (everythingLoaded === true) {
-      setDisplayLocations(getLocations(locations, filtered, teamData))
-    }
-  }, [everythingLoaded, filtered])
-
-  function toggleAdminStations() {
-    const obj = filtered
-    obj.water = !obj.water
-    setFiltered(obj)
-    setDisplayLocations(getLocations(locations, obj, teamData))
-  }
-
-  /* =====================================================
-   * HANDLES ACROSS-THE-TEAM UPDATING OF NEXT GAME STATION
-   * =====================================================
-   */
-
-  // run only once, after teamName and stationOrder has loaded,
-  // to attach a listener to firebase
-  useEffect(() => {
-    if (everythingLoaded === true) {
+  useFocusEffect(
+    useCallback(() => {
+      console.debug('focused on SOAR navigator')
       const unsubscribeFirebase: Unsubscribe = onSnapshot(
-        doc(db, 'participants', teamName),
+        doc(db, 'teams', 'developer_team').withConverter(converter.team),
         (doc) => {
-          const liveData = doc.data()
-          if (liveData) {
+          const team = doc.data()
+          if (team !== undefined) {
             console.debug('received firebase updates at', new Date())
-            const updatedTeamData: TeamProps = {
-              SOARTimerEvents: liveData.SOARTimerEvents,
-              SOARStart: liveData.SOARStart,
-              teamName: liveData.teamName,
-              SOAR: liveData.SOAR,
-              members: liveData.members,
-              registeredEvents: liveData.registeredEvents,
-              SOARPausedAt: liveData.SOARPausedAt,
-              SOARStationsCompleted: liveData.SOARStationsCompleted,
-              SOARStationsRemaining: liveData.SOARStationsRemaining,
-            }
-            setDisplayLocations(
-              getLocations(locations, filtered, updatedTeamData)
+            setTeam(team)
+            console.debug(`\n<${team.teamName}>`)
+            console.debug(`${team._points} points,`)
+            console.debug(
+              `${team._stationsRemaining.length} stations remaining\n`
             )
-            setStartStatus(updatedTeamData.SOAR.started)
-
-            // Timer props
-            setIsRunning(updatedTeamData.SOAR.timerRunning)
-            setPausedAt(updatedTeamData.SOARPausedAt)
-            setTimerEvents(updatedTeamData.SOARTimerEvents)
+            console.debug(
+              `${team._stationsRemaining}\n`
+            )
+            console.debug(
+              `next up: ${team.nextStation()}\n`
+            )
           }
         }
       )
       return () => {
+        setQr(QR.empty)
+        console.debug('unfocused SOAR navigator')
         /* detach firebase listener on unmount */
-        console.debug('detach firebase listener on SOAR screen')
         unsubscribeFirebase()
+        console.debug('detach firebase listener on SOAR navigator')
       }
-    }
-  }, [everythingLoaded])
-
-  const Timer = () => {
-    if (!everythingLoaded) {
-      return null
-    }
-    return (
-      <TimerComponent
-        SOARTimerEvents={timerEvents}
-        pausedAt={pausedAt}
-        isRunning={isRunning}
-      />
-    )
-  }
-
-  /* =====================================================
-   *            HANDLES QR SCANNER INTERACTIONS
-   * =====================================================
-   */
-
-  function openQRScanner() {
-    setIsScanning(true)
-    setCheckingCameraPermission(true)
-    if (cameraPermission === 'granted') {
-      navigation.navigate('QRScreen')
-    }
-  }
-
-  function confirmQRAction() {
-    console.log('confirming QR Action ...')
-    console.log(qr)
-    // final checks for QR validity
-    // add the teamname?
-    // send a request to firebase
-    // set the QR to empty
-    const QRApi = httpsCallable(functions, 'QRApi')
-    QRApi({
-      station: qr.station,
-      command: qr.command,
-      facilitator: qr.facilitator,
-      teamName: 'developer_team',
-      points: qr.points,
-    }).then((result) => {
-      const data = result.data
-      console.log('data', data)
-    })
-    setQr(QR.empty)
-  }
-
-  const QRModal = () => {
-    return qr === QR.empty ? null : (
-      <Modal
-        visible={true}
-        dismissable={true}
-        onDismiss={() => setQr(QR.empty)}
-      >
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>{qr.command}</Text>
-          <View style={{ marginBottom: 10 }}></View>
-          <Text style={styles.centered}>{qr.command}</Text>
-          <View style={{ marginBottom: 10 }}></View>
-          <ButtonGreen onPress={confirmQRAction}>{qr.command}</ButtonGreen>
-        </View>
-      </Modal>
-    )
-  }
-
-  /* =====================================================
-   *                  LOAD STATE CHECKER
-   * =====================================================
-   */
-
-  useFocusEffect(
-    useCallback(() => {
-      console.debug('focused on SOAR screen')
-      setEverythingLoaded(false)
-      if (
-        teamName &&
-        stationOrder.A.length > 0 &&
-        teamData.teamName.length > 0
-      ) {
-        setEverythingLoaded(true)
-      }
-      return () => {
-        console.debug('unfocused SOAR screen')
-        setEverythingLoaded(false)
-      }
-    }, [teamName, stationOrder, teamData])
+    }, [])
   )
-
-  /* =====================================================
-   *                  CAMERA PERMISSIONS
-   * =====================================================
-   */
-
-  const enableCameraPermission = async () => {
-    setCheckingCameraPermission(false)
-    let { status } = await BarCodeScanner.requestPermissionsAsync()
-    if (status === 'granted') {
-      setCameraPermission('granted')
-    }
-  }
-
-  // run once to check for existing camera permissions
-  useEffect(() => {
-    enableCameraPermission()
-  }, [])
-
-  const HandleCameraPermission = () => {
-    if (cameraPermission !== 'granted' && checkingCameraPermission) {
-      return (
-        <View style={styles.container}>
-          <Modal
-            visible={true}
-            dismissable={true}
-            onDismiss={() => setCheckingCameraPermission(false)}
-          >
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>Permissions needed</Text>
-              <View style={{ marginBottom: 10 }}></View>
-              <Text style={styles.centered}>
-                This app needs camera access for QR code scanning.
-              </Text>
-              <View style={{ marginBottom: 10 }}></View>
-              <ButtonGreen onPress={enableCameraPermission}>
-                Enable Camera
-              </ButtonGreen>
-            </View>
-          </Modal>
-        </View>
-      )
-    }
-    return null
-  }
-
-  /* =====================================================
-   *            MAIN RENDER COMPONENT FOR SOAR
-   * =====================================================
-   */
-
-  if (loading) {
-    return <Text>loading...</Text>
-  } else {
-    return (
-      <RootSiblingParent>
-        <NoTouchDiv style={styles.container}>
-          <Map
-            mapRef={mapRef}
-            navigation={navigation}
-            displayLocations={displayLocations}
-            startStatus={startStatus}
-          />
-          <SOS visible={SOSVisible} setState={setSOSVisible} />
-          <UI
-            navigation={navigation}
-            filtered={filtered}
-            flyToCurrentLocation={flyToCurrentLocation}
-            handleSOS={() => setSOSVisible(!SOSVisible)}
-            openQRScanner={openQRScanner}
-            toggleAdminStations={toggleAdminStations}
-            Timer={Timer}
-          />
-          <HandleCameraPermission />
-          <QRModal />
-        </NoTouchDiv>
-      </RootSiblingParent>
-    )
-  }
+  return (
+    <RootSiblingParent>
+      <NoTouchDiv style={styles.container}>
+        <Map mapRef={mapRef} />
+        <UI navigation={navigation} flyToNUS={flyToNUS} />
+        <QRModal />
+      </NoTouchDiv>
+    </RootSiblingParent>
+  )
 }
 
 export default SOARScreen

@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner'
 import CryptoJS from 'crypto-js'
 
@@ -8,22 +8,21 @@ import { SOARPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
 
 /* sunnus components */
-import { QR as styles } from '@/styles/fresh'
 import { Overlap } from '@/components/Views'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SOARContext } from '@/contexts/SOARContext'
 import { invalidQR } from '@/lib/SOAR/QRCommands'
 import { SOARCommand } from '@/types/SOAR'
 import { QR } from '@/classes/QR'
+import { globalStyles } from '../styles/global'
 
 const QRScreen = () => {
   const SALT = 'MoonNUS'
   const SEPERATOR = '_'
 
-  const { QRState, scanningState } = useContext(SOARContext)
-  const [isScanning, setIsScanning] = scanningState
+  const { QRState } = useContext(SOARContext)
   const setQR = QRState[1]
   const navigation = useNavigation<SOARPage<'QRScreen'>>()
+  const [scanning, setScanning] = useState(true)
 
   /*
    * check validity
@@ -32,14 +31,12 @@ const QRScreen = () => {
    */
   const handleQRCode = async (code: BarCodeEvent) => {
     // Note! QRDictionary may be depreciated
-    setIsScanning(false)
 
     // Decrypt
     let bytes, qrData
     try {
       bytes = CryptoJS.AES.decrypt(code.data, SALT)
       qrData = bytes.toString(CryptoJS.enc.Utf8)
-      console.log('raw data', qrData)
     } catch (err) {
       console.debug('Invalid QR!') // perma
       setQR(invalidQR)
@@ -69,10 +66,10 @@ const QRScreen = () => {
       command: cmd as SOARCommand,
       station: stn,
       facilitator,
-      teamName: 'developer_team' // TODO un-hardcode this
+      teamName: 'developer_team', // TODO un-hardcode this
     })
 
-    console.log("Sending this QR back to SOAR Screen:", qr)
+    console.log(qr)
 
     setQR(qr)
     navigation.navigate('SOARScreen')
@@ -81,21 +78,21 @@ const QRScreen = () => {
 
   const BackToMap = () => {
     function closeQRScanner() {
-      setIsScanning(false)
+      setScanning(false)
       navigation.navigate('SOARScreen')
     }
     return (
       <TouchableOpacity
         onPress={closeQRScanner}
-        style={[styles.pillButton, styles.centered]}
+        style={globalStyles.button.map.qrBack}
       >
-        <Text style={styles.pillButtonText}>Back to Map</Text>
+        <Text style={globalStyles.text.settings}>Back to Map</Text>
       </TouchableOpacity>
     )
   }
 
-  return isScanning ? (
-    <View style={styles.container}>
+  return scanning ? (
+    <View style={globalStyles.container.base}>
       <Overlap>
         <BarCodeScanner
           type="back"
@@ -104,21 +101,13 @@ const QRScreen = () => {
         />
       </Overlap>
       <Overlap>
-        <View style={styles.buttonContainer}>
+        <View style={globalStyles.container.body}>
           <View style={{ flex: 1 }} />
           <BackToMap />
         </View>
       </Overlap>
     </View>
-  ) : (
-    <View style={styles.buttonContainer}>
-      <View
-        style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}
-      />
-      <Text>{'Done 🎉 Click below to return to the map!'}</Text>
-      <BackToMap />
-    </View>
-  )
+  ) : null
 }
 
 export default QRScreen

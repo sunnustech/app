@@ -1,35 +1,27 @@
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import MapPoint from '@/components/SOAR/MapPoint'
-
 import { map as styles } from '@/styles/fresh'
 import { MapProps } from '@/types/SOAR'
-import { Text } from 'react-native'
 import { customMapStyle } from './MapStyle'
 import { NUSCoordinates } from '@/data/constants'
+import { SOARContext } from '@/contexts/SOARContext'
+import { useContext } from 'react'
+import { Location } from '@/classes/location'
 
-const Map = ({
-  navigation,
-  displayLocations,
-  mapRef,
-  startStatus,
-}: MapProps) => {
-  const gameLocations = displayLocations.filter(
-    (stn) => stn.stationType === 'game'
-  )
-  const nonGameLocations = displayLocations.filter(
-    (e: any) => e.stationType !== 'game'
-  )
+const Map = ({ mapRef }: MapProps) => {
+  const { teamState, gameStations } = useContext(SOARContext)
+  const team = teamState[0]
+  gameStations.update(team)
 
-  const GameLocations = () => {
-    return startStatus ? (
+  const GameStations = () => {
+    return team._started ? (
       <>
-        {gameLocations.map((e: any, i: number) => (
+        {gameStations.list.map((e: Location, i: number) => (
           <MapPoint
             key={i}
-            navigation={navigation}
-            coordinate={e.coordinate}
-            pointType={e.stationType}
-            content={e.content}
+            coordinate={e.getCoordinates()}
+            pointType={e.type}
+            content={e.details}
             status={e.status}
           />
         ))}
@@ -37,26 +29,9 @@ const Map = ({
     ) : null
   }
 
-  const NonGameLocations = () => {
-    return (
-      <>
-        {nonGameLocations.map((e: any, i: number) => (
-          <MapPoint
-            key={i}
-            navigation={navigation}
-            coordinate={e.coordinate}
-            pointType={e.stationType}
-            content={e.content}
-          >
-            <Text>{`${e.stationType}: ${e.title}`}</Text>
-          </MapPoint>
-        ))}
-      </>
-    )
-  }
-
   return mapRef ? (
     <MapView
+      showsCompass={false}
       ref={mapRef}
       style={styles.overlap}
       provider={PROVIDER_GOOGLE}
@@ -64,8 +39,7 @@ const Map = ({
       customMapStyle={customMapStyle}
       showsUserLocation={true}
     >
-      <GameLocations />
-      <NonGameLocations />
+      <GameStations />
     </MapView>
   ) : null
 }

@@ -1,6 +1,7 @@
 import { FirestoreDataConverter, DocumentData } from 'firebase/firestore'
 import { Team } from './team'
 import { User } from './user'
+import { QR } from './QR'
 import { db } from '@/sunnus/firebase'
 import { collection as fscol } from '@firebase/firestore'
 
@@ -63,7 +64,10 @@ export namespace collection {
  * using source, rebuild target
  */
 export namespace rebuild {
-  export const team = (source: Team | DocumentData, target: Team | DocumentData) => {
+  export const team = (
+    source: Team | DocumentData,
+    target: Team | DocumentData
+  ) => {
     target.teamName = source.teamName || ''
     target.members = source.members || []
     target.sport = source.sport || ''
@@ -81,4 +85,17 @@ export namespace rebuild {
     target._stationsCompleted = source._stationsCompleted || []
     target._stationsRemaining = source._stationsRemaining || []
   }
+}
+
+/**
+ * flatten a Class to an Record of key-value pairs
+ */
+export namespace flatten {
+  export const qr = (q: QR | DocumentData) => ({
+    station: q.station,
+    command: q.command,
+    facilitator: q.facilitator,
+    teamName: q.teamName,
+    points: q.points,
+  })
 }

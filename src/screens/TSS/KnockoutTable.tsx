@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, View } from 'react-native'
+import { SafeAreaView, Text, View, TouchableOpacity } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import Picker from 'react-native-picker-select'
 import { Ionicons } from '@expo/vector-icons'
@@ -19,11 +19,11 @@ import {
 import { Sport } from '@/types/TSS'
 import { sportList, reversedRoundList } from '@/data/constants'
 import PagerRound from '@/components/knockout/Round'
-import { TouchableOpacity } from 'react-native'
 import { showNone } from '@/lib/picker'
 import { LastContext } from '@/contexts/LastContext'
 import { AuthPage } from '@/types/navigation'
 import BackButton from '@/components/BackButton'
+import { globalStyles } from '@/styles/global'
 
 const SportPicker = ({
   pickerRef,
@@ -82,7 +82,7 @@ const KnockoutTable = ({
   }, [sport])
 
   return (
-    <SafeAreaView style={styles.outerContainer}>
+    <SafeAreaView style={globalStyles.container.base}>
       <BackButton navigation={navigation} text="TSS Knockout Table" />
       <View style={styles.container}>
         <RNPickerSelect

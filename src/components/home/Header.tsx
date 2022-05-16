@@ -1,23 +1,29 @@
 import { View, TouchableOpacity } from 'react-native'
 import colors from '@/styles/colors'
-import { MaterialCommunityIcons as MCI, AntDesign } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 import Sunnus from '@/components/svgs/Sunnus'
-import { Overlap } from '@/components/Views'
-import { home as styles } from '@/styles/fresh'
 import { AuthPageNavigator } from '@/types/navigation'
 import { OnPress } from '@/types/index'
+import { globalStyles } from '../../styles/global'
 
 const Circle = () => {
-  return <View style={styles.circle} />
+  return <View style={globalStyles.shapes.circle} />
 }
 
 const HiddenCircle = () => {
-  return <View style={[styles.circle, styles.transparent]} />
+  return (
+    <View
+      style={[globalStyles.shapes.circle, globalStyles.utils.transparent]}
+    />
+  )
 }
 
 const Heart = ({ alert, onPress }: { alert: boolean; onPress: OnPress }) => {
   return (
-    <TouchableOpacity style={styles.headerButton} onPress={onPress}>
+    <TouchableOpacity
+      style={globalStyles.button.outline.header}
+      onPress={onPress}
+    >
       {alert ? <HiddenCircle /> : null}
       <AntDesign name={'hearto'} size={20} color={colors.homeFg} />
       {alert ? <Circle /> : null}
@@ -27,23 +33,18 @@ const Heart = ({ alert, onPress }: { alert: boolean; onPress: OnPress }) => {
 
 const Header = ({ navigation }: { navigation: AuthPageNavigator }) => {
   return (
-    <View style={styles.headerContainer}>
-      <Overlap>
-        <View style={styles.logoContainer}>
-          <View style={styles.logo}>
-            <Sunnus fill={colors.homeFg} />
-          </View>
-        </View>
-      </Overlap>
-      <Overlap>
-        <View style={styles.iconsContainer}>
-          <View style={{ flex: 1 }} />
-          <Heart
-            alert={true}
-            onPress={() => navigation.navigate('NotificationScreen')}
-          />
-        </View>
-      </Overlap>
+    <View style={globalStyles.container.header}>
+      <View style={globalStyles.container.headerLogo}>
+        <Sunnus fill={colors.homeFg} />
+      </View>
+      <View style={{ flex: 1 }} />
+      <View style={globalStyles.container.headerIcons}>
+        <View style={{ flex: 1 }} />
+        <Heart
+          alert={true}
+          onPress={() => navigation.navigate('NotificationScreen')}
+        />
+      </View>
     </View>
   )
 }

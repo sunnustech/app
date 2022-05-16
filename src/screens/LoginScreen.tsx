@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import colors from '@/styles/colors'
 
 /* firebase */
@@ -8,7 +8,6 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
 import { login as styles } from '@/styles/fresh'
-import { ScrollView } from 'react-native-gesture-handler'
 import Sunnus from '@/components/svgs/Sunnus'
 import {
   Loader,
