@@ -1,22 +1,21 @@
 /*
  * Hey devs, to add your own debug function, simply create a new instance of
- * DebugButton below and put your intended function to call inside the onPress
+ * Button below and put your intended function to call inside the onPress
  * property.
  */
 
 /* debug functions */
 // import { MatchRequest } from '@/types/knockout'
 import { generateStationQR } from '@/lib/SOAR/QRDictionary'
-import colors from '@/styles/colors'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { httpsCallable } from 'firebase/functions'
 import { auth, functions } from '@/sunnus/firebase'
-import { QR } from '../../classes/QR'
+import { QR } from '@/classes/QR'
 import { Text, View, ScrollView } from 'react-native'
-import { DEV as styles } from '@/styles/fresh'
-import DebugButton from './DebugButton'
 import { SOARContext } from '@/contexts/SOARContext'
 import { useContext } from 'react'
+import { Button } from '@/components/Buttons'
+import { globalStyles } from '../../styles/global'
 
 /* use this space to hard-code test inputs to functions */
 
@@ -55,89 +54,68 @@ const DebugList = (props: any) => {
 
       <Text>QR Command List</Text>
 
-      <DebugButton onPress={generateStationQR} color={colors.pink[500]}>
+      <Button onPress={generateStationQR} color="pink">
         Generate QR (to send to SOAR)
-      </DebugButton>
+      </Button>
 
       <Text>Send QR to firebase endpoint</Text>
 
-      <DebugButton
-        onPress={() => firebaseQR('startTimer')}
-        color={colors.pink[500]}
-      >
+      <Button onPress={() => firebaseQR('startTimer')} color="pink">
         QR: start
-      </DebugButton>
+      </Button>
 
-      <DebugButton
-        onPress={() => firebaseQR('resumeTimer')}
-        color={colors.pink[500]}
-      >
+      <Button onPress={() => firebaseQR('resumeTimer')} color="pink">
         QR: resume
-      </DebugButton>
+      </Button>
 
-      <DebugButton
-        onPress={() => firebaseQR('pauseTimer')}
-        color={colors.pink[500]}
-      >
+      <Button onPress={() => firebaseQR('pauseTimer')} color="pink">
         QR: pause
-      </DebugButton>
+      </Button>
 
-      <DebugButton
-        onPress={() => firebaseQR('stopTimer')}
-        color={colors.pink[500]}
-      >
+      <Button onPress={() => firebaseQR('stopTimer')} color="pink">
         QR: stop
-      </DebugButton>
+      </Button>
 
-      <DebugButton
-        onPress={() => firebaseQR('resetTeam')}
-        color={colors.pink[500]}
-      >
+      <Button onPress={() => firebaseQR('resetTeam')} color="pink">
         QR: reset
-      </DebugButton>
+      </Button>
 
-      <DebugButton
+      <Button
         onPress={() => firebaseQR('completeStage', 'Slide')}
-        color={colors.emerald[500]}
+        color="emerald"
       >
-        {' '}
-        CS: Slide{' '}
-      </DebugButton>
-      <DebugButton
+        CS: Slide
+      </Button>
+      <Button
         onPress={() => firebaseQR('completeStage', 'Sotong Houze')}
-        color={colors.emerald[500]}
+        color="emerald"
       >
-        {' '}
-        CS: Sotong Houze{' '}
-      </DebugButton>
-      <DebugButton
+        CS: Sotong Houze
+      </Button>
+      <Button
         onPress={() => firebaseQR('completeStage', 'Nerf Battle')}
-        color={colors.emerald[500]}
+        color="emerald"
       >
-        {' '}
-        CS: Nerf Battle{' '}
-      </DebugButton>
-      <DebugButton
+        CS: Nerf Battle
+      </Button>
+      <Button
         onPress={() => firebaseQR('completeStage', 'Snake and Ladders')}
-        color={colors.emerald[500]}
+        color="emerald"
       >
-        {' '}
-        CS: Snake and Ladders{' '}
-      </DebugButton>
-      <DebugButton
+        CS: Snake and Ladders
+      </Button>
+      <Button
         onPress={() => firebaseQR('completeStage', 'GOLF')}
-        color={colors.emerald[500]}
+        color="emerald"
       >
-        {' '}
-        CS: GOLF{' '}
-      </DebugButton>
-      <DebugButton
+        CS: GOLF
+      </Button>
+      <Button
         onPress={() => firebaseQR('completeStage', 'Relay2Maze')}
-        color={colors.emerald[500]}
+        color="emerald"
       >
-        {' '}
-        CS: Relay2Maze{' '}
-      </DebugButton>
+        CS: Relay2Maze
+      </Button>
     </>
   )
 }
@@ -162,9 +140,9 @@ const DEVScreen = () => {
   // const navigation = useNavigation<AuthPage<'DEVScreen'>>()
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container.base}>
       <ScrollView
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerStyle={globalStyles.container.scrollBase}
         showsVerticalScrollIndicator={false}
       >
         <Text>Welcome to the DEV page!</Text>

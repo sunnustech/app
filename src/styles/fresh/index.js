@@ -1,5 +1,3 @@
-import DEV from './DEV'
-import QR from './QR'
 import TSS from './TSS'
 import WSS from './WSS'
 import back from './back'
@@ -15,8 +13,6 @@ import timer from './timer'
 import utils from './utils'
 
 export {
-  DEV,
-  QR,
   TSS,
   WSS,
   back,

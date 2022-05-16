@@ -14,10 +14,10 @@ export const Button = (props: ButtonProps & { color?: Color }) => {
       onPress={props.onPress}
       style={[
         globalStyles.button.pill.base,
-        { backgroundColor: accent.fg, borderColor: accent.fg },
+        { backgroundColor: accent.border, borderColor: accent.border },
       ]}
     >
-      <Text style={styles.buttonText}>{props.children}</Text>
+      <Text style={globalStyles.text.pillButton}>{props.children}</Text>
     </TouchableOpacity>
   )
 }
