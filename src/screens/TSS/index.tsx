@@ -2,7 +2,6 @@ import {
   Text,
   View,
   TextInput,
-  ScrollView,
   TouchableOpacity,
   StyleProp,
   ViewStyle,
@@ -39,6 +38,8 @@ import { OnPress } from '@/types/index'
 import colors from '@/styles/colors'
 import { AuthPage } from '@/types/navigation'
 import BackButton from '@/components/BackButton'
+import { globalStyles } from '../../styles/global'
+import { Button } from '../../components/Buttons'
 
 const FinalButton = ({
   onPress,
@@ -54,7 +55,7 @@ const FinalButton = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.baseButton, containerStyle]}
+      style={[globalStyles.button.pill.tss, containerStyle]}
     >
       <View style={styles.buttonTextContainer}>
         <Text style={[styles.buttonBaseText, textStyle]}>{text}</Text>
@@ -233,26 +234,23 @@ const TSSScreen = ({
         <View style={styles.bottomAreaButtonContainer}>
           {gonnaSend ? (
             <>
-              <FinalButton
+              <Button
                 onPress={() => setGonnaSend(false)}
-                containerStyle={styles.backButton}
-                textStyle={styles.backText}
-                text="Back"
+                color='red'
+                children='Go Back'
               />
               <View style={{ width: 10 }} />
-              <FinalButton
+              <Button
                 onPress={handleConfirm}
-                containerStyle={styles.confirmButton}
-                textStyle={styles.confirmText}
-                text="Confirm"
+                color="green"
+                children='Confirm'
               />
             </>
           ) : (
-            <FinalButton
+            <Button
               onPress={() => setGonnaSend(true)}
-              containerStyle={styles.pushButton}
-              textStyle={styles.pushText}
-              text="Push"
+              color='green'
+              children='Push'
             />
           )}
         </View>
