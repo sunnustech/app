@@ -4,18 +4,6 @@ import colors from '@/styles/colors'
 
 const accent = 'orange'
 
-const m = StyleSheet.create({
-  button: {
-    backgroundColor: colors[accent][300],
-    borderWidth: opts.border,
-    borderColor: colors[accent][400],
-    width: '60%',
-    padding: 12,
-    borderRadius: opts.radius,
-    alignItems: 'center',
-  },
-})
-
 export default StyleSheet.create({
   /* containers */
   loginContainer: {

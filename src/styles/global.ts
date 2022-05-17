@@ -256,6 +256,17 @@ const container = css({
     height: 28,
     width: '100%',
   },
+  input: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderWidth: opts.button.pill.border,
+    borderColor: colors.gray[200],
+    paddingVertical: 18,
+    paddingHorizontal: 16,
+    fontWeight: '600',
+    fontSize: 16,
+    borderRadius: opts.radius,
+  },
 })
 
 const text = css({
@@ -272,10 +283,25 @@ const text = css({
   },
 })
 
+const others = css({
+  inputContainer: {
+    width: opts.width,
+    flexDirection: 'row',
+    // backgroundColor: colors.green[200],
+  },
+  loginButtonContainer: join([
+    {
+      width: opts.width,
+    },
+    core.centered,
+  ]),
+})
+
 export const globalStyles = {
   button,
   container,
   shapes,
   utils,
   text,
+  others,
 }
