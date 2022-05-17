@@ -80,7 +80,11 @@ export namespace Buttons {
     />
   )
   export const GoToSchool = (props: { onPress: OnPress }) => (
-    <MapBottomButton type="child" style={styles.blue} onPress={props.onPress}>
+    <MapBottomButton
+      type="child"
+      style={{ backgroundColor: colors.blue[400] }}
+      onPress={props.onPress}
+    >
       <Text style={styles.whiteText}>NUS</Text>
     </MapBottomButton>
   )

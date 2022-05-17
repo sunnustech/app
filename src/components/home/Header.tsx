@@ -13,7 +13,7 @@ const Circle = () => {
 const HiddenCircle = () => {
   return (
     <View
-      style={[globalStyles.shapes.circle, globalStyles.utils.transparent]}
+      style={[globalStyles.shapes.circle, globalStyles.core.transparent]}
     />
   )
 }

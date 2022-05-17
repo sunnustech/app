@@ -1,5 +1,8 @@
+const debugSwitch = false
+
 import colors from '@/styles/colors'
 import { Color, Shade } from '@/types/colors'
+import { StyleSheet } from 'react-native'
 
 export function makeAccent(color: Color) {
   // bg: 300, fg: 500, border: 600
@@ -10,9 +13,13 @@ export function makeAccent(color: Color) {
   }
 }
 
-export function createDebugger(debug: boolean) {
+function createDebugger(debug: boolean) {
   const helper = (color: Color, shade?: Shade) => {
     return debug ? colors[color][shade || 100] : colors.transparent
   }
   return helper
 }
+export const debug = createDebugger(debugSwitch)
+
+export const css = StyleSheet.create
+export const join = StyleSheet.flatten
