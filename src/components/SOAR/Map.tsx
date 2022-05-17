@@ -15,14 +15,8 @@ const Map = ({ mapRef }: MapProps) => {
   const GameStations = () => {
     return team._started ? (
       <>
-        {gameStations.list.map((e: Location, i: number) => (
-          <MapPoint
-            key={i}
-            coordinate={e.getCoordinates()}
-            pointType={e.type}
-            content={e.details}
-            status={e.status}
-          />
+        {gameStations.list.map((location: Location, i: number) => (
+          <MapPoint location={location} key={i} />
         ))}
       </>
     ) : null

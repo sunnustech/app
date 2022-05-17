@@ -179,6 +179,7 @@ export type MapProps = {
 }
 
 export type MapPointProps = {
+  location: Location
   coordinate: Coordinate
   content: string
   pointType: LocationType
