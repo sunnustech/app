@@ -226,16 +226,18 @@ const login = css({
 })
 
 const picker = css({
-  pickerContainer: centered(shadow({
-    width: '80%',
-    height: 64,
-    backgroundColor: colors.bg,
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    marginBottom: 12,
-    flexDirection: 'row',
-    display: 'flex',
-  })),
+  pickerContainer: centered(
+    shadow({
+      width: '80%',
+      height: 64,
+      backgroundColor: colors.bg,
+      paddingHorizontal: 18,
+      paddingVertical: 8,
+      marginBottom: 12,
+      flexDirection: 'row',
+      display: 'flex',
+    })
+  ),
   pickerText: {
     fontWeight: '700',
     width: '100%',
