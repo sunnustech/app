@@ -1,20 +1,16 @@
 import { SafeAreaView, Text, View } from 'react-native'
-
-/* navigation */
 import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-
-/* sunnus components */
-import { WSS as styles } from '@/styles/fresh'
 import BackButton from '@/components/BackButton'
+import { globalStyles } from '@/styles/global'
 
 const WSSScreen = () => {
   const navigation = useNavigation<AuthPage<'WSSScreen'>>()
 
   return (
-    <SafeAreaView style={styles.outerContainer}>
+    <SafeAreaView style={globalStyles.WSS.outerContainer}>
       <BackButton navigation={navigation} text="Water Sports Series" />
-      <View style={styles.container}>
+      <View style={globalStyles.WSS.container}>
         <Text>Welcome to the WSS page!</Text>
       </View>
     </SafeAreaView>
