@@ -1,4 +1,7 @@
+const debugSwitch = true
+
 import { makeAccent, css } from '@/styles/utils'
+import { Shade, Color } from '@/types/colors'
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import colors from '@/styles/colors'
 
@@ -33,6 +36,9 @@ const config = {
       color: colors.white,
     },
   },
+  aspectRatio: {
+    SunNUS: 890.6 / 119.6
+  }
 }
 
 export const core = css({
@@ -74,5 +80,14 @@ export const centered = compose(core.centered)
 export const marginAuto = compose(core.marginAuto)
 export const translucent = compose(core.translucent)
 export const shadow = compose(core.shadow)
+
+function createDebugger(debug: boolean) {
+  const helper = (color: Color, shade?: Shade) => {
+    return debug ? colors[color][shade || 100] : colors.transparent
+  }
+  return helper
+}
+
+export const debug = createDebugger(debugSwitch)
 
 export default config

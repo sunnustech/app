@@ -1,8 +1,8 @@
 import { Platform, StatusBar } from 'react-native'
 import colors from '@/styles/colors'
-import { debug, css } from '@/styles/utils'
+import { css } from '@/styles/utils'
 import { Color } from '@/types/colors'
-import config, { core, centered, marginAuto, shadow } from './config'
+import config, { debug, core, centered, marginAuto, shadow } from './config'
 import button from './button'
 import shapes from './shapes'
 
@@ -42,8 +42,8 @@ const container = css({
     borderRadius: config.radius,
   }),
   headerLogo: {
-    paddingLeft: 24,
-    width: '40%',
+    marginLeft: 24,
+    width: config.header.height * 0.4 * config.aspectRatio.SunNUS,
     backgroundColor: debug('blue'),
   },
   headerIcons: centered({
