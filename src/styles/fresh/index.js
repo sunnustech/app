@@ -1,6 +1,5 @@
 import TSS from './TSS'
 import WSS from './WSS'
-import back from './back'
 import buttons from './buttons'
 import knockout from './knockout'
 import map from './map'
@@ -14,7 +13,6 @@ import utils from './utils'
 export {
   TSS,
   WSS,
-  back,
   buttons,
   knockout,
   map,

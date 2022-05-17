@@ -117,6 +117,14 @@ const button = {
       },
       core.centered,
     ]),
+    back: {
+      color: colors.homeFg,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      height: 50,
+      width: 50,
+    },
   }),
   pill: css({
     base: {
@@ -267,6 +275,13 @@ const container = css({
     fontSize: 16,
     borderRadius: opts.radius,
   },
+  backButton: {
+    height: 50,
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: debug('blue')
+  },
 })
 
 const text = css({
@@ -281,6 +296,11 @@ const text = css({
     fontSize: 18,
     color: 'white',
   },
+  back: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: colors.homeFg,
+  }
 })
 
 const others = css({
@@ -310,7 +330,7 @@ const others = css({
     borderColor: colors.gray[400],
   },
   spacer: {
-    height: 36
+    height: 36,
   },
   errorMessage: {
     fontWeight: '500',

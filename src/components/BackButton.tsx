@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, Text } from 'react-native'
-import colors from '@/styles/colors'
-import { back as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import { AuthPageNavigator } from '@/types/navigation'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -11,17 +10,22 @@ const BackButton = ({
   text: string
   navigation: AuthPageNavigator
 }) => {
+  const Chevron = () => (
+    <TouchableOpacity
+      style={globalStyles.button.outline.back}
+      onPress={() => navigation.pop()}
+    >
+      <Ionicons
+        name="chevron-back"
+        size={32}
+        color={globalStyles.button.outline.back.color}
+      />
+    </TouchableOpacity>
+  )
   return (
-    <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.pop()}
-        >
-          <Ionicons name="ios-chevron-back" size={32} color={colors.homeFg} />
-        </TouchableOpacity>
-        <Text style={styles.text}>{text}</Text>
-      </View>
+    <View style={globalStyles.container.backButton}>
+      <Chevron />
+      <Text style={globalStyles.text.back}>{text}</Text>
     </View>
   )
 }
