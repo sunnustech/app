@@ -1,20 +1,22 @@
-import { css, join, debug } from '@/styles/utils'
-import config, { centered, core, marginAuto, translucent } from './config'
+import { css, debug } from '@/styles/utils'
+import config, {
+  centered,
+  shadow,
+  marginAuto,
+  translucent,
+} from './config'
 import colors from '@/styles/colors'
 
 const button = {
   map: css({
-    base: join([
-      {
-        width: config.map.baseButton.size,
-        height: config.map.baseButton.size,
-        backgroundColor: config.map.baseButton.color,
-        borderRadius: config.button.round.radius,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-      },
-      core.shadow,
-    ]),
+    base: shadow({
+      width: config.map.baseButton.size,
+      height: config.map.baseButton.size,
+      backgroundColor: config.map.baseButton.color,
+      borderRadius: config.button.round.radius,
+      justifyContent: 'space-around',
+      alignItems: 'center',
+    }),
     whiteText: {
       fontWeight: '800',
       color: 'white',

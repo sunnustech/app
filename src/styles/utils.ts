@@ -22,4 +22,3 @@ function createDebugger(debug: boolean) {
 export const debug = createDebugger(debugSwitch)
 
 export const css = StyleSheet.create
-export const join = StyleSheet.flatten

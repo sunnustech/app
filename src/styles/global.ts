@@ -1,6 +1,6 @@
 import { Platform, StatusBar } from 'react-native'
 import colors from '@/styles/colors'
-import { debug, css, join } from '@/styles/utils'
+import { debug, css } from '@/styles/utils'
 import { Color } from '@/types/colors'
 import config, { core, centered, marginAuto, shadow } from './config'
 import button from './button'
