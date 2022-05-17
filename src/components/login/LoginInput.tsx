@@ -1,9 +1,9 @@
 import {
   NativeSyntheticEvent,
   TextInputSubmitEditingEventData,
-  TextInput
+  TextInput,
 } from 'react-native'
-import { login as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import { useState } from 'react'
 
 const LoginInput = ({
@@ -22,7 +22,10 @@ const LoginInput = ({
   ) => void
 }) => {
   const [focused, setFocused] = useState(false)
-  const style = [styles.input, focused ?  styles.inputFocused : null]
+  const style = [
+    globalStyles.others.input,
+    focused ? globalStyles.others.inputFocused : null,
+  ]
   return (
     <TextInput
       onFocus={() => setFocused(true)}

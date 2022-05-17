@@ -1,11 +1,15 @@
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
+import { CalloutSubview } from 'react-native-maps'
+import { Location } from '@/classes/location'
+import { globalStyles } from '@/styles/global'
 
-const Popup = ({ content }: any) => {
+const Popup = (props: {location: Location}) => {
+  const {details, gameTitle} = props.location
   return (
-    <View>
-      <Text>{content.game_title}</Text>
-      <Text>{content.details}</Text>
-    </View>
+    <CalloutSubview style={globalStyles.container.mapCallout}>
+      <Text style={globalStyles.text.calloutTitle}>{gameTitle}</Text>
+      <Text>{details}</Text>
+    </CalloutSubview>
   )
 }
 

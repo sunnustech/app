@@ -1,6 +1,5 @@
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import MapPoint from '@/components/SOAR/MapPoint'
-import { map as styles } from '@/styles/fresh'
 import { MapProps } from '@/types/SOAR'
 import { customMapStyle } from './MapStyle'
 import { NUSCoordinates } from '@/data/constants'
@@ -16,14 +15,8 @@ const Map = ({ mapRef }: MapProps) => {
   const GameStations = () => {
     return team._started ? (
       <>
-        {gameStations.list.map((e: Location, i: number) => (
-          <MapPoint
-            key={i}
-            coordinate={e.getCoordinates()}
-            pointType={e.type}
-            content={e.details}
-            status={e.status}
-          />
+        {gameStations.list.map((location: Location, i: number) => (
+          <MapPoint location={location} key={i} />
         ))}
       </>
     ) : null
@@ -33,7 +26,7 @@ const Map = ({ mapRef }: MapProps) => {
     <MapView
       showsCompass={false}
       ref={mapRef}
-      style={styles.overlap}
+      style={{ flex: 1, width: '100%' }}
       provider={PROVIDER_GOOGLE}
       initialCamera={NUSCoordinates}
       customMapStyle={customMapStyle}

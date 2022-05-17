@@ -11,7 +11,7 @@ const SettingsButton = ({
 }) => {
   const [focus, setFocus] = useState(false)
   const style = focus
-    ? [globalStyles.button.outline.footer, globalStyles.utils.focused]
+    ? [globalStyles.button.outline.footer, globalStyles.core.focused]
     : [globalStyles.button.outline.footer]
   return (
     <TouchableOpacity

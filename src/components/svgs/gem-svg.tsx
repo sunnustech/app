@@ -2,14 +2,12 @@ import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg'
 import colors from '@/styles/colors'
 import { Color } from '@/types/colors'
 
-// const accent: Color[] = ['orange', 'rose']
-// const accent: Color[] = ['orange', 'rose', 'red']
 const otherColors: Color[] = ['blue', 'emerald']
 const accent: Color = 'pink'
 
 const Gem = () => (
   <Svg
-    viewBox="0 -8 45 43"
+    viewBox="6.2 6 28.6 28.6"
     fillRule="evenodd"
     clipRule="evenodd"
     strokeLinejoin='round'

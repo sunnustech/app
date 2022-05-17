@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import colors from '@/styles/colors'
-import opts from './opts'
+import config from './config'
 
 const scorePadding = {
   left: 10,
@@ -37,7 +37,7 @@ export default StyleSheet.create({
   eventBg: {
     width: '90%',
     // backgroundColor: colors.orange[200],
-    borderRadius: opts.radius,
+    borderRadius: config.radius,
     borderBottomColor: colors.gray[200],
     borderBottomWidth: 1,
     paddingHorizontal: scorePadding.left,
@@ -45,7 +45,7 @@ export default StyleSheet.create({
   },
   eventBgCompleted: {
     width: '90%',
-    borderRadius: opts.radius,
+    borderRadius: config.radius,
     borderBottomColor: colors.gray[200],
     borderBottomWidth: 1,
     paddingHorizontal: 10,

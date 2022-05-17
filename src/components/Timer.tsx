@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { Team } from '@/classes/team'
-import { timer as styles } from '../styles/fresh'
 import colors from '@/styles/colors'
+import { globalStyles } from '@/styles/global'
+import { NoTouchDiv } from './Views'
 
 const secondsToHHMMSS = (seconds: number): string => {
   if (seconds < 3600) {
@@ -16,19 +17,6 @@ const secondsToHHMMSS = (seconds: number): string => {
   return new Date(seconds * 1000).toISOString().substring(11, 19)
 }
 
-/* start: a JavaScript Date object
- * totalBreak: number of seconds that the team didn't have the timer running
- *
- * only return a <Text/> object
- * make it as no-frills, no-outer dependencies as possible
- */
-
-// function separateSeconds(HMS: string) {
-//   const S = HMS.split(':').pop()
-//   const re = new RegExp(`:${S}$`)
-//   const HM = HMS.replace(re, '')
-// }
-
 const ProgressBar = (props: { team: Team }) => {
   const done = props.team._stationsCompleted.length
   const notDone = props.team._stationsRemaining.length
@@ -41,7 +29,7 @@ const ProgressBar = (props: { team: Team }) => {
     backgroundColor: colors.emerald[400],
   }
   return (
-    <View style={styles.progressContainer}>
+    <View style={globalStyles.timer.progressContainer}>
       <View style={barStyle} />
     </View>
   )
@@ -52,10 +40,16 @@ const SmallSeconds = (props: { HMS: string; team: Team }) => {
   const re = new RegExp(`:${S}$`)
   const HM = props.HMS.replace(re, '')
   return (
-    <View style={styles.smallSecondsContainer}>
-      <View style={styles.textContainer}>
-        <Text style={[styles.number, styles.hourMinutes]}>{HM}</Text>
-        <Text style={[styles.number, styles.seconds]}>{S}</Text>
+    <View style={globalStyles.timer.smallSecondsContainer}>
+      <View style={globalStyles.timer.textContainer}>
+        <Text
+          style={[globalStyles.timer.number, globalStyles.timer.hourMinutes]}
+        >
+          {HM}
+        </Text>
+        <Text style={[globalStyles.timer.number, globalStyles.timer.seconds]}>
+          {S}
+        </Text>
       </View>
       <ProgressBar team={props.team} />
     </View>
@@ -80,6 +74,7 @@ const Timer = (props: { team: Team }) => {
     return HMS
   }
 
+  // heartbeat of the timer
   useEffect(() => {
     if (team._timerRunning) {
       const timerId = setInterval(() => setNow(new Date()), 1000)
@@ -90,7 +85,9 @@ const Timer = (props: { team: Team }) => {
   })
 
   return (
-    <SmallSeconds HMS={team._timerRunning ? tick() : paused()} team={team} />
+    <NoTouchDiv style={globalStyles.container.timer}>
+      <SmallSeconds HMS={team._timerRunning ? tick() : paused()} team={team} />
+    </NoTouchDiv>
   )
 }
 

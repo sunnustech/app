@@ -7,14 +7,13 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
-import { login as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import Sunnus from '@/components/svgs/Sunnus'
 import {
   Loader,
   LoginInput,
-  LoginButton,
-  ForgotIdButton,
 } from '@/components/login'
+import { Button } from '../components/Buttons'
 
 const PASSWORD = 'sunnus'
 
@@ -48,12 +47,12 @@ const LoginScreen = () => {
 
   return (
     <ScrollView
-      contentContainerStyle={styles.loginContainer}
+      contentContainerStyle={globalStyles.container.base}
       scrollEnabled={false}
     >
       <Sunnus fill={colors.gray[600]} height={32} width="100%" />
-      <View style={styles.spacer} />
-      <View style={styles.inputContainer}>
+      <View style={{ height: 36 }} />
+      <View style={globalStyles.others.inputContainer}>
         <LoginInput
           secureTextEntry={false}
           placeholder="User ID"
@@ -63,13 +62,8 @@ const LoginScreen = () => {
         />
       </View>
       <Loader loading={loading} error={loginError} />
-      <View style={styles.buttonContainer}>
-        <LoginButton onPress={loginHandler} loading={loading} />
-        <ForgotIdButton
-          onPress={forgotHandler}
-          loading={loading}
-          enabled={false}
-        />
+      <View style={globalStyles.others.loginButtonContainer}>
+        <Button color='amber' onPress={loginHandler} children='Login'/>
       </View>
     </ScrollView>
   )

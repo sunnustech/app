@@ -3,7 +3,6 @@ import MapView from 'react-native-maps'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-import { map as styles } from '@/styles/fresh'
 import { NoTouchDiv } from '@/components/Views'
 import { Map } from '@/components/SOAR'
 import UI from '@/components/SOAR/UI'
@@ -17,6 +16,7 @@ import { SOARContext } from '@/contexts/SOARContext'
 import { converter } from '@/classes/firebase'
 import { useFocusEffect } from '@react-navigation/native'
 import { QR } from '@/classes/QR'
+import { globalStyles } from '@/styles/global'
 
 const SOARScreen = () => {
   const mapRef = useRef<MapView | null>(null)
@@ -69,7 +69,7 @@ const SOARScreen = () => {
   )
   return (
     <RootSiblingParent>
-      <NoTouchDiv style={styles.container}>
+      <NoTouchDiv style={globalStyles.container.base}>
         <Map mapRef={mapRef} />
         <UI navigation={navigation} flyToNUS={flyToNUS} />
         <QRModal />

@@ -37,6 +37,7 @@ export type AddedColors = {
   bg: string
   fg: string
   homeFg: string
+
 }
 
 export type AllColors = BaseColors & AddedColors

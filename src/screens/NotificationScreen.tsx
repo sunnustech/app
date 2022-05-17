@@ -2,13 +2,13 @@ import { KeyboardAvoidingView, Text, Button, View } from 'react-native'
 
 /* sunnus components */
 import { auth } from '@/sunnus/firebase'
-import { notifications as styles } from '@/styles/main'
 import { sendPushNotification, notificationInit } from '@/lib/notifications'
+import { globalStyles } from '@/styles/global'
 
 const NotificationScreen = () => {
   const { expoPushToken, notification } = notificationInit()
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={globalStyles.container.base} behavior="padding">
       <Text>
         You are logged in as{' '}
         {auth.currentUser ? auth.currentUser.email : 'ERROR'}!

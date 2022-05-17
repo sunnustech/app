@@ -22,9 +22,18 @@ import { globalStyles } from '../../styles/global'
 function sendEmail() {
   const school = 'e0725213@u.nus.edu'
   const personal = 'brew4k@gmail.com'
-  sendPasswordResetEmail(auth, personal).then(() =>
-    console.debug('email sent!')
-  )
+  const target = personal
+  console.log(`sending email to ${target}`)
+  console.log("current user's email: ", auth.currentUser?.email)
+  sendPasswordResetEmail(auth, target)
+    .then(() => console.debug('email sent!'))
+    .catch((err) => {
+      console.log('==========================================')
+      console.log(err)
+    })
+    .finally(() => {
+      console.log('==========================================')
+    })
 }
 
 function firebaseQR(command: string, station?: string) {
@@ -59,6 +68,10 @@ const DebugList = (props: any) => {
       </Button>
 
       <Text>Send QR to firebase endpoint</Text>
+
+      <Button onPress={() => sendEmail()} color="orange">
+        send PR email
+      </Button>
 
       <Button onPress={() => firebaseQR('startTimer')} color="pink">
         QR: start
