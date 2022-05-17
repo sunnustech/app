@@ -31,7 +31,7 @@ const config = {
     },
   },
   map: {
-    baseButton: {
+    button: {
       size: 56,
       color: colors.white,
     },

@@ -11,9 +11,9 @@ import colors from '@/styles/colors'
 const button = {
   map: css({
     base: shadow({
-      width: config.map.baseButton.size,
-      height: config.map.baseButton.size,
-      backgroundColor: config.map.baseButton.color,
+      width: config.map.button.size,
+      height: config.map.button.size,
+      backgroundColor: config.map.button.color,
       borderRadius: config.button.round.radius,
       justifyContent: 'space-around',
       alignItems: 'center',
