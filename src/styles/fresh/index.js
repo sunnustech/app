@@ -5,7 +5,6 @@ import knockout from './knockout'
 import map from './map'
 import picker from './picker'
 import schedule from './schedule'
-import seriesButton from './seriesButton'
 import splash from './splash'
 import utils from './utils'
 
@@ -17,7 +16,6 @@ export {
   map,
   picker,
   schedule,
-  seriesButton,
   splash,
   utils,
 }
