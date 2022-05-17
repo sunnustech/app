@@ -102,7 +102,6 @@ const map = StyleSheet.create({
     marginRight: 'auto',
     marginTop: 'auto',
     marginBottom: 'auto',
-
     display: 'flex',
     flexDirection: 'column',
   },

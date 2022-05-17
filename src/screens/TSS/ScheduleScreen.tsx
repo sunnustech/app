@@ -1,10 +1,5 @@
 import { SafeAreaView, ScrollView } from 'react-native'
-
-/* sunnus components */
-import { schedule as styles } from '@/styles/fresh'
 import Event from '@/components/schedule/Event'
-
-// DELETE AFTER USE
 import { AuthPage } from '@/types/navigation'
 import BackButton from '@/components/BackButton'
 import { useContext } from 'react'
@@ -22,8 +17,8 @@ const ScheduleScreen = ({
     <SafeAreaView style={globalStyles.container.base}>
       <BackButton navigation={navigation} text="Schedule" />
       <ScrollView
-        contentContainerStyle={styles.container}
-        style={styles.scrollContainer}
+        contentContainerStyle={{ alignItems: 'center' }}
+        style={{ width: '100%' }}
       >
         {debug
           ? schedule
