@@ -3,11 +3,12 @@ import { httpsCallable } from 'firebase/functions'
 import { Text, View } from 'react-native'
 import { Button } from '@/components/Buttons'
 import { Modal } from 'react-native-paper'
-import { QR } from '../../classes/QR'
+import { QR } from '@/classes/QR'
 import { useContext } from 'react'
 import { log } from '@/utils/cli'
 import { SOARContext } from '@/contexts/SOARContext'
 import { globalStyles } from '@/styles/global'
+import { Toast } from '@/lib/utils'
 
 const QRModal = () => {
   const { QRState } = useContext(SOARContext)
@@ -19,7 +20,8 @@ const QRModal = () => {
     const QRApi = httpsCallable(functions, 'QRApi')
     QRApi(qr.flatten()).then((result) => {
       const response: any = result.data
-      log.yellow('firebase reponse:', response.status)
+      log.yellow('firebase response:', response.status)
+      Toast(response.status)
     })
     setQr(QR.empty)
   }
