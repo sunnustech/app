@@ -1,6 +1,7 @@
-import { css, debug } from '@/styles/utils'
+import { css } from '@/styles/utils'
 import config, {
   centered,
+  debug,
   shadow,
   marginAuto,
   translucent,

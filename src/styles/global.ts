@@ -47,10 +47,8 @@ const container = css({
     backgroundColor: debug('blue'),
   },
   headerIcons: centered({
-    height: '100%',
-    flexDirection: 'row',
-    backgroundColor: debug('green'),
     marginRight: config.button.round.size * 0.2,
+    backgroundColor: debug('green'),
   }),
   padded: centered({
     width: config.width,

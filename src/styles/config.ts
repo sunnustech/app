@@ -1,4 +1,4 @@
-const debugSwitch = true
+const debugSwitch = false
 
 import { makeAccent, css } from '@/styles/utils'
 import { Shade, Color } from '@/types/colors'

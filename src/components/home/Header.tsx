@@ -39,9 +39,8 @@ const Header = ({ navigation }: { navigation: AuthPageNavigator }) => {
       </View>
       <View style={{ flex: 1 }} />
       <View style={globalStyles.container.headerIcons}>
-        <View style={{ flex: 1 }} />
         <Heart
-          alert={true}
+          alert={false}
           onPress={() => navigation.navigate('NotificationScreen')}
         />
       </View>
