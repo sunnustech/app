@@ -1,5 +1,4 @@
 import { Text, TouchableOpacity, View, ViewProps } from 'react-native'
-import { buttons as styles } from '@/styles/fresh'
 import { ButtonProps, OnPress } from '@/types/index'
 import { makeAccent } from '@/styles/utils'
 import { Color } from '@/types/colors'
@@ -33,7 +32,7 @@ export const AccentButton = (props: ButtonProps & { color?: Color }) => {
         { backgroundColor: accent.bg, borderColor: accent.border },
       ]}
     >
-      <Text style={[styles.buttonText, { color: accent.fg }]}>
+      <Text style={[globalStyles.text.pillButton, { color: accent.fg }]}>
         {props.children}
       </Text>
     </TouchableOpacity>
