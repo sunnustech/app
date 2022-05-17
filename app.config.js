@@ -18,7 +18,7 @@ const config = {
       config: {
         googleMapsApiKey: process.env.IOS_GOOGLE_MAP_API_KEY,
       },
-      buildNumber: '2',
+      buildNumber: '3',
       supportsTablet: true,
       bundleIdentifier: 'com.nus.sunnus',
     },
