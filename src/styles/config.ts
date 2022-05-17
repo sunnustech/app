@@ -64,16 +64,14 @@ export const core = css({
 
 type Styles = ViewStyle | TextStyle | ImageStyle
 
-export const centered = (style: Styles): Styles => {
-  return StyleSheet.flatten([core.centered, style])
+const compose = (targetStyle: Styles) => {
+  return (style: Styles): Styles => {
+    return StyleSheet.flatten([targetStyle, style])
+  }
 }
 
-export const marginAuto = (style: Styles): Styles => {
-  return StyleSheet.flatten([core.marginAuto, style])
-}
-
-export const translucent = (style: Styles): Styles => {
-  return StyleSheet.flatten([core.trasclucentBg, style])
-}
+export const centered = compose(core.centered)
+export const marginAuto = compose(core.marginAuto)
+export const translucent = compose(core.trasclucentBg)
 
 export default config
