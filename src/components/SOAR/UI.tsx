@@ -1,4 +1,3 @@
-import { map as styles } from '@/styles/fresh'
 import SOS from '@/components/SOAR/SOS'
 import { NoTouchDiv as NView, Overlap } from '@/components/Views'
 import { Buttons } from '@/components/SOAR'
@@ -9,7 +8,7 @@ import Timer from '@/components/Timer'
 import { SOARContext } from '@/contexts/SOARContext'
 import Points from '@/components/SOAR/Points'
 import { useNavigation } from '@react-navigation/native'
-import { Text } from 'react-native'
+import { globalStyles } from '@/styles/global'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
@@ -71,12 +70,12 @@ const UI = (props: Props) => {
 
   const BottomUI = () => {
     return (
-      <NView style={styles.mapBottomContainer}>
-        <NView style={styles.mapLeftContainer}>
-          <NView style={styles.flex1} />
+      <NView style={{ flexDirection: 'row' }}>
+        <NView style={{ flex: 1 }}>
+          <NView style={{ flex: 1 }} />
           <Buttons.SOS onPress={() => setSOSVisible(!SOSVisible)} />
         </NView>
-        <NView style={styles.mapRightContainer}>
+        <NView style={{ alignItems: 'flex-end' }}>
           <Buttons.GoToSchool onPress={flyToNUS} />
           <Buttons.QR onPress={openQRScanner} />
         </NView>
@@ -87,9 +86,9 @@ const UI = (props: Props) => {
   return (
     <Overlap>
       <SOS visible={SOSVisible} setState={setSOSVisible} />
-      <NView style={styles.mapUIContainer}>
+      <NView style={globalStyles.container.mapUI}>
         <TopUI />
-        <NView style={{flex: 1}}/>
+        <NView style={{ flex: 1 }} />
         <BottomUI />
       </NView>
     </Overlap>

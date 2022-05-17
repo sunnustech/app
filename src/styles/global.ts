@@ -118,6 +118,17 @@ const container = css({
     // height: backButton.size, = 56 - 8
     // backgroundColor: colors.green[100],
   }),
+  mapUI: {
+    /* take % of screen's dimensions and center it */
+    width: '90%',
+    height: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+  },
 })
 
 const others = css({
