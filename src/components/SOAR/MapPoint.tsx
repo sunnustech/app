@@ -51,7 +51,7 @@ const Icon = (props: { location: Location }) => {
     return <MCI name="marker-check" color={colors.emerald[500]} size={24} />
   }
   if (status === 'next') {
-    return <Gem size={36} />
+    return <Gem size={22} />
   }
   return null
 }

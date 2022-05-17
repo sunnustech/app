@@ -30,10 +30,12 @@ const WSSSvg = (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
   <GeneralSvg src={wss} {...props} />
 )
 
-export const Gem = (props: { size: number } = { size: 36 }) => {
+export const Gem = (props: { size?: number }) => {
+  const height = props.size || 36
+  const ratio = 1.315
   return (
-    <View style={{ height: props.size, width: props.size }}>
-      <GemSvg/>
+    <View style={{ height, width: height * ratio }}>
+      <GemSvg />
     </View>
   )
 }
