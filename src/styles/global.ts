@@ -76,6 +76,12 @@ const container = css({
     alignItems: 'center',
     backgroundColor: debug('blue'),
   },
+  mapCallout: {
+    height: 160,
+    width: 200,
+    borderRadius: config.radius,
+    backgroundColor: colors.blue[600]
+  },
 })
 
 const others = css({
