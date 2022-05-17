@@ -3,7 +3,6 @@ import WSS from './WSS'
 import buttons from './buttons'
 import knockout from './knockout'
 import map from './map'
-import picker from './picker'
 import schedule from './schedule'
 import splash from './splash'
 import utils from './utils'
@@ -14,7 +13,6 @@ export {
   buttons,
   knockout,
   map,
-  picker,
   schedule,
   splash,
   utils,

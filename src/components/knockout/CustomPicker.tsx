@@ -1,5 +1,5 @@
 import { Text, View, TouchableOpacity } from 'react-native'
-import { picker as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import Picker from 'react-native-picker-select'
 import { MutableRefObject } from 'react'
 import { replaceUnderscoresWithSpaces } from '@/lib/utils'
@@ -23,9 +23,9 @@ const CustomPicker = ({
     return dashed
   }
   return (
-    <TouchableOpacity onPress={openPicker} style={styles.pickerContainer}>
-      <View style={styles.pickerTextContainer}>
-        <Text style={styles.pickerText}>{prettyText(display)}</Text>
+    <TouchableOpacity onPress={openPicker} style={globalStyles.picker.pickerContainer}>
+      <View style={globalStyles.picker.pickerTextContainer}>
+        <Text style={globalStyles.picker.pickerText}>{prettyText(display)}</Text>
       </View>
     </TouchableOpacity>
   )
