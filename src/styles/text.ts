@@ -35,7 +35,7 @@ const text = css({
     textAlign: 'center',
   },
   points: {
-    marginLeft: 1,
+    marginLeft: 2,
     textAlign: 'center',
     fontSize: 16,
     fontWeight: '600',

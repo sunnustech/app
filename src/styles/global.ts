@@ -94,11 +94,11 @@ const container = css({
     width: '100%',
     height: '100%',
   },
-  points: {
+  pointsArea: {
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  pointsText: {
+  points: {
     backgroundColor: colors.white,
     marginTop: 6,
     paddingVertical: 4,
