@@ -1,4 +1,5 @@
 import { makeAccent, css } from '@/styles/utils'
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import colors from '@/styles/colors'
 
 const config = {
@@ -57,8 +58,22 @@ export const core = css({
     backgroundColor: 'rgba(255,255,255,0.7)',
   },
   transparent: {
-    backgroundColor: colors.transparent
-  }
+    backgroundColor: colors.transparent,
+  },
 })
+
+type Styles = ViewStyle | TextStyle | ImageStyle
+
+export const centered = (style: Styles): Styles => {
+  return StyleSheet.flatten([core.centered, style])
+}
+
+export const marginAuto = (style: Styles): Styles => {
+  return StyleSheet.flatten([core.marginAuto, style])
+}
+
+export const translucent = (style: Styles): Styles => {
+  return StyleSheet.flatten([core.trasclucentBg, style])
+}
 
 export default config

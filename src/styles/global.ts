@@ -2,80 +2,59 @@ import { Platform, StatusBar } from 'react-native'
 import colors from '@/styles/colors'
 import { debug, css, join } from '@/styles/utils'
 import { Color } from '@/types/colors'
-import config, { core } from './config'
+import config, { core, centered, marginAuto } from './config'
 import button from './button'
 import shapes from './shapes'
 
 const container = css({
-  base: join([
-    {
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      backgroundColor: config.background,
-      paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    },
-    core.centered,
-  ]),
-  body: join([
-    {
-      flex: 1,
-      width: '100%',
-      backgroundColor: debug('purple'),
-    },
-    core.centered,
-  ]),
+  base: centered({
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: config.background,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+  }),
+  body: centered({
+    flex: 1,
+    width: '100%',
+    backgroundColor: debug('purple'),
+  }),
   header: {
     height: config.header.height,
     flexDirection: 'row',
     marginBottom: config.footer.height - config.header.height,
   },
-  footer: join([
-    {
-      height: config.footer.height,
-      flexDirection: 'row',
-      backgroundColor: debug('pink'),
-    },
-    core.centered,
-  ]),
-  scrollBase: join([
-    {
-      paddingTop: 64,
-      paddingBottom: 64,
-    },
-    core.centered,
-  ]),
-  modal: join([
-    {
-      width: config.width,
-      backgroundColor: config.background,
-      display: 'flex',
-      flexDirection: 'column',
-      padding: 18,
-      borderRadius: config.radius,
-    },
-    core.marginAuto,
-  ]),
+  footer: centered({
+    height: config.footer.height,
+    flexDirection: 'row',
+    backgroundColor: debug('pink'),
+  }),
+  scrollBase: centered({
+    paddingTop: 64,
+    paddingBottom: 64,
+  }),
+  modal: marginAuto({
+    width: config.width,
+    backgroundColor: config.background,
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 18,
+    borderRadius: config.radius,
+  }),
   headerLogo: {
     paddingLeft: 24,
     width: '40%',
     backgroundColor: debug('blue'),
   },
-  headerIcons: join([
-    {
-      height: '100%',
-      flexDirection: 'row',
-      backgroundColor: debug('green'),
-      marginRight: config.button.round.size * 0.2,
-    },
-    core.centered,
-  ]),
-  padded: join([
-    {
-      width: config.width,
-    },
-    core.centered,
-  ]),
+  headerIcons: centered({
+    height: '100%',
+    flexDirection: 'row',
+    backgroundColor: debug('green'),
+    marginRight: config.button.round.size * 0.2,
+  }),
+  padded: centered({
+    width: config.width,
+  }),
   series: {
     height: 28,
     width: '100%',
@@ -125,12 +104,9 @@ const others = css({
     flexDirection: 'row',
     // backgroundColor: colors.green[200],
   },
-  loginButtonContainer: join([
-    {
-      width: config.width,
-    },
-    core.centered,
-  ]),
+  loginButtonContainer: centered({
+    width: config.width,
+  }),
   input: {
     flex: 1,
     backgroundColor: 'white',
@@ -303,35 +279,26 @@ const picker = css({
 
 const splash = css({
   /* containers */
-  background: join([
-    core.centered,
-    {
-      flex: 1,
-      backgroundColor: colors.white,
-    },
-  ]),
+  background: centered({
+    flex: 1,
+    backgroundColor: colors.white,
+  }),
   logoContainer: {
-    width: '60%', 
+    width: '60%',
   },
 })
 
 const WSS = css({
   /* containers */
-  outerContainer: join([
-    {
-      flex: 1,
-      backgroundColor: debug('green'),
-    },
-    core.centered,
-  ]),
-  container: join([
-    {
-      width: '100%',
-      flex: 1,
-      backgroundColor: debug('purple'),
-    },
-    core.centered,
-  ]),
+  outerContainer: centered({
+    flex: 1,
+    backgroundColor: debug('green'),
+  }),
+  container: centered({
+    width: '100%',
+    flex: 1,
+    backgroundColor: debug('purple'),
+  }),
 })
 
 export const globalStyles = {

@@ -1,5 +1,5 @@
 import { css, join, debug } from '@/styles/utils'
-import config, { core } from './config'
+import config, { centered, core, marginAuto, translucent } from './config'
 import colors from '@/styles/colors'
 
 const button = {
@@ -23,39 +23,33 @@ const button = {
     bottomButton: {
       marginTop: 14,
     },
-    qrBack: join([
-      {
-        borderRadius: 1000,
-        width: '50%',
-        display: 'flex',
-        padding: 20,
-        marginBottom: 36,
-      },
-      core.marginAuto,
-      core.trasclucentBg,
-      core.centered,
-    ]),
+    qrBack: centered(
+      marginAuto(
+        translucent({
+          borderRadius: 1000,
+          width: '50%',
+          display: 'flex',
+          padding: 20,
+          marginBottom: 36,
+        })
+      )
+    ),
   }),
   outline: css({
-    header: join([
-      {
-        height: config.button.round.size,
-        width: config.button.round.size,
-        borderRadius: config.button.round.radius,
-        // backgroundColor: colors.blue[100],
-      },
-      core.centered,
-    ]),
-    footer: join([
-      {
-        borderRadius: config.button.round.radius,
-        paddingVertical: 10,
-        paddingHorizontal: 14,
-        flexDirection: 'row',
-        backgroundColor: debug('amber'),
-      },
-      core.centered,
-    ]),
+    header: centered({
+      height: config.button.round.size,
+      width: config.button.round.size,
+      borderRadius: config.button.round.radius,
+      // backgroundColor: colors.blue,
+    }),
+    footer: centered({
+      borderRadius: config.button.round.radius,
+      paddingVertical: 10,
+      paddingHorizontal: 14,
+      flexDirection: 'row',
+      backgroundColor: debug('amber'),
+    }),
+
     back: {
       color: colors.homeFg,
       justifyContent: 'center',
@@ -94,17 +88,14 @@ const button = {
     },
   }),
   series: css({
-    base: join([
-      {
-        width: '100%',
-        borderWidth: config.border,
-        height: 108,
-        borderBottomRightRadius: config.radius,
-        borderTopLeftRadius: config.radius,
-        marginVertical: 10,
-      },
-      core.centered,
-    ]),
+    base: centered({
+      width: '100%',
+      borderWidth: config.border,
+      height: 108,
+      borderBottomRightRadius: config.radius,
+      borderTopLeftRadius: config.radius,
+      marginVertical: 10,
+    }),
   }),
 }
 
