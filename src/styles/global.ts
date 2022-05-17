@@ -277,17 +277,6 @@ const picker = css({
   },
 })
 
-const splash = css({
-  /* containers */
-  background: centered({
-    flex: 1,
-    backgroundColor: colors.white,
-  }),
-  logoContainer: {
-    width: '60%',
-  },
-})
-
 export const globalStyles = {
   button,
   container,
@@ -297,6 +286,5 @@ export const globalStyles = {
   login,
   timer,
   picker,
-  splash,
   core,
 }
