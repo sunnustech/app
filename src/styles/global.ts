@@ -5,6 +5,7 @@ import { Color } from '@/types/colors'
 import config, { debug, core, centered, marginAuto, shadow } from './config'
 import button from './button'
 import shapes from './shapes'
+import text from './text'
 
 const container = css({
   base: centered({
@@ -74,25 +75,6 @@ const container = css({
     width: '100%',
     alignItems: 'center',
     backgroundColor: debug('blue'),
-  },
-})
-
-const text = css({
-  settings: {
-    marginLeft: 4,
-    fontWeight: '600',
-    color: config.foreground,
-    textAlign: 'center',
-  },
-  pillButton: {
-    fontWeight: '600',
-    fontSize: 18,
-    color: 'white',
-  },
-  back: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: colors.homeFg,
   },
 })
 
