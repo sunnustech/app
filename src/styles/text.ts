@@ -1,11 +1,5 @@
 import { css } from '@/styles/utils'
-import config, {
-  centered,
-  debug,
-  shadow,
-  marginAuto,
-  translucent,
-} from './config'
+import config from './config'
 import colors from '@/styles/colors'
 
 const text = css({
@@ -32,6 +26,13 @@ const text = css({
     fontSize: 22,
     fontWeight: '700',
     color: colors.homeFg,
+  },
+  calloutTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.gray[700],
+    marginBottom: 8,
+    textAlign: 'center'
   },
 })
 

@@ -79,8 +79,13 @@ const container = css({
   mapCallout: {
     height: 160,
     width: 200,
+    marginBottom: 10,
     borderRadius: config.radius,
-    backgroundColor: colors.blue[600]
+    borderWidth: config.border,
+    borderColor: colors.gray[300],
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    backgroundColor: config.background
   },
 })
 

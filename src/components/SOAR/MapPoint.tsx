@@ -21,11 +21,11 @@ const MapPoint = (props: { location: Location }) => {
 }
 
 const HandlePopup = (props: { location: Location }) => {
-  const location = props.location
-  if (location.status === 'next') {
+  const { status } = props.location
+  if (status === 'next' || status === 'done') {
     return (
       <Callout tooltip>
-        <Popup location={location} />
+        <Popup location={props.location} />
       </Callout>
     )
   }
