@@ -288,19 +288,6 @@ const splash = css({
   },
 })
 
-const WSS = css({
-  /* containers */
-  outerContainer: centered({
-    flex: 1,
-    backgroundColor: debug('green'),
-  }),
-  container: centered({
-    width: '100%',
-    flex: 1,
-    backgroundColor: debug('purple'),
-  }),
-})
-
 export const globalStyles = {
   button,
   container,
@@ -311,6 +298,5 @@ export const globalStyles = {
   timer,
   picker,
   splash,
-  WSS,
   core,
 }

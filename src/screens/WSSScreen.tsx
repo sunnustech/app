@@ -8,9 +8,9 @@ const WSSScreen = () => {
   const navigation = useNavigation<AuthPage<'WSSScreen'>>()
 
   return (
-    <SafeAreaView style={globalStyles.WSS.outerContainer}>
+    <SafeAreaView style={globalStyles.container.base}>
       <BackButton navigation={navigation} text="Water Sports Series" />
-      <View style={globalStyles.WSS.container}>
+      <View style={globalStyles.container.body}>
         <Text>Welcome to the WSS page!</Text>
       </View>
     </SafeAreaView>
