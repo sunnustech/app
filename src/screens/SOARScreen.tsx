@@ -17,6 +17,7 @@ import { converter } from '@/classes/firebase'
 import { useFocusEffect } from '@react-navigation/native'
 import { QR } from '@/classes/QR'
 import { globalStyles } from '@/styles/global'
+import EndCard from '@/components/SOAR/EndCard'
 
 const SOARScreen = () => {
   const mapRef = useRef<MapView | null>(null)
