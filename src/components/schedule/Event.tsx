@@ -5,7 +5,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native'
-import { schedule as styles } from '@/styles/fresh'
+import styles from '@/styles/schedule'
 import { EventProps } from '@/types/schedule'
 import { Feather } from '@expo/vector-icons'
 import {
