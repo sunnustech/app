@@ -85,7 +85,7 @@ const container = css({
     borderColor: colors.gray[300],
     paddingVertical: 10,
     paddingHorizontal: 14,
-    backgroundColor: config.background
+    backgroundColor: config.background,
   },
   overlap: {
     position: 'absolute',
@@ -111,7 +111,13 @@ const container = css({
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
     shadowRadius: 3,
-  }
+  },
+  timer: marginAuto({
+    width: '100%',
+    height: 48,
+    // height: backButton.size, = 56 - 8
+    // backgroundColor: colors.green[100],
+  }),
 })
 
 const others = css({

@@ -1,6 +1,6 @@
 import { map as styles } from '@/styles/fresh'
 import SOS from '@/components/SOAR/SOS'
-import { NoTouchDiv, Overlap } from '@/components/Views'
+import { NoTouchDiv as NView, Overlap } from '@/components/Views'
 import { Buttons } from '@/components/SOAR'
 import { AuthPage, SOARPage } from '@/types/navigation'
 import { useContext, useEffect, useState } from 'react'
@@ -9,6 +9,7 @@ import Timer from '@/components/Timer'
 import { SOARContext } from '@/contexts/SOARContext'
 import Points from '@/components/SOAR/Points'
 import { useNavigation } from '@react-navigation/native'
+import { Text } from 'react-native'
 
 type Props = {
   navigation: AuthPage<'SOARNavigator'>
@@ -53,48 +54,44 @@ const UI = (props: Props) => {
   }
 
   const TopUI = () => {
+    const middlePercent = 55
+    const sidePercent = (100 - middlePercent) / 2
     return (
-      <NoTouchDiv style={styles.mapTopContainer}>
-        <Overlap>
-          <NoTouchDiv style={styles.timerAndPointsContainer}>
-            <NoTouchDiv style={styles.timerContainer}>
-              <Timer team={team} />
-            </NoTouchDiv>
-            <Points team={team} />
-          </NoTouchDiv>
-        </Overlap>
-        <Overlap>
-          <NoTouchDiv style={styles.navigationContainer}>
-            <Buttons.Back onPress={() => navigation.navigate('HomeScreen')} />
-            <NoTouchDiv style={{ flex: 1 }} />
-          </NoTouchDiv>
-        </Overlap>
-      </NoTouchDiv>
+      <NView style={{ flexDirection: 'row' }}>
+        <NView style={{ width: `${sidePercent}%` }}>
+          <Buttons.Back onPress={() => navigation.navigate('HomeScreen')} />
+        </NView>
+        <NView style={{ width: `${middlePercent}%` }}>
+          <Timer team={team} />
+          <Points team={team} />
+        </NView>
+      </NView>
     )
   }
 
   const BottomUI = () => {
     return (
-      <NoTouchDiv style={styles.mapBottomContainer}>
-        <NoTouchDiv style={styles.mapLeftContainer}>
-          <NoTouchDiv style={styles.flex1} />
-          <Buttons.SOS onPress={() => setSOSVisible(!SOSVisible)}/>
-        </NoTouchDiv>
-        <NoTouchDiv style={styles.mapRightContainer}>
-          <Buttons.GoToSchool onPress={flyToNUS}/>
-          <Buttons.QR onPress={openQRScanner}/>
-        </NoTouchDiv>
-      </NoTouchDiv>
+      <NView style={styles.mapBottomContainer}>
+        <NView style={styles.mapLeftContainer}>
+          <NView style={styles.flex1} />
+          <Buttons.SOS onPress={() => setSOSVisible(!SOSVisible)} />
+        </NView>
+        <NView style={styles.mapRightContainer}>
+          <Buttons.GoToSchool onPress={flyToNUS} />
+          <Buttons.QR onPress={openQRScanner} />
+        </NView>
+      </NView>
     )
   }
 
   return (
     <Overlap>
       <SOS visible={SOSVisible} setState={setSOSVisible} />
-      <NoTouchDiv style={styles.mapUIContainer}>
+      <NView style={styles.mapUIContainer}>
         <TopUI />
+        <NView style={{flex: 1}}/>
         <BottomUI />
-      </NoTouchDiv>
+      </NView>
     </Overlap>
   )
 }

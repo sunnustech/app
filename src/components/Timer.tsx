@@ -3,6 +3,7 @@ import { Text, View } from 'react-native'
 import { Team } from '@/classes/team'
 import colors from '@/styles/colors'
 import { globalStyles } from '@/styles/global'
+import { NoTouchDiv } from './Views'
 
 const secondsToHHMMSS = (seconds: number): string => {
   if (seconds < 3600) {
@@ -84,7 +85,9 @@ const Timer = (props: { team: Team }) => {
   })
 
   return (
-    <SmallSeconds HMS={team._timerRunning ? tick() : paused()} team={team} />
+    <NoTouchDiv style={globalStyles.container.timer}>
+      <SmallSeconds HMS={team._timerRunning ? tick() : paused()} team={team} />
+    </NoTouchDiv>
   )
 }
 

@@ -1,17 +1,23 @@
-import { View } from 'react-native'
-import { SafeDivProps } from '@/types/index'
+import { View, ViewStyle, StyleSheet } from 'react-native'
 import { globalStyles } from '@/styles/global'
+import { ReactNode } from 'react'
 
-const NoTouchDiv = ({ style, children }: SafeDivProps) => (
-  <View style={style} pointerEvents="box-none">
-    {children}
-  </View>
-)
+const NoTouchDiv = (props: { style?: ViewStyle; children?: ReactNode }) => {
+  return (
+    <View
+      style={props.style}
+      pointerEvents="box-none"
+      children={props.children}
+    />
+  )
+}
 
-const Overlap = ({ children, style }: SafeDivProps) => (
-  <NoTouchDiv style={[globalStyles.container.overlap, style]}>
-    {children}
-  </NoTouchDiv>
-)
+const Overlap = (props: { style?: ViewStyle; children?: ReactNode }) => {
+  const _style = StyleSheet.flatten([
+    globalStyles.container.overlap,
+    props.style,
+  ])
+  return <NoTouchDiv style={_style} children={props.children} />
+}
 
 export { NoTouchDiv, Overlap }
