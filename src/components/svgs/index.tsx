@@ -3,7 +3,8 @@ import sunnus from './sunnus-svg'
 import soar from './soar-svg'
 import tss from './tss-svg'
 import wss from './wss-svg'
-import gem from './gem-svg'
+import GemSvg from './gem-svg'
+import { View } from 'react-native'
 
 const GeneralSvg = (
   props: { src: (color: Color) => string } & Pick<XmlProps, 'fill' | 'opacity'>
@@ -29,6 +30,12 @@ const WSSSvg = (props: Pick<XmlProps, 'fill' | 'opacity'>) => (
   <GeneralSvg src={wss} {...props} />
 )
 
-const GemSvg = gem
+export const Gem = (props: { size: number } = { size: 36 }) => {
+  return (
+    <View style={{ height: props.size, width: props.size }}>
+      <GemSvg/>
+    </View>
+  )
+}
 
-export { SunnusSvg, SOARSvg, TSSSvg, WSSSvg, GemSvg }
+export { SunnusSvg, SOARSvg, TSSSvg, WSSSvg }

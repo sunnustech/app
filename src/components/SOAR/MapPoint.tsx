@@ -2,8 +2,7 @@ import { Marker, Callout, LatLng } from 'react-native-maps'
 import { View } from 'react-native'
 import { MaterialCommunityIcons as MCI } from '@expo/vector-icons'
 import Popup from './Popup'
-import { GemSvg } from '@/components/svgs'
-import { map as styles } from '@/styles/fresh'
+import { Gem } from '@/components/svgs'
 import colors from '@/styles/colors'
 import { Location } from '@/classes/location'
 
@@ -52,11 +51,7 @@ const Icon = (props: { location: Location }) => {
     return <MCI name="marker-check" color={colors.emerald[500]} size={24} />
   }
   if (status === 'next') {
-    return (
-      <View style={styles.GemContainer}>
-        <GemSvg />
-      </View>
-    )
+    return <Gem size={36} />
   }
   return null
 }
