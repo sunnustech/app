@@ -93,6 +93,24 @@ const container = css({
     left: 0,
     width: '100%',
     height: '100%',
+  },
+  points: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  pointsText: {
+    backgroundColor: colors.white,
+    marginTop: 6,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    borderRadius: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
   }
 })
 

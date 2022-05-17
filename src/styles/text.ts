@@ -32,7 +32,15 @@ const text = css({
     fontWeight: '700',
     color: colors.gray[700],
     marginBottom: 8,
-    textAlign: 'center'
+    textAlign: 'center',
+  },
+  points: {
+    marginLeft: 1,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.gray[700],
+    fontVariant: ['tabular-nums'],
   },
 })
 
