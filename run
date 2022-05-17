@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cp ../turtle-build .
+cp $HOME/dots/personal/.secrets/sunnus/turtle-build .
 ./turtle-build
