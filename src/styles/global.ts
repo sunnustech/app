@@ -2,7 +2,7 @@ import { Platform, StatusBar } from 'react-native'
 import colors from '@/styles/colors'
 import { debug, css, join } from '@/styles/utils'
 import { Color } from '@/types/colors'
-import config, { core, centered, marginAuto } from './config'
+import config, { core, centered, marginAuto, shadow } from './config'
 import button from './button'
 import shapes from './shapes'
 
@@ -246,33 +246,21 @@ const login = css({
 })
 
 const picker = css({
-  pickerContainer: {
+  pickerContainer: centered(shadow({
     width: '80%',
     height: 64,
     backgroundColor: colors.bg,
     paddingHorizontal: 18,
     paddingVertical: 8,
-    borderRadius: 6,
-    shadowColor: colors.shadow,
-    shadowRadius: 2,
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 5 },
     marginBottom: 12,
     flexDirection: 'row',
-    justifyContent: 'center',
     display: 'flex',
-  },
-  pickerTextContainer: {
-    flex: 1,
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
+  })),
   pickerText: {
+    fontWeight: '700',
     width: '100%',
     fontSize: 18,
     color: colors.fg,
-    fontWeight: '700',
     textAlign: 'center',
   },
 })

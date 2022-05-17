@@ -54,7 +54,7 @@ export const core = css({
     shadowOpacity: 0.15,
     shadowRadius: 3,
   },
-  trasclucentBg: {
+  translucent: {
     backgroundColor: 'rgba(255,255,255,0.7)',
   },
   transparent: {
@@ -72,6 +72,7 @@ const compose = (targetStyle: Styles) => {
 
 export const centered = compose(core.centered)
 export const marginAuto = compose(core.marginAuto)
-export const translucent = compose(core.trasclucentBg)
+export const translucent = compose(core.translucent)
+export const shadow = compose(core.shadow)
 
 export default config
