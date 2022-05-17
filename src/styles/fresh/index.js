@@ -7,7 +7,6 @@ import picker from './picker'
 import schedule from './schedule'
 import seriesButton from './seriesButton'
 import splash from './splash'
-import timer from './timer'
 import utils from './utils'
 
 export {
@@ -20,6 +19,5 @@ export {
   schedule,
   seriesButton,
   splash,
-  timer,
   utils,
 }

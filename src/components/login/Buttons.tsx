@@ -2,7 +2,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native'
-import { login as styles } from '@/styles/fresh'
+import { globalStyles } from '@/styles/global'
 import { OnPress } from '@/types/index'
 
 const LoginScreenButton = ({
@@ -16,11 +16,11 @@ const LoginScreenButton = ({
 }) => {
   return (
     <TouchableOpacity
-      style={[styles.button, loading ? styles.disabledButton : null]}
+      style={[globalStyles.login.button, loading ? globalStyles.login.disabledButton : null]}
       disabled={loading}
       onPress={onPress}
     >
-      <Text style={styles.buttonText}>{text}</Text>
+      <Text style={globalStyles.login.buttonText}>{text}</Text>
     </TouchableOpacity>
   )
 }
