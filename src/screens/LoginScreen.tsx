@@ -12,9 +12,8 @@ import Sunnus from '@/components/svgs/Sunnus'
 import {
   Loader,
   LoginInput,
-  LoginButton,
-  ForgotIdButton,
 } from '@/components/login'
+import { Button } from '../components/Buttons'
 
 const PASSWORD = 'sunnus'
 
@@ -64,12 +63,7 @@ const LoginScreen = () => {
       </View>
       <Loader loading={loading} error={loginError} />
       <View style={globalStyles.others.loginButtonContainer}>
-        <LoginButton onPress={loginHandler} loading={loading} />
-        <ForgotIdButton
-          onPress={forgotHandler}
-          loading={loading}
-          enabled={false}
-        />
+        <Button color='amber' onPress={loginHandler} children='Login'/>
       </View>
     </ScrollView>
   )

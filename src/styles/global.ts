@@ -295,6 +295,27 @@ const others = css({
     },
     core.centered,
   ]),
+  input: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderWidth: opts.button.pill.border,
+    borderColor: colors.gray[200],
+    paddingVertical: 18,
+    paddingHorizontal: 16,
+    fontWeight: '600',
+    fontSize: 16,
+    borderRadius: opts.radius,
+  },
+  inputFocused: {
+    borderColor: colors.gray[400],
+  },
+  spacer: {
+    height: 36
+  },
+  errorMessage: {
+    fontWeight: '500',
+    color: colors.red[500],
+  },
 })
 
 export const globalStyles = {
