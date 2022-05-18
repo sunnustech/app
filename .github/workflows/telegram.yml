@@ -14,7 +14,8 @@ jobs:
         with:
           to: ${{ env.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
           message: |
             Build workflow complete (android)
             Status: ${{ job.status }}
-            Url: https://expo.dev/accounts/brew4k/projects/SunNUS/builds
+            [Expo Console](https://expo.dev/accounts/brew4k/projects/SunNUS/builds)
