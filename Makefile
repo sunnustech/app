@@ -25,6 +25,7 @@ cp:
 	@make get-turtler
 
 ios:
+	@make publish
 	@make get-turtler
 	./turtler ios
 	rm turtler
