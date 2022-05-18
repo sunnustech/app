@@ -8,3 +8,9 @@ jobs:
     steps:
       - name: helloworld
         run: echo "helloworld!"
+
+      - name: Telegram Notify
+        uses: appleboy/telegram-action@0.0.3
+        with:
+          to: -646035026
+          token: ${{ secrets.TELEGRAM_TOKEN }}
