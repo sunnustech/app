@@ -1,3 +1,6 @@
+const IOS_GOOGLE_MAP_API_KEY='AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk'
+const ANDROID_GOOGLE_MAP_API_KEY='AIzaSyAMokc0eF4l5_HGuMBGGgVOIKsw8BQCccU'
+
 const config = {
   expo: {
     name: 'SunNUS',
@@ -16,7 +19,8 @@ const config = {
     assetBundlePatterns: ['**/*'],
     ios: {
       config: {
-        googleMapsApiKey: process.env.IOS_GOOGLE_MAP_API_KEY,
+        // googleMapsApiKey: process.env.IOS_GOOGLE_MAP_API_KEY,
+        googleMapsApiKey: IOS_GOOGLE_MAP_API_KEY,
       },
       buildNumber: '3',
       supportsTablet: true,
@@ -25,7 +29,8 @@ const config = {
     android: {
       config: {
         googleMaps: {
-          apiKey: process.env.ANDROID_GOOGLE_MAP_API_KEY,
+          // apiKey: process.env.ANDROID_GOOGLE_MAP_API_KEY,
+          apiKey: ANDROID_GOOGLE_MAP_API_KEY,
         },
       },
       adaptiveIcon: {

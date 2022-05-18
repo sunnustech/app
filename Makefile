@@ -13,8 +13,8 @@ clean:
 	rm -rf node_modules
 
 ios:
-	cp $$HOME/dots/personal/.secrets/sunnus/build:ios turtler
-	./turtler
+	cp $$HOME/dots/personal/.secrets/sunnus/build turtler
+	./turtler ios
 	rm turtler
 
 i:
