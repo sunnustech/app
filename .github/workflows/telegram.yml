@@ -3,7 +3,7 @@ on:
     branches:
       - ci/telegram
 env:
-  TELEGRAM_TO: [257481278]
+  TELEGRAM_TO: 257481278
 jobs:
   build-android:
     runs-on: ubuntu-latest
