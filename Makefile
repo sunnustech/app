@@ -13,9 +13,12 @@ clean:
 	rm -rf node_modules
 
 ios:
+	rm -rf build
 	cp $$HOME/dots/personal/.secrets/sunnus/build:ios turtler
 	./turtler
 	rm turtler
+	tar -xvf build/*
+	open build
 
 i:
 	@make ios
