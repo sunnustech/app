@@ -16,6 +16,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            Build workflow complete (android)
+            📦 build complete (android)
             Status: ${{ job.status }}
             https://expo.dev/accounts/brew4k/projects/SunNUS/builds
