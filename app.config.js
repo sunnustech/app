@@ -1,5 +1,11 @@
-const IOS_GOOGLE_MAP_API_KEY='AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk'
-const ANDROID_GOOGLE_MAP_API_KEY='AIzaSyAMokc0eF4l5_HGuMBGGgVOIKsw8BQCccU'
+const versions = {
+  main: '3.0.6',
+  ios: '4',
+  android: 17,
+}
+
+const IOS_GOOGLE_MAP_API_KEY = 'AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk'
+const ANDROID_GOOGLE_MAP_API_KEY = 'AIzaSyAMokc0eF4l5_HGuMBGGgVOIKsw8BQCccU'
 
 const config = {
   expo: {
@@ -22,7 +28,7 @@ const config = {
         // googleMapsApiKey: process.env.IOS_GOOGLE_MAP_API_KEY,
         googleMapsApiKey: IOS_GOOGLE_MAP_API_KEY,
       },
-      buildNumber: '4',
+      buildNumber: versions.ios,
       supportsTablet: true,
       bundleIdentifier: 'com.nus.sunnus',
     },
@@ -38,7 +44,7 @@ const config = {
         backgroundColor: '#FFFFFF',
       },
       package: 'com.nus.sunnus',
-      versionCode: 16,
+      versionCode: versions.android,
     },
     web: {
       favicon: './assets/favicon.png',
