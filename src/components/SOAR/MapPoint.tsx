@@ -1,74 +1,57 @@
-import { Marker, Callout } from 'react-native-maps'
+import { Marker, Callout, LatLng } from 'react-native-maps'
 import { View } from 'react-native'
 import { MaterialCommunityIcons as MCI } from '@expo/vector-icons'
 import Popup from './Popup'
-import { GemSvg } from '@/components/svgs'
-import { map as styles } from '@/styles/fresh'
-import {
-  MapPointIconProps,
-  MapPointPopupProps,
-  MapPointProps,
-} from '@/types/SOAR'
+import { Gem } from '@/components/svgs'
 import colors from '@/styles/colors'
+import { Location } from '@/classes/location'
 
-const MapPoint = ({
-  navigation,
-  coordinate,
-  navTarget,
-  content,
-  pointType,
-  status,
-}: MapPointProps) => {
+const MapPoint = (props: { location: Location }) => {
+  const location = props.location
+  const coordinate: LatLng = {
+    latitude: location.latitude,
+    longitude: location.longitude,
+  }
   return (
-    <Marker coordinate={coordinate} opacity={status === '' ? 0 : 1}>
-      <HandleIcon pointType={pointType} status={status} />
-      <HandlePopup
-        navigation={navigation}
-        status={status}
-        navTarget={navTarget}
-        content={content}
-      />
+    <Marker coordinate={coordinate} opacity={1}>
+      <Icon location={location} />
+      <HandlePopup location={location} />
     </Marker>
   )
 }
 
-const HandlePopup = ({
-  navigation,
-  navTarget,
-  content,
-  status,
-}: MapPointPopupProps) => {
-  if (status === 'next') {
+const HandlePopup = (props: { location: Location }) => {
+  const { status } = props.location
+  if (status === 'next' || status === 'done') {
     return (
-      <Callout
-        style={styles.callout}
-        onPress={() => navigation.navigate(navTarget)}
-      >
-        <Popup content={content} />
+      <Callout tooltip>
+        <Popup location={props.location} />
       </Callout>
     )
   }
   return null
 }
 
-const HandleIcon = ({ pointType, status }: MapPointIconProps) => {
-  if (pointType === 'game') {
-    if (status === 'done') {
-      return <MCI name="marker-check" color={colors.emerald[500]} size={24} />
-    }
-    if (status === 'next') {
-      return (
-        <View style={styles.GemContainer}>
-          <GemSvg />
-        </View>
-      )
-    }
-    if (status === '') {
-      return <MCI name="marker-check" color={colors.red[500]} size={1} />
-    }
+const Icon = (props: { location: Location }) => {
+  const { type, status } = props.location
+  // hide hidden stations
+  if (status === 'hidden') {
+    // null will show default markers
+    return <View />
   }
-  if (pointType === 'water') {
+  // show water points
+  if (type === 'water') {
     return <MCI name="cup-water" color={colors.blue[400]} size={24} />
+  }
+  // don't handle anything other than game stations past this point
+  if (type !== 'game') {
+    return <View />
+  }
+  if (status === 'done') {
+    return <MCI name="marker-check" color={colors.emerald[500]} size={24} />
+  }
+  if (status === 'next') {
+    return <Gem size={22} />
   }
   return null
 }

@@ -1,22 +1,11 @@
-import { Text, View, TouchableOpacity } from 'react-native'
+import { View } from 'react-native'
 import { Modal } from 'react-native-paper'
 import { AuthenticatedPages, AuthPage } from '@/types/navigation'
 import { UseState } from '@/types/SOAR'
-import { home as styles } from '@/styles/fresh'
 import { auth } from '@/sunnus/firebase'
 import { Auth } from 'firebase/auth'
-import { ButtonRed } from '@/components/Buttons'
-
-const DevButton = ({ onPress, children, containerStyle, textStyle }: any) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.devButton, containerStyle]}
-    >
-      <Text style={[styles.buttonText, textStyle]}>{children}</Text>
-    </TouchableOpacity>
-  )
-}
+import { AccentButton, Button } from '@/components/Buttons'
+import { globalStyles } from '@/styles/global'
 
 const Settings = ({
   showSettingsState,
@@ -38,23 +27,23 @@ const Settings = ({
       dismissable={true}
       onDismiss={() => setShowSettings(false)}
     >
-      <View style={styles.modalContainer}>
-        <DevButton
+      <View style={globalStyles.container.modal}>
+        <AccentButton
+          color="pink"
           onPress={() => go('GeneratorScreen')}
-          textStyle={styles.GenerateQRbuttonText}
-          containerStyle={styles.GenerateQRbutton}
-        >
-          Generate QR
-        </DevButton>
-        <DevButton
+          children="Generate QR"
+        />
+        <AccentButton
+          color="purple"
           onPress={() => go('DEVScreen')}
-          textStyle={styles.DEVbuttonText}
-          containerStyle={styles.DEVbutton}
-        >
-          Development
-        </DevButton>
+          children="Development"
+        />
         <View style={{ height: 24 }} />
-        <ButtonRed onPress={() => logoutHandler(auth)}>Logout</ButtonRed>
+        <Button
+          color="red"
+          onPress={() => logoutHandler(auth)}
+          children="Logout"
+        />
       </View>
     </Modal>
   )

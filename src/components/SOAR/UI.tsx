@@ -1,88 +1,96 @@
-import { map as styles } from '@/styles/fresh'
-import { NoTouchDiv, Overlap } from '@/components/Views'
-import { Ionicons as IC, MaterialIcons as MI } from '@expo/vector-icons'
-import {
-  MapBottomButton,
-  MapNavigationButton,
-  MapSOSButton,
-  MapAdminToggle,
-} from '@/components/SOAR'
-import { MapGoToSchoolButton } from '@/components/SOAR/MapButtons'
+import SOS from '@/components/SOAR/SOS'
+import { NoTouchDiv as NView, Overlap } from '@/components/Views'
+import { Buttons } from '@/components/SOAR'
+import { AuthPage, SOARPage } from '@/types/navigation'
+import { useContext, useEffect, useState } from 'react'
+import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner'
+import Timer from '@/components/Timer'
+import { SOARContext } from '@/contexts/SOARContext'
+import Points from '@/components/SOAR/Points'
+import { useNavigation } from '@react-navigation/native'
+import { globalStyles } from '@/styles/global'
 
-import SOAR from '@/lib/SOAR'
-import { QRCommands as q } from '@/lib/SOAR/QRCommands'
+type Props = {
+  navigation: AuthPage<'SOARNavigator'>
+  flyToNUS: () => void
+}
 
-const UI = ({
-  navigation,
-  filtered,
-  toggleAdminStations,
-  handleSOS,
-  openQRScanner,
-  flyToCurrentLocation,
-  Timer,
-}: any) => {
-  const TopUI = () => {
-    function backToHomeScreen() {
-      navigation.navigate('HomeScreen')
+const UI = (props: Props) => {
+  const { navigation, flyToNUS } = props
+  const SOARnavigation = useNavigation<SOARPage<'SOARScreen'>>()
+  const { teamState } = useContext(SOARContext)
+  const team = teamState[0]
+
+  const [cameraPermission, setCameraPermission] = useState<PermissionStatus>()
+  const [SOSVisible, setSOSVisible] = useState<boolean>(false)
+
+  // pre-emptively fetches for camera permissions once
+  useEffect(() => {
+    BarCodeScanner.getPermissionsAsync().then((res) => {
+      setCameraPermission(res.status)
+      console.debug('current camera permissions:', res.status)
+    })
+  }, [])
+
+  /** opens QR scanner */
+  function openQRScanner() {
+    /** if granted, send it */
+    if (cameraPermission === 'granted') {
+      SOARnavigation.navigate('QRScreen')
+      return
     }
-    return (
-      <NoTouchDiv style={styles.mapTopContainer}>
-        <Overlap style={styles.mapRightContainer}>
-          <MapAdminToggle
-            onPress={toggleAdminStations}
-            activated={filtered.water}
-          />
-        </Overlap>
-        <Overlap>
-          <NoTouchDiv style={styles.timerContainer}>
-            <Timer />
-          </NoTouchDiv>
-        </Overlap>
-        <Overlap>
-          <NoTouchDiv style={styles.navigationContainer}>
-            <MapNavigationButton
-              icon={[IC, 'arrow-back']}
-              onPress={backToHomeScreen}
-            />
-          </NoTouchDiv>
-        </Overlap>
-      </NoTouchDiv>
-    )
+    /** else, ask for permission */
+    BarCodeScanner.requestPermissionsAsync().then((res) => {
+      setCameraPermission(res.status)
+      if (res.status !== 'granted') {
+        alert(
+          'Camera permissions denied.\nPlease head over to system\nsettings to re-enable.'
+        )
+        return
+      }
+      SOARnavigation.navigate('QRScreen')
+    })
   }
 
-  const Debug = () => {
+  const TopUI = () => {
+    const middlePercent = 55
+    const sidePercent = (100 - middlePercent) / 2
     return (
-      <>
-        <MapSOSButton onPress={() => SOAR.start("Dev_loper", q.start)} />
-        <MapSOSButton onPress={() => SOAR.pause('Dev_loper', q.pause)} />
-        <MapSOSButton onPress={() => SOAR.resume('Dev_loper', q.resume)} />
-        <MapSOSButton onPress={() => SOAR.stopFinal('Dev_loper', q.stopFinal)} />
-      </>
+      <NView style={{ flexDirection: 'row' }}>
+        <NView style={{ width: `${sidePercent}%` }}>
+          <Buttons.Back onPress={() => navigation.navigate('HomeScreen')} />
+        </NView>
+        <NView style={{ width: `${middlePercent}%` }}>
+          <Timer team={team} />
+          <Points team={team} />
+        </NView>
+      </NView>
     )
   }
 
   const BottomUI = () => {
     return (
-      <NoTouchDiv style={styles.mapBottomContainer}>
-        <NoTouchDiv style={styles.mapLeftContainer}>
-          <NoTouchDiv style={styles.flex1} />
-          <MapSOSButton onPress={handleSOS} />
-        </NoTouchDiv>
-        <NoTouchDiv style={styles.mapRightContainer}>
-          {/* <Debug /> */}
-          <MapGoToSchoolButton onPress={flyToCurrentLocation} />
-          <MapBottomButton icon={[MI, 'qr-code']} onPress={openQRScanner} />
-        </NoTouchDiv>
-      </NoTouchDiv>
+      <NView style={{ flexDirection: 'row' }}>
+        <NView style={{ flex: 1 }}>
+          <NView style={{ flex: 1 }} />
+          <Buttons.SOS onPress={() => setSOSVisible(!SOSVisible)} />
+        </NView>
+        <NView style={{ alignItems: 'flex-end' }}>
+          <Buttons.GoToSchool onPress={flyToNUS} />
+          <Buttons.QR onPress={openQRScanner} />
+        </NView>
+      </NView>
     )
   }
 
   return (
     <Overlap>
-      <NoTouchDiv style={styles.mapUIContainer}>
+      <SOS visible={SOSVisible} setState={setSOSVisible} />
+      <NView style={globalStyles.container.mapUI}>
         <TopUI />
+        <NView style={{ flex: 1 }} />
         <BottomUI />
-      </NoTouchDiv>
+      </NView>
     </Overlap>
   )
 }

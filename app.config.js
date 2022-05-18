@@ -1,3 +1,12 @@
+const versions = {
+  main: '3.0.6',
+  ios: '4',
+  android: 17,
+}
+
+const IOS_GOOGLE_MAP_API_KEY = 'AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk'
+const ANDROID_GOOGLE_MAP_API_KEY = 'AIzaSyAMokc0eF4l5_HGuMBGGgVOIKsw8BQCccU'
+
 const config = {
   expo: {
     name: 'SunNUS',
@@ -16,16 +25,18 @@ const config = {
     assetBundlePatterns: ['**/*'],
     ios: {
       config: {
-        googleMapsApiKey: process.env.IOS_GOOGLE_MAP_API_KEY,
+        // googleMapsApiKey: process.env.IOS_GOOGLE_MAP_API_KEY,
+        googleMapsApiKey: IOS_GOOGLE_MAP_API_KEY,
       },
-      buildNumber: '1',
+      buildNumber: versions.ios,
       supportsTablet: true,
       bundleIdentifier: 'com.nus.sunnus',
     },
     android: {
       config: {
         googleMaps: {
-          apiKey: process.env.ANDROID_GOOGLE_MAP_API_KEY,
+          // apiKey: process.env.ANDROID_GOOGLE_MAP_API_KEY,
+          apiKey: ANDROID_GOOGLE_MAP_API_KEY,
         },
       },
       adaptiveIcon: {
@@ -33,7 +44,7 @@ const config = {
         backgroundColor: '#FFFFFF',
       },
       package: 'com.nus.sunnus',
-      versionCode: 16,
+      versionCode: versions.android,
     },
     web: {
       favicon: './assets/favicon.png',

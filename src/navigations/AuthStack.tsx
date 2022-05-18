@@ -1,23 +1,25 @@
 import {
   HomeScreen,
-  SOARScreen,
   WSSScreen,
   DEVScreen,
-  QRScreen,
   GeneratorScreen,
 } from '@/screens/index'
-import { SOARProvider } from '@/contexts/SOARContext'
+import { SOARContext, SOARProvider } from '@/contexts/SOARContext'
 import { TimerProvider } from '@/contexts/TimerContext'
 import { UserProvider } from '@/contexts/UserContext'
-import { AuthenticatedPages, SOARPages } from '@/types/navigation'
+import { AuthenticatedPages } from '@/types/navigation'
 import TSSNavigator from '@/navigations/TSSNavigator'
+import SOARNavigator from '@/navigations/SOARNavigator'
 import { createStackNavigator } from '@react-navigation/stack'
 import { LastProvider } from '@/contexts/LastContext'
 import NotificationScreen from '@/screens/NotificationScreen'
 import { TransitionSpec } from '@react-navigation/stack/lib/typescript/src/types'
+import { useFocusEffect } from '@react-navigation/native'
+import { useCallback, useContext } from 'react'
+import { doc, onSnapshot } from 'firebase/firestore'
+import { db } from '@/sunnus/firebase'
 
 const MainStack = createStackNavigator<AuthenticatedPages>()
-const SOARStack = createStackNavigator<SOARPages>()
 
 const config: TransitionSpec = {
   animation: 'spring',
@@ -31,74 +33,84 @@ const config: TransitionSpec = {
   },
 }
 
-const Navigator = () => (
-  <MainStack.Navigator
-    initialRouteName="HomeScreen"
-    defaultScreenOptions={{
-      transitionSpec: {
-        open: config,
-        close: config,
-      },
-    }}
-  >
-    <MainStack.Screen
-      name="HomeScreen"
-      component={HomeScreen}
-      options={{ headerShown: false }}
-    />
-    <MainStack.Screen
-      name="NotificationScreen"
-      component={NotificationScreen}
-      options={{ headerShown: true }}
-    />
-    <MainStack.Screen
-      name="SOARNavigator"
-      component={SOARNavigator}
-      options={{ headerShown: false }}
-    />
-    <MainStack.Screen
-      name="TSSNavigator"
-      component={TSSNavigator}
-      options={{ headerShown: false }}
-    />
-    <MainStack.Screen
-      name="WSSScreen"
-      component={WSSScreen}
-      options={{ headerShown: false }}
-    />
-    <MainStack.Screen name="GeneratorScreen" component={GeneratorScreen} />
-    <MainStack.Screen name="DEVScreen" component={DEVScreen} />
-  </MainStack.Navigator>
-)
+const Navigator = () => {
+  const { safetyOfficerPhoneState } = useContext(SOARContext)
+  const setPhone = safetyOfficerPhoneState[1]
+  useFocusEffect(
+    useCallback(() => {
+      console.debug('focused on SOAR navigator')
+      const unsubscribeFirebase = onSnapshot(
+        doc(db, 'shared', 'main'),
+        (doc) => {
+          const data = doc.data()
+          if (data !== undefined) {
+            console.debug('firebase updated <main> at', new Date())
+            setPhone(data.safetyOfficer)
+          }
+        }
+      )
+      return () => {
+        console.debug('unfocused AuthStack')
+        /* detach firebase listener on unmount */
+        unsubscribeFirebase()
+        console.debug('detach firebase listener on AuthStack')
+      }
+    }, [])
+  )
 
-const SOARNavigator = () => (
-  <SOARStack.Navigator
-    initialRouteName="SOARScreen"
-    screenOptions={{ headerShown: false }}
-  >
-    <SOARStack.Screen
-      name="SOARScreen"
-      component={SOARScreen}
-      options={{ animationEnabled: false }}
-    />
-    <SOARStack.Screen
-      name="QRScreen"
-      component={QRScreen}
-      options={{ animationEnabled: false }}
-    />
-  </SOARStack.Navigator>
-)
+  return (
+    <MainStack.Navigator
+      initialRouteName="HomeScreen"
+      defaultScreenOptions={{
+        transitionSpec: {
+          open: config,
+          close: config,
+        },
+      }}
+    >
+      <MainStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <MainStack.Screen
+        name="NotificationScreen"
+        component={NotificationScreen}
+        options={{ headerShown: true }}
+      />
+      <MainStack.Screen
+        name="SOARNavigator"
+        component={SOARNavigator}
+        options={{ headerShown: false }}
+      />
+      <MainStack.Screen
+        name="TSSNavigator"
+        component={TSSNavigator}
+        options={{ headerShown: false }}
+      />
+      <MainStack.Screen
+        name="WSSScreen"
+        component={WSSScreen}
+        options={{ headerShown: false }}
+      />
+      <MainStack.Screen name="GeneratorScreen" component={GeneratorScreen} />
+      <MainStack.Screen name="DEVScreen" component={DEVScreen} />
+    </MainStack.Navigator>
+  )
+}
 
-const AuthStack = () => (
-  <UserProvider>
-    <SOARProvider>
-      <TimerProvider>
-        <LastProvider>
-          <Navigator />
-        </LastProvider>
-      </TimerProvider>
-    </SOARProvider>
-  </UserProvider>
-)
+const AuthStack = () => {
+  return (
+    <UserProvider>
+      <SOARProvider>
+        <TimerProvider>
+          <LastProvider>
+            <Navigator />
+          </LastProvider>
+        </TimerProvider>
+      </SOARProvider>
+    </UserProvider>
+  )
+}
 
 export default AuthStack

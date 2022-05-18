@@ -1,23 +1,64 @@
-import { Text, TouchableOpacity } from 'react-native'
-import { buttons as styles } from '@/styles/fresh'
-import { ButtonProps } from '@/types/index'
+import { Text, TouchableOpacity, View, ViewProps } from 'react-native'
+import { ButtonProps, OnPress } from '@/types/index'
+import { makeAccent } from '@/styles/utils'
+import { Color } from '@/types/colors'
+import { ReactElement } from 'react'
+import { globalStyles } from '@/styles/global'
 
-const Button = ({ onPress, children, style }: ButtonProps) => {
+export const Button = (props: ButtonProps & { color?: Color }) => {
+  const _color = props.color || 'blue'
+  const accent = makeAccent(_color)
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
-      <Text style={styles.buttonText}>{children}</Text>
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={[
+        globalStyles.button.pill.base,
+        { backgroundColor: accent.border, borderColor: accent.border },
+      ]}
+    >
+      <Text style={globalStyles.text.pillButton}>{props.children}</Text>
     </TouchableOpacity>
   )
 }
 
-const ButtonRed = (props: ButtonProps) => {
-  const { style, ...otherProps } = props
-  return <Button {...otherProps} style={[styles.redBg, style]} />
+export const AccentButton = (props: ButtonProps & { color?: Color }) => {
+  const _color = props.color || 'blue'
+  const accent = makeAccent(_color)
+  return (
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={[
+        globalStyles.button.pill.base,
+        { backgroundColor: accent.bg, borderColor: accent.border },
+      ]}
+    >
+      <Text style={[globalStyles.text.pillButton, { color: accent.fg }]}>
+        {props.children}
+      </Text>
+    </TouchableOpacity>
+  )
 }
 
-const ButtonGreen = (props: ButtonProps) => {
-  const { style, ...otherProps } = props
-  return <Button {...otherProps} style={[styles.greenBg, style]} />
-}
+type SvgProps = (props: { fill: string }) => ReactElement
 
-export { Button, ButtonRed, ButtonGreen }
+export const Series = (
+  props: ViewProps & { color: Color; onPress: OnPress; svg: SvgProps }
+) => {
+  const accent = makeAccent(props.color)
+  return (
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={[
+        globalStyles.button.series.base,
+        {
+          backgroundColor: accent.bg,
+          borderColor: accent.border,
+        },
+      ]}
+    >
+      <View style={globalStyles.container.series}>
+        <props.svg fill={accent.fg} />
+      </View>
+    </TouchableOpacity>
+  )
+}

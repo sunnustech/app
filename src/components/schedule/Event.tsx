@@ -5,7 +5,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native'
-import { schedule as styles } from '@/styles/fresh'
+import styles from '@/styles/schedule'
 import { EventProps } from '@/types/schedule'
 import { Feather } from '@expo/vector-icons'
 import {
@@ -14,12 +14,9 @@ import {
 } from '@/lib/utils'
 import { ReactNode } from 'react'
 import colors from '@/styles/colors'
+import { HSpacer } from '@/components/utils'
 
 const prettify = (s: string) => CFL(RU(s))
-
-const HSpacer = (props: { width: number }) => (
-  <View style={{ width: props.width }} />
-)
 
 const Segment = (props: { children: ReactNode }) => (
   <View style={styles.segment} children={props.children} />
@@ -37,9 +34,9 @@ const Event = (props: EventProps) => {
   const SportTime = () => (
     <Segment>
       <Text style={styles.sport}>{CFL(props.sport)}</Text>
-      <HSpacer width={10} />
+      <HSpacer w={10} />
       <Text style={styles.completedTime}>{props.start}</Text>
-      <HSpacer width={10} />
+      <HSpacer w={10} />
       <Feather
         name="check"
         size={18}
@@ -52,7 +49,7 @@ const Event = (props: EventProps) => {
   const VenueCourt = () => (
     <Segment>
       <Text style={styles.venue}>{props.venue}</Text>
-      <HSpacer width={8} />
+      <HSpacer w={8} />
       <Text style={styles.court}>{props.court}</Text>
     </Segment>
   )

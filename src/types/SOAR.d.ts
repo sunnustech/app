@@ -1,16 +1,22 @@
 import { AuthenticatedPages, SOARPage } from '@/types/navigation'
-import { TimeApiProps } from '@/types/index'
+import { OnPress, TimeApiProps } from '@/types/index'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import MapView from 'react-native-maps'
-import { MutableRefObject, RefObject } from 'react'
+import React, { MutableRefObject, RefObject } from 'react'
 import { QR } from '@/classes/QR'
+import { Team } from '@/classes/Team'
+import { Location, LocationList } from '@/classes/location'
+import { ViewStyle } from 'react-native'
 
 export type SOARTimetable = Array<{
   time: string
   teamName: string
 }>
 
-type SOARLocationStatus = '' | 'next' | 'done'
+type SOARLocationStatus = 'hidden' | 'next' | 'done'
+
+type LocationStatus = SOARLocationStatus
+type LocationType = PointType | ''
 
 type Coordinate = {
   latitude: number
@@ -117,11 +123,14 @@ export type UseState<Type> = [Type, Dispatch<SetStateAction<Type>>]
 
 export type SOARContextProps = {
   loadingState: UseState<boolean>
-  scanningState: UseState<boolean>
   locationState: UseState<Array<SOARLocation>>
   stationOrderState: UseState<StationOrderProps>
-  filteredState: UseState<SOARFilterProps>
+  displayLocationState: UseState<SOARLocation[]>
   QRState: UseState<QR>
+  gameStationsState: UseState<Location[]>
+  gameStations: LocationList
+  teamState: UseState<Team>
+  safetyOfficerPhoneState: UseState<string>
 }
 
 export type SOARTimestamp = {
@@ -142,11 +151,20 @@ export type SOARTeamProps = {
 
 /* Map and SOAR */
 
-export type MapButtonProps = {
-  style?: any
-  icon: any
-  onPress: any
-  activated?: any
+type MapButtonContents =
+  | {
+      type: 'child'
+      children: any
+    }
+  | {
+      type: 'icon'
+      icon: any
+    }
+
+export type MapButtonProps = MapButtonContents & {
+  size?: number
+  style?: ViewStyle
+  onPress: OnPress
 }
 
 /* some constants */
@@ -158,30 +176,24 @@ type NavTarget = keyof AuthenticatedPages
 
 export type MapProps = {
   mapRef: MutableRefObject<MapView | null>
-  navigation: SOARNavigator
-  displayLocations: Array<SOARLocation>
-  startStatus: boolean
 }
 
 export type MapPointProps = {
-  navigation: SOARNavigator
+  location: Location
   coordinate: Coordinate
-  navTarget: NavTarget
   content: string
-  pointType: PointType
-  status: StationStatus
+  pointType: LocationType
+  status: LocationStatus
 }
 
 export type MapPointPopupProps = {
-  navigation: SOARNavigator
-  navTarget: NavTarget
   content: string
-  status: StationStatus
+  status: LocationStatus
 }
 
 export type MapPointIconProps = {
-  status: StationStatus
-  pointType: PointType
+  status: LocationStatus
+  pointType: LocationType
 }
 
 export type SOARStations = [
