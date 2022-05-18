@@ -9,15 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: send telegram message on push
+      - name: Notify on telegram
         uses: appleboy/telegram-action@master
         with:
           to: ${{ env.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
-            
-            Repository: ${{ github.repository }}
-            
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            Build workflow complete (android)
+            Status: ${{ github.action_status }}
+            Url: https://expo.dev/accounts/brew4k/projects/SunNUS/builds
