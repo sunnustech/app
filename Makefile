@@ -5,6 +5,12 @@ all:
 	yarn
 	make check
 
+publish:
+	expo publish
+
+p:
+	@make publish
+
 check:
 	yarn list | rg "react@17"
 	yarn list | rg "react@18"
@@ -12,18 +18,23 @@ check:
 clean:
 	rm -rf node_modules
 
-ios:
+get-turtler:
 	cp $$HOME/dots/personal/.secrets/sunnus/build turtler
+
+cp:
+	@make get-turtler
+
+ios:
+	@make get-turtler
 	./turtler ios
 	rm turtler
 
 i:
-	expo publish
 	@make ios
 
 android:
-	cp $$HOME/dots/personal/.secrets/sunnus/build:android turtler
-	./turtler
+	@make get-turtler
+	./turtler android
 	rm turtler
 
 a:
