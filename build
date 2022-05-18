@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cleanup () {
+  rm turtler
+}
+trap cleanup EXIT
+
+if [[ $1 == "i" || $1 == "ios" ]]; then
+  cp $HOME/dots/personal/.secrets/sunnus/build:ios turtler
+  ./turtler && return 0
+fi
+
+if [[ $1 == "a" || $1 == "android" ]]; then
+  cp $HOME/dots/personal/.secrets/sunnus/build:android turtler
+  ./turtler && return 0
+fi

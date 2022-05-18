@@ -18,6 +18,3 @@ secrets.json
 firebase-debug.log
 
 .env.local
-
-turtle-build
-build

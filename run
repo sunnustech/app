@@ -1,8 +1,0 @@
-#!/bin/bash
-
-cleanup () {
-  rm turtle-build
-}
-trap cleanup EXIT
-cp $HOME/dots/personal/.secrets/sunnus/turtle-build turtle-build
-./turtle-build
