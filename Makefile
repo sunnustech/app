@@ -25,13 +25,20 @@ cp:
 	@make get-turtler
 
 ios:
-	@make publish
 	@make get-turtler
 	./turtler ios
 	rm turtler
 
+ios-dep:
+	@make get-turtler
+	./turtler ios-dep
+	rm turtler
+
 i:
 	@make ios
+
+i-dep:
+	@make ios-dep
 
 android:
 	@make get-turtler
