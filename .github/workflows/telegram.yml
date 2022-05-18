@@ -16,5 +16,5 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Build workflow complete (android)
-            Status: ${{ github.action_status }}
+            Status: ${{ job.status }}
             Url: https://expo.dev/accounts/brew4k/projects/SunNUS/builds
