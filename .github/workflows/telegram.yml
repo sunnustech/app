@@ -18,4 +18,4 @@ jobs:
           message: |
             Build workflow complete (android)
             Status: ${{ job.status }}
-            [Expo Console](https://expo.dev/accounts/brew4k/projects/SunNUS/builds)
+            https://expo.dev/accounts/brew4k/projects/SunNUS/builds
