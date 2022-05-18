@@ -1,7 +1,7 @@
 const versions = {
   main: '3.0.6',
   ios: '4',
-  android: 17,
+  android: 17, 
 }
 
 const IOS_GOOGLE_MAP_API_KEY = 'AIzaSyAeW2OZIBAcgMncxw7BcZOuf2EUnL9xxxk'
