@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master
+      - build:android
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,4 +29,4 @@ jobs:
         uses: darcien/cancel-expo-eas-builds-action@v1
 
       - name: 🚀 Build app
-        run: eas build --platform ios --non-interactive
+        run: eas build --platform android --non-interactive
