@@ -59,3 +59,5 @@ const yes = {
     },
   ],
 }
+
+const api = 'https://api.telegram.org/bot5283818611:AAG62UULojDVFfbx0i1dX4Pz00xizJdqf4k/sendMessage?chat_id=257481278&text=Test%20message'
