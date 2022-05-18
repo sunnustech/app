@@ -1,9 +1,12 @@
 on:
   push:
     branches:
-      - master
+      - build/android
+env:
+  TELEGRAM_TO: 257481278
+
 jobs:
-  build:
+  build-android:
     runs-on: ubuntu-latest
     steps:
       - name: Setup repo
@@ -29,4 +32,14 @@ jobs:
         uses: darcien/cancel-expo-eas-builds-action@v1
 
       - name: 🚀 Build app
-        run: eas build --platform ios --non-interactive
+        run: eas build --platform android --non-interactive
+
+      - name: Notify on telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ env.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Build workflow complete (android)
+            Status: ${{ github.action_status }}
+            Url: https://expo.dev/accounts/brew4k/projects/SunNUS/builds
