@@ -19,6 +19,7 @@
     "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./"
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.17.12",
     "@react-native-community/geolocation": "^2.1.0",
     "@react-native-picker/picker": "2.2.1",
     "@react-navigation/bottom-tabs": "^6.3.1",
