@@ -6,9 +6,7 @@ env:
   TELEGRAM_TO: 257481278
 
 jobs:
-  build-android:
-    runs-on: ubuntu-latest
-    steps:
+  build-android: runs-on: ubuntu-latest steps:
       - name: Setup repo
         uses: actions/checkout@v2
 
@@ -39,7 +37,8 @@ jobs:
         with:
           to: ${{ env.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
           message: |
-            Build workflow complete (android)
-            Status: ${{ github.action_status }}
-            Url: https://expo.dev/accounts/brew4k/projects/SunNUS/builds
+            📦 build complete (android)
+            Status: ${{ job.status }}
+            https://expo.dev/accounts/brew4k/projects/SunNUS/builds
