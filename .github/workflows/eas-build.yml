@@ -3,7 +3,7 @@ on:
     branches:
       - build/android
 jobs:
-  build:
+  build-android:
     runs-on: ubuntu-latest
     steps:
       - name: Setup repo
