@@ -1,29 +1,13 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { auth, db } from '@/sunnus/firebase'
-import { pullDoc } from '@/data/pull'
-import { TeamProps } from '@/types/participants'
 import { notificationInit } from '@/lib/notifications'
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
-import { newSunNUSTeam } from '@/data/constants'
+import { doc, updateDoc } from 'firebase/firestore'
 import { UseState } from '../types/SOAR'
 import { User } from '../classes/user'
 
 type UserContextProps = {
   userState: UseState<User>
 }
-
-const teamDataInit = newSunNUSTeam({
-  members: [],
-  registeredEvents: {},
-  direction: 'A',
-  teamName: '',
-})
 
 const UserContext = createContext<UserContextProps>({
   userState: [User.empty, () => {}],
