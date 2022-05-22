@@ -11,6 +11,8 @@ import { TeamProps } from '@/types/participants'
 import { notificationInit } from '@/lib/notifications'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
 import { newSunNUSTeam } from '@/data/constants'
+import { UseState } from '../types/SOAR'
+import { User } from '../classes/user'
 
 type UserContextProps = {
   userId: string
@@ -21,6 +23,7 @@ type UserContextProps = {
   setSchedule: Dispatch<SetStateAction<object>>
   teamData: TeamProps
   setTeamData: Dispatch<SetStateAction<TeamProps>>
+  userState: UseState<User>
 }
 
 const teamDataInit = newSunNUSTeam({
@@ -39,6 +42,7 @@ const UserContext = createContext<UserContextProps>({
   setSchedule: () => {},
   teamData: teamDataInit,
   setTeamData: () => {},
+  userState: [User.empty, () => {}],
 })
 
 const rehydrateUserData = async ({
@@ -88,6 +92,7 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [teamName, setTeamName] = useState('')
   const [schedule, setSchedule] = useState({})
   const [teamData, setTeamData] = useState<TeamProps>(teamDataInit)
+  const userState = useState(User.empty)
 
   const token = notificationInit().expoPushToken
 
@@ -96,14 +101,6 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
       handlePushTokens(token)
     }
   }, [token])
-
-  /*
-   * This is needed because expo only remembers firebase credentials,
-   * so we need to rehydrate the user's SunNUS-specific data
-   */
-  if (userId === '' && auth != null) {
-    rehydrateUserData({ setTeamName, setUserId, setSchedule, setTeamData })
-  }
 
   return (
     <UserContext.Provider
@@ -116,6 +113,7 @@ const UserProvider = (props: React.PropsWithChildren<{}>) => {
         setSchedule,
         teamData,
         setTeamData,
+        userState,
       }}
       {...props}
     />
