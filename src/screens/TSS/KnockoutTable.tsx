@@ -2,6 +2,7 @@ import { SafeAreaView, Text, View, TouchableOpacity } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import Picker from 'react-native-picker-select'
 import { Ionicons } from '@expo/vector-icons'
+import colors from '@/styles/colors'
 
 /* navigation */
 // import { TSSPage } from '@/types/navigation'
@@ -69,11 +70,11 @@ const KnockoutTable = ({
    */
 
   const AllRounds = () => (
-    <>
+    <View style={{ width: '100%' }}>
       {reversedRoundList.map((round, idx) => {
         return <PagerRound matches={roundData[round]} key={idx} />
       })}
-    </>
+    </View>
   )
 
   /* to sync up value of sport/tempSport with match handler page */
@@ -84,7 +85,7 @@ const KnockoutTable = ({
   return (
     <SafeAreaView style={globalStyles.container.base}>
       <BackButton navigation={navigation} text="TSS Knockout Table" />
-      <View style={styles.container}>
+      <View style={globalStyles.container.body}>
         <RNPickerSelect
           ref={pickerRef}
           placeholder={{}}
