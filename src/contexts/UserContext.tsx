@@ -14,13 +14,11 @@ const UserContext = createContext<UserContextProps>({
 })
 
 async function handlePushTokens(token: string) {
-  if (auth.currentUser === null) {
-    return
-  }
+  if (auth.currentUser === null) return
   updateDoc(doc(db, 'users', auth.currentUser.uid), {
     expoPushToken: token,
-  }).then(() => {
-    console.debug('successfully pushed Expo token to firebase')
+  }).catch(() => {
+    console.debug('failed to pushed Expo token to firebase')
   })
 }
 
