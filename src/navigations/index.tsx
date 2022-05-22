@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 /* firebase */
 import { onAuthStateChanged } from 'firebase/auth'
@@ -13,6 +13,7 @@ import { auth } from '@/sunnus/firebase'
 import { LoginScreen } from '@/screens/index'
 import AuthStack from '@/navigations/AuthStack'
 import { UnauthenticatedPages } from '@/types/navigation'
+import { UserContext } from '@/contexts/UserContext'
 
 const S = createNativeStackNavigator<UnauthenticatedPages>()
 
@@ -25,6 +26,8 @@ const S = createNativeStackNavigator<UnauthenticatedPages>()
 const SunNUS = () => {
   /* initialize user's state */
   const [loggedIn, setLoggedIn] = useState(true)
+  const { userState } = useContext(UserContext)
+  const setUser = userState[1]
   onAuthStateChanged(auth, (user) => {
     setLoggedIn(Boolean(user))
   })
