@@ -153,8 +153,9 @@ const TSSScreen = ({
       firebaseHandleMatch(request)
       // TODO: add successful response notice
     }
-    const firebaseHandleMatch = httpsCallable(functions, 'updateSchedule')
+    const firebaseHandleMatch = httpsCallable(functions, 'development-updateSchedule')
     firebaseHandleMatch({
+      id: matchNumber,
       sport,
       matchNumber,
       round: 'round_robin',
@@ -183,7 +184,7 @@ const TSSScreen = ({
       items.matchNumber[1](getPickerItems(matchNumbers[round]))
     } else {
       items.matchNumber[1](
-        getPickerItems(schedule.map((x) => `${x.venue}`).sort())
+        getPickerItems(schedule.map((x) => `${x.id}`).sort())
       )
       console.log(matchNumber)
     }
@@ -197,11 +198,11 @@ const TSSScreen = ({
   const teamNameA =
     round !== 'round_robin'
       ? replaceUnderscoresWithSpaces(roundData[round][matchNumber].A)
-      : schedule.find((x) => x.venue === matchNumber)?.A || 'not found'
+      : schedule.find((x) => x.id === matchNumber)?.A || 'not found'
   const teamNameB =
     round !== 'round_robin'
       ? replaceUnderscoresWithSpaces(roundData[round][matchNumber].B)
-      : schedule.find((x) => x.venue === matchNumber)?.B || 'not found'
+      : schedule.find((x) => x.id === matchNumber)?.B || 'not found'
 
   /* to sync up value of sport/tempSport with match handler page */
   useEffect(() => {
