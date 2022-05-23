@@ -85,6 +85,7 @@ const TSSNavigator = () => {
         const schedule: Event[] = []
         snapshot.forEach((doc) => {
           const event = getEvent(doc.data())
+          event.venue = doc.id
           schedule.push(event)
         })
         setSchedule(schedule)
