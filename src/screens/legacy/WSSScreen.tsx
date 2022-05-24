@@ -1,3 +1,5 @@
+// retired scren, used to be event page for WSS
+
 import { SafeAreaView, Text, View } from 'react-native'
 import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'

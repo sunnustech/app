@@ -6,10 +6,14 @@ export type Sport =
   | 'volleyball'
   | 'captainsBall'
 
+/*
+* different from the normal round, this is the updated one
+* only for schedule, made to cater to picker for admins to input score
+*/
 export type Round = 'round_robin' | 'quarterfinals' | 'semifinals' | 'finals'
 
 export type Event = {
-  id: string
+  id?: string
   group: string
   start: string
   end: string
