@@ -195,13 +195,14 @@ const TSSScreen = ({
   const scoreRefA = useRef<TextInput>(null)
   const scoreRefB = useRef<TextInput>(null)
 
+  const _matchNumber = typeof matchNumber === 'string' ? 0 : matchNumber
   const teamNameA =
     round !== 'round_robin'
-      ? replaceUnderscoresWithSpaces(roundData[round][matchNumber].A)
+      ? replaceUnderscoresWithSpaces(roundData[round][_matchNumber].A)
       : schedule.find((x) => x.id === matchNumber)?.A || 'not found'
   const teamNameB =
     round !== 'round_robin'
-      ? replaceUnderscoresWithSpaces(roundData[round][matchNumber].B)
+      ? replaceUnderscoresWithSpaces(roundData[round][_matchNumber].B)
       : schedule.find((x) => x.id === matchNumber)?.B || 'not found'
 
   /* to sync up value of sport/tempSport with match handler page */
