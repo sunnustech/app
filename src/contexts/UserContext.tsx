@@ -9,8 +9,12 @@ import { auth, db } from '@/sunnus/firebase'
 import { pullDoc } from '@/data/pull'
 import { TeamProps } from '@/types/participants'
 import { notificationInit } from '@/lib/notifications'
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { newSunNUSTeam } from '@/data/constants'
+
+/*
+ * Pulls all users and team related data from the Firestore
+ */
 
 type UserContextProps = {
   userId: string
@@ -30,6 +34,7 @@ const teamDataInit = newSunNUSTeam({
   teamName: '',
 })
 
+// Initializes the context with default values
 const UserContext = createContext<UserContextProps>({
   userId: '',
   setUserId: () => '',
@@ -41,10 +46,17 @@ const UserContext = createContext<UserContextProps>({
   setTeamData: () => {},
 })
 
+/**
+ * Updates userid and teamname for each user upon login
+ *
+ * @param {any} obj Object containg useState setters
+ * @param {React.Dispatch<React.SetStateAction<string>>} obj.setTeamName Setter for teamname
+ * @param {React.Dispatch<React.SetStateAction<string>>} obj.setUserId Setter for userid
+ * @param {React.Dispatch<React.SetStateAction<TeamProps>>} obj.setTeamData Setter for team data
+ */
 const rehydrateUserData = async ({
   setTeamName,
   setUserId,
-  setSchedule,
   setTeamData,
 }: any) => {
   if (auth.currentUser) {
@@ -72,6 +84,11 @@ const rehydrateUserData = async ({
   }
 }
 
+/**
+ * Writes to firebase that user is authenticated
+ * 
+ * @param {string} token represents user's device
+ */
 async function handlePushTokens(token: string) {
   if (auth.currentUser === null) {
     return
@@ -83,6 +100,7 @@ async function handlePushTokens(token: string) {
   })
 }
 
+// Creates a context provider with the following default values
 const UserProvider = (props: React.PropsWithChildren<{}>) => {
   const [userId, setUserId] = useState('')
   const [teamName, setTeamName] = useState('')

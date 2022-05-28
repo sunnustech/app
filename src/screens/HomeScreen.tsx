@@ -25,6 +25,11 @@ const HomeScreen = () => {
   const showSettingsState = useState(false)
   const setShowSettings = showSettingsState[1]
 
+  /**
+   * Handles user logout
+   *
+   * @param {Auth} auth authentication object verified with firebase
+   */
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
       .then(() => {

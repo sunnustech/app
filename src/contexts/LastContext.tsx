@@ -3,6 +3,10 @@ import { Rounds, Sport } from '@/types/TSS'
 import { emptyRounds } from '@/data/constants'
 import { Event } from '@/types/schedule'
 
+/*
+ * Pulls all tss related data from the Firestore
+ */
+
 type LastContextProps = {
   roundData: Rounds
   setRoundData: Dispatch<SetStateAction<Rounds>>
@@ -12,6 +16,7 @@ type LastContextProps = {
   setSchedule: Dispatch<SetStateAction<Event[]>>
 }
 
+// Initializes the context with default values
 const LastContext = createContext<LastContextProps>({
   roundData: emptyRounds,
   setRoundData: () => {},
@@ -21,6 +26,7 @@ const LastContext = createContext<LastContextProps>({
   setSchedule: () => [],
 })
 
+// Creates a context provider with the following default values
 const LastProvider = (props: React.PropsWithChildren<{}>) => {
   const [roundData, setRoundData] = useState(emptyRounds)
   const [sport, setSport] = useState<Sport>('volleyball')
