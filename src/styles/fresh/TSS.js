@@ -112,6 +112,8 @@ export default StyleSheet.create({
     color: colors.gray[600],
   },
   numberInput: {
+    overflow: "hidden",
+    padding: 10,
     textAlign: 'center',
     fontSize: 36,
     fontWeight: '600',

@@ -232,6 +232,7 @@ const TSSScreen = ({
               style={styles.numberInput}
               keyboardType="number-pad"
               returnKeyType="done"
+              numberOfLines={1}
             />
           </View>
           <View style={styles.numberInputSpacer} />
