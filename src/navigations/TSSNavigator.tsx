@@ -1,8 +1,13 @@
 import TSSScreen from '@/screens/TSS'
 import TSSKnockoutTable from '@/screens/TSS/KnockoutTable'
 import TSSSchedule from '@/screens/TSS/ScheduleScreen'
+import { Entypo } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import {
+  useFocusEffect,
+  useNavigation,
+  RouteProp,
+} from '@react-navigation/native'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import {
   onSnapshot,
@@ -17,6 +22,7 @@ import { db } from '@/sunnus/firebase'
 import { LastContext } from '@/contexts/LastContext'
 import { AuthPage, TSSPages } from '@/types/navigation'
 import { Event } from '@/types/schedule'
+import colors from '@/styles/colors'
 
 const TSSTabs = createBottomTabNavigator<TSSPages>()
 
@@ -69,7 +75,10 @@ const TSSNavigator = () => {
         (doc) => {
           const liveData = doc.data()
           if (liveData) {
-            console.debug(`received firebase updates for ${sport} at`, new Date())
+            console.debug(
+              `received firebase updates for ${sport} at`,
+              new Date()
+            )
             const updatedData = getRounds(liveData)
             setRoundData(updatedData)
           }
@@ -115,24 +124,46 @@ const TSSNavigator = () => {
     <TSSKnockoutTable navigation={navigation} />
   )
 
+  function getIcon(route: RouteProp<TSSPages>): keyof typeof Entypo.glyphMap {
+    if (route.name === 'TSSScreen') {
+      return 'cog'
+    }
+    if (route.name === 'TSSKnockoutTable') {
+      return 'flow-tree'
+    }
+    if (route.name === 'TSSScheduleScreen') {
+      return 'list' // calendar
+    }
+    return 'cog'
+  }
+
   // change the initial route name for deployment
   // use whichever is most convenient when debugging
   return (
-    <TSSTabs.Navigator initialRouteName="TSSScheduleScreen">
+    <TSSTabs.Navigator
+      initialRouteName="TSSScheduleScreen"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => (
+          <Entypo name={getIcon(route)} size={size} color={color} />
+        ),
+        tabBarActiveTintColor: colors.emerald[500],
+        tabBarInactiveTintColor: 'gray',
+      })}
+    >
       <TSSTabs.Screen
-        name="TSSScreen"
-        component={TSSScreenWrapper}
-        options={{ headerShown: false }}
+        name="TSSScheduleScreen"
+        component={TSSSchedule}
+        options={{ headerShown: false, title: 'Schedule' }}
       />
       <TSSTabs.Screen
         name="TSSKnockoutTable"
         component={TSSKnockoutTableWrapper}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, title: 'Knockout Table' }}
       />
       <TSSTabs.Screen
-        name="TSSScheduleScreen"
-        component={TSSSchedule}
-        options={{ headerShown: false }}
+        name="TSSScreen"
+        component={TSSScreenWrapper}
+        options={{ headerShown: false, title: 'Match Updater' }}
       />
     </TSSTabs.Navigator>
   )
