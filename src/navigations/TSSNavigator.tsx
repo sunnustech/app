@@ -23,6 +23,7 @@ import { LastContext } from '@/contexts/LastContext'
 import { AuthPage, TSSPages } from '@/types/navigation'
 import { Event } from '@/types/schedule'
 import colors from '@/styles/colors'
+import { UserContext } from '@/contexts/UserContext'
 
 const TSSTabs = createBottomTabNavigator<TSSPages>()
 
@@ -59,6 +60,8 @@ const getEvent = (data: DocumentData): Event => {
 
 const TSSNavigator = () => {
   const navigation = useNavigation<AuthPage<'TSSNavigator'>>()
+  const { userState } = useContext(UserContext)
+  const user = userState[0]
   // TSS page active state
   // (de-activates when navigating out)
   const [TSSNavActive, setTSSNavActive] = useState<boolean>(false)
@@ -160,11 +163,14 @@ const TSSNavigator = () => {
         component={TSSKnockoutTableWrapper}
         options={{ headerShown: false, title: 'Knockout Table' }}
       />
-      <TSSTabs.Screen
-        name="TSSScreen"
-        component={TSSScreenWrapper}
-        options={{ headerShown: false, title: 'Match Updater' }}
-      />
+      {(user.role === 'tss-admin' ||
+        user.role === 'admin') && (
+          <TSSTabs.Screen
+            name="TSSScreen"
+            component={TSSScreenWrapper}
+            options={{ headerShown: false, title: 'Match Updater' }}
+          />
+        )}
     </TSSTabs.Navigator>
   )
 }

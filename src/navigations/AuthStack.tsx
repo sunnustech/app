@@ -6,7 +6,7 @@ import {
 } from '@/screens/index'
 import { SOARContext, SOARProvider } from '@/contexts/SOARContext'
 import { TimerProvider } from '@/contexts/TimerContext'
-import { UserProvider } from '@/contexts/UserContext'
+import { UserContext, UserProvider } from '@/contexts/UserContext'
 import { AuthenticatedPages } from '@/types/navigation'
 import TSSNavigator from '@/navigations/TSSNavigator'
 import SOARNavigator from '@/navigations/SOARNavigator'
@@ -17,7 +17,7 @@ import { TransitionSpec } from '@react-navigation/stack/lib/typescript/src/types
 import { useFocusEffect } from '@react-navigation/native'
 import { useCallback, useContext } from 'react'
 import { doc, onSnapshot } from 'firebase/firestore'
-import { db } from '@/sunnus/firebase'
+import { auth, db } from '@/sunnus/firebase'
 
 const MainStack = createStackNavigator<AuthenticatedPages>()
 
@@ -35,6 +35,8 @@ const config: TransitionSpec = {
 
 const Navigator = () => {
   const { safetyOfficerPhoneState } = useContext(SOARContext)
+  const { userState } = useContext(UserContext)
+  const [user, setUser] = userState
   const setPhone = safetyOfficerPhoneState[1]
   useFocusEffect(
     useCallback(() => {
@@ -49,10 +51,21 @@ const Navigator = () => {
           }
         }
       )
+      const unsubscribeUser = onSnapshot(
+        doc(db, 'users', auth.currentUser?.uid || ''),
+        (doc) => {
+          const data = doc.data()
+          if (data !== undefined) {
+            console.debug('firebase updated <user> at', new Date())
+            setUser(data)
+          }
+        }
+      )
       return () => {
         console.debug('unfocused AuthStack')
         /* detach firebase listener on unmount */
         unsubscribeFirebase()
+        unsubscribeUser()
         console.debug('detach firebase listener on AuthStack')
       }
     }, [])
@@ -93,7 +106,9 @@ const Navigator = () => {
         component={WSSScreen}
         options={{ headerShown: false }}
       />
-      <MainStack.Screen name="GeneratorScreen" component={GeneratorScreen} />
+      {(user.role === 'soar-admin' || user.role === 'admin') && (
+        <MainStack.Screen name="GeneratorScreen" component={GeneratorScreen} />
+      )}
       <MainStack.Screen name="DEVScreen" component={DEVScreen} />
     </MainStack.Navigator>
   )

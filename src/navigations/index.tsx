@@ -14,6 +14,9 @@ import { LoginScreen } from '@/screens/index'
 import AuthStack from '@/navigations/AuthStack'
 import { UnauthenticatedPages } from '@/types/navigation'
 import { UserContext } from '@/contexts/UserContext'
+import { db } from '@/sunnus/firebase'
+import { doc, getDoc } from 'firebase/firestore'
+import { converter } from '@/classes/firebase'
 
 const S = createNativeStackNavigator<UnauthenticatedPages>()
 
@@ -29,7 +32,16 @@ const SunNUS = () => {
   const { userState } = useContext(UserContext)
   const setUser = userState[1]
   onAuthStateChanged(auth, (user) => {
-    setLoggedIn(Boolean(user))
+    const bool = Boolean(user)
+    setLoggedIn(bool)
+    if (user) {
+      getDoc(doc(db, 'users', user.uid).withConverter(converter.user)).then(
+        (res) => {
+          console.log(res.data())
+          setUser(res.data())
+        }
+      )
+    }
   })
   return (
     <S.Navigator initialRouteName="Authenticated">

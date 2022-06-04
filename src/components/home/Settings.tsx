@@ -6,6 +6,8 @@ import { auth } from '@/sunnus/firebase'
 import { Auth } from 'firebase/auth'
 import { AccentButton, Button } from '@/components/Buttons'
 import { globalStyles } from '@/styles/global'
+import { useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext'
 
 const Settings = ({
   showSettingsState,
@@ -17,6 +19,8 @@ const Settings = ({
   logoutHandler: (auth: Auth) => void
 }) => {
   const [showSettings, setShowSettings] = showSettingsState
+  const { userState } = useContext(UserContext)
+  const user = userState[0]
   function go(target: keyof AuthenticatedPages) {
     navigation.navigate(target)
     setShowSettings(false)
@@ -28,17 +32,20 @@ const Settings = ({
       onDismiss={() => setShowSettings(false)}
     >
       <View style={globalStyles.container.modal}>
-        <AccentButton
-          color="pink"
-          onPress={() => go('GeneratorScreen')}
-          children="Generate QR"
-        />
-        <AccentButton
-          color="purple"
-          onPress={() => go('DEVScreen')}
-          children="Development"
-        />
-        <View style={{ height: 24 }} />
+        {(user.role === 'soar-admin' || user.role === 'admin') && (
+          <AccentButton
+            color="pink"
+            onPress={() => go('GeneratorScreen')}
+            children="Generate QR"
+          />
+        )}
+        {user.role === 'admin' && (
+          <AccentButton
+            color="purple"
+            onPress={() => go('DEVScreen')}
+            children="Development"
+          />
+        )}
         <Button
           color="red"
           onPress={() => logoutHandler(auth)}
