@@ -1,6 +1,6 @@
 const versions = {
   main: '3.0.6',
-  ios: '4',
+  ios: '5',
   android: 17, 
 }
 
