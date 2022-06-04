@@ -24,6 +24,7 @@ import { AuthPage, TSSPages } from '@/types/navigation'
 import { Event } from '@/types/schedule'
 import colors from '@/styles/colors'
 import { UserContext } from '@/contexts/UserContext'
+import { SOARContext } from '../contexts/SOARContext'
 
 const TSSTabs = createBottomTabNavigator<TSSPages>()
 
@@ -90,7 +91,7 @@ const TSSNavigator = () => {
       // TODO: un-hardcode this section with user's registered sport
       const myScheduleQuery = query(
         collection(db, 'schedule'),
-        where('sport', '==', 'volleyball')
+        where('sport', '==', sport)
       )
       const unsubscribeSchedule = onSnapshot(myScheduleQuery, (snapshot) => {
         console.debug(`received firebase updates for schedule at`, new Date())
@@ -163,14 +164,13 @@ const TSSNavigator = () => {
         component={TSSKnockoutTableWrapper}
         options={{ headerShown: false, title: 'Knockout Table' }}
       />
-      {(user.role === 'tss-admin' ||
-        user.role === 'admin') && (
-          <TSSTabs.Screen
-            name="TSSScreen"
-            component={TSSScreenWrapper}
-            options={{ headerShown: false, title: 'Match Updater' }}
-          />
-        )}
+      {(user.role === 'tss-admin' || user.role === 'admin') && (
+        <TSSTabs.Screen
+          name="TSSScreen"
+          component={TSSScreenWrapper}
+          options={{ headerShown: false, title: 'Match Updater' }}
+        />
+      )}
     </TSSTabs.Navigator>
   )
 }

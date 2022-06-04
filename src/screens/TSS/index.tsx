@@ -28,7 +28,7 @@ import {
   useState,
 } from 'react'
 import { auth, functions } from '@/sunnus/firebase'
-import { matchNumbers, sportList, roundList } from '@/data/constants'
+import { matchNumbers, sportList, } from '@/data/constants'
 import Picker, { Item } from 'react-native-picker-select'
 import { replaceUnderscoresWithSpaces } from '@/lib/utils'
 import { getPickerItems } from '@/lib/picker'

@@ -1,6 +1,14 @@
 import { UseState } from '@/types/SOAR'
 
-export type Sport = 'dodgeball' | 'frisbee' | 'volleyball' | 'tchoukball' | "tchoukball" | "touchRugby"
+export type Sport =
+  | 'dodgeball'
+  | 'frisbee'
+  | 'volleyball'
+  | 'tchoukball'
+  | 'tchoukball'
+  | 'touchRugby'
+  | 'none'
+  | 'more than 1'
 
 export type Winner = 'A' | 'B' | 'U'
 

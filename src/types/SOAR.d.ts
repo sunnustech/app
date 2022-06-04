@@ -7,6 +7,7 @@ import { QR } from '@/classes/QR'
 import { Team } from '@/classes/Team'
 import { Location, LocationList } from '@/classes/location'
 import { ViewStyle } from 'react-native'
+import { Sport } from './TSS'
 
 export type SOARTimetable = Array<{
   time: string
@@ -131,6 +132,7 @@ export type SOARContextProps = {
   gameStations: LocationList
   teamState: UseState<Team>
   safetyOfficerPhoneState: UseState<string>
+  scheduleSportState: UseState<Sport>
 }
 
 export type SOARTimestamp = {
