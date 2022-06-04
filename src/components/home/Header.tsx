@@ -12,9 +12,7 @@ const Circle = () => {
 
 const HiddenCircle = () => {
   return (
-    <View
-      style={[globalStyles.shapes.circle, globalStyles.core.transparent]}
-    />
+    <View style={[globalStyles.shapes.circle, globalStyles.core.transparent]} />
   )
 }
 
@@ -31,19 +29,23 @@ const Heart = ({ alert, onPress }: { alert: boolean; onPress: OnPress }) => {
   )
 }
 
-const Header = ({ navigation }: { navigation: AuthPageNavigator }) => {
+const Notifications = (props: { navigation: AuthPageNavigator }) => (
+  <View style={globalStyles.container.headerIcons}>
+    <Heart
+      alert={false}
+      onPress={() => props.navigation.navigate('NotificationScreen')}
+    />
+  </View>
+)
+
+const Header = (props: { navigation: AuthPageNavigator }) => {
   return (
     <View style={globalStyles.container.header}>
       <View style={globalStyles.container.headerLogo}>
         <Sunnus fill={colors.homeFg} />
       </View>
       <View style={{ flex: 1 }} />
-      <View style={globalStyles.container.headerIcons}>
-        <Heart
-          alert={false}
-          onPress={() => navigation.navigate('NotificationScreen')}
-        />
-      </View>
+      {/* <Notifications navigation={props.navigation} /> */}
     </View>
   )
 }

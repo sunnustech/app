@@ -1,31 +1,20 @@
-import { View, SafeAreaView, Text } from 'react-native'
-
-/* firebase */
+import { View, SafeAreaView } from 'react-native'
 import { signOut, Auth } from 'firebase/auth'
-
-/* navigation */
 import { AuthPage } from '@/types/navigation'
 import { useNavigation } from '@react-navigation/native'
-
-/* sunnus components */
 import { globalStyles } from '@/styles/global'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Header from '@/components/home/Header'
 import Settings from '@/components/home/Settings'
 import Footer from '@/components/home/Footer'
 import { Series } from '@/components/Buttons'
-
 import SOAR from '@/components/svgs/SOAR'
 import TSS from '@/components/svgs/TSS'
-import { UserContext } from '@/contexts/UserContext'
 
 const HomeScreen = () => {
   const navigation = useNavigation<AuthPage<'HomeScreen'>>()
   const showSettingsState = useState(false)
   const setShowSettings = showSettingsState[1]
-  const { userState } = useContext(UserContext)
-  const user = userState[0]
-  console.log('HomeScreen, User:', user)
 
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
@@ -58,13 +47,6 @@ const HomeScreen = () => {
             svg={TSS}
             onPress={() => navigation.navigate('TSSNavigator')}
           />
-          {/* A retired series
-          <Series
-            color="sky"
-            svg={WSS}
-            onPress={() => navigation.navigate('WSSScreen')}
-          /> 
-          */}
         </View>
       </View>
       <Settings

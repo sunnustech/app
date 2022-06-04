@@ -38,35 +38,38 @@ const Navigator = () => {
   const { userState } = useContext(UserContext)
   const [user, setUser] = userState
   const setPhone = safetyOfficerPhoneState[1]
+
   useFocusEffect(
     useCallback(() => {
-      console.debug('focused on SOAR navigator')
-      const unsubscribeFirebase = onSnapshot(
-        doc(db, 'shared', 'main'),
-        (doc) => {
-          const data = doc.data()
-          if (data !== undefined) {
-            console.debug('firebase updated <main> at', new Date())
-            setPhone(data.safetyOfficer)
+      if (auth.currentUser) {
+        console.debug('focused on SOAR navigator')
+        const unsubscribeFirebase = onSnapshot(
+          doc(db, 'shared', 'main'),
+          (doc) => {
+            const data = doc.data()
+            if (data !== undefined) {
+              console.debug('firebase updated <main> at', new Date())
+              setPhone(data.safetyOfficer)
+            }
           }
-        }
-      )
-      const unsubscribeUser = onSnapshot(
-        doc(db, 'users', auth.currentUser?.uid || ''),
-        (doc) => {
-          const data = doc.data()
-          if (data !== undefined) {
-            console.debug('firebase updated <user> at', new Date())
-            setUser(data)
+        )
+        const unsubscribeUser = onSnapshot(
+          doc(db, 'users', auth.currentUser?.uid || 'meme'),
+          (doc) => {
+            const data = doc.data()
+            if (data !== undefined) {
+              console.debug('firebase updated <user> at', new Date())
+              setUser(data)
+            }
           }
+        )
+        return () => {
+          console.debug('unfocused AuthStack')
+          /* detach firebase listener on unmount */
+          unsubscribeFirebase()
+          unsubscribeUser()
+          console.debug('detach firebase listener on AuthStack')
         }
-      )
-      return () => {
-        console.debug('unfocused AuthStack')
-        /* detach firebase listener on unmount */
-        unsubscribeFirebase()
-        unsubscribeUser()
-        console.debug('detach firebase listener on AuthStack')
       }
     }, [])
   )
