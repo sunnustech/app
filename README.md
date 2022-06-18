@@ -14,7 +14,9 @@
 
 ## What is this repo for?
 
-This repo is used to contain all the components used in building the mobile app for SunNUS 22. We use [expo](https://expo.dev/) to develop for both iOS and Android.
+This repo is used to contain all the components used in building the mobile app for SunNUS 22. 
+We use [expo](https://expo.dev/) as an emulator to develop for both iOS and Android.
+In addition, we also use [TestFlight](https://developer.apple.com/testflight/) for testing deployment on iOS.
 
 If you would like to learn more about the project in general or need a starting point, you may refer to the docs repo.
 
@@ -22,11 +24,21 @@ If you would like to learn more about how the backend and cloud functions are bu
 
 ## Repo structure
 
-This repo has two main directories: `functions` and `tests`.
-
-`functions` contain the logic for the `onRequest` and `onCall` backend functions.
-
-`tests` contain ...
+```
+.
+├── firebase.js             # Firebase credentials
+├── App.tsx                 # Entry point of the application
+├── src                     # Components used to build the application
+│   ├── classes             # Objects in our schema modelled as classes
+│   ├── components          # Components used to build pages
+│   ├── data                # Constants used in our application
+│   ├── lib                 # Constants in dictionaries, helper functions
+│   ├── navigations         # Routing and auth related
+│   ├── screens             # Different pages available
+│   ├── styles              # Styling of components and pages
+│   ├── types               # Typescript types
+└   └── utils               # Misc and general helpfer functions
+```
 
 ## Setup
 
@@ -47,6 +59,10 @@ In order for the application to interact with firebase, you would need the fireb
 
 As it contains sensitive information, it is not part of the repo. You may have to obtain it from the tech lead and put it into the root directory.
 
-Ensure you are logged into expo using the CLI:
+Before running the app using `expo`, sign up for an expo account [here](https://expo.dev/signup). 
+
+Log in using your terminal with the following command:
+
+`expo signin -u <username> -p <password>`
 
 Then run `expo start` to start up a server.
