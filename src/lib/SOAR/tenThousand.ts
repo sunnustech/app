@@ -1,4 +1,6 @@
 /*
+ * DEPRECATED
+ * Used to be the fixed QR codes before we hashed the qr url
  * don't ever edit this.
  * gonna be a hassle to generate another unique set of 10000 alphanumerics
  */

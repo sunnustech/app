@@ -9,10 +9,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/sunnus/firebase'
 import { globalStyles } from '@/styles/global'
 import Sunnus from '@/components/svgs/Sunnus'
-import {
-  Loader,
-  LoginInput,
-} from '@/components/login'
+import { Loader, LoginInput } from '@/components/login'
 import { Button } from '../components/Buttons'
 
 const PASSWORD = 'sunnus'
@@ -22,6 +19,9 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState(false)
   const [loginError, setLoginError] = useState(false)
 
+  /**
+   * Handles user login, firebase requires email and password but for this year we only use loginid
+   */
   const loginHandler = () => {
     setLoading(true)
     setLoginError(false)
@@ -40,8 +40,10 @@ const LoginScreen = () => {
     }
   }
 
+  /**
+   * Sends an email to the user to reset loginid
+   */
   const forgotHandler = () => {
-    console.debug('call forgot password handler')
     // https://firebase.google.com/products/extensions/firebase-firestore-send-email
   }
 
@@ -63,7 +65,7 @@ const LoginScreen = () => {
       </View>
       <Loader loading={loading} error={loginError} />
       <View style={globalStyles.others.loginButtonContainer}>
-        <Button color='amber' onPress={loginHandler} children='Login'/>
+        <Button color="amber" onPress={loginHandler} children="Login" />
       </View>
     </ScrollView>
   )

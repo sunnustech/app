@@ -1,9 +1,12 @@
 on:
   push:
     branches:
-      - build:android
+      - build/android
+env:
+  TELEGRAM_TO: 257481278
+
 jobs:
-  build:
+  build-android:
     runs-on: ubuntu-latest
     steps:
       - name: Setup repo
@@ -30,3 +33,14 @@ jobs:
 
       - name: 🚀 Build app
         run: eas build --platform android --non-interactive
+
+      - name: Notify on telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ env.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            📦 build complete (android)
+            Status: ${{ job.status }}
+            https://expo.dev/accounts/brew4k/projects/SunNUS/builds

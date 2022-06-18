@@ -23,8 +23,9 @@ const S = createNativeStackNavigator<UnauthenticatedPages>()
  */
 
 const SunNUS = () => {
-  /* initialize user's state */
+  // initialize user's state 
   const [loggedIn, setLoggedIn] = useState(true)
+  // observes the auth value, which can be changed from loginhandler
   onAuthStateChanged(auth, (user) => {
     setLoggedIn(Boolean(user))
   })

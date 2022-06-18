@@ -22,17 +22,16 @@ const QRScreen = () => {
   const { QRState } = useContext(SOARContext)
   const setQR = QRState[1]
   const navigation = useNavigation<SOARPage<'QRScreen'>>()
-  const [scanning, setScanning] = useState(true)
+  const [scanning, setScanning] = useState(true) 
 
-  /*
-   * check validity
-   * parse encrypted string to a command object
-   * doesn't process anything else
+  /**
+   * Checks validity of QRCode and handles it accordingly if valid
+   * Uses Crypto to prevent participants from fabricating their own qr to alter points
+   *
+   * @param {BarCodeEvent} code qr code scanned
    */
   const handleQRCode = async (code: BarCodeEvent) => {
-    // Note! QRDictionary may be depreciated
-
-    // Decrypt
+    // Decrypt, SunNUS qr codes can only
     let bytes, qrData
     try {
       bytes = CryptoJS.AES.decrypt(code.data, SALT)
@@ -77,6 +76,9 @@ const QRScreen = () => {
   }
 
   const BackToMap = () => {
+    /**
+     * Navigates back to the map screen after scanning a QR
+     */
     function closeQRScanner() {
       setScanning(false)
       navigation.navigate('SOARScreen')

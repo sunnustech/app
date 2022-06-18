@@ -13,6 +13,14 @@ export const NUSCoordinates: Camera = {
   altitude: 0,
 }
 
+export const SentosaCoordinates: Camera = {
+  center: { latitude: 1.2556798311520643, longitude: 103.81290699270792 },
+  pitch: 0,
+  zoom: 15.3,
+  heading: 0,
+  altitude: 0,
+}
+
 export const sportList: Array<Sport> = [
   'dodgeball',
   'frisbee',
@@ -32,8 +40,6 @@ export const reversedRoundList: Array<Round> = [
   'finals',
   'semifinals',
   'quarterfinals',
-  'round_of_16',
-  'round_of_32',
 ]
 
 export const matchNumbers: Record<Round, Array<number>> = {

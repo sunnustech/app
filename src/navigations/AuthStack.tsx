@@ -36,6 +36,8 @@ const config: TransitionSpec = {
 const Navigator = () => {
   const { safetyOfficerPhoneState } = useContext(SOARContext)
   const setPhone = safetyOfficerPhoneState[1]
+
+  // runs when component is unfocused, used to detach app from firebase to stop live updates
   useFocusEffect(
     useCallback(() => {
       console.debug('focused on SOAR navigator')
@@ -58,6 +60,8 @@ const Navigator = () => {
     }, [])
   )
 
+  // provides navigation capabilities to different screens
+  // edit below to add or remove the ability to navigate to your screen
   return (
     <MainStack.Navigator
       initialRouteName="HomeScreen"
@@ -99,6 +103,9 @@ const Navigator = () => {
   )
 }
 
+/**
+ * Contexts to be used wrapping our navigator
+ */
 const AuthStack = () => {
   return (
     <UserProvider>

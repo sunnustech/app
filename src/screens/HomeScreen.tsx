@@ -1,4 +1,4 @@
-import { View, SafeAreaView  } from 'react-native'
+import { View, SafeAreaView } from 'react-native'
 
 /* firebase */
 import { signOut, Auth } from 'firebase/auth'
@@ -17,6 +17,7 @@ import { Series } from '@/components/Buttons'
 
 import SOAR from '@/components/svgs/SOAR'
 import TSS from '@/components/svgs/TSS'
+// retired series
 import WSS from '@/components/svgs/WSS'
 
 const HomeScreen = () => {
@@ -24,6 +25,11 @@ const HomeScreen = () => {
   const showSettingsState = useState(false)
   const setShowSettings = showSettingsState[1]
 
+  /**
+   * Handles user logout
+   *
+   * @param {Auth} auth authentication object verified with firebase
+   */
   const logoutHandler = (auth: Auth) => {
     signOut(auth)
       .then(() => {
@@ -55,11 +61,13 @@ const HomeScreen = () => {
             svg={TSS}
             onPress={() => navigation.navigate('TSSNavigator')}
           />
+          {/* A retired series
           <Series
             color="sky"
             svg={WSS}
             onPress={() => navigation.navigate('WSSScreen')}
-          />
+          /> 
+          */}
         </View>
       </View>
       <Settings

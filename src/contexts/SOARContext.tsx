@@ -5,12 +5,11 @@ import { Team } from '@/classes/team'
 import { Location, LocationList } from '@/classes/location'
 import { gameStations as GS } from '@/data/locations'
 
-// reference: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
-
 /*
- * pulls all locations from the Firestore
+ * Pulls all soar locations and utilities from the Firestore
  */
 
+// Initializes the context with default values
 const SOARContext = createContext<SOARContextProps>({
   loadingState: [false, () => true],
   locationState: [[], () => true],
@@ -23,7 +22,7 @@ const SOARContext = createContext<SOARContextProps>({
   safetyOfficerPhoneState: ['', () => '']
 })
 
-// Getters and setters to be used when using context
+// Creates a context provider with the following default values
 function SOARProvider(props: React.PropsWithChildren<{}>) {
   const loadingState = useState(false)
   const QRState = useState(QR.empty)
